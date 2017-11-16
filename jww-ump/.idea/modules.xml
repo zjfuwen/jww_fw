@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/jww-ump.iml" filepath="$PROJECT_DIR$/jww-ump.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jww-ump-api/jww-ump-api.iml" filepath="$PROJECT_DIR$/jww-ump-api/jww-ump-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jww-ump-api-service/jww-ump-api-service.iml" filepath="$PROJECT_DIR$/jww-ump-api-service/jww-ump-api-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jww-ump-common/jww-ump-common.iml" filepath="$PROJECT_DIR$/jww-ump-common/jww-ump-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jww-ump-dao/jww-ump-dao.iml" filepath="$PROJECT_DIR$/jww-ump-dao/jww-ump-dao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jww-ump-mq/jww-ump-mq.iml" filepath="$PROJECT_DIR$/jww-ump-mq/jww-ump-mq.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jww-ump-server/jww-ump-server.iml" filepath="$PROJECT_DIR$/jww-ump-server/jww-ump-server.iml" />
+    </modules>
+  </component>
+</project>

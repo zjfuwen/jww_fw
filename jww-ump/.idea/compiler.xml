@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="jww-ump-api" />
+        <module name="jww-ump-api-service" />
+        <module name="jww-ump-common" />
+        <module name="jww-ump-dao" />
+        <module name="jww-ump-mq" />
+        <module name="jww-ump-server" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="jww-ump" target="1.5" />
+      <module name="jww-ump-api" target="1.5" />
+      <module name="jww-ump-api-service" target="1.5" />
+      <module name="jww-ump-common" target="1.5" />
+      <module name="jww-ump-dao" target="1.5" />
+      <module name="jww-ump-mq" target="1.5" />
+      <module name="jww-ump-server" target="1.5" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
