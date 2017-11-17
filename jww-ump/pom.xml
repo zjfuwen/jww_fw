@@ -12,6 +12,7 @@
     <artifactId>jww-ump</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0</version>
+
     <modules>
         <module>jww-ump-common</module>
         <module>jww-ump-dao</module>
@@ -20,6 +21,5 @@
         <module>jww-ump-server</module>
         <module>jww-ump-mq</module>
     </modules>
-
 
 </project>
