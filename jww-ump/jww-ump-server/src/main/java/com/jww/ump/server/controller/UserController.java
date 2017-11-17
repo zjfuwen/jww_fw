@@ -20,7 +20,7 @@ public class UserController {
     @SysLogAnnotation("queryUser")
     @GetMapping("/queryUser/{id}")
     public String queryUser(@PathVariable String id) {
-        log.info("id: {}", id);
+        log.info("UserController id: {}", id);
         return "id:" + id;
     }
 }
