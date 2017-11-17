@@ -4,11 +4,11 @@
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/jww-common" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/jww-ump" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/jww-ump/jww-ump-api" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/jww-ump/jww-ump-api-service" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/jww-ump/jww-ump-common" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/jww-ump/jww-ump-dao" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/jww-ump/jww-ump-mq" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jww-ump/jww-ump-rpc-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jww-ump/jww-ump-rpc-service" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/jww-ump/jww-ump-server" charset="UTF-8" />
   </component>
 </project>

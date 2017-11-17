@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>jww-ump-api-service</artifactId>
+    <artifactId>jww-ump-rpc-api</artifactId>
 
 
 </project>

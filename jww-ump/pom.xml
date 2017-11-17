@@ -16,8 +16,8 @@
     <modules>
         <module>jww-ump-common</module>
         <module>jww-ump-dao</module>
-        <module>jww-ump-api</module>
-        <module>jww-ump-api-service</module>
+        <module>jww-ump-rpc-api</module>
+        <module>jww-ump-rpc-service</module>
         <module>jww-ump-server</module>
         <module>jww-ump-mq</module>
     </modules>

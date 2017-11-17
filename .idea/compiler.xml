@@ -8,8 +8,8 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="jww-common" />
-        <module name="jww-ump-api" />
-        <module name="jww-ump-api-service" />
+        <module name="jww-ump-rpc-api" />
+        <module name="jww-ump-rpc-service" />
         <module name="jww-ump-common" />
         <module name="jww-ump-dao" />
         <module name="jww-ump-mq" />
@@ -20,8 +20,8 @@
       <module name="jww" target="1.5" />
       <module name="jww-common" target="1.5" />
       <module name="jww-ump" target="1.5" />
-      <module name="jww-ump-api" target="1.5" />
-      <module name="jww-ump-api-service" target="1.5" />
+      <module name="jww-ump-rpc-api" target="1.5" />
+      <module name="jww-ump-rpc-service" target="1.5" />
       <module name="jww-ump-common" target="1.5" />
       <module name="jww-ump-dao" target="1.5" />
       <module name="jww-ump-mq" target="1.5" />

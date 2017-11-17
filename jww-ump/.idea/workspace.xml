@@ -5,8 +5,8 @@
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/jww-ump-common/target/" />
     <ignored path="$PROJECT_DIR$/jww-ump-dao/target/" />
-    <ignored path="$PROJECT_DIR$/jww-ump-api/target/" />
-    <ignored path="$PROJECT_DIR$/jww-ump-api-service/target/" />
+    <ignored path="$PROJECT_DIR$/jww-ump-rpc-api/target/" />
+    <ignored path="$PROJECT_DIR$/jww-ump-rpc-service/target/" />
     <ignored path="$PROJECT_DIR$/jww-ump-server/target/" />
     <ignored path="$PROJECT_DIR$/jww-ump-mq/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -258,7 +258,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jww-ump-api/pom.xml">
+    <entry file="file://$PROJECT_DIR$/jww-ump-rpc-api/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -266,7 +266,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jww-ump-api-service/pom.xml">
+    <entry file="file://$PROJECT_DIR$/jww-ump-rpc-service/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
