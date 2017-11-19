@@ -1,5 +1,7 @@
 package com.jww.common.annotation;
 
+import com.jww.common.Constants;
+
 import java.lang.annotation.*;
 
 /**
@@ -11,5 +13,5 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface DataSourceAnnotation {
-    String value() default "";
+    Constants.DataSourceEnum value() default Constants.DataSourceEnum.MASTER;
 }

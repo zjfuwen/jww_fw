@@ -1,12 +1,14 @@
 package com.jww.common.model;
 
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 /**
  * @author wanyong
  * @description: 返回结果类
  * @date 2017/11/9 23:45
  */
+@NoArgsConstructor
 @AllArgsConstructor
 public class ResultModel<T> {
 

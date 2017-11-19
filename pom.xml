@@ -30,13 +30,19 @@
         <mysql.connector.java.version>6.0.5</mysql.connector.java.version>
         <mybatis.spring.boot.version>1.3.1</mybatis.spring.boot.version>
         <mybatisplus.spring.boot.version>1.0.5</mybatisplus.spring.boot.version>
-        <mybatis-plus.version>2.1.4</mybatis-plus.version>
+        <mybatis.plus.version>2.1.5</mybatis.plus.version>
         <!-- dubbo -->
         <dubbo.version>2.5.7</dubbo.version>
+        <zookeeper.version>3.4.11</zookeeper.version>
+        <zkclient.version>0.10</zkclient.version>
         <!-- shiro -->
         <shiro.spring.version>1.4.0</shiro.spring.version>
         <!-- apache-commons -->
         <commons.lang3.version>3.6</commons.lang3.version>
+        <!-- maven -->
+        <maven.compiler.plugin.version>3.7.0</maven.compiler.plugin.version>
+        <!-- fastjson -->
+        <fastjson.version>1.2.41</fastjson.version>
     </properties>
 
 

@@ -20,6 +20,7 @@
         <module>jww-ump-rpc-service</module>
         <module>jww-ump-server</module>
         <module>jww-ump-mq</module>
+        <module>jww-ump-model</module>
     </modules>
 
 </project>

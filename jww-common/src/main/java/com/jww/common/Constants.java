@@ -7,8 +7,15 @@ package com.jww.common;
  */
 public final class Constants {
 
-    /** 当前用户 */
+    /**
+     * 当前用户
+     */
     public static final String CURRENT_USER = "CURRENT_USER";
+    
+    /**
+     * mapper方法中查询语句开头格式，必须以select开头，才会切换数据源
+     */
+    public static final String MAPPER_METHOD_STARTSWITH_SELECT = "select";
 
     public enum ResultCodeEnum {
         SUCCESS(200, "成功"),

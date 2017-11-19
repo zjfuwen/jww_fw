@@ -15,7 +15,6 @@ import java.util.Date;
  * @description: 数据模型基类
  * @date 2017/11/10 12:02
  */
-@Slf4j
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public abstract class BaseModel implements Serializable {

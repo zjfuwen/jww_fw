@@ -8,24 +8,28 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="jww-common" />
-        <module name="jww-ump-rpc-api" />
-        <module name="jww-ump-rpc-service" />
         <module name="jww-ump-common" />
         <module name="jww-ump-dao" />
+        <module name="jww-ump-model" />
         <module name="jww-ump-mq" />
+        <module name="jww-ump-rpc-api" />
+        <module name="jww-ump-rpc-service" />
         <module name="jww-ump-server" />
+        <module name="jww.ump.model" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="jww" target="1.5" />
-      <module name="jww-common" target="1.5" />
+      <module name="jww-common" target="1.8" />
       <module name="jww-ump" target="1.5" />
-      <module name="jww-ump-rpc-api" target="1.5" />
-      <module name="jww-ump-rpc-service" target="1.5" />
       <module name="jww-ump-common" target="1.5" />
       <module name="jww-ump-dao" target="1.5" />
+      <module name="jww-ump-model" target="1.5" />
       <module name="jww-ump-mq" target="1.5" />
+      <module name="jww-ump-rpc-api" target="1.5" />
+      <module name="jww-ump-rpc-service" target="1.8" />
       <module name="jww-ump-server" target="1.5" />
+      <module name="jww.ump.model" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>
