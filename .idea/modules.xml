@@ -12,7 +12,6 @@
       <module fileurl="file://$PROJECT_DIR$/jww-ump/jww-ump-rpc-api/jww-ump-rpc-api.iml" filepath="$PROJECT_DIR$/jww-ump/jww-ump-rpc-api/jww-ump-rpc-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/jww-ump/jww-ump-rpc-service/jww-ump-rpc-service.iml" filepath="$PROJECT_DIR$/jww-ump/jww-ump-rpc-service/jww-ump-rpc-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/jww-ump/jww-ump-server/jww-ump-server.iml" filepath="$PROJECT_DIR$/jww-ump/jww-ump-server/jww-ump-server.iml" />
-      <module fileurl="file://$PROJECT_DIR$/jww-ump/jww-ump-model/jww.ump.model.iml" filepath="$PROJECT_DIR$/jww-ump/jww-ump-model/jww.ump.model.iml" />
     </modules>
   </component>
 </project>

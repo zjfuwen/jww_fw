@@ -5,8 +5,8 @@ import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.cache.annotation.Cacheable;
 
 /**
- * @description: TODO
  * @author wanyong
+ * @description: TODO
  * @date 2017/11/19 20:36
  */
 public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseModel>
