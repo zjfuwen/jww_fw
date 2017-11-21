@@ -24,7 +24,7 @@ import java.lang.reflect.Method;
 @Component
 public class DataSourceAspect {
 
-    @Pointcut("this(com.jww.common.base.BaseMapper)")
+    @Pointcut("execution(* com.jww..mapper..*.*(..))")
     public void dataSourcePointCut() {
     }
 

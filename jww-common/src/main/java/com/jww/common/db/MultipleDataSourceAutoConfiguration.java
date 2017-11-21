@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -47,7 +48,11 @@ import java.util.Map;
  */
 @Slf4j
 @Configuration
+@AutoConfigureBefore(DataSourceAutoConfiguration.class)
 public class MultipleDataSourceAutoConfiguration {
+
+    @Value("${datasource.type}")
+    private Class<? extends DataSource> dataSourceType;
 
     private final MybatisPlusProperties properties;
 
@@ -82,7 +87,7 @@ public class MultipleDataSourceAutoConfiguration {
     @ConfigurationProperties(prefix = "datasource.master")
     public DataSource masterDataSource() {
         log.info("===========初始化masterDataSource=============");
-        return DataSourceBuilder.create().build();
+        return DataSourceBuilder.create().type(dataSourceType).build();
     }
 
     /**
@@ -95,7 +100,7 @@ public class MultipleDataSourceAutoConfiguration {
     @ConfigurationProperties(prefix = "datasource.slaver")
     public DataSource slaverDataSource() {
         log.info("===========初始化slaverDataSource=============");
-        return DataSourceBuilder.create().build();
+        return DataSourceBuilder.create().type(dataSourceType).build();
     }
 
     /**

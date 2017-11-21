@@ -11,16 +11,15 @@ spring:
       max-idle: 8
       min-idle: 0
 datasource:
+  type: com.alibaba.druid.pool.DruidDataSource
   master:
     url: jdbc:mysql://localhost:3306/ibase4j?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
     username: root
     password: 123456
     driverClassName: com.mysql.jdbc.Driver
-    #type: com.alibaba.druid.pool.DruidDataSource
     initialSize: 5
     maxActive: 20
     minIdle: 5
-    maxIdle: 20
     maxWait: 60000
     defaultReadOnly: false
   slaver:
@@ -28,11 +27,9 @@ datasource:
       username: root
       password: 123456
       driverClassName: com.mysql.jdbc.Driver
-      #type: com.alibaba.druid.pool.DruidDataSource
       initialSize: 5
       maxActive: 20
       minIdle: 5
-      maxIdle: 20
       maxWait: 60000
       defaultReadOnly: false
 #mybatis-plus
