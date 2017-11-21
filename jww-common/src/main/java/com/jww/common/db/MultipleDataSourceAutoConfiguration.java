@@ -15,12 +15,14 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -45,9 +47,6 @@ import java.util.Map;
  */
 @Slf4j
 @Configuration
-@ConditionalOnClass({SqlSessionFactory.class, MybatisSqlSessionFactoryBean.class})
-@ConditionalOnBean(DynamicDataSource.class)
-@EnableConfigurationProperties(MybatisPlusProperties.class)
 public class MultipleDataSourceAutoConfiguration {
 
     private final MybatisPlusProperties properties;
@@ -82,6 +81,7 @@ public class MultipleDataSourceAutoConfiguration {
     @Bean("masterDataSource")
     @ConfigurationProperties(prefix = "datasource.master")
     public DataSource masterDataSource() {
+        log.info("===========初始化masterDataSource=============");
         return DataSourceBuilder.create().build();
     }
 
@@ -94,6 +94,7 @@ public class MultipleDataSourceAutoConfiguration {
     @Bean("slaverDataSource")
     @ConfigurationProperties(prefix = "datasource.slaver")
     public DataSource slaverDataSource() {
+        log.info("===========初始化slaverDataSource=============");
         return DataSourceBuilder.create().build();
     }
 
@@ -106,6 +107,7 @@ public class MultipleDataSourceAutoConfiguration {
     @Bean("dynamicDataSource")
     public DynamicDataSource dynamicDataSource(@Qualifier("masterDataSource") DataSource masterDataSource,
                                                @Qualifier("slaverDataSource") DataSource slaverDataSource) {
+        log.info("===========初始化dynamicDataSource=============");
         Map<Object, Object> targetDataSources = new HashMap<Object, Object>(2);
         targetDataSources.put(Constants.DataSourceEnum.MASTER.getName(), masterDataSource);
         targetDataSources.put(Constants.DataSourceEnum.SLAVE.getName(), slaverDataSource);
@@ -180,6 +182,7 @@ public class MultipleDataSourceAutoConfiguration {
      */
     @Bean
     public DataSourceTransactionManager transactionManager(DynamicDataSource dynamicDataSource) throws Exception {
+        log.info("================初始化transactionManager====================");
         return new DataSourceTransactionManager(dynamicDataSource);
     }
 }

@@ -12,9 +12,10 @@ import org.springframework.context.annotation.ImportResource;
  * @description: 启动类
  * @date 2017/11/17 00:34
  */
-@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
+@SpringBootApplication
 @ComponentScan(basePackages = {"com.jww.ump.rpc.service.impl", "com.jww.common"})
 @ImportResource(value = {"classpath:dubbo/providers.xml"})
+@MapperScan(basePackages = {"com.jww.ump.dao.mapper"})
 public class ServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(ServiceApplication.class, args);

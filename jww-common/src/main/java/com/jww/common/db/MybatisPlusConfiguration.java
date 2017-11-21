@@ -27,7 +27,6 @@ import java.util.Map;
  */
 @Slf4j
 @Configuration
-@MapperScan(basePackages = {"com.jww.ump.dao.mapper"})
 public class MybatisPlusConfiguration {
 
     /**

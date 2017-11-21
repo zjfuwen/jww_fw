@@ -1,7 +1,7 @@
 spring:
   redis:
     database: 0
-    host: 127.0.0.1
+    host: 192.168.0.116
     port: 6379
     password:
     timeout: 0
@@ -16,7 +16,7 @@ datasource:
     username: root
     password: 123456
     driverClassName: com.mysql.jdbc.Driver
-    type: com.alibaba.druid.pool.DruidDataSource
+    #type: com.alibaba.druid.pool.DruidDataSource
     initialSize: 5
     maxActive: 20
     minIdle: 5
@@ -24,17 +24,17 @@ datasource:
     maxWait: 60000
     defaultReadOnly: false
   slaver:
-    url: jdbc:mysql://localhost:3306/ibase4j?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
-    username: root
-    password: 123456
-    driverClassName: com.mysql.jdbc.Driver
-    type: com.alibaba.druid.pool.DruidDataSource
-    initialSize: 5
-    maxActive: 20
-    minIdle: 5
-    maxIdle: 20
-    maxWait: 60000
-    defaultReadOnly: false
+      url: jdbc:mysql://localhost:3306/ibase4j?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+      username: root
+      password: 123456
+      driverClassName: com.mysql.jdbc.Driver
+      #type: com.alibaba.druid.pool.DruidDataSource
+      initialSize: 5
+      maxActive: 20
+      minIdle: 5
+      maxIdle: 20
+      maxWait: 60000
+      defaultReadOnly: false
 #mybatis-plus
 mybatis-plus:
   mapper-locations: classpath:/mapper/*Mapper.xml
@@ -64,3 +64,4 @@ mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: false
+debug: true
