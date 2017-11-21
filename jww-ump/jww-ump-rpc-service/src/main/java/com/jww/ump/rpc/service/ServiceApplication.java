@@ -3,7 +3,6 @@ package com.jww.ump.rpc.service;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ImportResource;
 
@@ -13,7 +12,7 @@ import org.springframework.context.annotation.ImportResource;
  * @date 2017/11/17 00:34
  */
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.jww.ump.rpc.service.impl", "com.jww.common"})
+@ComponentScan(basePackages = {"com.jww.ump.rpc.service.impl", "com.jww.common.db"})
 @ImportResource(value = {"classpath:dubbo/providers.xml"})
 @MapperScan(basePackages = {"com.jww.ump.dao.mapper"})
 public class ServiceApplication {

@@ -1,6 +1,6 @@
 package com.jww.ump.rpc.api;
 
-import com.jww.common.base.BaseService;
+import com.jww.common.service.BaseService;
 import com.jww.ump.model.UmpUserModel;
 
 /**
@@ -9,5 +9,5 @@ import com.jww.ump.model.UmpUserModel;
  * @date 2017/11/17 16:43
  */
 public interface UmpUserService extends BaseService<UmpUserModel> {
-    
+
 }

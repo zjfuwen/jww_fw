@@ -43,6 +43,8 @@
         <maven.compiler.plugin.version>3.7.0</maven.compiler.plugin.version>
         <!-- fastjson -->
         <fastjson.version>1.2.41</fastjson.version>
+        <!-- jackson -->
+        <jackson.version>2.9.2</jackson.version>
     </properties>
 
 

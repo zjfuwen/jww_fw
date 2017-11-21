@@ -4,6 +4,15 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/jww.iml" filepath="$PROJECT_DIR$/jww.iml" />
       <module fileurl="file://$PROJECT_DIR$/jww-common/jww-common.iml" filepath="$PROJECT_DIR$/jww-common/jww-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jww-common/jww-common-constant/jww-common-constant.iml" filepath="$PROJECT_DIR$/jww-common/jww-common-constant/jww-common-constant.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jww-common/jww-common-db/jww-common-db.iml" filepath="$PROJECT_DIR$/jww-common/jww-common-db/jww-common-db.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jww-common/jww-common-exception/jww-common-exception.iml" filepath="$PROJECT_DIR$/jww-common/jww-common-exception/jww-common-exception.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jww-common/jww-common-http/jww-common-http.iml" filepath="$PROJECT_DIR$/jww-common/jww-common-http/jww-common-http.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jww-common/jww-common-log/jww-common-log.iml" filepath="$PROJECT_DIR$/jww-common/jww-common-log/jww-common-log.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jww-common/jww-common-mq/jww-common-mq.iml" filepath="$PROJECT_DIR$/jww-common/jww-common-mq/jww-common-mq.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jww-common/jww-common-redis/jww-common-redis.iml" filepath="$PROJECT_DIR$/jww-common/jww-common-redis/jww-common-redis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jww-common/jww-common-service/jww-common-service.iml" filepath="$PROJECT_DIR$/jww-common/jww-common-service/jww-common-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jww-common/jww-common-web/jww-common-web.iml" filepath="$PROJECT_DIR$/jww-common/jww-common-web/jww-common-web.iml" />
       <module fileurl="file://$PROJECT_DIR$/jww-ump/jww-ump.iml" filepath="$PROJECT_DIR$/jww-ump/jww-ump.iml" />
       <module fileurl="file://$PROJECT_DIR$/jww-ump/jww-ump-common/jww-ump-common.iml" filepath="$PROJECT_DIR$/jww-ump/jww-ump-common/jww-ump-common.iml" />
       <module fileurl="file://$PROJECT_DIR$/jww-ump/jww-ump-dao/jww-ump-dao.iml" filepath="$PROJECT_DIR$/jww-ump/jww-ump-dao/jww-ump-dao.iml" />
