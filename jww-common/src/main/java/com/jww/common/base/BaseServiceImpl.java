@@ -2,6 +2,7 @@ package com.jww.common.base;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import org.springframework.cache.annotation.Cacheable;
 
 /**
  * @description: TODO
@@ -20,6 +21,7 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseModel>
     }
 
     @Override
+    @Cacheable(value = "findById", key = "#id")
     public T findById(String id) {
         return super.selectById(id);
     }

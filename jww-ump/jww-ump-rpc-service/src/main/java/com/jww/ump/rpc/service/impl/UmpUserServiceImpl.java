@@ -1,6 +1,5 @@
 package com.jww.ump.rpc.service.impl;
 
-import com.jww.common.base.BaseService;
 import com.jww.common.base.BaseServiceImpl;
 import com.jww.ump.dao.mapper.UmpUserMapper;
 import com.jww.ump.model.UmpUserModel;
