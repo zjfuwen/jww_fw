@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
@@ -28,22 +28,21 @@ import java.lang.reflect.Method;
 @EnableCaching
 public class RedisConfig extends CachingConfigurerSupport{
 
+    @Autowired
+    private RedisProperties redisProperties;
+
     @Bean(name= "jedis.pool")
     @Autowired
-    public JedisPool jedisPool(@Qualifier("jedis.pool.config") JedisPoolConfig config,
-                               @Value("${jedis.pool.host}") String host,
-                               @Value("${jedis.pool.port}")int port) {
-        return new JedisPool(config, host, port);
+    public JedisPool jedisPool(@Qualifier("jedis.pool.config") JedisPoolConfig config) {
+        return new JedisPool(config, redisProperties.getHost(), redisProperties.getPort());
     }
 
     @Bean(name= "jedis.pool.config")
-    public JedisPoolConfig jedisPoolConfig (@Value("${jedis.pool.config.maxTotal}")int maxTotal,
-                                            @Value("${jedis.pool.config.maxIdle}")int maxIdle,
-                                            @Value("${jedis.pool.config.maxWaitMillis}")int maxWaitMillis) {
+    public JedisPoolConfig jedisPoolConfig () {
         JedisPoolConfig config = new JedisPoolConfig();
-        config.setMaxTotal(maxTotal);
-        config.setMaxIdle(maxIdle);
-        config.setMaxWaitMillis(maxWaitMillis);
+        config.setMaxTotal(redisProperties.getPool().getMaxActive());
+        config.setMaxIdle(redisProperties.getPool().getMaxIdle());
+        config.setMaxWaitMillis(redisProperties.getPool().getMaxWait());
         return config;
     }
 
