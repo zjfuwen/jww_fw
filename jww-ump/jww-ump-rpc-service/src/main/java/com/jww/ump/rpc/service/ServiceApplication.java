@@ -2,10 +2,13 @@ package com.jww.ump.rpc.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ImportResource;
+
+import java.io.IOException;
 
 /**
  * @author wanyong
@@ -18,11 +21,14 @@ import org.springframework.context.annotation.ImportResource;
 @ImportResource(value = {"classpath:dubbo/providers.xml"})
 @MapperScan(basePackages = {"com.jww.ump.dao.mapper"})
 public class ServiceApplication {
+    public static void main(String[] args) throws IOException {
+        //SpringApplication.run(ServiceApplication.class, args);
+        ApplicationContext ctx = new SpringApplicationBuilder()
+                .sources(ServiceApplication.class)
+                .web(false)
+                .run(args);
 
-    public static void main(String[] args) {
-        SpringApplication springApplication = new SpringApplication(ServiceApplication.class);
-        springApplication.setWebEnvironment(false);
-        springApplication.run(args);
-        log.info("========== ServiceApplication启动成功 ==========");
+        log.info("项目启动!");
+        System.in.read();
     }
 }
