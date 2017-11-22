@@ -1,6 +1,6 @@
 package com.jww.ump.dao.mapper;
 
-import com.jww.common.base.BaseMapper;
+import com.jww.common.db.mapper.BaseMapper;
 import com.jww.ump.model.UmpUserModel;
 
 /**

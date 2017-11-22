@@ -1,8 +1,8 @@
 package com.jww.ump.server.controller;
 
-import com.jww.common.annotation.SysLogAnnotation;
-import com.jww.common.model.ResultModel;
-import com.jww.common.util.ResultUtil;
+import com.jww.common.log.annotation.SysLogAnnotation;
+import com.jww.common.web.ResultModel;
+import com.jww.common.web.util.ResultUtil;
 import com.jww.ump.model.UmpUserModel;
 import com.jww.ump.rpc.api.UmpUserService;
 import lombok.extern.slf4j.Slf4j;
