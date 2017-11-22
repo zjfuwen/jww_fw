@@ -1,5 +1,6 @@
 package com.jww.common.mq;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.RedeliveryPolicy;
 import org.apache.activemq.command.ActiveMQQueue;
@@ -8,17 +9,21 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
+import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.jms.core.JmsTemplate;
 
 import javax.jms.Queue;
 
 @EnableJms
 @Configuration
+@Slf4j
 public class MQConfig {
+    @Value("${spring.activemq.defaultQueueName}")
+    private String defaultQueueName;
 
     @Bean
     public Queue queue(){
-        return new ActiveMQQueue("queue1");
+        return new ActiveMQQueue(defaultQueueName);
     }
 
     @Bean
@@ -57,6 +62,13 @@ public class MQConfig {
         jmsTemplate.setDefaultDestination(queue); //此处可不设置默认，在发送消息时也可设置队列
         jmsTemplate.setSessionAcknowledgeMode(4);//客户端签收模式
         return jmsTemplate;
+    }
+
+    @Bean
+    public JmsMessagingTemplate jmsMessagingTemplate(JmsTemplate jmsTemplate){
+        JmsMessagingTemplate jmsMessagingTemplate = new JmsMessagingTemplate();
+        jmsMessagingTemplate.setJmsTemplate(jmsTemplate);
+        return jmsMessagingTemplate;
     }
 
     //定义一个消息监听器连接工厂，这里定义的是点对点模式的监听器连接工厂

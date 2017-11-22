@@ -20,23 +20,32 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class MQService {
     @Autowired() // 也可以注入JmsTemplate，JmsMessagingTemplate对JmsTemplate进行了封装
-    private JmsMessagingTemplate jmsTemplate;
+    private JmsMessagingTemplate jmsMessagingTemplate;
     // 发送消息，destination是发送到的队列，message是待发送的消息
     public void send(String queueName, final Object object){
         send(new ActiveMQQueue(queueName), object);
     }
 
+    public void send(final Object object){
+        send(jmsMessagingTemplate.getJmsTemplate().getDefaultDestination(), object);
+    }
+
     public void send(Destination destination, final Object object){
         String message = object instanceof String ? object.toString() :  JSONObject.toJSONString(object);
         try{
-            jmsTemplate.convertAndSend(destination, message);
+            jmsMessagingTemplate.convertAndSend(destination, message);
         }catch (MessagingException e){
             log.error(e.toString());
         }
     }
 
+    public Object receive() {
+        Message message = jmsMessagingTemplate.receive(jmsMessagingTemplate.getJmsTemplate().getDefaultDestinationName());
+        return message.getPayload();
+    }
+
     public Object receive(String queueName) {
-        Message message = jmsTemplate.receive(queueName);
+        Message message = jmsMessagingTemplate.receive(queueName);
         return message.getPayload();
     }
 }

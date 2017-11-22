@@ -18,7 +18,7 @@ public class MQListener {
 //    private int num = 1;
 
     //监听队列
-//    @JmsListener(destination = "${queue-name}")//监听指定消息队列
+//    @JmsListener(destination = "${spring.activemq.defaultQueueName}")//监听指定消息队列
 //    @Async
 //    public void receiveQueue(String text) throws Exception {
 //        this.text = text;
@@ -34,7 +34,7 @@ public class MQListener {
 //    }
 
 //    //异常测试
-//    @JmsListener(destination = "${queue-name}")
+//    @JmsListener(destination = "${spring.activemq.defaultQueueName}")
 //    public void receiveQueue(TextMessage text) throws Exception {
 //        System.out.println("重试次数"+num++);
 //        System.out.println(Thread.currentThread().getName()+":Consumer收到的报文为:"+text.getText());
