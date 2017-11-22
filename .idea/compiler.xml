@@ -27,26 +27,26 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="jww" target="1.5" />
-      <module name="jww-common" target="1.5" />
-      <module name="jww-common-constant" target="1.5" />
+      <module name="jww" target="1.8" />
+      <module name="jww-common" target="1.8" />
+      <module name="jww-common-constant" target="1.8" />
       <module name="jww-common-db" target="1.8" />
-      <module name="jww-common-exception" target="1.5" />
-      <module name="jww-common-http" target="1.5" />
-      <module name="jww-common-log" target="1.5" />
-      <module name="jww-common-mq" target="1.5" />
-      <module name="jww-common-redis" target="1.5" />
-      <module name="jww-common-service" target="1.5" />
-      <module name="jww-common-web" target="1.5" />
-      <module name="jww-ump" target="1.5" />
-      <module name="jww-ump-common" target="1.5" />
-      <module name="jww-ump-dao" target="1.5" />
-      <module name="jww-ump-model" target="1.5" />
-      <module name="jww-ump-mq" target="1.5" />
-      <module name="jww-ump-rpc-api" target="1.5" />
+      <module name="jww-common-exception" target="1.8" />
+      <module name="jww-common-http" target="1.8" />
+      <module name="jww-common-log" target="1.8" />
+      <module name="jww-common-mq" target="1.8" />
+      <module name="jww-common-redis" target="1.8" />
+      <module name="jww-common-service" target="1.8" />
+      <module name="jww-common-web" target="1.8" />
+      <module name="jww-ump" target="1.8" />
+      <module name="jww-ump-common" target="1.8" />
+      <module name="jww-ump-dao" target="1.8" />
+      <module name="jww-ump-model" target="1.8" />
+      <module name="jww-ump-mq" target="1.8" />
+      <module name="jww-ump-rpc-api" target="1.8" />
       <module name="jww-ump-rpc-service" target="1.8" />
-      <module name="jww-ump-server" target="1.5" />
-      <module name="jww.ump.model" target="1.5" />
+      <module name="jww-ump-server" target="1.8" />
+      <module name="jww.ump.model" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

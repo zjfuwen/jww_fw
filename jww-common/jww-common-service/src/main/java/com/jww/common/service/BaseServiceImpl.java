@@ -22,7 +22,7 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseModel>
     }
 
     @Override
-    @Cacheable(value = "findById", key = "#id")
+    @Cacheable(value = "findById")
     public T findById(String id) {
         return super.selectById(id);
     }
