@@ -12,7 +12,7 @@ import org.springframework.context.annotation.ImportResource;
  * @date 2017/11/17 00:34
  */
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
-@ComponentScan(basePackages = {"com.jww.ump.server", "com.jww.common.web", "com.jww.common.log"})
+@ComponentScan(basePackages = {"com.jww.ump.server", "com.jww.common.web", "com.jww.common.log", "com.jww.common.redis"})
 @ImportResource(value = {"classpath:dubbo/consumers.xml"})
 public class ServerApplication {
     public static void main(String[] args) {

@@ -7,10 +7,11 @@ import com.jww.ump.model.UmpUserModel;
 import com.jww.ump.rpc.api.UmpUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author wanyong
@@ -27,9 +28,20 @@ public class UserController {
 
     @SysLogAnnotation("queryUser")
     @GetMapping("/queryUser/{id}")
-    public ResultModel<UmpUserModel> queryUser(@PathVariable String id) {
+    public ResultModel<UmpUserModel> queryUser(@PathVariable String id, HttpServletRequest request) {
         log.info("UserController id: {}", id);
         UmpUserModel umpUserModel = umpUserService.findById(id);
+
+        request.getSession().setAttribute("request Url", request.getRequestURL());
+        log.info("setAttribute:" + request.getRequestURL());
         return ResultUtil.ok(umpUserModel);
+    }
+
+    @RequestMapping(value = "/sessions", method = RequestMethod.GET)
+    public Object sessions (HttpServletRequest request){
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("sessionId", request.getSession().getId());
+        map.put("message", request.getSession().getAttribute("request Url"));
+        return map;
     }
 }
