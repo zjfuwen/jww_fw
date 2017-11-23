@@ -38,8 +38,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "/sessions", method = RequestMethod.GET)
-    public Object sessions (HttpServletRequest request){
-        Map<String, Object> map = new HashMap<String, Object>();
+    public Object sessions(HttpServletRequest request) {
+        Map<String, Object> map = new HashMap<String, Object>(2);
         map.put("sessionId", request.getSession().getId());
         map.put("message", request.getSession().getAttribute("request Url"));
         return map;

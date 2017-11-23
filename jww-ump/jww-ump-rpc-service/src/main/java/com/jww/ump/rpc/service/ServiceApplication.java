@@ -7,8 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ImportResource;
 
-import java.io.IOException;
-
 /**
  * @author wanyong
  * @description: 启动类
@@ -20,14 +18,10 @@ import java.io.IOException;
 @ImportResource(value = {"classpath:dubbo/providers.xml"})
 @MapperScan(basePackages = {"com.jww.ump.dao.mapper"})
 public class ServiceApplication {
-    public static void main(String[] args) throws IOException {
-        SpringApplication.run(ServiceApplication.class, args);
-        /*ApplicationContext ctx = new SpringApplicationBuilder()
-                .sources(ServiceApplication.class)
-                .web(false)
-                .run(args);*/
 
-        log.info("项目启动!");
-        System.in.read();
+    public static void main(String[] args) {
+        SpringApplication springApplication = new SpringApplication(ServiceApplication.class);
+        springApplication.run(args);
+        log.info("========== ServiceApplication启动成功 ==========");
     }
 }

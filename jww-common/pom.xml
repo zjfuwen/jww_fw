@@ -21,6 +21,7 @@
         <module>jww-common-log</module>
         <module>jww-common-service</module>
         <module>jww-common-constant</module>
+        <module>jww-common-core</module>
     </modules>
     <packaging>pom</packaging>
 

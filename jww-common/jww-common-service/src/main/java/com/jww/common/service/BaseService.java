@@ -1,7 +1,7 @@
 package com.jww.common.service;
 
 import com.baomidou.mybatisplus.service.IService;
-import com.jww.common.db.BaseModel;
+import com.jww.common.core.model.BaseModel;
 
 /**
  * @author wanyong

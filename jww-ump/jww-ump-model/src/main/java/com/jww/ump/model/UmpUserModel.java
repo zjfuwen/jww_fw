@@ -2,7 +2,7 @@ package com.jww.ump.model;
 
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
-import com.jww.common.db.BaseModel;
+import com.jww.common.core.model.BaseModel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

@@ -1,6 +1,6 @@
 package com.jww.common.db.mapper;
 
-import com.jww.common.db.BaseModel;
+import com.jww.common.core.model.BaseModel;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 

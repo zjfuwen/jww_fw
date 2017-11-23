@@ -2,7 +2,7 @@ package com.jww.common.service;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.jww.common.db.BaseModel;
+import com.jww.common.core.model.BaseModel;
 import org.springframework.cache.annotation.Cacheable;
 
 /**
