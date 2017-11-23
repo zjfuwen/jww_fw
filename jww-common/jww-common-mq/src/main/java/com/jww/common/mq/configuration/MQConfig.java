@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
+import org.springframework.jms.connection.CachingConnectionFactory;
 import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.jms.core.JmsTemplate;
 
@@ -41,22 +42,25 @@ public class MQConfig {
         redeliveryPolicy.setMaximumRedeliveryDelay(-1);
         return redeliveryPolicy;
     }
+
     @Bean
-    public ActiveMQConnectionFactory activeMQConnectionFactory (@Value("${spring.activemq.broker-url}")String url, RedeliveryPolicy redeliveryPolicy){
+    public CachingConnectionFactory cachingConnectionFactory (@Value("${spring.activemq.broker-url}")String url, RedeliveryPolicy redeliveryPolicy){
         ActiveMQConnectionFactory activeMQConnectionFactory =
                 new ActiveMQConnectionFactory(
                         "admin",
                         "admin",
                         url);
         activeMQConnectionFactory.setRedeliveryPolicy(redeliveryPolicy);
-        return activeMQConnectionFactory;
+        CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory(activeMQConnectionFactory);
+        cachingConnectionFactory.setSessionCacheSize(10);
+        return cachingConnectionFactory;
     }
 
     @Bean
-    public JmsTemplate jmsTemplate(ActiveMQConnectionFactory activeMQConnectionFactory, Queue queue){
+    public JmsTemplate jmsTemplate(CachingConnectionFactory cachingConnectionFactory, Queue queue){
         JmsTemplate jmsTemplate=new JmsTemplate();
         jmsTemplate.setDeliveryMode(2);//进行持久化配置 1表示非持久化，2表示持久化
-        jmsTemplate.setConnectionFactory(activeMQConnectionFactory);
+        jmsTemplate.setConnectionFactory(cachingConnectionFactory);
         jmsTemplate.setDefaultDestination(queue); //此处可不设置默认，在发送消息时也可设置队列
         jmsTemplate.setSessionAcknowledgeMode(4);//客户端签收模式
         return jmsTemplate;
@@ -71,10 +75,10 @@ public class MQConfig {
 
     //定义一个消息监听器连接工厂，这里定义的是点对点模式的监听器连接工厂
     @Bean(name = "jmsQueueListener")
-    public DefaultJmsListenerContainerFactory jmsQueueListenerContainerFactory(ActiveMQConnectionFactory activeMQConnectionFactory) {
+    public DefaultJmsListenerContainerFactory jmsQueueListenerContainerFactory(CachingConnectionFactory cachingConnectionFactory) {
         DefaultJmsListenerContainerFactory factory =
                 new DefaultJmsListenerContainerFactory();
-        factory.setConnectionFactory(activeMQConnectionFactory);
+        factory.setConnectionFactory(cachingConnectionFactory);
         //设置连接数
         factory.setConcurrency("1-10");
         //重连间隔时间
