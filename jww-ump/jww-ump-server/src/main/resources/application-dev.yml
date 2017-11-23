@@ -4,9 +4,9 @@ server:
 spring:
   redis:
     database: 0
-    host: 192.168.0.121
+    host: 127.0.0.1
     port: 6379
-    password:
+    password: 123456
     timeout: 0
     pool:
       max-active: 8

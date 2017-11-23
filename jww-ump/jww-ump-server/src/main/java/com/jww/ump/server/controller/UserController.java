@@ -1,8 +1,10 @@
 package com.jww.ump.server.controller;
 
+import com.jww.common.exception.BusinessException;
 import com.jww.common.log.annotation.SysLogAnnotation;
 import com.jww.common.web.ResultModel;
 import com.jww.common.web.util.ResultUtil;
+import com.jww.ump.model.PageModel;
 import com.jww.ump.model.UmpUserModel;
 import com.jww.ump.rpc.api.UmpUserService;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.transform.Result;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,4 +47,19 @@ public class UserController {
         map.put("message", request.getSession().getAttribute("request Url"));
         return map;
     }
+
+    @SysLogAnnotation("query")
+    @GetMapping("/query/{current}/{size}")
+    public ResultModel<PageModel<UmpUserModel>> query(@PathVariable int current, @PathVariable int size) {
+        // PageModel<UmpUserModel> pageModel = new PageModel<UmpUserModel>(current, size);
+        PageModel<UmpUserModel> pageModel = new PageModel<UmpUserModel>();
+        pageModel.setCurrent(current);
+        pageModel.setSize(size);
+        pageModel = (PageModel<UmpUserModel>) umpUserService.selectPage(pageModel);
+        if (1 == 1) {
+            throw new NullPointerException("发生异常");
+        }
+        return ResultUtil.ok(pageModel);
+    }
+
 }

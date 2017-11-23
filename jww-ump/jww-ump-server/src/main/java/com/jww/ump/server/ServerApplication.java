@@ -13,7 +13,6 @@ import org.springframework.context.annotation.PropertySource;
  */
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.jww.ump.server", "com.jww.common"})
-@PropertySource("classpath:dubbo/dubbo.properties")
 @ImportResource(value = {"classpath:dubbo/consumers.xml"})
 public class ServerApplication {
     public static void main(String[] args) {
