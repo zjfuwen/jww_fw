@@ -62,7 +62,8 @@ public class MQConfig {
         jmsTemplate.setDeliveryMode(2);//进行持久化配置 1表示非持久化，2表示持久化
         jmsTemplate.setConnectionFactory(cachingConnectionFactory);
         jmsTemplate.setDefaultDestination(queue); //此处可不设置默认，在发送消息时也可设置队列
-        jmsTemplate.setSessionAcknowledgeMode(4);//客户端签收模式
+//        jmsTemplate.setSessionAcknowledgeMode(4);//客户端签收模式
+//        jmsTemplate.setReceiveTimeout(3000);//默认0永不超时
         return jmsTemplate;
     }
 
@@ -83,7 +84,7 @@ public class MQConfig {
         factory.setConcurrency("1-10");
         //重连间隔时间
         factory.setRecoveryInterval(1000L);
-        factory.setSessionAcknowledgeMode(4);
+//        factory.setSessionAcknowledgeMode(4);
         return factory;
     }
 
