@@ -21,6 +21,7 @@
         <module>jww-ump-server</module>
         <module>jww-ump-mq</module>
         <module>jww-ump-model</module>
+        <module>jww-ump-generator</module>
     </modules>
 
 </project>

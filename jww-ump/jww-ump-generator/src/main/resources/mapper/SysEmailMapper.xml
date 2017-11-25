@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jww.ump.generator.mapper.SysEmailMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.jww.ump.generator.entity.SysEmail">
+    <result column="id_" property="id" />
+    <result column="remark_" property="remark" />
+    <result column="enable_" property="enable" />
+    <result column="create_by" property="createBy" />
+    <result column="create_time" property="createTime" />
+    <result column="update_by" property="updateBy" />
+    <result column="update_time" property="updateTime" />
+        <result column="email_name" property="emailName" />
+        <result column="sender_" property="sender" />
+        <result column="email_title" property="emailTitle" />
+        <result column="email_content" property="emailContent" />
+    </resultMap>
+
+</mapper>

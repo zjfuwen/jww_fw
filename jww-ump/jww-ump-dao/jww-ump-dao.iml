@@ -16,9 +16,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="jww-common-db" />
-    <orderEntry type="module" module-name="jww-common-constant" />
-    <orderEntry type="module" module-name="jww-common-core" />
+    <orderEntry type="library" name="Maven: com.jww:jww-common-db:1.0.0" level="project" />
+    <orderEntry type="library" name="Maven: com.jww:jww-common-constant:1.0.0" level="project" />
+    <orderEntry type="library" name="Maven: com.jww:jww-common-core:1.0.0" level="project" />
     <orderEntry type="library" name="Maven: org.projectlombok:lombok:1.16.18" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.9.2" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-aop:1.5.8.RELEASE" level="project" />
@@ -55,9 +55,9 @@
     <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.6" level="project" />
     <orderEntry type="module" module-name="jww-ump-model" />
     <orderEntry type="module" module-name="jww-ump-common" />
-    <orderEntry type="module" module-name="jww-common-exception" />
-    <orderEntry type="module" module-name="jww-common-log" />
-    <orderEntry type="module" module-name="jww-common-redis" />
+    <orderEntry type="library" name="Maven: com.jww:jww-common-exception:1.0.0" level="project" />
+    <orderEntry type="library" name="Maven: com.jww:jww-common-log:1.0.0" level="project" />
+    <orderEntry type="library" name="Maven: com.jww:jww-common-redis:1.0.0" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-redis:1.4.7.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.data:spring-data-redis:1.7.11.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.data:spring-data-keyvalue:1.1.11.RELEASE" level="project" />
