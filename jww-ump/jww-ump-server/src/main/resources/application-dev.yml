@@ -1,15 +1,25 @@
-server:
-  port: 8888
-
 spring:
   redis:
     database: 0
     host: 127.0.0.1
     port: 6379
-    password: 123456
+    password:
     timeout: 0
     pool:
       max-active: 8
       max-wait: 1
       max-idle: 8
       min-idle: 0
+  activemq:
+    broker-url: tcp://localhost:61616
+    user: admin
+    password: admin
+    pool:
+      enabled: false #如果此处设置为true，需要加如下的依赖包，否则会自动配置失败，报JmsMessagingTemplate注入失败
+      #<dependency>
+      #         <groupId>org.apache.activemq</groupId>
+      #            <artifactId>activemq-pool</artifactId>
+      #        <!-- <version>5.7.0</version> -->
+      #    </dependency>
+server:
+  port: 8888

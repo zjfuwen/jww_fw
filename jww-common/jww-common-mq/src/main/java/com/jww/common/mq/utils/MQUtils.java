@@ -35,22 +35,4 @@ public class MQUtils {
         mqUtils.mqService.send(queueName, object);
     }
 
-    public static void send(final Object object){
-        mqUtils.mqService.send(object);
-    }
-
-    /**
-     * @description: 同步接受队列，一次返回一条
-     * @param
-     * @return
-     * @author Ricky Wang
-     * @date 2017/11/21 15:45
-     */
-    public static Object receive(String queueName) {
-        return mqUtils.mqService.receive(queueName);
-    }
-
-    public static Object receive() {
-        return mqUtils.mqService.receive();
-    }
 }
