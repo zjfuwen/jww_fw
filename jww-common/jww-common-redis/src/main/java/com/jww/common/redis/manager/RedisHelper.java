@@ -1,9 +1,9 @@
 package com.jww.common.redis.manager;
 
-import com.jww.common.redis.manager.CacheManager;
 import com.jww.common.redis.util.CacheUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -25,8 +26,15 @@ public final class RedisHelper implements CacheManager {
     @Autowired
     private RedisTemplate<String, Serializable> redisTemplate;
 
+
+    @Value("spring.redis.lock.waitTimeOut")
+    private long waitTimeOut;
+
+    @Value("spring.redis.lock.lockTimeOut")
+    private int lockTimeOut;
+
     public RedisHelper(){
-        log.info("==============setCacheManager(RedisHelper)================");
+        log.debug("==============setCacheManager(RedisHelper)================");
         CacheUtil.setCacheManager(this);
     }
 
@@ -40,7 +48,6 @@ public final class RedisHelper implements CacheManager {
     @Override
     public void set(String key, Serializable value) {
         redisTemplate.opsForValue().set(key, value);
-        // expire(key, EXPIRE);
     }
 
     /**
@@ -52,7 +59,6 @@ public final class RedisHelper implements CacheManager {
      */
     @Override
     public Object get(final String key) {
-        //expire(key, EXPIRE);
         return redisTemplate.opsForValue().get(key);
     }
 
@@ -135,14 +141,56 @@ public final class RedisHelper implements CacheManager {
     }
 
     @Override
-    public boolean lock(String key) {
-        //TODO
-        return false;
+    public String lock(String lockName) {
+        return this.lock(lockName,waitTimeOut,lockTimeOut);
     }
 
     @Override
-    public void unlock(String key) {
-        //TODO
+    public String lock(String lockName, long _waitTimeOut, int _lockTimeOut) {
+        String lockKey = "lock:" + lockName;
+        // 随机生成一个value
+        String lockValue = UUID.randomUUID().toString();
+        // 计算获取锁的最后时间
+        long end = System.currentTimeMillis() + _waitTimeOut * 1000;
+        int i = 0;
+        while (System.currentTimeMillis() < end) {
+            boolean flag = redisTemplate.opsForValue().setIfAbsent(lockKey,lockValue);
+            // 获取锁成功后，还要设置锁的有效期
+            if (flag) {
+                this.expire(lockKey,_lockTimeOut);
+                log.info("set lock '" + lockName + "',lockValue=" + lockValue + ",retry " + i);
+                return lockValue;
+            }
+            // 返回-1代表key没有设置超时时间，为key设置一个超时时间
+            if (this.ttl(lockKey) == -1) {
+                this.expire(lockKey, _lockTimeOut);
+            }
+            //等待10毫秒再继续获取锁
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+            i++;
+        }
+        return null;
+    }
+
+    @Override
+    public boolean unlock(String lockName, String lockValue) {
+        if(lockValue == null || "".equals(lockValue)){
+            log.error("lockValue must be not empty");
+            throw new IllegalArgumentException("lockValue must be not empty");
+        }
+        String lockKey = "lock:" + lockName;
+        redisTemplate.watch(lockKey);
+        if (lockValue.equals(this.get(lockKey))) {
+            this.del(lockKey);
+            log.info("release lock '" + lockName + "',lockValue=" + lockValue);
+            return true;
+        }
+        redisTemplate.unwatch();
+        return false;
     }
 
     @Override
@@ -162,7 +210,7 @@ public final class RedisHelper implements CacheManager {
 
     @Override
     public boolean setnx(String key, Serializable value) {
-        return false;
+        return redisTemplate.opsForValue().setIfAbsent(key,value);
     }
 
     @Override

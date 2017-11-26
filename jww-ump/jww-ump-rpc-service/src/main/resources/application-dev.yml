@@ -10,6 +10,9 @@ spring:
       max-wait: 1
       max-idle: 8
       min-idle: 0
+    lock:
+      waitTimeOut: 5
+      lockTimeOut: 30
 datasource:
   type: com.alibaba.druid.pool.DruidDataSource
   master:

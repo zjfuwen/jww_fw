@@ -4,9 +4,6 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
@@ -17,36 +14,21 @@ import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
 
 import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * @description: Redis缓存配置类
+ * @author shadj
+ * @date 2017/11/24 10:19
+ */
 @Slf4j
 @Configuration
 @EnableCaching
 public class RedisConfig extends CachingConfigurerSupport {
-
-    @Autowired
-    private RedisProperties redisProperties;
-
-    @Bean(name = "jedis.pool")
-    @Autowired
-    public JedisPool jedisPool(@Qualifier("jedis.pool.config") JedisPoolConfig config) {
-        return new JedisPool(config, redisProperties.getHost(), redisProperties.getPort());
-    }
-
-    @Bean(name = "jedis.pool.config")
-    public JedisPoolConfig jedisPoolConfig() {
-        JedisPoolConfig config = new JedisPoolConfig();
-        config.setMaxTotal(redisProperties.getPool().getMaxActive());
-        config.setMaxIdle(redisProperties.getPool().getMaxIdle());
-        config.setMaxWaitMillis(redisProperties.getPool().getMaxWait());
-        return config;
-    }
 
     /**
      * @description: 自定义KEY生成器，格式如：com.jww.common.redis.RedisConfig.keyGenerator:param1_param2
@@ -56,8 +38,9 @@ public class RedisConfig extends CachingConfigurerSupport {
      * @date 2017/11/21 15:38
      */
     @Bean
+    @Override
     public KeyGenerator keyGenerator() {
-        log.info("================自定义KEY生成器====================");
+        log.debug("================自定义KEY生成器====================");
         return new KeyGenerator() {
             @Override
             public Object generate(Object target, Method method, Object... params) {
@@ -72,12 +55,18 @@ public class RedisConfig extends CachingConfigurerSupport {
         };
     }
 
+
+    /**
+     * @description: 初始化缓存管理类
+     * @param redisTemplate
+     * @return org.springframework.cache.CacheManager
+     * @author shadj
+     * @date 2017/11/24 14:47
+     */
     @SuppressWarnings("rawtypes")
     @Bean
     public CacheManager cacheManager(RedisTemplate redisTemplate) {
         RedisCacheManager rcm = new RedisCacheManager(redisTemplate);
-        //设置缓存过期时间
-        //rcm.setDefaultExpiration(60);//秒
         return rcm;
     }
 
@@ -97,8 +86,10 @@ public class RedisConfig extends CachingConfigurerSupport {
         om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
         om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
         jackson2JsonRedisSerializer.setObjectMapper(om);
-        template.setKeySerializer(template.getStringSerializer());//KEY 为String方式
-        template.setValueSerializer(jackson2JsonRedisSerializer);//VALUE 使用 jackson进行序列化
+        //KEY 为String方式
+        template.setKeySerializer(template.getStringSerializer());
+        //VALUE 使用 jackson进行序列化
+        template.setValueSerializer(jackson2JsonRedisSerializer);
         template.afterPropertiesSet();
         return template;
     }
