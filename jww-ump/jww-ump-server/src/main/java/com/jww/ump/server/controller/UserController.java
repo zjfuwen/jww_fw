@@ -1,5 +1,7 @@
 package com.jww.ump.server.controller;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.jww.common.exception.BusinessException;
 import com.jww.common.log.annotation.SysLogAnnotation;
 import com.jww.common.web.ResultModel;
@@ -50,16 +52,30 @@ public class UserController {
 
     @SysLogAnnotation("query")
     @GetMapping("/query/{current}/{size}")
-    public ResultModel<PageModel<UmpUserModel>> query(@PathVariable int current, @PathVariable int size) {
+    public ResultModel query(@PathVariable int current, @PathVariable int size) {
         // PageModel<UmpUserModel> pageModel = new PageModel<UmpUserModel>(current, size);
         PageModel<UmpUserModel> pageModel = new PageModel<UmpUserModel>();
         pageModel.setCurrent(current);
         pageModel.setSize(size);
         pageModel = (PageModel<UmpUserModel>) umpUserService.selectPage(pageModel);
-        if (1 == 1) {
-            throw new NullPointerException("发生异常");
-        }
         return ResultUtil.ok(pageModel);
+    }
+
+    /**
+     * TODO
+     *
+     * @param
+     * @return
+     * @author wanyong
+     * @date 2017/11/24 22:04
+     */
+    @PostMapping("/query")
+    public ResultModel<PageModel<UmpUserModel>> query(Page page) {
+        EntityWrapper<UmpUserModel> entityWrapper = new EntityWrapper<UmpUserModel>();
+        // entityWrapper.setEntity(new UmpUserModel());
+        // entityWrapper.where("password_", "123456");
+        page = umpUserService.selectPage(page, entityWrapper);
+        return ResultUtil.ok(page);
     }
 
 }

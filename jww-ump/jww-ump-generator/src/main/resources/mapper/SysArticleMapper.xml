@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jww.ump.generator.mapper.SysArticleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.jww.ump.generator.entity.SysArticle">
+    <result column="id_" property="id" />
+    <result column="enable_" property="enable" />
+    <result column="remark_" property="remark" />
+    <result column="create_by" property="createBy" />
+    <result column="create_time" property="createTime" />
+    <result column="update_by" property="updateBy" />
+    <result column="update_time" property="updateTime" />
+        <result column="type_" property="type" />
+        <result column="author_" property="author" />
+        <result column="title_" property="title" />
+        <result column="content_" property="content" />
+        <result column="out_url" property="outUrl" />
+        <result column="seo_keyword" property="seoKeyword" />
+        <result column="seo_description" property="seoDescription" />
+        <result column="is_top" property="isTop" />
+    </resultMap>
+
+</mapper>

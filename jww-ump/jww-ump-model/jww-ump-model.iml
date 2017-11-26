@@ -17,19 +17,19 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="jww-ump-common" />
-    <orderEntry type="module" module-name="jww-common-core" />
+    <orderEntry type="library" name="Maven: com.jww:jww-common-core:1.0.0" level="project" />
     <orderEntry type="library" name="Maven: com.baomidou:mybatis-plus:2.1.5" level="project" />
     <orderEntry type="library" name="Maven: org.mybatis:mybatis-spring:1.3.1" level="project" />
     <orderEntry type="library" name="Maven: org.mybatis:mybatis:3.4.5" level="project" />
     <orderEntry type="library" name="Maven: com.github.jsqlparser:jsqlparser:1.1" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.9.2" level="project" />
-    <orderEntry type="module" module-name="jww-common-constant" />
-    <orderEntry type="module" module-name="jww-common-exception" />
-    <orderEntry type="module" module-name="jww-common-log" />
+    <orderEntry type="library" name="Maven: com.jww:jww-common-constant:1.0.0" level="project" />
+    <orderEntry type="library" name="Maven: com.jww:jww-common-exception:1.0.0" level="project" />
+    <orderEntry type="library" name="Maven: com.jww:jww-common-log:1.0.0" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-aop:1.5.8.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-aop:4.3.12.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.aspectj:aspectjweaver:1.8.11" level="project" />
-    <orderEntry type="module" module-name="jww-common-redis" />
+    <orderEntry type="library" name="Maven: com.jww:jww-common-redis:1.0.0" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-redis:1.4.7.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.data:spring-data-redis:1.7.11.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.data:spring-data-keyvalue:1.1.11.RELEASE" level="project" />
