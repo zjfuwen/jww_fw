@@ -29,8 +29,6 @@ import java.util.Date;
 public class WebLogAspect {
     // 开始时间
     private long startTime = 0L;
-    // 结束时间
-    private long endTime = 0L;
 
     @Pointcut("execution(* *..controller..*.*(..))")
     public void webLogPointCut() {
@@ -56,5 +54,6 @@ public class WebLogAspect {
     public void doAfterReturning(ResultModel resultModel) throws Throwable {
         // 处理完请求，返回内容
         log.info("RESPONSE : " + JSON.toJSONString(resultModel));
+        log.info("SPEND TIME : " + (System.currentTimeMillis() - startTime));
     }
 }
