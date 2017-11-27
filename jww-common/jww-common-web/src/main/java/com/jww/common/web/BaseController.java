@@ -4,8 +4,9 @@ import com.jww.common.web.util.WebUtil;
 import lombok.extern.slf4j.Slf4j;
 
 /**
+ * 控制器基类
+ *
  * @author wanyong
- * @description: TODO
  * @date 2017/11/9 23:45
  */
 @Slf4j

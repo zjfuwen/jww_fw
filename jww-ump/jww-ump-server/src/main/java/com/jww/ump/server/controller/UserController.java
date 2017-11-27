@@ -10,12 +10,14 @@ import com.jww.ump.model.PageModel;
 import com.jww.ump.model.UmpUserModel;
 import com.jww.ump.rpc.api.UmpUserService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.crypto.hash.Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.transform.Result;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -70,12 +72,13 @@ public class UserController {
      * @date 2017/11/24 22:04
      */
     @PostMapping("/query")
-    public ResultModel<PageModel<UmpUserModel>> query(Page page) {
-        EntityWrapper<UmpUserModel> entityWrapper = new EntityWrapper<UmpUserModel>();
-        // entityWrapper.setEntity(new UmpUserModel());
-        // entityWrapper.where("password_", "123456");
-        page = umpUserService.selectPage(page, entityWrapper);
-        return ResultUtil.ok(page);
+    public ResultModel query(UmpUserModel umpUserModel) {
+        log.info(umpUserModel.toString());
+        Map<String, Object> map = new HashMap<String, Object>(2);
+        map.put("user_name", "123");
+        map.put("password_", "1234");
+        List<UmpUserModel> umpUserModelList = umpUserService.selectByMap(map);
+        return ResultUtil.ok(umpUserModelList);
     }
 
 }

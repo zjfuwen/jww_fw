@@ -30,6 +30,17 @@
             <artifactId>jackson-annotations</artifactId>
             <version>${jackson.version}</version>
         </dependency>
+        <!-- hutooljava工具类集合 -->
+        <dependency>
+            <groupId>com.xiaoleilu</groupId>
+            <artifactId>hutool-crypto</artifactId>
+            <version>${hutool.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.xiaoleilu</groupId>
+            <artifactId>hutool-poi</artifactId>
+            <version>${hutool.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

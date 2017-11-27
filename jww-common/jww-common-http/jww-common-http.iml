@@ -16,5 +16,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: com.xiaoleilu:hutool-http:3.2.1" level="project" />
+    <orderEntry type="library" name="Maven: com.xiaoleilu:hutool-core:3.2.1" level="project" />
+    <orderEntry type="library" name="Maven: com.xiaoleilu:hutool-log:3.2.1" level="project" />
+    <orderEntry type="library" name="Maven: com.xiaoleilu:hutool-json:3.2.1" level="project" />
   </component>
 </module>

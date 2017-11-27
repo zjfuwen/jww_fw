@@ -16,14 +16,22 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: com.jww:jww-common-service:1.0.0" level="project" />
     <orderEntry type="library" name="Maven: com.jww:jww-common-core:1.0.0" level="project" />
+    <orderEntry type="module" module-name="jww-common-service" />
+    <orderEntry type="module" module-name="jww-common-core" />
     <orderEntry type="library" name="Maven: org.projectlombok:lombok:1.16.18" level="project" />
-    <orderEntry type="library" name="Maven: com.baomidou:mybatis-plus:2.1.5" level="project" />
+    <orderEntry type="library" name="Maven: com.baomidou:mybatis-plus:2.1.6" level="project" />
+    <orderEntry type="library" name="Maven: com.baomidou:mybatis-plus-support:2.1.6" level="project" />
+    <orderEntry type="library" name="Maven: com.baomidou:mybatis-plus-core:2.1.6" level="project" />
+    <orderEntry type="library" name="Maven: com.github.jsqlparser:jsqlparser:1.1" level="project" />
     <orderEntry type="library" name="Maven: org.mybatis:mybatis-spring:1.3.1" level="project" />
     <orderEntry type="library" name="Maven: org.mybatis:mybatis:3.4.5" level="project" />
-    <orderEntry type="library" name="Maven: com.github.jsqlparser:jsqlparser:1.1" level="project" />
+    <orderEntry type="library" name="Maven: com.baomidou:mybatis-plus-generate:2.1.6" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.9.2" level="project" />
+    <orderEntry type="library" name="Maven: com.xiaoleilu:hutool-crypto:3.2.1" level="project" />
+    <orderEntry type="library" name="Maven: com.xiaoleilu:hutool-core:3.2.1" level="project" />
+    <orderEntry type="library" name="Maven: com.xiaoleilu:hutool-poi:3.2.1" level="project" />
+    <orderEntry type="library" name="Maven: com.xiaoleilu:hutool-log:3.2.1" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context:4.3.12.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-aop:4.3.12.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-beans:4.3.12.RELEASE" level="project" />
@@ -32,12 +40,38 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-expression:4.3.12.RELEASE" level="project" />
     <orderEntry type="module" module-name="jww-ump-model" />
     <orderEntry type="module" module-name="jww-ump-common" />
-    <orderEntry type="library" name="Maven: com.jww:jww-common-constant:1.0.0" level="project" />
-    <orderEntry type="library" name="Maven: com.jww:jww-common-exception:1.0.0" level="project" />
-    <orderEntry type="library" name="Maven: com.jww:jww-common-log:1.0.0" level="project" />
+    <orderEntry type="module" module-name="jww-common-constant" />
+    <orderEntry type="module" module-name="jww-common-exception" />
+    <orderEntry type="module" module-name="jww-common-log" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-aop:1.5.8.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.aspectj:aspectjweaver:1.8.11" level="project" />
-    <orderEntry type="library" name="Maven: com.jww:jww-common-redis:1.0.0" level="project" />
+    <orderEntry type="module" module-name="jww-common-mq" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-activemq:1.5.8.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-jms:4.3.12.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-messaging:4.3.12.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.activemq:activemq-broker:5.14.5" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.activemq:activemq-client:5.14.5" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.geronimo.specs:geronimo-jms_1.1_spec:1.1.1" level="project" />
+    <orderEntry type="library" name="Maven: org.fusesource.hawtbuf:hawtbuf:1.11" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.geronimo.specs:geronimo-j2ee-management_1.1_spec:1.0.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.activemq:activemq-openwire-legacy:5.14.5" level="project" />
+    <orderEntry type="library" name="Maven: com.alibaba:fastjson:1.2.6" level="project" />
+    <orderEntry type="module" module-name="jww-common-web" />
+    <orderEntry type="library" name="Maven: org.apache.shiro:shiro-spring:1.4.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shiro:shiro-core:1.4.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shiro:shiro-lang:1.4.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shiro:shiro-cache:1.4.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shiro:shiro-crypto-hash:1.4.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shiro:shiro-crypto-core:1.4.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shiro:shiro-crypto-cipher:1.4.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shiro:shiro-config-core:1.4.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shiro:shiro-config-ogdl:1.4.0" level="project" />
+    <orderEntry type="library" name="Maven: commons-beanutils:commons-beanutils:1.9.3" level="project" />
+    <orderEntry type="library" name="Maven: commons-collections:commons-collections:3.2.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shiro:shiro-event:1.4.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shiro:shiro-web:1.4.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.6" level="project" />
+    <orderEntry type="module" module-name="jww-common-redis" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-redis:1.4.7.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.data:spring-data-redis:1.7.11.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.data:spring-data-keyvalue:1.1.11.RELEASE" level="project" />

@@ -7,8 +7,9 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 
 /**
+ * 业务处理实现基类
+ *
  * @author wanyong
- * @description: TODO
  * @date 2017/11/19 20:36
  */
 public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseModel>

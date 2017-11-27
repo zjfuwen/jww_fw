@@ -11,6 +11,14 @@
 
     <artifactId>jww-common-http</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.xiaoleilu</groupId>
+            <artifactId>hutool-http</artifactId>
+            <version>${hutool.version}</version>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>
