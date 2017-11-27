@@ -1,9 +1,12 @@
 package com.jww.common.log.aspect;
 
+import com.alibaba.dubbo.rpc.RpcContext;
 import com.alibaba.fastjson.JSON;
 import com.jww.common.web.ResultModel;
+import com.xiaoleilu.hutool.date.DateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -30,25 +33,37 @@ public class WebLogAspect {
 
     }
 
-    @Before("webLogPointCut()")
-    public void doBeforeInServiceLayer(JoinPoint joinPoint) {
-        log.debug("doBeforeInServiceLayer");
+    @Around("webLogPointCut()")
+    public Object doAround(ProceedingJoinPoint pjp){
+
         startTime = System.currentTimeMillis();
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 
-        HttpServletRequest request = attributes.getRequest();
         // 记录下请求内容
-        log.info("URL : " + request.getRequestURL().toString());
-        log.info("HTTP_METHOD : " + request.getMethod());
-        log.info("IP : " + request.getRemoteAddr());
-        log.info("CLASS_METHOD : " + joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
-        log.info("ARGS : " + Arrays.toString(joinPoint.getArgs()));
-    }
-
-    @AfterReturning(returning = "resultModel", pointcut = "webLogPointCut()")
-    public void doAfterReturning(ResultModel resultModel) throws Throwable {
+        HttpServletRequest request = attributes.getRequest();
+        StringBuffer logbf = new StringBuffer();
+        logbf.append("request:{url:").append(request.getRequestURL());
+        logbf.append(",httpMethod:").append(request.getMethod());
+        logbf.append(",ip:").append(request.getRemoteAddr());
+        logbf.append(",classMethod:").append(pjp.getSignature().getDeclaringTypeName() + "." + pjp.getSignature().getName());
+        logbf.append(",args:").append(Arrays.toString(pjp.getArgs()));
+        logbf.append(",startTime:").append(DateUtil.date(startTime));
+        Object result = null;
+        try{
+            result = pjp.proceed();
+        }catch (Throwable throwable){
+            log.error(throwable.getMessage());
+            log.error(Arrays.toString(throwable.getStackTrace()));
+        }
         // 处理完请求，返回内容
-        log.info("RESPONSE : " + JSON.toJSONString(resultModel));
-        log.info("SPEND TIME : " + (System.currentTimeMillis() - startTime));
+        logbf.append("},response:").append(JSON.toJSONString(result));
+        logbf.append(",spendTime:").append(System.currentTimeMillis() - startTime + "ms}");
+        String logStr = logbf.toString();
+        if(result==null){
+            log.error(logStr);
+        }else{
+            log.info(logStr);
+        }
+        return result;
     }
 }

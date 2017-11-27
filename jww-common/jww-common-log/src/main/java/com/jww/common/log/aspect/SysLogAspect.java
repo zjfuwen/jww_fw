@@ -1,13 +1,17 @@
 package com.jww.common.log.aspect;
 
+import com.jww.common.constant.MQConstants;
 import com.jww.common.log.annotation.SysLogAnnotation;
 import com.jww.common.log.model.SysLogModel;
+import com.jww.common.mq.propties.MQPropties;
+import com.jww.common.mq.utils.MQUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
@@ -62,6 +66,8 @@ public class SysLogAspect {
         String className = joinPoint.getTarget().getClass().getName();
         String methodName = signature.getName();
         sysLog.setMethod(className + "." + methodName + "()");
-        log.info(sysLog.toString());
+//        log.info(sysLog.toString());
+//        MQUtils.send(MQConstants.DEFAULT_LOG_QUEUE_NAME, sysLog);
+        log.info("sysLog: {}", sysLog);
     }
 }
