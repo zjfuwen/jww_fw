@@ -27,10 +27,10 @@ public final class RedisHelper implements CacheManager {
     private RedisTemplate<String, Serializable> redisTemplate;
 
 
-    @Value("spring.redis.lock.waitTimeOut")
+    @Value("${spring.redis.lock.waitTimeOut}")
     private long waitTimeOut;
 
-    @Value("spring.redis.lock.lockTimeOut")
+    @Value("${spring.redis.lock.lockTimeOut}")
     private int lockTimeOut;
 
     public RedisHelper(){
