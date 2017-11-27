@@ -29,7 +29,7 @@ import java.util.List;
 @ConditionalOnClass(com.alibaba.fastjson.JSON.class)
 @ConditionalOnMissingBean(FastJsonHttpMessageConverter4.class)
 @ConditionalOnWebApplication
-public class FastJsonConfig {
+public class FastJsonConfiguration {
     @Bean
     public FastJsonHttpMessageConverter4 fastJsonHttpMessageConverter() {
         FastJsonHttpMessageConverter4 converter = new FastJsonHttpMessageConverter4();
