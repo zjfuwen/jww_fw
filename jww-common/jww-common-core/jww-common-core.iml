@@ -20,5 +20,10 @@
     <orderEntry type="library" name="Maven: org.mybatis:mybatis:3.4.5" level="project" />
     <orderEntry type="library" name="Maven: com.baomidou:mybatis-plus-generate:2.1.6" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.9.2" level="project" />
+    <orderEntry type="library" name="Maven: com.alibaba:fastjson:1.2.41" level="project" />
+    <orderEntry type="library" name="Maven: com.xiaoleilu:hutool-crypto:3.2.1" level="project" />
+    <orderEntry type="library" name="Maven: com.xiaoleilu:hutool-core:3.2.1" level="project" />
+    <orderEntry type="library" name="Maven: com.xiaoleilu:hutool-poi:3.2.1" level="project" />
+    <orderEntry type="library" name="Maven: com.xiaoleilu:hutool-log:3.2.1" level="project" />
   </component>
 </module>

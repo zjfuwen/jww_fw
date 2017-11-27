@@ -1,8 +1,11 @@
 package com.jww.common.core.model;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.enums.IdType;
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -28,8 +31,10 @@ public abstract class BaseModel implements Serializable {
     @TableField("remark_")
     private String remark;
     private Long createBy;
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
     private Long updateBy;
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
     @TableField(exist = false)
     private String keyword;
