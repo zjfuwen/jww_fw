@@ -14,6 +14,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
+import java.util.Enumeration;
 
 /**
  * @Title: 控制层日志切面
@@ -61,9 +62,8 @@ public class WebLogAspect {
         String logStr = logbf.toString();
         if(result==null){
             log.error(logStr);
-        }else{
-            log.info(logStr);
         }
+        log.info(logStr);
         return result;
     }
 }
