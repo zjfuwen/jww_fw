@@ -41,22 +41,21 @@ public class SysLogAspect {
         // 记录下请求内容
         HttpServletRequest request = attributes.getRequest();
         StringBuffer logbf = new StringBuffer();
-        logbf.append("request:{url:").append(request.getRequestURL());
-        logbf.append(",httpMethod:").append(request.getMethod());
-        logbf.append(",ip:").append(request.getRemoteAddr());
-        logbf.append(",classMethod:").append(pjp.getSignature().getDeclaringTypeName() + "." + pjp.getSignature().getName());
-        logbf.append(",args:").append(Arrays.toString(pjp.getArgs()));
-        logbf.append(",startTime:").append(DateUtil.date(startTime));
+        logbf.append("URL:").append(request.getRequestURL());
+        logbf.append(",HTTP_METHOD:").append(request.getMethod());
+        logbf.append(",IP:").append(request.getRemoteAddr());
+        logbf.append(",CLASS_METHOD:").append(pjp.getSignature().getDeclaringTypeName() + "." + pjp.getSignature().getName());
+        logbf.append(",ARGS:").append(Arrays.toString(pjp.getArgs()));
         Object result = null;
         try{
             result = pjp.proceed();
         }catch (Throwable throwable){
-            log.error(throwable.getMessage());
-            log.error(Arrays.toString(throwable.getStackTrace()));
+            log.error("系统异常",throwable);
         }
         // 处理完请求，返回内容
-        logbf.append("},response:").append(JSON.toJSONString(result));
-        logbf.append(",spendTime:").append(System.currentTimeMillis() - startTime + "ms}");
+        logbf.append(",RESPONSE:").append(JSON.toJSONString(result));
+        logbf.append(",START_TIME:").append(DateUtil.date(startTime));
+        logbf.append(",SEPEND_TIME:").append(System.currentTimeMillis() - startTime + "ms}");
         String logStr = logbf.toString();
         if(result==null){
             log.error(logStr);

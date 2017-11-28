@@ -44,8 +44,7 @@ public class RpcLogAspect {
         try{
             result = pjp.proceed();
         }catch (Throwable throwable){
-            log.error(throwable.getMessage());
-            log.error(Arrays.toString(throwable.getStackTrace()));
+            log.error("系统异常",throwable);
         }
         // 是否是消费端
         boolean consumerSide = RpcContext.getContext().isConsumerSide();
