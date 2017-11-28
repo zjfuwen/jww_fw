@@ -1,20 +1,18 @@
 package com.jww.common.log.aspect;
 
-import com.jww.common.constant.MQConstants;
-import com.jww.common.log.annotation.SysLogAnnotation;
-import com.jww.common.log.model.SysLogModel;
-import com.jww.common.mq.propties.MQPropties;
-import com.jww.common.mq.utils.MQUtils;
+import com.alibaba.fastjson.JSON;
+import com.xiaoleilu.hutool.date.DateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
-import java.lang.reflect.Method;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 
 
 /**
@@ -26,48 +24,44 @@ import java.lang.reflect.Method;
 @Aspect
 @Component
 public class SysLogAspect {
+    // 开始时间
+    private long startTime = 0L;
 
-    public SysLogAspect() {
-        log.info("==========SysLogAspect构造方法===========");
-    }
-
-    @Pointcut("@annotation(com.jww.common.log.annotation.SysLogAnnotation)")
-    public void logPointCut() {
+    @Pointcut("execution(* *..controller..*.*(..))")
+    public void webLogPointCut() {
 
     }
 
-    @Around("logPointCut()")
-    public Object around(ProceedingJoinPoint point) throws Throwable {
-        log.info("around come in...");
-        long beginTime = System.currentTimeMillis();
-        //执行方法
-        Object result = point.proceed();
-        //执行时长(毫秒)
-        long time = System.currentTimeMillis() - beginTime;
+    @Around("webLogPointCut()")
+    public Object doAround(ProceedingJoinPoint pjp){
 
-        //保存日志
-        saveSysLog(point, time);
+        startTime = System.currentTimeMillis();
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 
-        return result;
-    }
-
-    private void saveSysLog(ProceedingJoinPoint joinPoint, long time) {
-        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-        Method method = signature.getMethod();
-
-        SysLogModel sysLog = new SysLogModel();
-        SysLogAnnotation sysLogAnnotation = method.getAnnotation(SysLogAnnotation.class);
-        if (sysLogAnnotation != null) {
-            //注解上的描述
-            sysLog.setOperation(sysLogAnnotation.value());
+        // 记录下请求内容
+        HttpServletRequest request = attributes.getRequest();
+        StringBuffer logbf = new StringBuffer();
+        logbf.append("request:{url:").append(request.getRequestURL());
+        logbf.append(",httpMethod:").append(request.getMethod());
+        logbf.append(",ip:").append(request.getRemoteAddr());
+        logbf.append(",classMethod:").append(pjp.getSignature().getDeclaringTypeName() + "." + pjp.getSignature().getName());
+        logbf.append(",args:").append(Arrays.toString(pjp.getArgs()));
+        logbf.append(",startTime:").append(DateUtil.date(startTime));
+        Object result = null;
+        try{
+            result = pjp.proceed();
+        }catch (Throwable throwable){
+            log.error(throwable.getMessage());
+            log.error(Arrays.toString(throwable.getStackTrace()));
         }
-
-        //请求的方法名
-        String className = joinPoint.getTarget().getClass().getName();
-        String methodName = signature.getName();
-        sysLog.setMethod(className + "." + methodName + "()");
-//        log.info(sysLog.toString());
-//        MQUtils.send(MQConstants.DEFAULT_LOG_QUEUE_NAME, sysLog);
-        log.info("sysLog: {}", sysLog);
+        // 处理完请求，返回内容
+        logbf.append("},response:").append(JSON.toJSONString(result));
+        logbf.append(",spendTime:").append(System.currentTimeMillis() - startTime + "ms}");
+        String logStr = logbf.toString();
+        if(result==null){
+            log.error(logStr);
+        }
+        log.info(logStr);
+        return result;
     }
 }

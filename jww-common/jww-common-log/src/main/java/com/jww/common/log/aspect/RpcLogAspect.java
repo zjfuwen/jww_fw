@@ -4,11 +4,10 @@ import com.alibaba.dubbo.rpc.RpcContext;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
+
+import java.util.Arrays;
 
 /**
  * @author wanyong
@@ -25,20 +24,29 @@ public class RpcLogAspect {
     // 结束时间
     private long endTime = 0L;
 
-    @Before("execution(* *..rpc..*.*(..))")
+    @Pointcut("execution(* *..rpc.service..*.*(..))")
+    public void pointCut(){}
+
+    @Before("pointCut()")
     public void doBeforeInServiceLayer(JoinPoint joinPoint) {
         log.debug("doBeforeInServiceLayer");
         startTime = System.currentTimeMillis();
     }
 
-    @After("execution(* *..rpc..*.*(..))")
+    @After("pointCut()")
     public void doAfterInServiceLayer(JoinPoint joinPoint) {
         log.debug("doAfterInServiceLayer");
     }
 
-    @Around("execution(* *..rpc..*.*(..))")
-    public Object doAround(ProceedingJoinPoint pjp) throws Throwable {
-        Object result = pjp.proceed();
+    @Around("pointCut()")
+    public Object doAround(ProceedingJoinPoint pjp){
+        Object result = null;
+        try{
+            result = pjp.proceed();
+        }catch (Throwable throwable){
+            log.error(throwable.getMessage());
+            log.error(Arrays.toString(throwable.getStackTrace()));
+        }
         // 是否是消费端
         boolean consumerSide = RpcContext.getContext().isConsumerSide();
         // 获取最后一次提供方或调用方IP
