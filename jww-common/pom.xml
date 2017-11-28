@@ -22,6 +22,7 @@
         <module>jww-common-service</module>
         <module>jww-common-constant</module>
         <module>jww-common-core</module>
+        <module>jww-common-pay</module>
     </modules>
     <packaging>pom</packaging>
 
