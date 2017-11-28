@@ -1,8 +1,7 @@
 package com.jww.common.web.handler;
 
-import com.fasterxml.jackson.databind.ser.Serializers;
-import com.jww.common.constant.Constants;
-import com.jww.common.exception.BaseException;
+import com.jww.common.core.Constants;
+import com.jww.common.core.exception.BaseException;
 import com.jww.common.web.ResultModel;
 import com.jww.common.web.util.ResultUtil;
 import lombok.extern.slf4j.Slf4j;

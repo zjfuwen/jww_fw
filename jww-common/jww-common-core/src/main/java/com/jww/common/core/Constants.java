@@ -1,4 +1,4 @@
-package com.jww.common.constant;
+package com.jww.common.core;
 
 /**
  * @author wanyong

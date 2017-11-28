@@ -34,13 +34,11 @@
             <artifactId>jww-ump-common</artifactId>
             <version>1.0.0</version>
         </dependency>
-
         <dependency>
             <groupId>com.jww</groupId>
             <artifactId>jww-ump-rpc-api</artifactId>
             <version>1.0.0</version>
         </dependency>
-
         <dependency>
             <groupId>com.jww</groupId>
             <artifactId>jww-ump-dao</artifactId>

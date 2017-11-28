@@ -2,7 +2,7 @@ package com.jww.ump.generator.entity;
 
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
-import com.jww.common.core.model.BaseModel;
+import com.jww.common.core.base.BaseModel;
 
 /**
  * <p>

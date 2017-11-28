@@ -3,7 +3,7 @@ package com.jww.ump.generator.service.impl;
 import com.jww.ump.generator.entity.SysUserRole;
 import com.jww.ump.generator.mapper.SysUserRoleMapper;
 import com.jww.ump.generator.service.ISysUserRoleService;
-import com.jww.common.service.BaseServiceImpl;
+import com.jww.common.core.base.BaseServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**

@@ -1,6 +1,6 @@
 package com.jww.common.db.annotation;
 
-import com.jww.common.constant.Constants;
+import com.jww.common.core.Constants;
 
 import java.lang.annotation.*;
 

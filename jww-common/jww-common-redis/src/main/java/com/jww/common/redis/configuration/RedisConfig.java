@@ -21,8 +21,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * @description: Redis缓存配置类
  * @author shadj
+ * @description: Redis缓存配置类
  * @date 2017/11/24 10:19
  */
 @Slf4j
@@ -31,13 +31,11 @@ import java.util.stream.Stream;
 public class RedisConfig extends CachingConfigurerSupport {
 
     /**
-     * @description:
-     *          自定义KEY生成器，格式：
-     *                      Cacheable ： cacheNames(0) + 包名 + 类名 +  参数  ,如：keyGenerator.com.jww.common.redis.RedisConfig:param1_param2
-     *                      CachePut  ： cacheNames(0) + 包名 + 类名 +  id    ,要求第一个参数为BaseModel
-     *                      CacheEvict:  cacheNames(0) + 包名 + 类名 +  id   ,当 allEntries=false 时，需要设置key值，指定主键
-     *
-     * @return  KeyGenerator
+     * @return KeyGenerator
+     * @description: 自定义KEY生成器，格式：
+     * Cacheable ： cacheNames(0) + 包名 + 类名 +  参数  ,如：keyGenerator.com.jww.common.redis.RedisConfig:param1_param2
+     * CachePut  ： cacheNames(0) + 包名 + 类名 +  id    ,要求第一个参数为BaseModel
+     * CacheEvict:  cacheNames(0) + 包名 + 类名 +  id   ,当 allEntries=false 时，需要设置key值，指定主键
      * @author shadj
      * @date 2017/11/21 15:38
      */
@@ -61,9 +59,9 @@ public class RedisConfig extends CachingConfigurerSupport {
 
 
     /**
-     * @description: 初始化缓存管理类
      * @param redisTemplate
      * @return org.springframework.cache.CacheManager
+     * @description: 初始化缓存管理类
      * @author shadj
      * @date 2017/11/24 14:47
      */
@@ -75,9 +73,9 @@ public class RedisConfig extends CachingConfigurerSupport {
     }
 
     /**
+     * @return RedisTemplate
      * @description: RedisTemplate序列化方式设置，并初始化
      * @param: factory
-     * @return RedisTemplate
      * @author shadj
      * @date 2017/11/21 15:23
      */

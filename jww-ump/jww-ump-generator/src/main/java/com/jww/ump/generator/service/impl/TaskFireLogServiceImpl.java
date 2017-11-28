@@ -3,7 +3,7 @@ package com.jww.ump.generator.service.impl;
 import com.jww.ump.generator.entity.TaskFireLog;
 import com.jww.ump.generator.mapper.TaskFireLogMapper;
 import com.jww.ump.generator.service.ITaskFireLogService;
-import com.jww.common.service.BaseServiceImpl;
+import com.jww.common.core.base.BaseServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**

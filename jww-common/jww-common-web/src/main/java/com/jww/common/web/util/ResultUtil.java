@@ -1,6 +1,6 @@
 package com.jww.common.web.util;
 
-import com.jww.common.constant.Constants;
+import com.jww.common.core.Constants;
 import com.jww.common.web.ResultModel;
 
 /**

@@ -1,6 +1,6 @@
 package com.jww.common.db;
 
-import com.jww.common.constant.Constants;
+import com.jww.common.core.Constants;
 import org.apache.commons.lang3.StringUtils;
 
 /**

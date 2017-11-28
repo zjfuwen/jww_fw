@@ -1,7 +1,7 @@
 package com.jww.ump.generator.mapper;
 
 import com.jww.ump.generator.entity.SysMenu;
-import com.jww.common.db.mapper.BaseMapper;
+import com.jww.common.core.base.BaseMapper;
 
 /**
  * <p>

@@ -1,8 +1,7 @@
-package com.jww.common.service;
+package com.jww.common.core.base;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.jww.common.core.model.BaseModel;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -25,7 +24,7 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseModel>
     }
 
     @Override
-    @Cacheable(value="UmpUser")
+    @Cacheable(value = "UmpUser")
     public T findById(String id) {
         return super.selectById(id);
     }
@@ -40,8 +39,8 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseModel>
     }
 
     @Override
-    @CacheEvict(value = "OneModel",key="#entity.id + ''",allEntries=false)
-    public boolean updateById(T entity){
+    @CacheEvict(value = "OneModel", key = "#entity.id + ''", allEntries = false)
+    public boolean updateById(T entity) {
         return super.updateById(entity);
     }
 }

@@ -3,7 +3,7 @@ package com.jww.ump.generator.service.impl;
 import com.jww.ump.generator.entity.SysUserMenu;
 import com.jww.ump.generator.mapper.SysUserMenuMapper;
 import com.jww.ump.generator.service.ISysUserMenuService;
-import com.jww.common.service.BaseServiceImpl;
+import com.jww.common.core.base.BaseServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**

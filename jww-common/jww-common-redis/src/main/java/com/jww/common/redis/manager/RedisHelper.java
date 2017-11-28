@@ -15,8 +15,9 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * Redis缓存辅助类
+ *
  * @author shadj
- * @description: Redis缓存辅助类
  * @date 2017/11/21 1:30
  */
 @Slf4j
@@ -33,7 +34,7 @@ public final class RedisHelper implements CacheManager {
     @Value("${spring.redis.lock.lockTimeOut}")
     private int lockTimeOut;
 
-    public RedisHelper(){
+    public RedisHelper() {
         log.debug("==============setCacheManager(RedisHelper)================");
         CacheUtil.setCacheManager(this);
     }
@@ -63,9 +64,9 @@ public final class RedisHelper implements CacheManager {
     }
 
     /**
+     * @return Set<Object>
      * @description: 根据key模式获取所有的缓存
      * @param: pattern
-     * @return Set<Object>
      * @author shadj
      * @date 2017/11/21 22:26
      */
@@ -107,9 +108,9 @@ public final class RedisHelper implements CacheManager {
     }
 
     /**
+     * @return Boolean
      * @description: 在某段时间后失效
      * @param:
-     * @return Boolean
      * @author shadj
      * @date 2017/11/21 23:47
      */
@@ -119,9 +120,9 @@ public final class RedisHelper implements CacheManager {
     }
 
     /**
+     * @return Boolean
      * @description: 在某个时间点失效
      * @param:
-     * @return  Boolean
      * @author shadj
      * @date 2017/11/21 23:47
      */
@@ -137,12 +138,12 @@ public final class RedisHelper implements CacheManager {
 
     @Override
     public Object getSet(String key, Serializable value) {
-        return redisTemplate.opsForValue().getAndSet(key,value);
+        return redisTemplate.opsForValue().getAndSet(key, value);
     }
 
     @Override
     public String lock(String lockName) {
-        return this.lock(lockName,waitTimeOut,lockTimeOut);
+        return this.lock(lockName, waitTimeOut, lockTimeOut);
     }
 
     @Override
@@ -154,10 +155,10 @@ public final class RedisHelper implements CacheManager {
         long end = System.currentTimeMillis() + _waitTimeOut * 1000;
         int i = 0;
         while (System.currentTimeMillis() < end) {
-            boolean flag = redisTemplate.opsForValue().setIfAbsent(lockKey,lockValue);
+            boolean flag = redisTemplate.opsForValue().setIfAbsent(lockKey, lockValue);
             // 获取锁成功后，还要设置锁的有效期
             if (flag) {
-                this.expire(lockKey,_lockTimeOut);
+                this.expire(lockKey, _lockTimeOut);
                 log.info("set lock '" + lockName + "',lockValue=" + lockValue + ",retry " + i);
                 return lockValue;
             }
@@ -179,7 +180,7 @@ public final class RedisHelper implements CacheManager {
 
     @Override
     public boolean unlock(String lockName, String lockValue) {
-        if(lockValue == null || "".equals(lockValue)){
+        if (lockValue == null || "".equals(lockValue)) {
             log.error("lockValue must be not empty");
             throw new IllegalArgumentException("lockValue must be not empty");
         }
@@ -196,7 +197,7 @@ public final class RedisHelper implements CacheManager {
 
     @Override
     public void hset(String key, Serializable field, Serializable value) {
-        redisTemplate.boundHashOps(key).put(field,value);
+        redisTemplate.boundHashOps(key).put(field, value);
     }
 
     @Override
@@ -211,12 +212,12 @@ public final class RedisHelper implements CacheManager {
 
     @Override
     public boolean setnx(String key, Serializable value) {
-        return redisTemplate.opsForValue().setIfAbsent(key,value);
+        return redisTemplate.opsForValue().setIfAbsent(key, value);
     }
 
     @Override
     public Long incr(String key) {
-        return redisTemplate.opsForValue().increment(key,1L);
+        return redisTemplate.opsForValue().increment(key, 1L);
     }
 
     @Override

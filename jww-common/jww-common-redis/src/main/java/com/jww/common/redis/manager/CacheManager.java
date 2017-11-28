@@ -4,7 +4,8 @@ import java.io.Serializable;
 import java.util.Set;
 
 /**
- * @description: 缓存管理接口
+ * 缓存管理接口
+ *
  * @author shadj
  * @date 2017/11/21 16:05
  */
@@ -31,10 +32,9 @@ public interface CacheManager {
     Boolean expireAt(final String key, final long unixTime);
 
     /**
-     * @description:
-     *             获取 key 的剩余过期时间
      * @param key
      * @return java.lang.Long 当 key 不存在时，返回 -2 。 当 key 存在但没有设置剩余生存时间时，返回 -1 。 否则，以秒为单位，返回 key 的剩余生存时间。
+     * @description: 获取 key 的剩余过期时间
      * @author shadj
      * @date 2017/11/26 21:10
      */
@@ -43,37 +43,34 @@ public interface CacheManager {
     Object getSet(final String key, final Serializable value);
 
     /**
-     * @description:
-     *             获取指定名称的分布式锁
      * @param lockName 分布式锁名称
      * @return java.lang.String 如果获取锁成功则返回锁键对应值，否则返回null
+     * @description: 获取指定名称的分布式锁
      * @author shadj
      * @date 2017/11/26 21:23
      */
     String lock(String lockName);
 
     /**
-     * @description:
-     *             获取指定名称的分布式锁
-     * @param lockName  锁名称
+     * @param lockName    锁名称
      * @param waitTimeOut 等待获取锁的超时时间（秒）
-     * @param lockTimeOut   锁的生存时间（秒）
+     * @param lockTimeOut 锁的生存时间（秒）
      * @return java.lang.String 如果获取锁成功则返回锁键对应值，否则返回null
+     * @description: 获取指定名称的分布式锁
      * @author shadj
      * @date 2017/11/26 21:25
      */
-    String lock(String lockName,long waitTimeOut,int lockTimeOut);
+    String lock(String lockName, long waitTimeOut, int lockTimeOut);
 
     /**
-     * @description:
-     *             解锁，将判断锁键对应值是否是给定的值，防止误解锁。分布式锁原则之一：每个锁只能被获得锁的客户端删除，或者自动过期释放锁
      * @param lockName  锁名称
      * @param lockValue 锁键对应值
      * @return boolean  解锁成功返回true，否则返回false
+     * @description: 解锁，将判断锁键对应值是否是给定的值，防止误解锁。分布式锁原则之一：每个锁只能被获得锁的客户端删除，或者自动过期释放锁
      * @author shadj
      * @date 2017/11/26 21:26
      */
-    boolean unlock(String lockName,String lockValue);
+    boolean unlock(String lockName, String lockValue);
 
     void hset(String key, Serializable field, Serializable value);
 

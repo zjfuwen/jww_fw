@@ -1,6 +1,6 @@
 package com.jww.common.db.aspect;
 
-import com.jww.common.constant.Constants;
+import com.jww.common.core.Constants;
 import com.jww.common.db.DbContextHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;

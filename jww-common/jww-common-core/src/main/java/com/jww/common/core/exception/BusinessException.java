@@ -1,6 +1,6 @@
-package com.jww.common.exception;
+package com.jww.common.core.exception;
 
-import com.jww.common.constant.Constants;
+import com.jww.common.core.Constants;
 
 /**
  * @author wanyong

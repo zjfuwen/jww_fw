@@ -3,7 +3,7 @@ package com.jww.ump.generator.service.impl;
 import com.jww.ump.generator.entity.SysNotice;
 import com.jww.ump.generator.mapper.SysNoticeMapper;
 import com.jww.ump.generator.service.ISysNoticeService;
-import com.jww.common.service.BaseServiceImpl;
+import com.jww.common.core.base.BaseServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**

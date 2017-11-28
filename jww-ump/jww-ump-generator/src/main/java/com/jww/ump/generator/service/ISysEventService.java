@@ -1,7 +1,7 @@
 package com.jww.ump.generator.service;
 
 import com.jww.ump.generator.entity.SysEvent;
-import com.jww.common.service.BaseService;
+import com.jww.common.core.base.BaseService;
 
 /**
  * <p>

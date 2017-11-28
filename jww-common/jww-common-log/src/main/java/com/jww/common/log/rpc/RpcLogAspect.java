@@ -1,4 +1,4 @@
-package com.jww.common.log.aspect;
+package com.jww.common.log.rpc;
 
 import com.alibaba.dubbo.rpc.RpcContext;
 import lombok.extern.slf4j.Slf4j;

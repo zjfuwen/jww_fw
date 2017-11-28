@@ -1,12 +1,13 @@
-package com.jww.ump.model;
+package com.jww.common.core.model;
 
 
 import com.baomidou.mybatisplus.plugins.Page;
-import com.jww.common.core.model.BaseModel;
+import com.jww.common.core.base.BaseModel;
 
 /**
+ * 分页实体类
+ *
  * @author wanyong
- * @description: 分页实体类
  * @date 2017/11/23 22:14
  */
 public class PageModel<T extends BaseModel> extends Page<T> {

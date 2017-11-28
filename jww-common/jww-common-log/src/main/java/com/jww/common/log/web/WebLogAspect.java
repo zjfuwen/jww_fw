@@ -1,4 +1,4 @@
-package com.jww.common.log.aspect;
+package com.jww.common.log.web;
 
 import com.alibaba.fastjson.JSON;
 import com.xiaoleilu.hutool.date.DateUtil;
@@ -23,7 +23,7 @@ import java.util.Arrays;
 @Slf4j
 @Aspect
 @Component
-public class SysLogAspect {
+public class WebLogAspect {
     // 开始时间
     private long startTime = 0L;
 

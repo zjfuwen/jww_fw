@@ -1,6 +1,6 @@
 package com.jww.ump.rpc.api;
 
-import com.jww.common.service.BaseService;
+import com.jww.common.core.base.BaseService;
 import com.jww.ump.model.UmpUserModel;
 
 /**

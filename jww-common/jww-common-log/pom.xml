@@ -12,6 +12,11 @@
     <artifactId>jww-common-log</artifactId>
 
     <dependencies>
+        <dependency>
+            <groupId>com.jww</groupId>
+            <artifactId>jww-common-core</artifactId>
+            <version>1.0.0</version>
+        </dependency>
         <!-- lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -49,26 +54,6 @@
                     <artifactId>spring-web</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>com.jww</groupId>
-            <artifactId>jww-common-core</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.jww</groupId>
-            <artifactId>jww-common-mq</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.jww</groupId>
-            <artifactId>jww-common-constant</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.jww</groupId>
-            <artifactId>jww-common-web</artifactId>
-            <version>1.0.0</version>
         </dependency>
     </dependencies>
 
