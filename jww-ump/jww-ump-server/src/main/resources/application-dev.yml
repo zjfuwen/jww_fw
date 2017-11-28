@@ -12,7 +12,7 @@ spring:
       min-idle: 0
     lock:
       waitTimeOut: 5
-      lockTimeOut: 30
+      lockTimeOut: 10
   session:
     timeout: 60
 

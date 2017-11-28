@@ -31,8 +31,12 @@ import java.util.stream.Stream;
 public class RedisConfig extends CachingConfigurerSupport {
 
     /**
-     * @description: 自定义KEY生成器，格式如：com.jww.common.redis.RedisConfig.keyGenerator:param1_param2
-     * @param:
+     * @description:
+     *          自定义KEY生成器，格式：
+     *                      Cacheable ： cacheNames(0) + 包名 + 类名 +  参数  ,如：keyGenerator.com.jww.common.redis.RedisConfig:param1_param2
+     *                      CachePut  ： cacheNames(0) + 包名 + 类名 +  id    ,要求第一个参数为BaseModel
+     *                      CacheEvict:  cacheNames(0) + 包名 + 类名 +  id   ,当 allEntries=false 时，需要设置key值，指定主键
+     *
      * @return  KeyGenerator
      * @author shadj
      * @date 2017/11/21 15:38

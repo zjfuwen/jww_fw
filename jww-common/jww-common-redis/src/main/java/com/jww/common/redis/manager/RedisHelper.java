@@ -173,6 +173,7 @@ public final class RedisHelper implements CacheManager {
             }
             i++;
         }
+        log.info("get lock false, lockName:" + lockName + ",retry " + i);
         return null;
     }
 

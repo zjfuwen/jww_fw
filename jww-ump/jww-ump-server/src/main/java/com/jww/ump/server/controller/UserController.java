@@ -9,6 +9,7 @@ import com.jww.common.web.util.ResultUtil;
 import com.jww.ump.model.PageModel;
 import com.jww.ump.model.UmpUserModel;
 import com.jww.ump.rpc.api.UmpUserService;
+import com.jww.ump.server.Outputer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.crypto.hash.Hash;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,12 +45,77 @@ public class UserController {
         return ResultUtil.ok(umpUserModel);
     }
 
+
+    @SysLogAnnotation("updateUser")
+    @GetMapping("/updateUser/{id}/{remark}")
+    public ResultModel<UmpUserModel> updateUser(@PathVariable String id,@PathVariable String remark, HttpServletRequest request) {
+        log.info("updateUser id: {},remark: {}", id , remark);
+
+        UmpUserModel umpUserModel = new UmpUserModel();
+        umpUserModel.setId(Long.valueOf(id));
+        umpUserModel.setRemark(remark);
+        boolean res = umpUserService.updateById(umpUserModel);
+
+        log.info("updateUser id: {},remark: {}, result: {}", id , remark, res);
+        return ResultUtil.ok(res);
+    }
+
     @RequestMapping(value = "/sessions", method = RequestMethod.GET)
     public Object sessions(HttpServletRequest request) {
         Map<String, Object> map = new HashMap<String, Object>(2);
         map.put("sessionId", request.getSession().getId());
         map.put("message", request.getSession().getAttribute("request Url"));
         return map;
+    }
+
+    @RequestMapping(value = "/lockTest", method = RequestMethod.GET)
+    public Object lockTest() {
+        Outputer outputer = new Outputer();
+        //线程1打印zhangsan
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    outputer.output("zhangsan");
+                }
+            }
+        }).start();
+
+        //线程2打印lingsi
+        new Thread(new Runnable(){
+            @Override
+            public void run() {
+                while(true) {
+                    try{
+                        Thread.sleep(1000);
+                    }catch(InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    outputer.output("lingsi");
+                }
+            }
+        }).start();
+
+        //线程3打印wangwu
+        new Thread(new Runnable(){
+            @Override
+            public void run() {
+                while(true) {
+                    try{
+                        Thread.sleep(1000);
+                    }catch(InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    outputer.output("wangwu");
+                }
+            }
+        }).start();
+        return "lock is running ...";
     }
 
     @SysLogAnnotation("query")
