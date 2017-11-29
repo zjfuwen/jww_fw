@@ -18,7 +18,9 @@ public final class Constants {
     public static final String MAPPER_METHOD_STARTSWITH_SELECT = "select";
 
     public enum ResultCodeEnum {
+        /** 成功 */
         SUCCESS(200, "成功"),
+        /** 服务器出错 */
         INTERNAL_SERVER_ERROR(500, "服务器出错");
 
         private final int value;

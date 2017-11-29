@@ -147,24 +147,24 @@ public final class RedisHelper implements CacheManager {
     }
 
     @Override
-    public String lock(String lockName, long _waitTimeOut, int _lockTimeOut) {
+    public String lock(String lockName, long userWaitTimeOut, int userLockTimeOut) {
         String lockKey = "lock:" + lockName;
         // 随机生成一个value
         String lockValue = UUID.randomUUID().toString();
         // 计算获取锁的最后时间
-        long end = System.currentTimeMillis() + _waitTimeOut * 1000;
+        long end = System.currentTimeMillis() + userWaitTimeOut * 1000;
         int i = 0;
         while (System.currentTimeMillis() < end) {
             boolean flag = redisTemplate.opsForValue().setIfAbsent(lockKey, lockValue);
             // 获取锁成功后，还要设置锁的有效期
             if (flag) {
-                this.expire(lockKey, _lockTimeOut);
+                this.expire(lockKey, userLockTimeOut);
                 log.info("set lock '" + lockName + "',lockValue=" + lockValue + ",retry " + i);
                 return lockValue;
             }
             // 返回-1代表key没有设置超时时间，为key设置一个超时时间
             if (this.ttl(lockKey) == -1) {
-                this.expire(lockKey, _lockTimeOut);
+                this.expire(lockKey, userLockTimeOut);
             }
             //等待10毫秒再继续获取锁
             try {

@@ -10,4 +10,8 @@ import java.io.Serializable;
  */
 public abstract class BaseModel implements Serializable {
     private static final long serialVersionUID = 7258436689721815928L;
+
+    public Long getId(){
+        return 0L;
+    }
 }

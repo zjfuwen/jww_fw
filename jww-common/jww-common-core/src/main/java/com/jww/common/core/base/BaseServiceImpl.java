@@ -24,7 +24,7 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseModel>
     }
 
     @Override
-    @Cacheable(value = "UmpUser")
+    @Cacheable(value = "OneModel")
     public T findById(String id) {
         return super.selectById(id);
     }
@@ -39,7 +39,7 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseModel>
     }
 
     @Override
-    @CacheEvict(value = "OneModel", key = "#entity.id + ''", allEntries = false)
+    @CacheEvict(value = "OneModel", allEntries = false)
     public boolean updateById(T entity) {
         return super.updateById(entity);
     }

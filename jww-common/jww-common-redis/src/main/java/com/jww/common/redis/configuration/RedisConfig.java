@@ -3,10 +3,11 @@ package com.jww.common.redis.configuration;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jww.common.core.base.BaseModel;
+import com.xiaoleilu.hutool.util.ArrayUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.CachingConfigurerSupport;
-import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.annotation.*;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,7 +36,7 @@ public class RedisConfig extends CachingConfigurerSupport {
      * @description: 自定义KEY生成器，格式：
      * Cacheable ： cacheNames(0) + 包名 + 类名 +  参数  ,如：keyGenerator.com.jww.common.redis.RedisConfig:param1_param2
      * CachePut  ： cacheNames(0) + 包名 + 类名 +  id    ,要求第一个参数为BaseModel
-     * CacheEvict:  cacheNames(0) + 包名 + 类名 +  id   ,当 allEntries=false 时，需要设置key值，指定主键
+     * CacheEvict:  cacheNames(0) + 包名 + 类名 +  id    ,要求第一个参数为BaseModel
      * @author shadj
      * @date 2017/11/21 15:38
      */
@@ -47,12 +48,51 @@ public class RedisConfig extends CachingConfigurerSupport {
             @Override
             public Object generate(Object target, Method method, Object... params) {
                 StringBuilder sb = new StringBuilder();
-                sb.append(target.getClass().getName());
+                Cacheable cacheable = method.getAnnotation(Cacheable.class);
+                CachePut cachePut = method.getAnnotation(CachePut.class);
+                CacheEvict cacheEvict = method.getAnnotation(CacheEvict.class);
+                String cacheName = "";
+                String suffix = "";
+                if(cacheable != null){
+                    String[] cacheNames = cacheable.value();
+                    if(ArrayUtil.isNotEmpty(cacheNames)){
+                        cacheName = cacheNames[0];
+                    }
+                    suffix = Stream.of(params).map(String::valueOf).collect(Collectors.joining("_"));
+                }else if (cachePut != null){
+                    String[] cacheNames = cachePut.value();
+                    if(ArrayUtil.isNotEmpty(cacheNames)){
+                        cacheName = cacheNames[0];
+                    }
+                    suffix = getIDFromParams(params);
+                }else if (cacheEvict != null){
+                    String[] cacheNames = cacheEvict.value();
+                    if(ArrayUtil.isNotEmpty(cacheNames)){
+                        cacheName = cacheNames[0];
+                    }
+                    suffix = getIDFromParams(params);
+                }
+                sb.append(cacheName);
                 sb.append(".");
-                sb.append(method.getName());
+                sb.append(target.getClass().getName());
                 sb.append(":");
-                sb.append(Stream.of(params).map(String::valueOf).collect(Collectors.joining("_")));
+                sb.append(suffix);
                 return sb.toString();
+            }
+
+            /** 从参数中获取ID */
+            private String getIDFromParams(Object[] params) {
+                String id = "";
+                if(ArrayUtil.isNotEmpty(params)){
+                    //获取第一个参数
+                    Object param0 = params[0];
+                    //如果第一个参数是BaseModel，则获取ID
+                    if(param0 instanceof BaseModel){
+                        BaseModel param0BaseModel = (BaseModel)param0;
+                        id = String.valueOf(param0BaseModel.getId());
+                    }
+                }
+                return id;
             }
         };
     }

@@ -9,7 +9,7 @@ import org.apache.commons.lang3.StringUtils;
  * @date 2017/11/17 13:31
  */
 public class DbContextHolder {
-    private static final ThreadLocal<String> contextHolder = new ThreadLocal<String>();
+    private static final ThreadLocal<String> CONTEXTHOLDER = new ThreadLocal<String>();
 
     /**
      * 设置数据源
@@ -17,7 +17,7 @@ public class DbContextHolder {
      * @param dataSourceEnum
      */
     public static void setDbType(Constants.DataSourceEnum dataSourceEnum) {
-        contextHolder.set(dataSourceEnum.getName());
+        CONTEXTHOLDER.set(dataSourceEnum.getName());
     }
 
     /**
@@ -26,18 +26,18 @@ public class DbContextHolder {
      * @return
      */
     public static String getDbType() {
-        String dataSource = contextHolder.get();
+        String dataSource = CONTEXTHOLDER.get();
         // 如果没有指定数据源，使用默认数据源
         if (StringUtils.isEmpty(dataSource)) {
             DbContextHolder.setDbType(Constants.DataSourceEnum.MASTER);
         }
-        return contextHolder.get();
+        return CONTEXTHOLDER.get();
     }
 
     /**
      * 清除上下文数据
      */
     public static void clearDbType() {
-        contextHolder.remove();
+        CONTEXTHOLDER.remove();
     }
 }
