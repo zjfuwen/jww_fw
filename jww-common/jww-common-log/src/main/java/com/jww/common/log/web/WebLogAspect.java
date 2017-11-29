@@ -34,33 +34,46 @@ public class WebLogAspect {
 
     @Around("webLogPointCut()")
     public Object doAround(ProceedingJoinPoint pjp){
-
         startTime = System.currentTimeMillis();
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        //异常标记
+        boolean eFlag = false;
+        //获取请求对象
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        //拼接请求日志
+        StringBuffer logbf = appendLogStrPre(pjp, request);
+        Object result = null;
+        try{
+            result = pjp.proceed();
+        }catch (Throwable throwable){
+            eFlag = true;
+            log.error("系统异常",throwable);
+        }
+        //拼接返回日志
+        String logStr = appendLogStrAfter(logbf, result);
+        if(eFlag){
+            log.error(logStr);
+        }
+        log.info(logStr);
+        return result;
+    }
 
-        // 记录下请求内容
-        HttpServletRequest request = attributes.getRequest();
+    //记录下请求内容
+    private StringBuffer appendLogStrPre(ProceedingJoinPoint pjp, HttpServletRequest request){
+        startTime = System.currentTimeMillis();
         StringBuffer logbf = new StringBuffer();
         logbf.append("URL:").append(request.getRequestURL());
         logbf.append(",HTTP_METHOD:").append(request.getMethod());
         logbf.append(",IP:").append(request.getRemoteAddr());
         logbf.append(",CLASS_METHOD:").append(pjp.getSignature().getDeclaringTypeName() + "." + pjp.getSignature().getName());
         logbf.append(",ARGS:").append(Arrays.toString(pjp.getArgs()));
-        Object result = null;
-        try{
-            result = pjp.proceed();
-        }catch (Throwable throwable){
-            log.error("系统异常",throwable);
-        }
-        // 处理完请求，返回内容
+        return logbf;
+    }
+
+    //处理完请求，返回内容
+    private String appendLogStrAfter(StringBuffer logbf, Object result){
         logbf.append(",RESPONSE:").append(JSON.toJSONString(result));
         logbf.append(",START_TIME:").append(DateUtil.date(startTime));
         logbf.append(",SEPEND_TIME:").append(System.currentTimeMillis() - startTime + "ms}");
-        String logStr = logbf.toString();
-        if(result==null){
-            log.error(logStr);
-        }
-        log.info(logStr);
-        return result;
+        return logbf.toString();
     }
 }
