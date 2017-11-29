@@ -24,6 +24,12 @@
             <artifactId>spring-boot-starter-activemq</artifactId>
             <version>${spring.boot.version}</version>
         </dependency>
+        <!-- fastjson -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

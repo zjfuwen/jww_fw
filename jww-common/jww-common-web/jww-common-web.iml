@@ -16,6 +16,10 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: org.springframework.data:spring-data-redis:1.7.10.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.data:spring-data-keyvalue:1.1.10.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.data:spring-data-commons:1.12.10.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: redis.clients:jedis:2.8.1" level="project" />
     <orderEntry type="module" module-name="jww-common-core" />
     <orderEntry type="library" name="Maven: com.baomidou:mybatis-plus:2.1.6" level="project" />
     <orderEntry type="library" name="Maven: com.baomidou:mybatis-plus-support:2.1.6" level="project" />

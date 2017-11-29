@@ -8,16 +8,19 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="jww-common-constant" />
+        <module name="jww-common-core" />
         <module name="jww-common-db" />
         <module name="jww-common-exception" />
         <module name="jww-common-http" />
         <module name="jww-common-log" />
         <module name="jww-common-mq" />
+        <module name="jww-common-pay" />
         <module name="jww-common-redis" />
         <module name="jww-common-service" />
         <module name="jww-common-web" />
         <module name="jww-ump-common" />
         <module name="jww-ump-dao" />
+        <module name="jww-ump-generator" />
         <module name="jww-ump-model" />
         <module name="jww-ump-mq" />
         <module name="jww-ump-rpc-api" />
@@ -30,17 +33,20 @@
       <module name="jww" target="1.8" />
       <module name="jww-common" target="1.8" />
       <module name="jww-common-constant" target="1.8" />
+      <module name="jww-common-core" target="1.8" />
       <module name="jww-common-db" target="1.8" />
       <module name="jww-common-exception" target="1.8" />
       <module name="jww-common-http" target="1.8" />
       <module name="jww-common-log" target="1.8" />
       <module name="jww-common-mq" target="1.8" />
+      <module name="jww-common-pay" target="1.8" />
       <module name="jww-common-redis" target="1.8" />
       <module name="jww-common-service" target="1.8" />
       <module name="jww-common-web" target="1.8" />
       <module name="jww-ump" target="1.8" />
       <module name="jww-ump-common" target="1.8" />
       <module name="jww-ump-dao" target="1.8" />
+      <module name="jww-ump-generator" target="1.8" />
       <module name="jww-ump-model" target="1.8" />
       <module name="jww-ump-mq" target="1.8" />
       <module name="jww-ump-rpc-api" target="1.8" />
