@@ -43,7 +43,6 @@ public class UmpUserRealm extends AuthorizingRealm {
                     simpleAuthorizationInfo.addStringPermission(permission);
                 }
             }
-
         }
         // 添加用户权限
         simpleAuthorizationInfo.addStringPermission("user");
@@ -53,13 +52,11 @@ public class UmpUserRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) token;
-        log.info("doGetAuthenticationInfo:" + usernamePasswordToken.getUsername() + "====" + usernamePasswordToken.getPassword());
         UmpUserModel umpUserModel = umpUserService.findByAccount(usernamePasswordToken.getUsername());
-        log.info("UmpUserRealm->doGetAuthenticationInfo->umpUserModel:" + umpUserModel.toString());
         if (null == umpUserModel) {
             throw new UnknownAccountException();
         }
-        if (!umpUserModel.getPassword().equals(usernamePasswordToken.getPassword())) {
+        if (!umpUserModel.getPassword().equals(new String(usernamePasswordToken.getPassword()))) {
             throw new IncorrectCredentialsException();
         }
         return new SimpleAuthenticationInfo(umpUserModel.getAccount(), umpUserModel.getPassword(), umpUserModel.getUserName());

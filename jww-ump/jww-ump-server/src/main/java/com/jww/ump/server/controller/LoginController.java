@@ -7,6 +7,7 @@ import com.jww.common.core.util.SecurityUtil;
 import com.jww.common.web.BaseController;
 import com.jww.common.web.ResultModel;
 import com.jww.common.web.util.ResultUtil;
+import com.xiaoleilu.hutool.lang.Base64;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
