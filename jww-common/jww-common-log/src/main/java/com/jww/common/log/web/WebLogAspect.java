@@ -33,7 +33,7 @@ public class WebLogAspect {
     }
 
     @Around("webLogPointCut()")
-    public Object doAround(ProceedingJoinPoint pjp){
+    public Object doAround(ProceedingJoinPoint pjp) throws Throwable{
         startTime = System.currentTimeMillis();
         //异常标记
         boolean eFlag = false;
@@ -47,13 +47,15 @@ public class WebLogAspect {
         }catch (Throwable throwable){
             eFlag = true;
             log.error("系统异常",throwable);
+            throw throwable;
+        }finally {
+            //拼接返回日志
+            String logStr = appendLogStrAfter(logbf, result);
+            if(eFlag){
+                log.error(logStr);
+            }
+            log.info(logStr);
         }
-        //拼接返回日志
-        String logStr = appendLogStrAfter(logbf, result);
-        if(eFlag){
-            log.error(logStr);
-        }
-        log.info(logStr);
         return result;
     }
 
