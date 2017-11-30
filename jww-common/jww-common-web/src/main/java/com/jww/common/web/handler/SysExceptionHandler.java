@@ -2,6 +2,7 @@ package com.jww.common.web.handler;
 
 import com.jww.common.core.Constants;
 import com.jww.common.core.exception.BaseException;
+import com.jww.common.core.exception.LoginException;
 import com.jww.common.web.ResultModel;
 import com.jww.common.web.util.ResultUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +28,10 @@ public class SysExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     public ResultModel exceptionHandler(Exception e) {
-        log.error(e.getMessage(), e);
+        if (e instanceof LoginException) {
+            LoginException loginException = (LoginException) e;
+            return ResultUtil.fail(loginException.getCode().value(), loginException.getMessage());
+        }
         if (e instanceof BaseException) {
             BaseException baseException = (BaseException) e;
             return ResultUtil.fail(baseException.getCode());

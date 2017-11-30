@@ -4,13 +4,7 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.jww.ump.generator.entity.SysMenu">
-    <result column="id_" property="id" />
-    <result column="remark_" property="remark" />
-    <result column="enable_" property="enable" />
-    <result column="create_by" property="createBy" />
-    <result column="create_time" property="createTime" />
-    <result column="update_by" property="updateBy" />
-    <result column="update_time" property="updateTime" />
+        <id column="id_" property="id" />
         <result column="menu_name" property="menuName" />
         <result column="menu_type" property="menuType" />
         <result column="parent_id" property="parentId" />
@@ -20,6 +14,12 @@
         <result column="sort_no" property="sortNo" />
         <result column="is_show" property="isShow" />
         <result column="permission_" property="permission" />
+        <result column="remark_" property="remark" />
+        <result column="enable_" property="enable" />
+        <result column="create_by" property="createBy" />
+        <result column="create_time" property="createTime" />
+        <result column="update_by" property="updateBy" />
+        <result column="update_time" property="updateTime" />
     </resultMap>
 
 </mapper>

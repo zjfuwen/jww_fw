@@ -9,7 +9,7 @@ import com.jww.common.core.base.BaseMapper;
  * </p>
  *
  * @author wanyong
- * @since 2017-11-25
+ * @since 2017-11-29
  */
 public interface SysMenuMapper extends BaseMapper<SysMenu> {
 

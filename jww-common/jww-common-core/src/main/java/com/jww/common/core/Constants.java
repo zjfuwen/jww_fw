@@ -11,17 +11,23 @@ public final class Constants {
      * 当前用户
      */
     public static final String CURRENT_USER = "CURRENT_USER";
-    
+
     /**
      * mapper方法中查询语句开头格式，必须以select开头，才会切换数据源
      */
     public static final String MAPPER_METHOD_STARTSWITH_SELECT = "select";
 
     public enum ResultCodeEnum {
-        /** 成功 */
         SUCCESS(200, "成功"),
-        /** 服务器出错 */
-        INTERNAL_SERVER_ERROR(500, "服务器出错");
+        INTERNAL_SERVER_ERROR(500, "服务器出错"),
+        LOGIN_FAIL(303, "登录失败"),
+        LOGIN_FAIL_ACCOUNT_LOCKED(304, "用户被锁定"),
+        LOGIN_FAIL_ACCOUNT_DISABLED(305, "用户未启用"),
+        LOGIN_FAIL_ACCOUNT_EXPIRED(306, "用户过期"),
+        LOGIN_FAIL_ACCOUNT_UNKNOWN(307, "不存在该用户"),
+        LOGIN_FAIL_INCORRECT_CREDENTIALS(308, "密码不正确"),
+        UNLOGIN(401, "没有登录"),
+        UNAUTHORIZED(403, "没有权限");
 
         private final int value;
         private final String message;
