@@ -24,8 +24,6 @@ public class UmpUserModel extends BaseModel {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id_", type = IdType.ID_WORKER)
-    private Long id;
     /**
      * 登陆帐户
      */
@@ -117,33 +115,5 @@ public class UmpUserModel extends BaseModel {
      */
     @TableField("staff_no")
     private String staffNo;
-    @TableField("enable_")
-    private Integer enable;
-    /**
-     * 备注
-     */
-    @TableField("remark_")
-    private String remark;
-    /**
-     * 创建时间
-     */
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
-    @TableField("create_time")
-    private Date createTime;
-    /**
-     * 创建人
-     */
-    @TableField("create_by")
-    private Long createBy;
-    /**
-     * 更新时间
-     */
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
-    @TableField("update_time")
-    private Date updateTime;
-    /**
-     * 更新人
-     */
-    @TableField("update_by")
-    private Long updateBy;
+
 }
