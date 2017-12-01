@@ -2,10 +2,13 @@ package com.jww.common.web.handler;
 
 import com.jww.common.core.Constants;
 import com.jww.common.core.exception.BaseException;
+import com.jww.common.core.exception.BusinessException;
 import com.jww.common.core.exception.LoginException;
 import com.jww.common.web.ResultModel;
 import com.jww.common.web.util.ResultUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -28,13 +31,16 @@ public class SysExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     public ResultModel exceptionHandler(Exception e) {
-        if (e instanceof LoginException) {
-            LoginException loginException = (LoginException) e;
-            return ResultUtil.fail(loginException.getCode().value(), loginException.getMessage());
+        log.info("SysExceptionHandler->exceptionHandler->comein...");
+        // springboot参数验证框架如果验证失败则抛出MethodArgumentNotValidException异常
+        if (e instanceof MethodArgumentNotValidException) {
+            MethodArgumentNotValidException methodArgumentNotValidException = (MethodArgumentNotValidException) e;
+            FieldError fieldError = methodArgumentNotValidException.getBindingResult().getFieldError();
+            return ResultUtil.fail(Constants.ResultCodeEnum.BAD_REQUEST, fieldError.getDefaultMessage());
         }
         if (e instanceof BaseException) {
             BaseException baseException = (BaseException) e;
-            return ResultUtil.fail(baseException.getCode());
+            return ResultUtil.fail(baseException.getCode(), baseException.getMessage());
         }
         return ResultUtil.fail(Constants.ResultCodeEnum.INTERNAL_SERVER_ERROR);
     }

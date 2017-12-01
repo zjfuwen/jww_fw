@@ -1,6 +1,7 @@
 package com.jww.ump.server.controller;
 
 import com.jww.common.core.Constants;
+import com.jww.common.core.exception.BusinessException;
 import com.jww.common.core.exception.LoginException;
 import com.jww.common.core.model.LoginModel;
 import com.jww.common.core.util.SecurityUtil;
@@ -12,7 +13,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.util.List;
 
 /**
  * 登陆控制器
@@ -33,13 +40,15 @@ public class LoginController extends BaseController {
      * @date 2017-11-30 16:14
      */
     @PostMapping("/login")
-    public ResultModel login(@RequestBody LoginModel loginModel) {
+    public ResultModel login(@Valid @RequestBody LoginModel loginModel, HttpServletRequest request) {
+        log.info("request->getSession->getId:" + request.getSession().getId());
         log.info(loginModel.toString());
         UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(loginModel.getAccount(), SecurityUtil.encryptPassword(loginModel.getPassword()));
         usernamePasswordToken.setRememberMe(true);
         Subject subject = SecurityUtils.getSubject();
         try {
             subject.login(usernamePasswordToken);
+            log.info("subject->getSession->getId:" + subject.getSession().getId().toString());
         } catch (LockedAccountException e) {
             throw new LoginException(Constants.ResultCodeEnum.LOGIN_FAIL_ACCOUNT_LOCKED.getMessage(), e);
         } catch (DisabledAccountException e) {

@@ -27,6 +27,7 @@
         <spring.boot.version>1.5.8.RELEASE</spring.boot.version>
         <spring.boot.starter.redis.version>1.4.7.RELEASE</spring.boot.starter.redis.version>
         <springloaded.version>1.2.8.RELEASE</springloaded.version>
+        <hibernate.validator.version>5.3.5.Final</hibernate.validator.version>
         <!-- lombok插件 -->
         <lombok.version>1.16.18</lombok.version>
         <!-- 数据库相关 -->

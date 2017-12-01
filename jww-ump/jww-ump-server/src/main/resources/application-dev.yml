@@ -28,4 +28,4 @@ spring:
       #        <!-- <version>5.7.0</version> -->
       #    </dependency>
 server:
-  port: 8888
+  port: 8089
