@@ -16,4 +16,5 @@
     <!-- 声明需要暴露的服务接口 -->
     <dubbo:service interface="com.jww.ump.rpc.api.UmpUserService" ref="umpUserService" timeout="10000"/>
     <dubbo:service interface="com.jww.ump.rpc.api.UmpAuthorizeService" ref="umpAuthorizeService" timeout="10000"/>
+    <dubbo:service interface="com.jww.ump.rpc.api.UmpMenuService" ref="umpMenuService" timeout="10000"/>
 </beans>

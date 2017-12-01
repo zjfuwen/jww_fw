@@ -8,6 +8,7 @@ import com.jww.common.web.ResultModel;
 import com.jww.common.web.util.ResultUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -32,6 +33,11 @@ public class SysExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResultModel exceptionHandler(Exception e) {
         log.info("SysExceptionHandler->exceptionHandler->comein...");
+        log.info(e.getMessage(), e);
+        // 媒体类型
+        if (e instanceof HttpMediaTypeNotSupportedException) {
+            return ResultUtil.fail(Constants.ResultCodeEnum.NO_SUPPORTED_MEDIATYPE);
+        }
         // springboot参数验证框架如果验证失败则抛出MethodArgumentNotValidException异常
         if (e instanceof MethodArgumentNotValidException) {
             MethodArgumentNotValidException methodArgumentNotValidException = (MethodArgumentNotValidException) e;

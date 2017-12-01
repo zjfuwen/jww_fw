@@ -6,6 +6,9 @@ layui.config({
         layer = layui.layer,
         element = layui.element();
     $ = layui.jquery;
+    /************* start 设置ajax请求不缓存(开发时不缓存，生产建议缓存) *********************/
+    $.ajaxSetup({cache: false});
+    /************* end 设置ajax请求不缓存(开发时不缓存，生产建议缓存) *********************/
     tab = layui.bodyTab({
         openTabNum: "50",  //最大可打开窗口数量
         url: "json/navs.json" //获取菜单json地址

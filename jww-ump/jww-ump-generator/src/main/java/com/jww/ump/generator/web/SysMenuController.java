@@ -12,7 +12,7 @@ import com.jww.common.web.BaseController;
  * </p>
  *
  * @author wanyong
- * @since 2017-11-25
+ * @since 2017-11-29
  */
 @Controller
 @RequestMapping("/generator/sysMenu")

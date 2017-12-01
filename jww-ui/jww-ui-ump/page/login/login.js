@@ -33,11 +33,21 @@ layui.config({
 
     //登录按钮事件
     form.on("submit(login)", function (data) {
-        layer.alert(JSON.stringify(data.field));
         var url = "http://localhost:8089/login";
-        $.post(url, data.field, function (data) {
-            alert(JSON.stringify(data));
-        }, "json");
+        $.ajax({
+            type: 'POST',
+            url: url,
+            dataType: 'json',
+            contentType: "application/json",
+            data: JSON.stringify(data.field),
+            success: function (data) {
+                if (data.code == 200) {
+                    window.location.href = "../../index.html";
+                } else {
+                    layer.alert(data.message);
+                }
+            }
+        });
         // window.location.href = "../../index.html";
         return false;
     })
