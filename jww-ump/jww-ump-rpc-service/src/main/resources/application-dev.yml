@@ -37,7 +37,7 @@ datasource:
       defaultReadOnly: false
 #mybatis-plus
 mybatis-plus:
-  mapper-locations: classpath:/mapper/*Mapper.xml
+  mapper-locations: classpath*:mapper/*Mapper.xml
   #实体扫描，多个package用逗号或者分号分隔
   #typeAliasesPackage: com.baomidou.springboot.entity
   #typeEnumsPackage: com.baomidou.springboot.entity.enums

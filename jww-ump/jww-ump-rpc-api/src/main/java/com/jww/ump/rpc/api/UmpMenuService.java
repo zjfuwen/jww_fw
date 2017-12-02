@@ -16,5 +16,22 @@ import java.util.List;
  */
 public interface UmpMenuService extends BaseService<UmpMenuModel> {
 
+    /**
+     * 查找所有菜单
+     *
+     * @return List<UmpMenuModel>
+     * @author wanyong
+     * @date 2017-12-02 13:59
+     */
     public List<UmpMenuModel> findList();
+
+    /**
+     * 根据用户ID查找菜单树
+     *
+     * @param userId
+     * @return List<UmpMenuModel>
+     * @author wanyong
+     * @date 2017-12-03 00:56
+     */
+    public List<UmpMenuModel> findMenuTreeByUserId(Long userId);
 }

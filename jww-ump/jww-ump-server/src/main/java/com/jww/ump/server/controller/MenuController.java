@@ -9,9 +9,11 @@ import com.jww.ump.rpc.api.UmpMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -40,6 +42,11 @@ public class MenuController extends BaseController {
     @GetMapping("/list")
     public ResultModel<List<UmpMenuModel>> queryList() {
         return ResultUtil.ok(umpMenuService.findList());
+    }
+
+    @GetMapping("/tree/{userId}")
+    public ResultModel<List<UmpMenuModel>> queryMenuTreeByUserId(@PathVariable Long userId) {
+        return ResultUtil.ok(umpMenuService.findMenuTreeByUserId(userId));
     }
 
 }

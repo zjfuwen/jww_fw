@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jww.ump.dao.mapper.UmpMenuMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.jww.ump.model.UmpMenuModel">
+        <result column="id_" property="id"/>
+        <result column="remark_" property="remark"/>
+        <result column="enable_" property="enable"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="menu_name" property="menuName"/>
+        <result column="menu_type" property="menuType"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="iconcls_" property="iconcls"/>
+        <result column="request_" property="request"/>
+        <result column="expand_" property="expand"/>
+        <result column="sort_no" property="sortNo"/>
+        <result column="is_show" property="isShow"/>
+        <result column="permission_" property="permission"/>
+    </resultMap>
+
+    <select id="selectMenuTreeByUserId" resultMap="BaseResultMap">
+        SELECT
+            menu.*
+        FROM
+            sys_menu menu
+        WHERE
+            is_show = 1
+        AND (
+            EXISTS (
+                SELECT
+                    1
+                FROM
+                    sys_user_menu um
+                WHERE
+                    um.user_id = #{userId} and um.menu_id = menu.id_)
+                OR EXISTS (
+                    SELECT
+                        1
+                    FROM
+                        sys_user_role ur
+                    JOIN sys_role_menu rm ON ur.role_id = rm.role_id
+                    WHERE
+                        ur.user_id = #{userId} and rm.menu_id = menu.id_))
+                    ORDER BY
+                        parent_id,
+                        sort_no
+    </select>
+
+</mapper>
