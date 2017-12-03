@@ -47,6 +47,12 @@
             <artifactId>hutool-poi</artifactId>
             <version>${hutool.version}</version>
         </dependency>
+        <!-- springboot配套的验证器 -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernate.validator.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

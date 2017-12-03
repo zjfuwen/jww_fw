@@ -2,6 +2,7 @@ package com.jww.common.web.util;
 
 import com.jww.common.core.Constants;
 import com.jww.common.web.ResultModel;
+import com.xiaoleilu.hutool.util.StrUtil;
 
 /**
  * @author wanyong
@@ -25,5 +26,9 @@ public class ResultUtil {
 
     public static ResultModel fail(int code, String message) {
         return new ResultModel(code, message, null);
+    }
+
+    public static ResultModel fail(Constants.ResultCodeEnum resultCodeEnum, String message) {
+        return new ResultModel(resultCodeEnum.value(), StrUtil.isBlank(message) ? resultCodeEnum.getMessage() : message, null);
     }
 }

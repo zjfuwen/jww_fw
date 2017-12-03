@@ -17,7 +17,7 @@ import java.io.IOException;
  */
 @Slf4j
 @Order(1)
-@WebFilter(filterName = "xssFilter",urlPatterns="/*")
+@WebFilter(filterName = "xssFilter", urlPatterns = "/*")
 public class XssFilter implements Filter {
 
     private String[] excludePaths = null;
@@ -26,7 +26,7 @@ public class XssFilter implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
         log.info("init XssFilter");
         String excludePath = filterConfig.getInitParameter("excludePaths");
-        if(StrUtil.isNotBlank(excludePath)) {
+        if (StrUtil.isNotBlank(excludePath)) {
             excludePaths = excludePath.split(",");
         }
     }
@@ -34,8 +34,8 @@ public class XssFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         log.info("XssFilter.doFilter ...");
-        if(excludePaths != null){
-            HttpServletRequest request = (HttpServletRequest)servletRequest;
+        if (excludePaths != null) {
+            HttpServletRequest request = (HttpServletRequest) servletRequest;
             String uri = request.getRequestURI();
             // 排除部分URL不做过滤。
             for (String str : excludePaths) {
@@ -47,7 +47,7 @@ public class XssFilter implements Filter {
             }
         }
         XssHttpRequestWrapper xssHttpServletRequest = new XssHttpRequestWrapper((HttpServletRequest) servletRequest);
-        filterChain.doFilter(xssHttpServletRequest,servletResponse);
+        filterChain.doFilter(xssHttpServletRequest, servletResponse);
     }
 
     @Override

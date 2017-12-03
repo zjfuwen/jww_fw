@@ -16,7 +16,7 @@ spring:
 datasource:
   type: com.alibaba.druid.pool.DruidDataSource
   master:
-    url: jdbc:mysql://localhost:3306/ibase4j?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+    url: jdbc:mysql://localhost:3306/jww?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
     username: root
     password: 1234
     driverClassName: com.mysql.jdbc.Driver
@@ -26,7 +26,7 @@ datasource:
     maxWait: 60000
     defaultReadOnly: false
   slaver:
-      url: jdbc:mysql://localhost:3306/ibase4j?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+      url: jdbc:mysql://localhost:3306/jww?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
       username: root
       password: 1234
       driverClassName: com.mysql.jdbc.Driver
@@ -37,7 +37,7 @@ datasource:
       defaultReadOnly: false
 #mybatis-plus
 mybatis-plus:
-  mapper-locations: classpath:/mapper/*Mapper.xml
+  mapper-locations: classpath*:mapper/*Mapper.xml
   #实体扫描，多个package用逗号或者分号分隔
   #typeAliasesPackage: com.baomidou.springboot.entity
   #typeEnumsPackage: com.baomidou.springboot.entity.enums
@@ -64,3 +64,5 @@ mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: false
+server:
+  port: 8088

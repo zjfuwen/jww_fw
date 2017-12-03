@@ -9,7 +9,7 @@ import com.jww.common.core.base.BaseService;
  * </p>
  *
  * @author wanyong
- * @since 2017-11-25
+ * @since 2017-11-29
  */
 public interface ISysMenuService extends BaseService<SysMenu> {
 

@@ -14,4 +14,5 @@
     <!-- 生成远程服务代理，可以和本地 bean 一样使用 testService -->
     <dubbo:reference id="umpUserService" interface="com.jww.ump.rpc.api.UmpUserService"/>
     <dubbo:reference id="umpAuthorizeService" interface="com.jww.ump.rpc.api.UmpAuthorizeService"/>
+    <dubbo:reference id="umpMenuService" interface="com.jww.ump.rpc.api.UmpMenuService"/>
 </beans>

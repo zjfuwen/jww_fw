@@ -1,6 +1,7 @@
 package com.jww.ump.model;
 
 import java.util.Date;
+import java.util.List;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotations.TableId;
@@ -24,11 +25,6 @@ public class UmpMenuModel extends BaseModel {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 菜单编号
-     */
-    @TableId(value = "id_", type = IdType.ID_WORKER)
-    private Long id;
     /**
      * 菜单名称
      */
@@ -74,23 +70,21 @@ public class UmpMenuModel extends BaseModel {
      */
     @TableField("permission_")
     private String permission;
+
     /**
-     * 备注
+     * start 页面所需字段（数据库没有）
      */
-    @TableField("remark_")
-    private String remark;
-    @TableField("enable_")
-    private Integer enable;
-    @TableField("create_by")
-    private Long createBy;
-
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
-    @TableField("create_time")
-    private Date createTime;
-    @TableField("update_by")
-    private Long updateBy;
-
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
-    @TableField("update_time")
-    private Date updateTime;
+    @TableField(exist = false)
+    private String parentName;
+    @TableField(exist = false)
+    private Integer leaf = 1;
+    @TableField(exist = false)
+    private String typeName;
+    @TableField(exist = false)
+    private String permissionText;
+    @TableField(exist = false)
+    private List<UmpMenuModel> menuBeans;
+    /**
+     * end 页面所需字段（数据库没有）
+     */
 }
