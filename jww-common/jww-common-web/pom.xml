@@ -47,6 +47,17 @@
             <artifactId>shiro-spring</artifactId>
             <version>${shiro.spring.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.xiaoleilu</groupId>
+            <artifactId>hutool-http</artifactId>
+            <version>3.2.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.xiaoleilu</groupId>
+                    <artifactId>hutool-log</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
     </dependencies>
 
     <build>

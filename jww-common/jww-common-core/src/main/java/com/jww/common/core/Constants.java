@@ -17,6 +17,16 @@ public final class Constants {
      */
     public static final String MAPPER_METHOD_STARTSWITH_SELECT = "select";
 
+    /**
+     * 缓存命名空间
+     */
+    public static final String CACHE_NAMESPACE = "JWW:";
+
+    /**
+     * TOKEN
+     */
+    public static final String TOKEN_KEY = CACHE_NAMESPACE + "TOKEN_KEY";
+
     public enum ResultCodeEnum {
         SUCCESS(200, "成功"),
         INTERNAL_SERVER_ERROR(500, "服务器出错"),

@@ -5,17 +5,19 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 /**
- * 使用一段文字进行描述
+ * 登录
  *
  * @author waner
- * @create 2017-11-30
+ * @since 2017-11-30
  **/
 @ToString
-public class LoginModel {
+public class LoginModel implements Serializable {
+    private static final long serialVersionUID = 3951474329069548585L;
+
     /**
      * 用户名
      */

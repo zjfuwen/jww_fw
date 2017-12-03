@@ -1,9 +1,11 @@
 layui.config({
-    base: "js/"
-}).use(['form', 'layer'], function () {
-    var form = layui.form(),
+    base: "../../js/"
+}).use(['base', 'form', 'layer'], function () {
+    var base = layui.base,
+        form = layui.form(),
         layer = parent.layer === undefined ? layui.layer : parent.layer,
         $ = layui.jquery;
+
     //video背景
     $(window).resize(function () {
         if ($(".video-player").width() > $(window).width()) {
@@ -33,15 +35,16 @@ layui.config({
 
     //登录按钮事件
     form.on("submit(login)", function (data) {
-        var url = "http://localhost:8089/login";
+        var url = "login";
         $.ajax({
             type: 'POST',
             url: url,
-            dataType: 'json',
-            contentType: "application/json",
             data: JSON.stringify(data.field),
             success: function (data) {
                 if (data.code == 200) {
+                    layui.data('JWW_UMP', {
+                        key: 'CUURENT_USER', value: data.data
+                    });
                     window.location.href = "../../index.html";
                 } else {
                     layer.alert(data.message);

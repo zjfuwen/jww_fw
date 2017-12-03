@@ -1,18 +1,21 @@
 var $, tab, skyconsWeather;
 layui.config({
     base: "js/"
-}).use(['bodyTab', 'form', 'element', 'layer', 'jquery'], function () {
-    var form = layui.form(),
+}).use(['base', 'bodyTab', 'form', 'element', 'layer', 'jquery'], function () {
+    var base = layui.base,
+        form = layui.form(),
         layer = layui.layer,
         element = layui.element();
     $ = layui.jquery;
-    /************* start 设置ajax请求不缓存(开发时不缓存，生产建议缓存) *********************/
-    $.ajaxSetup({cache: false});
-    /************* end 设置ajax请求不缓存(开发时不缓存，生产建议缓存) *********************/
+
+    //渲染用户名和头像
+    var userName = layui.data("JWW_UMP").CUURENT_USER.userName;
+    $("span[name='userName']").text(userName);
+
     tab = layui.bodyTab({
         openTabNum: "50",  //最大可打开窗口数量
         // url: "json/navs.json"
-        url: "http://localhost:8089/menu/tree/1" //获取菜单json地址
+        url: "menu/tree/1" //获取菜单json地址
     });
 
     //更换皮肤

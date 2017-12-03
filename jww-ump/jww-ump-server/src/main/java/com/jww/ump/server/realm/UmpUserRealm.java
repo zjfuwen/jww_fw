@@ -59,6 +59,7 @@ public class UmpUserRealm extends AuthorizingRealm {
         if (!umpUserModel.getPassword().equals(new String(usernamePasswordToken.getPassword()))) {
             throw new IncorrectCredentialsException();
         }
-        return new SimpleAuthenticationInfo(umpUserModel.getAccount(), umpUserModel.getPassword(), umpUserModel.getUserName());
+        // return new SimpleAuthenticationInfo(umpUserModel.getAccount(), umpUserModel.getPassword(), umpUserModel.getUserName());
+        return new SimpleAuthenticationInfo(umpUserModel, umpUserModel.getPassword(), umpUserModel.getUserName());
     }
 }
