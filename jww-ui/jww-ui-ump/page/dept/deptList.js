@@ -7,20 +7,15 @@ layui.config({
 		$ = layui.jquery;
 
 	//加载页面数据
-	var deptData = '';
 	var size = 2;//每页出现的数据量
     page();
 
     //查询
     $(".search_btn").click(function(){
         var newArray = [];
-        if($(".search_input").val() != ''){
-            var index = layer.msg('查询中，请稍候',{icon: 16,time:false,shade:0.8});
-            page();
-            layer.close(index);
-        }else{
-            layer.msg("请输入需要查询的内容");
-        }
+        var index = layer.msg('查询中，请稍候',{icon: 16,time:false,shade:0.8});
+        page();
+        layer.close(index);
     })
 
 	//添加部门
@@ -82,15 +77,14 @@ layui.config({
         $.ajax({
             url: "http://localhost:8089/dept/query/"+current+"/"+size+"/"+deptName,
             success: function(data){
-                deptData = data;
                 //执行加载数据的方法
                 var dataHtml = '';
-                if(deptData.code!=200){
+                if(data.code!=200){
                     dataHtml = '<tr><td colspan="8">查询异常</td></tr>';
                     return dataHtml;
                 }
-                currData = deptData.data.records;//.concat().splice(curr*nums-nums, nums);
-                if(deptData.data.total != 0){
+                currData = data.data.records;//.concat().splice(curr*nums-nums, nums);
+                if(data.data.total != 0){
                     for(var i=0;i<currData.length;i++){
                         dataHtml += '<tr>'
                             +'<td><input type="checkbox" name="checked" lay-skin="primary" lay-filter="choose"></td>'
@@ -112,7 +106,7 @@ layui.config({
                 //分页
                 laypage({
                     cont : "page",
-                    pages : deptData.data.pages,
+                    pages : data.data.pages,
                     curr: current || 1,
                     jump : function(obj,first){
                         if (!first) {
