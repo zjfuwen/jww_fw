@@ -15,4 +15,5 @@
     <dubbo:reference id="umpUserService" interface="com.jww.ump.rpc.api.UmpUserService"/>
     <dubbo:reference id="umpAuthorizeService" interface="com.jww.ump.rpc.api.UmpAuthorizeService"/>
     <dubbo:reference id="umpMenuService" interface="com.jww.ump.rpc.api.UmpMenuService"/>
+    <dubbo:reference id="umpDeptService" interface="com.jww.ump.rpc.api.UmpDeptService"/>
 </beans>
