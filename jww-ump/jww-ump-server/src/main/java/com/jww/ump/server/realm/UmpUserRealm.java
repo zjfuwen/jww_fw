@@ -1,5 +1,6 @@
 package com.jww.ump.server.realm;
 
+import com.jww.common.web.util.WebUtil;
 import com.jww.ump.model.UmpUserModel;
 import com.jww.ump.rpc.api.UmpAuthorizeService;
 import com.jww.ump.rpc.api.UmpUserService;
@@ -59,6 +60,7 @@ public class UmpUserRealm extends AuthorizingRealm {
         if (!umpUserModel.getPassword().equals(new String(usernamePasswordToken.getPassword()))) {
             throw new IncorrectCredentialsException();
         }
+        WebUtil.saveCurrentUser(umpUserModel.getId());
         // return new SimpleAuthenticationInfo(umpUserModel.getAccount(), umpUserModel.getPassword(), umpUserModel.getUserName());
         return new SimpleAuthenticationInfo(umpUserModel, umpUserModel.getPassword(), umpUserModel.getUserName());
     }
