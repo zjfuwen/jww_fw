@@ -45,7 +45,7 @@ public class MenuController extends BaseController {
     }
 
     @GetMapping("/tree/{userId}")
-    public ResultModel<List<UmpMenuModel>> queryMenuTreeByUserId(@PathVariable Long userId) {
+    public ResultModel<List<UmpMenuModel>> queryMenuTreeByUserId(@PathVariable(value="userId") Long userId) {
         return ResultUtil.ok(umpMenuService.findMenuTreeByUserId(userId));
     }
 
