@@ -1,6 +1,8 @@
 package com.jww.ump.server.controller;
 
+import com.fasterxml.jackson.databind.ser.Serializers;
 import com.jww.common.core.model.PageModel;
+import com.jww.common.web.BaseController;
 import com.jww.common.web.ResultModel;
 import com.jww.common.web.util.ResultUtil;
 import com.jww.ump.model.UmpUserModel;
@@ -23,7 +25,7 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequestMapping("/user")
-public class UserController {
+public class UserController extends BaseController {
 
     @Autowired
     private UmpUserService umpUserService;
@@ -86,6 +88,20 @@ public class UserController {
         map.put("password_", "1234");
         List<UmpUserModel> umpUserModelList = umpUserService.selectByMap(map);
         return ResultUtil.ok(umpUserModelList);
+    }
+
+    /**
+     * 分页查询用户列表
+     *
+     * @param pageModel
+     * @return ResultModel
+     * @author wanyong
+     * @date 2017/12/4 14:31
+     */
+    @PostMapping("/listPage")
+    public ResultModel queryListPage(@RequestBody PageModel<UmpUserModel> pageModel) {
+        pageModel = (PageModel<UmpUserModel>) umpUserService.findListPage(pageModel);
+        return ResultUtil.ok(pageModel);
     }
 
 }

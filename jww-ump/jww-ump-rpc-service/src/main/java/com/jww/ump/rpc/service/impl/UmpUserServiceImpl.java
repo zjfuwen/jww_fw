@@ -1,6 +1,7 @@
 package com.jww.ump.rpc.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.jww.common.core.base.BaseServiceImpl;
 import com.jww.ump.dao.mapper.UmpUserMapper;
 import com.jww.ump.model.UmpUserModel;
@@ -24,8 +25,16 @@ public class UmpUserServiceImpl extends BaseServiceImpl<UmpUserMapper, UmpUserMo
         UmpUserModel umpUserModel = new UmpUserModel();
         umpUserModel.setAccount(account);
         umpUserModel.setEnable(1);
-        EntityWrapper<UmpUserModel> entityWrapper = new EntityWrapper<UmpUserModel>(umpUserModel);
-        // entityWrapper.where("account_", account).andNew("enable_", 1);
+        EntityWrapper<UmpUserModel> entityWrapper = new EntityWrapper<>(umpUserModel);
         return super.selectOne(entityWrapper);
+    }
+
+    @Override
+    public Page<UmpUserModel> findListPage(Page<UmpUserModel> page) {
+        log.info("UmpUserServiceImpl->findListPage->page:" + page.toString());
+        UmpUserModel umpUserModel = new UmpUserModel();
+        umpUserModel.setEnable(1);
+        EntityWrapper<UmpUserModel> entityWrapper = new EntityWrapper<>(umpUserModel);
+        return super.selectPage(page, entityWrapper);
     }
 }

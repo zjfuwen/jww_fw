@@ -3,9 +3,9 @@ layui.config({
     base: "js/"
 }).use(['base', 'bodyTab', 'form', 'element', 'layer', 'jquery'], function () {
     var base = layui.base,
-        form = layui.form(),
+        form = layui.form,
         layer = layui.layer,
-        element = layui.element();
+        element = layui.element;
     $ = layui.jquery;
 
     //渲染用户名和头像
