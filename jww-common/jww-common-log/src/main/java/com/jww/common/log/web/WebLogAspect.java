@@ -1,7 +1,9 @@
 package com.jww.common.log.web;
 
 import com.alibaba.fastjson.JSON;
+import com.jww.common.core.Constants;
 import com.xiaoleilu.hutool.date.DateUtil;
+import com.xiaoleilu.hutool.http.HttpUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -46,7 +48,7 @@ public class WebLogAspect {
             result = pjp.proceed();
         }catch (Throwable throwable){
             eFlag = true;
-            log.error("系统异常",throwable);
+            log.error(Constants.ResultCodeEnum.INTERNAL_SERVER_ERROR.getMessage(),throwable);
             throw throwable;
         }finally {
             //拼接返回日志
@@ -65,7 +67,7 @@ public class WebLogAspect {
         StringBuffer logbf = new StringBuffer();
         logbf.append("URL:").append(request.getRequestURL());
         logbf.append(",HTTP_METHOD:").append(request.getMethod());
-        logbf.append(",IP:").append(request.getRemoteAddr());
+        logbf.append(",IP:").append(HttpUtil.getClientIP(request));
         logbf.append(",CLASS_METHOD:").append(pjp.getSignature().getDeclaringTypeName() + "." + pjp.getSignature().getName());
         logbf.append(",ARGS:").append(Arrays.toString(pjp.getArgs()));
         return logbf;
