@@ -15,6 +15,14 @@ import java.util.Map;
  */
 public interface UmpUserService extends BaseService<UmpUserModel> {
 
+    /**
+     * 根据账号查找用户
+     *
+     * @param account
+     * @return UmpUserModel
+     * @author wanyong
+     * @date 2017-12-05 12:48
+     */
     UmpUserModel findByAccount(String account);
 
     /**

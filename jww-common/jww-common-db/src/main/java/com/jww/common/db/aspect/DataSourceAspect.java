@@ -40,7 +40,7 @@ public class DataSourceAspect {
             // 切换从数据源
             DbContextHolder.setDbType(Constants.DataSourceEnum.SLAVE);
         } else {
-            log.info("切换为从数据源：{}", Constants.DataSourceEnum.MASTER.getName());
+            log.info("切换为主数据源：{}", Constants.DataSourceEnum.MASTER.getName());
             // 切换主数据源
             DbContextHolder.setDbType(Constants.DataSourceEnum.MASTER);
         }
