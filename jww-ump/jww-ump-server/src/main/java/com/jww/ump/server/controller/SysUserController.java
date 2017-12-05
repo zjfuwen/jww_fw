@@ -1,7 +1,5 @@
 package com.jww.ump.server.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.fasterxml.jackson.databind.ser.Serializers;
 import com.jww.common.core.exception.BusinessException;
 import com.jww.common.core.model.PageModel;
 import com.jww.common.core.util.SecurityUtil;
@@ -16,11 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 用户管理控制器
@@ -75,14 +70,23 @@ public class SysUserController extends BaseController {
      */
     @PostMapping("/add")
     public ResultModel add(@Valid @RequestBody UmpUserModel umpUserModel) {
-        UmpUserModel addUmpUserModel = umpUserService.findByAccount(umpUserModel.getAccount());
-        if (ObjectUtil.isNotNull(addUmpUserModel)) {
+        UmpUserModel existUmpUserModel = umpUserService.findByAccount(umpUserModel.getAccount());
+        if (ObjectUtil.isNotNull(existUmpUserModel)) {
             throw new BusinessException("已存在相同账号的用户");
         }
         // 设置初始密码: 123456
         umpUserModel.setPassword(SecurityUtil.encryptPassword("123456"));
-        addUmpUserModel = umpUserService.save(umpUserModel);
-        return ResultUtil.ok(addUmpUserModel);
+        umpUserService.save(umpUserModel);
+        return ResultUtil.ok();
+    }
+
+
+    @PostMapping("/delBatchByIds")
+    public ResultModel delBatchByIds(@RequestBody List<Long> ids) {
+        if (ids.size() == 0) {
+            throw new BusinessException("用户ID集合不能为空");
+        }
+        return ResultUtil.ok(umpUserService.delBatchByIds(ids));
     }
 
 }

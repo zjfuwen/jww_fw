@@ -16,7 +16,6 @@ layui.config({
 
     // 监听submit
     form.on('submit(addUser)', function (data) {
-        alert(JSON.stringify(data.field));
         $.ajax({
             type: 'POST',
             url: 'user/add',
@@ -25,9 +24,9 @@ layui.config({
                 if (data.code == 200) {
                     // 重置表单
                     $("#userForm")[0].reset();
-                    layer.alert('用户添加成功', {icon: 1});
+                    layer.msg('用户添加成功', {icon: 1});
                 } else {
-                    layer.alert(data.message);
+                    layer.msg(data.message, {icon: 2});
                 }
             }
         });

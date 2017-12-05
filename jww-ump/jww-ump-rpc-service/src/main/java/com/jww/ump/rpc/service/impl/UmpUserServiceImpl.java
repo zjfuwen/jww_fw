@@ -12,6 +12,8 @@ import com.xiaoleilu.hutool.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -45,7 +47,9 @@ public class UmpUserServiceImpl extends BaseServiceImpl<UmpUserMapper, UmpUserMo
             StringBuilder conditionSql = new StringBuilder();
             Map<String, Object> paramMap = page.getCondition();
             paramMap.forEach((k, v) -> {
-                conditionSql.append(k + " like '%" + v + "%' OR ");
+                if (StrUtil.isNotBlank(v + "")) {
+                    conditionSql.append(k + " like '%" + v + "%' OR ");
+                }
             });
             entityWrapper.and(StrUtil.removeSuffix(conditionSql.toString(), "OR "));
         }
@@ -53,4 +57,19 @@ public class UmpUserServiceImpl extends BaseServiceImpl<UmpUserMapper, UmpUserMo
 
         return super.selectPage(page, entityWrapper);
     }
+
+    @Override
+    public boolean delBatchByIds(List<Long> ids) {
+        List<UmpUserModel> umpUserModelList = new ArrayList<>(5);
+        for (Long id : ids) {
+            UmpUserModel umpUserModel = new UmpUserModel();
+            umpUserModel.setId(id);
+            umpUserModel.setEnable(0);
+
+            umpUserModelList.add(umpUserModel);
+        }
+        return super.updateBatchById(umpUserModelList);
+    }
+
+
 }

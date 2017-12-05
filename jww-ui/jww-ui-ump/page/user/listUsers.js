@@ -43,28 +43,33 @@ layui.config({
         var data = obj.data;
         var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
         if (layEvent === 'detail') { //查看
-            layer.alert("查看:" + data.id);
+            layer.msg("功能正在开发中，敬请期待...", {icon: 0});
         } else if (layEvent === 'del') { //删除
-            layer.confirm('您确定要删除吗？', {icon: 3, title: '确认'}, function (index) {
-                //向服务端发送删除指令
-                obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
-                layer.close(index);
+            var userIds = [data.id];
+            layer.confirm('您确定要删除吗？', {icon: 3, title: '确认'}, function () {
+                $.ajax({
+                    type: 'POST',
+                    url: 'user/delBatchByIds',
+                    data: JSON.stringify(userIds),
+                    success: function (data) {
+                        if (data.code == 200) {
+                            if (data.data === true) {
+                                obj.del();
+                                layer.msg("删除成功", {icon: 1, time: 2000});
+                            }
+                        } else {
+                            layer.msg(data.message, {icon: 2});
+                        }
+                    }
+                });
             });
         } else if (layEvent === 'edit') { //编辑
-            //do something
-            layer.alert("编辑:" + data.id);
-
-            //同步更新缓存对应的值
-            obj.update({
-                username: '123'
-                , title: 'xxx'
-            });
+            layer.msg("功能正在开发中，敬请期待...", {icon: 0});
         }
     });
 
     //监听表格复选框选择
     table.on('checkbox(tableFilter)', function (obj) {
-        alert(JSON.stringify(obj));
     });
 
     //查询
@@ -82,7 +87,7 @@ layui.config({
                 curr: 1 //重新从第 1 页开始
             }
         });
-    })
+    });
 
     //添加会员
     $(".usersAdd_btn").click(function () {
@@ -103,6 +108,43 @@ layui.config({
             layui.layer.full(index);
         });
         layui.layer.full(index);
+    });
+
+    //批量删除
+    $(".batchDel").click(function () {
+        var checkStatus = table.checkStatus('userTable');
+        if (checkStatus.data.length === 0) {
+            layer.msg("请选择要删除的用户", {icon: 0, time: 2000});
+            return;
+        }
+        layer.confirm('确定删除选中的信息？', {icon: 3, title: '确认'}, function (index) {
+            var indexMsg = layer.msg('删除中，请稍候', {icon: 16, time: false, shade: 0.8});
+            var userIds = [];
+            for (var i = 0; i < checkStatus.data.length; i++) {
+                userIds[i] = checkStatus.data[i].id;
+            }
+            $.ajax({
+                type: 'POST',
+                url: 'user/delBatchByIds',
+                data: JSON.stringify(userIds),
+                success: function (data) {
+                    if (data.code == 200) {
+                        if (data.data === true) {
+                            layer.close(indexMsg);
+                            layer.msg("删除成功", {icon: 1, time: 2000});
+                            tableIns.reload({
+                                page: {
+                                    curr: 1 //重新从第 1 页开始
+                                }
+                            });
+                        }
+                    } else {
+                        layer.msg(data.message, {icon: 2});
+                    }
+                }
+            });
+        });
     })
+
 
 });

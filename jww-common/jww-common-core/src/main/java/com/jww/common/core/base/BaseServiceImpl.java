@@ -43,4 +43,5 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseModel>
     public boolean updateById(T entity) {
         return super.updateById(entity);
     }
+
 }

@@ -34,4 +34,14 @@ public interface UmpUserService extends BaseService<UmpUserModel> {
      * @date 2017/12/4 14:45
      */
     Page<UmpUserModel> findListPage(Page<UmpUserModel> page);
+
+    /**
+     * 根据ID集合批量删除
+     *
+     * @param ids
+     * @return boolean
+     * @author wanyong
+     * @date 2017-12-05 19:50
+     */
+    boolean delBatchByIds(List<Long> ids);
 }
