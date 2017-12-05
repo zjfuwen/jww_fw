@@ -43,23 +43,6 @@
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
-<!-- 行模板 -->
-<script id="rowTemplate" type="text/html">
-    {{#  layui.each(d.records, function(index, item){ }}
-    <tr>
-        <td></td>
-        <td>{{item.account || ''}}</td>
-        <td>{{item.userName || ''}}</td>
-        <td>{{item.sex || ''}}</td>
-        <td>{{item.phone || ''}}</td>
-        <td>{{item.idCard || ''}}</td>
-        <td>{{item.deptId || ''}}</td>
-        <td>{{item.position || ''}}</td>
-        <td>{{item.email || ''}}</td>
-        <td>{{item.email || ''}}</td>
-    </tr>
-    {{#  }); }}
-</script>
 <script type="text/javascript" src="../../layui/layui.js"></script>
 <script type="text/javascript" src="listUsers.js"></script>
 

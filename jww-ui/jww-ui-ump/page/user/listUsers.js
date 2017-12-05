@@ -23,13 +23,6 @@ layui.config({
         ]],
         url: 'user/listPage',
         method: 'post',
-        where: { //设定异步数据接口的额外参数，任意设
-            condition: {
-                account_: "123",
-                user_name: "456",
-                phone_: "789"
-            }
-        },
         request: {
             pageName: 'current', //页码的参数名称，默认：page
             limitName: 'size' //每页数据量的参数名，默认：limit
@@ -80,9 +73,9 @@ layui.config({
         tableIns.reload({
             where: { //设定异步数据接口的额外参数，任意设
                 condition: {
-                    account: searchKey,
-                    userName: searchKey,
-                    phone: searchKey
+                    account_: searchKey,
+                    user_name: searchKey,
+                    phone_: searchKey
                 }
             },
             page: {

@@ -1,13 +1,18 @@
 package com.jww.ump.rpc.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.jww.common.core.base.BaseServiceImpl;
 import com.jww.ump.dao.mapper.UmpUserMapper;
 import com.jww.ump.model.UmpUserModel;
 import com.jww.ump.rpc.api.UmpUserService;
+import com.xiaoleilu.hutool.util.ObjectUtil;
+import com.xiaoleilu.hutool.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 /**
  * 用户管理服务实现
@@ -32,9 +37,20 @@ public class UmpUserServiceImpl extends BaseServiceImpl<UmpUserMapper, UmpUserMo
     @Override
     public Page<UmpUserModel> findListPage(Page<UmpUserModel> page) {
         log.info("UmpUserServiceImpl->findListPage->page:" + page.toString());
+        log.info("UmpUserServiceImpl->findListPage->page->condition:" + JSON.toJSONString(page.getCondition()));
         UmpUserModel umpUserModel = new UmpUserModel();
         umpUserModel.setEnable(1);
         EntityWrapper<UmpUserModel> entityWrapper = new EntityWrapper<>(umpUserModel);
+        if (ObjectUtil.isNotNull(page.getCondition())) {
+            StringBuilder conditionSql = new StringBuilder();
+            Map<String, Object> paramMap = page.getCondition();
+            paramMap.forEach((k, v) -> {
+                conditionSql.append(k + " like '%" + v + "%' OR ");
+            });
+            entityWrapper.and(StrUtil.removeSuffix(conditionSql.toString(), "OR "));
+        }
+        page.setCondition(null);
+
         return super.selectPage(page, entityWrapper);
     }
 }
