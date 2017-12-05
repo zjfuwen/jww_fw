@@ -16,26 +16,26 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">部门标题</label>
 			<div class="layui-input-block">
-				<input type="text" class="layui-input deptName" lay-verify="required" placeholder="请输入部门标题">
+				<input type="text" name="deptName" class="layui-input deptName" lay-verify="required" placeholder="请输入部门标题">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<div class="layui-inline">
 				<label class="layui-form-label">状态</label>
 				<div class="layui-input-block">
-					<input type="checkbox" name="show" class="isShow" title="启用">
+					<input type="checkbox" name="enable" class="isEnable" title="启用">
 				</div>
 			</div>
 			<div class="layui-inline">		
 				<label class="layui-form-label">排序</label>
 				<div class="layui-input-inline">
-					<input type="text" class="layui-input deptAuthor" lay-verify="required" placeholder="请输入序号">
+					<input type="text" name="sortNo" class="layui-input sortNo" lay-verify="required" placeholder="请输入序号">
 				</div>
 			</div>
 			<div class="layui-inline">
 				<label class="layui-form-label">上级部门</label>
 				<div class="layui-input-inline">
-					<select name="browseLook" class="deptLook" lay-filter="browseLook">
+					<select name="parentId" class="parentId" lay-filter="browseLook">
 				        <option value="0">技术部</option>
 				        <option value="1">销售部</option>
 				    </select>
@@ -50,6 +50,6 @@
 		</div>
 	</form>
 	<script type="text/javascript" src="../../layui/layui.js"></script>
-	<script type="text/javascript" src="deptAdd.js"></script>
+	<script type="text/javascript" src="deptAdd.js?v=2"></script>
 </body>
 </html>
