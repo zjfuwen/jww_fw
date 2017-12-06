@@ -1,6 +1,7 @@
 package com.jww.ump.server.controller;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.jww.common.core.exception.BusinessException;
 import com.jww.common.core.model.PageModel;
 import com.jww.common.web.BaseController;
 import com.jww.common.web.ResultModel;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Title:部门管理控制器
@@ -46,6 +48,12 @@ public class DeptController extends BaseController {
         return ResultUtil.ok(pageModel);
     }
 
+    @PostMapping("/queryList")
+    public ResultModel queryListPage(@RequestBody PageModel<UmpDept> pageModel) {
+        pageModel = (PageModel<UmpDept>) umpDeptService.queryListPage(pageModel);
+        return ResultUtil.ok(pageModel);
+    }
+
     @PostMapping("/add")
     public ResultModel add(@Valid @RequestBody UmpDept umpDept){
         log.info("DeptController->add: umpDept={}",umpDept);
@@ -74,8 +82,18 @@ public class DeptController extends BaseController {
     @PostMapping("/mod")
     public ResultModel mod(@RequestBody UmpDept umpDept){
         log.info("DeptController->mod: umpDept={}",umpDept.getId());
+        umpDept.setUpdateBy(this.getCurrUser());
+        umpDept.setUpdateTime(new Date());
         umpDeptService.updateById(umpDept);
         return ResultUtil.ok();
+    }
+
+    @PostMapping("/delBatchByIds")
+    public ResultModel delBatchByIds(@RequestBody List<Long> ids) {
+        if (ids.size() == 0) {
+            throw new BusinessException("部门ID集合不能为空");
+        }
+        return ResultUtil.ok(umpDeptService.delBatchByIds(ids));
     }
 
 }
