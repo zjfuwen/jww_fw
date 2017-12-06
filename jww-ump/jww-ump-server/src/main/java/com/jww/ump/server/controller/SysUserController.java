@@ -10,6 +10,9 @@ import com.jww.ump.model.UmpUserModel;
 import com.jww.ump.rpc.api.UmpUserService;
 import com.xiaoleilu.hutool.lang.Assert;
 import com.xiaoleilu.hutool.util.ObjectUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +27,7 @@ import java.util.List;
  * @date 2017/11/17 00:22
  */
 @Slf4j
+@Api(value = "用户管理", description = "用户管理")
 @RestController
 @RequestMapping("/user")
 public class SysUserController extends BaseController {
@@ -39,6 +43,8 @@ public class SysUserController extends BaseController {
      * @author wanyong
      * @date 2017-12-05 13:35
      */
+    @ApiOperation(value = "查询用户", notes = "根据用户主键ID查询用户")
+    @ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "Long")
     @PostMapping("/query")
     public ResultModel<UmpUserModel> query(@RequestBody Long id) {
         Assert.notNull(id);

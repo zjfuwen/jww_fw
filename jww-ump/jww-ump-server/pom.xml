@@ -61,6 +61,12 @@
             <artifactId>spring-session-data-redis</artifactId>
             <version>${spring.session.data.redis.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>io.github.jianzhichun</groupId>
+            <artifactId>swagger2-spring-boot-starter</artifactId>
+            <version>0.1.2</version>
+        </dependency>
     </dependencies>
 
     <build>

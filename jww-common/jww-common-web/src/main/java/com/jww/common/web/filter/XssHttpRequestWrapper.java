@@ -1,5 +1,8 @@
 package com.jww.common.web.filter;
 
+import com.xiaoleilu.hutool.util.ArrayUtil;
+import com.xiaoleilu.hutool.util.CollectionUtil;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import java.util.regex.Pattern;
@@ -52,9 +55,12 @@ public class XssHttpRequestWrapper extends HttpServletRequestWrapper {
     @Override
     public String[] getParameterValues(String name) {
         String[] values = super.getParameterValues(name);
-        for (int i = 0; i < values.length; i++) {
-            values[i] = this.xssEncode(values[i]);
+        if (ArrayUtil.isNotEmpty(values)) {
+            for (int i = 0; i < values.length; i++) {
+                values[i] = this.xssEncode(values[i]);
+            }
         }
+
         return values;
     }
 
