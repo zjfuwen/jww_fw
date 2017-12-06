@@ -1,81 +1,172 @@
 layui.config({
-	base : "../../js/"
-}).use(['base','form','layer','jquery','laypage'],function(){
-	var base = layui.base,
-        form = layui.form(),
-		layer = parent.layer === undefined ? layui.layer : parent.layer,
-		laypage = layui.laypage,
-		$ = layui.jquery;
+    base: "../../js/"
+}).use(['base', 'form', 'layer', 'jquery', 'table'], function () {
+    var base = layui.base,
+        form = layui.form,
+        layer = parent.layer === undefined ? layui.layer : parent.layer,
+        $ = layui.jquery,
+        table = layui.table;
 
-	//加载页面数据
-	var size = 10;//每页出现的数据量
-    page();
+    //列表加载
+    var tableIns = table.render({
+        //设置表头
+        cols: [[
+            {type: 'checkbox', fixed: 'left'},
+            {field: 'deptName', title: '部门名称', sort: true, edit: 'text'},
+            {field: 'sortNo', title: '排序', sort: true, edit: 'text'},
+            {field: 'parentId', title: '上级部门', sort: true, edit: 'text'},
+            {field: 'enable', title: '状态', templet: '#checkboxTpl', unresize: true},
+            {field: 'opt', fixed: 'right', width: 160, align: 'center', toolbar: '#toolBar'}
+        ]],
+        url: 'dept/queryList',
+        method: 'post',
+        request: {
+            pageName: 'current', //页码的参数名称，默认：page
+            limitName: 'size' //每页数据量的参数名，默认：limit
+        },
+        response: {
+            statusCode: 200, //成功的状态码，默认：0
+        },
+        elem: '#deptTable',
+        page: {
+            elem: 'pageDiv',
+            limit: 10,
+            limits: [10, 20, 30, 40, 50]
+        }
+    });
 
-    //查询
-    $(".search_btn").click(function(){
-        var newArray = [];
-        var index = layer.msg('查询中，请稍候',{icon: 16,time:false,shade:0.8});
-        page();
-        layer.close(index);
-    })
-
-	//添加部门
-	//改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
-	$(window).one("resize",function(){
-		$(".deptAdd_btn").click(function(){
-			var index = layui.layer.open({
-				title : "添加部门",
-				type : 2,
-				content : "deptAdd.html",
-				success : function(layero, index){
-					setTimeout(function(){
-						layui.layer.tips('点击此处返回部门列表', '.layui-layer-setwin .layui-layer-close', {
-							tips: 3
-						});
-					},500)
-				}
-			})			
-			layui.layer.full(index);
-		})
-	}).resize();
-
-	//全选
-	form.on('checkbox(allChoose)', function(data){
-		var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="enable"])');
-		child.each(function(index, item){
-			item.checked = data.elem.checked;
-		});
-		form.render('checkbox');
-	});
-
-	//通过判断部门是否全部选中来确定全选按钮是否选中
-	form.on("checkbox(choose)",function(data){
-		var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="enable"])');
-		var childChecked = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="enable"]):checked')
-		if(childChecked.length == child.length){
-			$(data.elem).parents('table').find('thead input#allChoose').get(0).checked = true;
-		}else{
-			$(data.elem).parents('table').find('thead input#allChoose').get(0).checked = false;
-		}
-		form.render('checkbox');
-	})
-
-    //操作
-    $("body").on("click",".dept_edit",function(){  //编辑
-        layer.alert('您点击了文章编辑按钮，由于没时间做，后期会添加，敬请谅解。。。',{icon:6, title:'部门编辑'});
-    })
-
-	//是否禁用
-	form.on('switch(isEnable)', function(data){
-        var _this = $(this);
-        var enable = _this.attr("is-enable");
-        if(enable==1){
-            enable = 0;
-        }else{
+    //监听状态操作
+    form.on('checkbox(enableCbx)', function(obj){
+        // layer.tips(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
+        var enable = 0;
+        if(obj.elem.checked == true){
             enable = 1;
         }
-        var modData = {"id":_this.attr("data-id"),"enable":enable};
-		var index = layer.msg('修改中，请稍候',{icon: 16,time:false,shade:0.8});
+        var modData = {"id":$(this).attr("data-id"),"enable":enable};
+        modDeptData(modData);
+    });
+
+    //监听单元格编辑
+    table.on('edit(deptTable)', function(obj){
+        var value = obj.value //得到修改后的值
+            ,data = obj.data //得到所在行所有键值
+            ,field = obj.field; //得到字段
+        // layer.msg('[ID: '+ data.id +'] ' + field + ' 字段更改为：'+ value);
+        var modData = {};
+        modData["id"] = data.id;
+        modData[field] = value;
+        // alert(JSON.stringify(modData));
+        modDeptData(modData);
+    });
+
+    //监听工具条
+    table.on('tool(deptTable)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+        var data = obj.data;
+        var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+        if (layEvent === 'detail') { //查看
+            layer.msg("功能正在开发中，敬请期待...", {icon: 0});
+        } else if (layEvent === 'del') { //删除
+            var deptIds = [data.id];
+            layer.confirm('您确定要删除吗？', {icon: 3, title: '确认'}, function () {
+                $.ajax({
+                    type: 'POST',
+                    url: 'dept/delBatchByIds',
+                    data: JSON.stringify(deptIds),
+                    success: function (data) {
+                        if (data.code == 200) {
+                            if (data.data === true) {
+                                obj.del();
+                                layer.msg("删除成功", {icon: 1, time: 2000});
+                            }
+                        } else {
+                            layer.msg(data.message, {icon: 2});
+                        }
+                    }
+                });
+            });
+        } else if (layEvent === 'edit') { //编辑
+            layer.msg("功能正在开发中，敬请期待...", {icon: 0});
+        }
+    });
+
+    //监听表格复选框选择
+    table.on('checkbox(deptTable)', function (obj) {
+    });
+
+    //查询
+    $(".search_btn").click(function () {
+        var searchKey = $(".search_input").val();
+        tableIns.reload({
+            where: { //设定异步数据接口的额外参数，任意设
+                condition: {
+                    dept_name: searchKey
+                }
+            },
+            page: {
+                curr: 1 //重新从第 1 页开始
+            }
+        });
+    });
+
+    //添加部门
+    $(".deptAdd_btn").click(function () {
+        var index = layui.layer.open({
+            title: "添加部门",
+            type: 2,
+            content: "deptAdd.html?v=4",
+            success: function (layero, index) {
+                setTimeout(function () {
+                    layui.layer.tips('点击此处返回部门列表', '.layui-layer-setwin .layui-layer-close', {
+                        tips: 3
+                    });
+                }, 500)
+            }
+        });
+        //改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
+        $(window).resize(function () {
+            layui.layer.full(index);
+        });
+        layui.layer.full(index);
+    });
+
+    //批量删除
+    $(".batchDel").click(function () {
+        var checkStatus = table.checkStatus('deptTable');
+        if (checkStatus.data.length === 0) {
+            layer.msg("请选择要删除的用户", {icon: 0, time: 2000});
+            return;
+        }
+        layer.confirm('确定删除选中的信息？', {icon: 3, title: '确认'}, function (index) {
+            var indexMsg = layer.msg('删除中，请稍候', {icon: 16, time: false, shade: 0.8});
+            var deptIds = [];
+            for (var i = 0; i < checkStatus.data.length; i++) {
+                deptIds[i] = checkStatus.data[i].id;
+            }
+            $.ajax({
+                type: 'POST',
+                url: 'dept/delBatchByIds',
+                data: JSON.stringify(deptIds),
+                success: function (data) {
+                    if (data.code == 200) {
+                        if (data.data === true) {
+                            layer.close(indexMsg);
+                            layer.msg("删除成功", {icon: 1, time: 2000});
+                            tableIns.reload({
+                                page: {
+                                    curr: 1 //重新从第 1 页开始
+                                }
+                            });
+                        }
+                    } else {
+                        layer.msg(data.message, {icon: 2});
+                    }
+                }
+            });
+        });
+    })
+
+    function modDeptData(modData) {
+        var index = layer.msg('修改中，请稍候',{icon: 16,time:false,shade:0.8});
         $.ajax({
             type: "POST",
             url: "dept/mod",
@@ -84,98 +175,15 @@ layui.config({
                 if(data.code==200){
                     setTimeout(function(){
                         layer.close(index);
-                        layer.msg("状态修改成功！");
+                        layer.msg("修改成功！");
                     },500);
                 }else{
                     top.layer.close(index);
-                    top.layer.msg("状态修改失败！");
+                    top.layer.msg("修改失败！");
                 }
             },
             contentType: "application/json"
         });
-	})
+    }
 
-    $("body").on("click",".dept_del",function(){  //删除
-        var _this = $(this);
-        var data = {"id":_this.attr("data-id")};
-        //alert(JSON.stringify(data));
-        layer.confirm('确定删除此信息？',{icon:3, title:'提示信息'},function(index){
-            $.ajax({
-                type: "POST",
-                url: "dept/del",
-                data: JSON.stringify(data),
-                success: function(data){
-                    if(data.code==200){
-                        //弹出loading
-                        setTimeout(function(){
-                            top.layer.msg("部门删除成功！");
-                            _this.parents("tr").remove();
-                        },1000);
-                    }else{
-                        top.layer.close(index);
-                        top.layer.msg("部门删除失败！");
-                    }
-                },
-                contentType: "application/json"
-            });
-            layer.close(index);
-        });
-    })
-
-	function page(current){
-        current = current==null?1:current;
-        var deptName = $(".search_input").val();
-        if(deptName == ''){
-            deptName = 'all';
-        }
-        $.ajax({
-            url: "dept/query/"+current+"/"+size+"/"+deptName,
-            success: function(data){
-                //执行加载数据的方法
-                var dataHtml = '';
-                if(data.code!=200){
-                    dataHtml = '<tr><td colspan="8">查询异常</td></tr>';
-                    return dataHtml;
-                }
-                currData = data.data.records;//.concat().splice(curr*nums-nums, nums);
-                if(data.data.total != 0){
-                    for(var i=0;i<currData.length;i++){
-                        dataHtml += '<tr>'
-                            +'<td><input type="checkbox" name="checked" lay-skin="primary" lay-filter="choose"></td>'
-                            +'<td align="left">'+currData[i].deptName+'</td>'
-                            +'<td>'+currData[i].sortNo+'</td>'
-                            +'<td>'+currData[i].parentId+'</td>';
-                        dataHtml += '<td><input type="checkbox" name="enable" lay-skin="switch" lay-text="启用|禁用" lay-filter="isEnable" data-id="'+currData[i].id + '\" is-enable="'+currData[i].enable + '\"';
-                        if(currData[i].enable==1){
-                            dataHtml += ' checked';
-                        }
-                        dataHtml += '></td>'
-                            +'<td>'
-                            +  '<a class="layui-btn layui-btn-mini dept_edit"><i class="iconfont icon-edit"></i> 编辑</a>'
-                            +  '<a class="layui-btn layui-btn-danger layui-btn-mini dept_del" data-id="'+currData[i].id+'"><i class="layui-icon">&#xe640;</i> 删除</a>'
-                            +'</td>'
-                            +'</tr>';
-                    }
-                }else{
-                    dataHtml = '<tr><td colspan="8">暂无数据</td></tr>';
-                }
-                $(".dept_content").html( dataHtml);
-
-                //分页
-                laypage({
-                    cont : "page",
-                    pages : data.data.pages,
-                    curr: current || 1,
-                    jump : function(obj,first){
-                        if (!first) {
-                            page(obj.curr);
-                        }
-                        $('.dept_list thead input[type="checkbox"]').prop("checked",false);
-                        form.render();
-                    }
-                })
-            },
-            contentType: "application/json"
-        });
-	}
-})
+});

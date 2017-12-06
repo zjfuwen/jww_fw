@@ -23,7 +23,7 @@
 			<div class="layui-inline">
 				<label class="layui-form-label">状态</label>
 				<div class="layui-input-block">
-					<input type="checkbox" name="enable" class="isEnable" title="启用">
+					<input type="checkbox" name="enable" value="1" class="isEnable" title="启用" checked>
 				</div>
 			</div>
 			<div class="layui-inline">		
@@ -35,10 +35,7 @@
 			<div class="layui-inline">
 				<label class="layui-form-label">上级部门</label>
 				<div class="layui-input-inline">
-					<select name="parentId" class="parentId" lay-filter="browseLook">
-				        <option value="0">技术部</option>
-				        <option value="1">销售部</option>
-				    </select>
+					<input type="text" name="parentId" class="layui-input parentId" lay-verify="required" placeholder="请输入上级部门号">
 				</div>
 			</div>
 		</div>
@@ -50,6 +47,6 @@
 		</div>
 	</form>
 	<script type="text/javascript" src="../../layui/layui.js"></script>
-	<script type="text/javascript" src="deptAdd.js?v=2"></script>
+	<script type="text/javascript" src="deptAdd.js?v=5"></script>
 </body>
 </html>

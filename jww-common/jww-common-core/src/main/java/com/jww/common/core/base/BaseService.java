@@ -3,40 +3,41 @@ package com.jww.common.core.base;
 import com.baomidou.mybatisplus.service.IService;
 
 /**
+ * 业务处理基类接口
+ *
  * @author wanyong
- * @description: TODO
  * @date 2017/11/12 11:56
  */
 public interface BaseService<T extends BaseModel> extends IService<T> {
 
     /**
-     * 保存
+     * 新增
      *
-     * @param entity
+     * @param entity 实体
      * @return T
      * @author wanyong
-     * @date 2017-12-06 19:58
+     * @date 2017/12/6 13:28
      */
     T save(T entity);
 
     /**
-     * 根据主键更新其他字段
+     * 更新
      *
-     * @param entity
+     * @param entity 实体
      * @return T
      * @author wanyong
-     * @date 2017-12-06 19:58
+     * @date 2017/12/6 13:29
      */
-    T renewById(T entity);
+    T renew(T entity);
 
     /**
-     * 根据主键查询
+     * 根据ID查询
      *
-     * @param id
+     * @param id 实体主键
      * @return T
      * @author wanyong
-     * @date 2017-12-06 19:58
+     * @date 2017/12/6 13:29
      */
-    T findById(Long id);
+    T findById(String id);
 
 }
