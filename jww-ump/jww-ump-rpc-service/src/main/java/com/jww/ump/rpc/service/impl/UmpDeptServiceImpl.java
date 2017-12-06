@@ -5,17 +5,13 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.jww.common.core.base.BaseServiceImpl;
 import com.jww.ump.dao.mapper.UmpDeptMapper;
-import com.jww.ump.model.UmpDept;
-import com.jww.ump.model.UmpUserModel;
+import com.jww.ump.model.UmpDeptModel;
 import com.jww.ump.rpc.api.UmpDeptService;
 import com.xiaoleilu.hutool.util.ObjectUtil;
-import com.xiaoleilu.hutool.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Title:
@@ -25,17 +21,17 @@ import java.util.Map;
  */
 @Service("umpDeptService")
 @Slf4j
-public class UmpDeptServiceImpl extends BaseServiceImpl<UmpDeptMapper, UmpDept> implements UmpDeptService{
+public class UmpDeptServiceImpl extends BaseServiceImpl<UmpDeptMapper, UmpDeptModel> implements UmpDeptService {
 
     @Override
-    public Page<UmpDept> queryListPage(Page<UmpDept> page) {
+    public Page<UmpDeptModel> queryListPage(Page<UmpDeptModel> page) {
         log.info("UmpDeptServiceImpl->queryListPage->page:" + page.toString());
         log.info("UmpDeptServiceImpl->queryListPage->page->condition:" + JSON.toJSONString(page.getCondition()));
-        UmpDept umpDept = new UmpDept();
+        UmpDeptModel umpDept = new UmpDeptModel();
 //        umpDept.setEnable(1);
-        EntityWrapper<UmpDept> entityWrapper = new EntityWrapper<UmpDept>(umpDept);
+        EntityWrapper<UmpDeptModel> entityWrapper = new EntityWrapper<UmpDeptModel>(umpDept);
         if (ObjectUtil.isNotNull(page.getCondition())) {
-            entityWrapper.like("dept_name",page.getCondition().get("dept_name").toString());
+            entityWrapper.like("dept_name", page.getCondition().get("dept_name").toString());
         }
         page.setCondition(null);
 

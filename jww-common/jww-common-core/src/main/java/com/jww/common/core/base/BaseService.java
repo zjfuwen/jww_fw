@@ -28,7 +28,7 @@ public interface BaseService<T extends BaseModel> extends IService<T> {
      * @author wanyong
      * @date 2017/12/6 13:29
      */
-    T renew(T entity);
+    T renewById(T entity);
 
     /**
      * 根据ID查询
@@ -38,6 +38,6 @@ public interface BaseService<T extends BaseModel> extends IService<T> {
      * @author wanyong
      * @date 2017/12/6 13:29
      */
-    T findById(String id);
+    T findById(Long id);
 
 }
