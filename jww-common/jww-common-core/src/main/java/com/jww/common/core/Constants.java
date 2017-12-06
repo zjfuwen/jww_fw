@@ -1,5 +1,8 @@
 package com.jww.common.core;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author wanyong
  * @description: 系统通用常量
@@ -23,9 +26,24 @@ public final class Constants {
     public static final String CACHE_NAMESPACE = "JWW:";
 
     /**
-     * TOKEN
+     * 数据缓存命名空间
      */
-    public static final String TOKEN_KEY = CACHE_NAMESPACE + "TOKEN_KEY";
+    public static final String DATA_CACHE_NAMESPACE = CACHE_NAMESPACE + "DATA:";
+
+    /**
+     * 分布式锁缓存命名空间
+     */
+    public static final String LOCK_CACHE_NAMESPACE = CACHE_NAMESPACE + "LOCK:";
+
+    /**
+     * TOKEN缓存命名空间
+     */
+    public static final String TOKEN_CACHE_NAMESPACE = CACHE_NAMESPACE + "TOKEN:";
+
+    /**
+     * 缓存键值
+     */
+    public static final Map<Class<?>, String> CACHE_KEY_MAP = new HashMap<>(5);
 
     public enum ResultCodeEnum {
         SUCCESS(200, "成功"),

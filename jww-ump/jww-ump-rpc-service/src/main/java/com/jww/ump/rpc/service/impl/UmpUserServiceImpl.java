@@ -71,5 +71,4 @@ public class UmpUserServiceImpl extends BaseServiceImpl<UmpUserMapper, UmpUserMo
         return super.updateBatchById(umpUserModelList);
     }
 
-
 }

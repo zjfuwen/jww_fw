@@ -3,6 +3,7 @@ package com.jww.common.redis.configuration;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jww.common.core.Constants;
 import com.jww.common.core.base.BaseModel;
 import com.xiaoleilu.hutool.util.ArrayUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -53,42 +54,39 @@ public class RedisConfig extends CachingConfigurerSupport {
                 CacheEvict cacheEvict = method.getAnnotation(CacheEvict.class);
                 String cacheName = "";
                 String suffix = "";
-                if(cacheable != null){
+                if (cacheable != null) {
                     String[] cacheNames = cacheable.value();
-                    if(ArrayUtil.isNotEmpty(cacheNames)){
+                    if (ArrayUtil.isNotEmpty(cacheNames)) {
                         cacheName = cacheNames[0];
                     }
                     suffix = Stream.of(params).map(String::valueOf).collect(Collectors.joining("_"));
-                }else if (cachePut != null){
+                } else if (cachePut != null) {
                     String[] cacheNames = cachePut.value();
-                    if(ArrayUtil.isNotEmpty(cacheNames)){
+                    if (ArrayUtil.isNotEmpty(cacheNames)) {
                         cacheName = cacheNames[0];
                     }
                     suffix = getIDFromParams(params);
-                }else if (cacheEvict != null){
+                } else if (cacheEvict != null) {
                     String[] cacheNames = cacheEvict.value();
-                    if(ArrayUtil.isNotEmpty(cacheNames)){
+                    if (ArrayUtil.isNotEmpty(cacheNames)) {
                         cacheName = cacheNames[0];
                     }
                     suffix = getIDFromParams(params);
                 }
-                sb.append(cacheName);
-                sb.append(".");
-                sb.append(target.getClass().getName());
-                sb.append(":");
-                sb.append(suffix);
+                sb.append(Constants.DATA_CACHE_NAMESPACE).append(target.getClass().getName()).append(":")
+                        .append(cacheName).append(":").append(suffix);
                 return sb.toString();
             }
 
             /** 从参数中获取ID */
             private String getIDFromParams(Object[] params) {
                 String id = "";
-                if(ArrayUtil.isNotEmpty(params)){
+                if (ArrayUtil.isNotEmpty(params)) {
                     //获取第一个参数
                     Object param0 = params[0];
                     //如果第一个参数是BaseModel，则获取ID
-                    if(param0 instanceof BaseModel){
-                        BaseModel param0BaseModel = (BaseModel)param0;
+                    if (param0 instanceof BaseModel) {
+                        BaseModel param0BaseModel = (BaseModel) param0;
                         id = String.valueOf(param0BaseModel.getId());
                     }
                 }

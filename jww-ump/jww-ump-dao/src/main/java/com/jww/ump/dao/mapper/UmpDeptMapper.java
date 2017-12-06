@@ -1,7 +1,7 @@
 package com.jww.ump.dao.mapper;
 
 import com.jww.common.core.base.BaseMapper;
-import com.jww.ump.model.UmpDept;
+import com.jww.ump.model.UmpDeptModel;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import com.jww.ump.model.UmpDept;
  * @author wanyong
  * @since 2017-11-25
  */
-public interface UmpDeptMapper extends BaseMapper<UmpDept> {
+public interface UmpDeptMapper extends BaseMapper<UmpDeptModel> {
 
 }

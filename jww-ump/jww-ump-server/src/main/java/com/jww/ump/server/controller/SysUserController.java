@@ -40,8 +40,8 @@ public class SysUserController extends BaseController {
      * @date 2017-12-05 13:35
      */
     @PostMapping("/query")
-    public ResultModel<UmpUserModel> query(@PathVariable String id) {
-        Assert.notBlank(id);
+    public ResultModel<UmpUserModel> query(@RequestBody Long id) {
+        Assert.notNull(id);
         UmpUserModel umpUserModel = umpUserService.findById(id);
         return ResultUtil.ok(umpUserModel);
     }
@@ -76,6 +76,7 @@ public class SysUserController extends BaseController {
         }
         // 设置初始密码: 123456
         umpUserModel.setPassword(SecurityUtil.encryptPassword("123456"));
+        umpUserModel.setCreateBy(getCurrUser());
         umpUserService.save(umpUserModel);
         return ResultUtil.ok();
     }
@@ -87,6 +88,11 @@ public class SysUserController extends BaseController {
             throw new BusinessException("用户ID集合不能为空");
         }
         return ResultUtil.ok(umpUserService.delBatchByIds(ids));
+    }
+
+    @PostMapping("/modify")
+    public ResultModel modify(@RequestBody UmpUserModel umpUserModel) {
+        return ResultUtil.ok(umpUserService.renewById(umpUserModel));
     }
 
 }

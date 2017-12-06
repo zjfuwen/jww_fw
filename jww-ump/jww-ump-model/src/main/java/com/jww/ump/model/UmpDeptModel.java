@@ -15,7 +15,7 @@ import lombok.Data;
  */
 @Data
 @TableName("sys_dept")
-public class UmpDept extends BaseModel {
+public class UmpDeptModel extends BaseModel {
 
     private static final long serialVersionUID = 1L;
 
