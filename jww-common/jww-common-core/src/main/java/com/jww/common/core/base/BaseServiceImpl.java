@@ -7,7 +7,7 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 
 /**
- * 业务处理实现基类
+ * 业务处理基类实现
  *
  * @author wanyong
  * @date 2017/11/19 20:36

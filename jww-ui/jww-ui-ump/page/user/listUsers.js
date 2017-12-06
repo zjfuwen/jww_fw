@@ -19,7 +19,7 @@ layui.config({
             {field: 'dept', title: '部门'},
             {field: 'position', title: '职位'},
             {field: 'email', title: '邮箱'},
-            {field: 'opt', fixed: 'right', width: 160, align: 'center', toolbar: '#toolBar'}
+            {field: 'opt', title: '操作', fixed: 'right', width: 160, align: 'center', toolbar: '#toolBar'}
         ]],
         url: 'user/listPage',
         method: 'post',
