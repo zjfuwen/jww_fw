@@ -56,12 +56,13 @@ jww
 │ 
 ├─pay-ump 统一管理平台项目
 │  ├─jww-ump-common 项目公共组件
-│  ├─jww-ump-dao 项目公共组件
-│  ├─jww-ump-generator 项目公共组件
-│  ├─jww-ump-model 项目公共组件
-│  ├─jww-ump-mq 项目公共组件
-│  ├─jww-ump-rpc-api 项目公共组件
-│  ├─jww-ump-rpc-service 项目公共组件
+│  ├─jww-ump-dao 项目数据访问模块
+│  ├─jww-ump-generator 项目代码生成器
+│  ├─jww-ump-model 项目MODEL模块
+│  ├─jww-ump-mq 项目队列模块
+│  ├─jww-ump-rpc-api 项目接口模块
+│  ├─jww-ump-rpc-service 项目后台模块
+│  ├─jww-ump-rpc-server 项目WEB控制模块
 │  └─sqls 项目SQL语句
 ``` 
 
@@ -71,19 +72,19 @@ jww
   1. 环境要求
    * JDK1.7+
    * MySQL5.5+
-   * Maven3.0+
+   * Maven3.3+
    * Zookeeper3.3+
    * Redis3.0+
    * Nginx1.8+
    * Apache Activemq-5.0+ (可选)
  2.	执行SQL文件jww/jww-ump/sqls/jww.sql，初始化表和数据；
  3.	修改jww/jww-ump/jww-ump-rpc-service/src/main/resources/application-dev.yml，更新MySQL帐号密码，Redis的IP、端口和密码；
- 4.	修改jww/jww-ump/jww-ump-server/src/main/resources/plication-dev.yml，更新Redis的IP、端口和密码；
+ 4.	修改jww/jww-ump/jww-ump-server/src/main/resources/application-dev.yml，更新Redis的IP、端口和密码；
  5.	修改Nginx/conf/ nginx.conf，指定静态页面地址：
  6.	启动MySQL, Zookeeper, Redis, Nginx;
  7.	IntelliJ IDEA中右键 >> Run jww/jww-ump/jww-ump-rpc-service/src/main/java/com/jww/ump/rpc/service/ServiceApplication.java;
  8.	IntelliJ IDEA中右键 >> Run jww/jww-ump/jww-ump-server/src/main/java/com/jww/ump/server/ ServerApplication.java;
- 9.	访问地址：http://localhost 帐户密码：admin/admin
+ 9.	访问地址：http://localhost 帐户密码：admin/111111
 
     
 ## 版权声明
