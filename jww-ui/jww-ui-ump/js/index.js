@@ -9,6 +9,10 @@ layui.config({
     $ = layui.jquery;
 
     //渲染用户名和头像
+    var currentUser = layui.data("JWW_UMP").CUURENT_USER;
+    if (typeof(currentUser) == "undefined") {
+        window.location.href = "/page/login/login.html";
+    }
     var userName = layui.data("JWW_UMP").CUURENT_USER.userName;
     $("span[name='userName']").text(userName);
 
