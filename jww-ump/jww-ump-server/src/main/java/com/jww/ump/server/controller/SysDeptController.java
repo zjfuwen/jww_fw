@@ -64,7 +64,7 @@ public class SysDeptController extends BaseController {
         return ResultUtil.ok(pageModel);
     }
 
-    @PostMapping("/queryList")
+    @PostMapping("/queryListPage")
     public ResultModel queryListPage(@RequestBody PageModel<UmpDeptModel> pageModel) {
         pageModel = (PageModel<UmpDeptModel>) umpDeptService.queryListPage(pageModel);
         return ResultUtil.ok(pageModel);
@@ -95,8 +95,8 @@ public class SysDeptController extends BaseController {
         return ResultUtil.ok();
     }
 
-    @PostMapping("/mod")
-    public ResultModel mod(@RequestBody UmpDeptModel UmpDeptModel) {
+    @PostMapping("/modify")
+    public ResultModel modify(@RequestBody UmpDeptModel UmpDeptModel) {
         log.info("DeptController->mod: UmpDeptModel={}", UmpDeptModel.getId());
         UmpDeptModel.setUpdateBy(this.getCurrUser());
         UmpDeptModel.setUpdateTime(new Date());

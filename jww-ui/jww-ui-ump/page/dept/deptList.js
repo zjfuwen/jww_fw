@@ -18,7 +18,7 @@ layui.config({
             {field: 'enable', title: '状态', templet: '#checkboxTpl', unresize: true},
             {field: 'opt', fixed: 'right', width: 160, align: 'center', toolbar: '#toolBar'}
         ]],
-        url: 'dept/queryList',
+        url: 'dept/queryListPage',
         method: 'post',
         request: {
             pageName: 'current', //页码的参数名称，默认：page
@@ -169,7 +169,7 @@ layui.config({
         var index = layer.msg('修改中，请稍候',{icon: 16,time:false,shade:0.8});
         $.ajax({
             type: "POST",
-            url: "dept/mod",
+            url: "dept/modify",
             data: JSON.stringify(modData),
             success: function(data){
                 if(data.code==200){
