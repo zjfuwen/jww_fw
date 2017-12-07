@@ -16,7 +16,7 @@ layui.config({
             {field: 'sortNo', title: '排序', sort: true, edit: 'text'},
             {field: 'parentId', title: '上级部门', sort: true, edit: 'text'},
             {field: 'enable', title: '状态', templet: '#checkboxTpl', unresize: true},
-            {field: 'opt', fixed: 'right', width: 160, align: 'center', toolbar: '#toolBar'}
+            {field: 'opt', title: '操作', fixed: 'right', width: 160, align: 'center', toolbar: '#toolBar'}
         ]],
         url: 'dept/queryListPage',
         method: 'post',
