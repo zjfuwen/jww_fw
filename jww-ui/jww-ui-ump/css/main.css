@@ -86,7 +86,7 @@
 .allNews em{ font-style:normal; font-size:16px;display: block; }
 .panel_box a .allNews cite{ display:none; }
 .panel_box a cite{ font-size:16px; display: block; font-style:normal; }
-.sysNotice{ width:50%; float: left; }
+.sysNotice{ width:100%; float: left; }
 .sysNotice .layui-elem-quote{ line-height:26px; position: relative;}
 .sysNotice .layui-table{ margin-top:0; border-left:5px solid #e2e2e2; }
 .sysNotice .title .icon-new1{ position: absolute; top:8px; margin-left: 10px; color:#f00; font-size:25px; }
