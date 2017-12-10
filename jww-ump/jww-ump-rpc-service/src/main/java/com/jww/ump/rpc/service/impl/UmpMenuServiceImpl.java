@@ -3,7 +3,6 @@ package com.jww.ump.rpc.service.impl;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.jww.common.core.base.BaseServiceImpl;
 import com.jww.ump.dao.mapper.UmpMenuMapper;
-import com.jww.ump.dao.mapper.UmpUserMapper;
 import com.jww.ump.model.UmpMenuModel;
 import com.jww.ump.rpc.api.UmpMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +28,7 @@ public class UmpMenuServiceImpl extends BaseServiceImpl<UmpMenuMapper, UmpMenuMo
     private UmpMenuMapper umpMenuMapper;
 
     @Override
-    public List<UmpMenuModel> findList() {
+    public List<UmpMenuModel> queryList() {
         UmpMenuModel umpMenuModel = new UmpMenuModel();
         umpMenuModel.setEnable(1);
         EntityWrapper<UmpMenuModel> entityWrapper = new EntityWrapper<>(umpMenuModel);
@@ -37,7 +36,7 @@ public class UmpMenuServiceImpl extends BaseServiceImpl<UmpMenuMapper, UmpMenuMo
     }
 
     @Override
-    public List<UmpMenuModel> findMenuTreeByUserId(Long userId) {
+    public List<UmpMenuModel> queryMenuTreeByUserId(Long userId) {
         List<UmpMenuModel> umpMenuModelList = umpMenuMapper.selectMenuTreeByUserId(userId);
         Map<Long, List<UmpMenuModel>> map = new HashMap<>(3);
         for (UmpMenuModel umpMenuModel : umpMenuModelList) {

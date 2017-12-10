@@ -21,11 +21,11 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseModel>
         extends ServiceImpl<BaseMapper<T>, T> implements BaseService<T> {
 
     @Override
-    @CacheEvict(value = "DATA")
-    public T renewById(T entity) {
+    @CacheEvict(value = "data")
+    public T modifyById(T entity) {
         T resultEntity = null;
         entity.setUpdateTime(new Date());
-        String lockKey = CacheUtil.getLockKey(entity.getId(), getClass());
+        String lockKey = CacheUtil.getLockKey(entity.getId(), this.getClass());
         String lockValue = CacheUtil.getCache().lock(lockKey);
         if (StrUtil.isNotBlank(lockValue)) {
             if (super.updateById(entity)) {
@@ -39,14 +39,14 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseModel>
     }
 
     @Override
-    @Cacheable(value = "DATA")
-    public T findById(Long id) {
+    @Cacheable(value = "data")
+    public T queryById(Long id) {
         return super.selectById(id);
     }
 
     @Override
-    @CachePut(value = "DATA")
-    public T save(T entity) {
+    @CachePut(value = "data")
+    public T add(T entity) {
         entity.setCreateTime(new Date());
         if (super.insert(entity)) {
             return entity;

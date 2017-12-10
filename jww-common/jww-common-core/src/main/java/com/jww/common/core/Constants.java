@@ -23,22 +23,22 @@ public final class Constants {
     /**
      * 缓存命名空间
      */
-    public static final String CACHE_NAMESPACE = "JWW:";
+    public static final String CACHE_NAMESPACE = "jww:";
 
     /**
      * 数据缓存命名空间
      */
-    public static final String DATA_CACHE_NAMESPACE = CACHE_NAMESPACE + "DATA:";
+    public static final String DATA_CACHE_NAMESPACE = CACHE_NAMESPACE + "data:";
 
     /**
      * 分布式锁缓存命名空间
      */
-    public static final String LOCK_CACHE_NAMESPACE = CACHE_NAMESPACE + "LOCK:";
+    public static final String LOCK_CACHE_NAMESPACE = CACHE_NAMESPACE + "lock:";
 
     /**
      * TOKEN缓存命名空间
      */
-    public static final String TOKEN_CACHE_NAMESPACE = CACHE_NAMESPACE + "TOKEN:";
+    public static final String TOKEN_CACHE_NAMESPACE = CACHE_NAMESPACE + "token:";
 
     /**
      * 缓存键值

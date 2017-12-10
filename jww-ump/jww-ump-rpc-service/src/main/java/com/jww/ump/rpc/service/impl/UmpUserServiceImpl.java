@@ -27,7 +27,7 @@ import java.util.Map;
 public class UmpUserServiceImpl extends BaseServiceImpl<UmpUserMapper, UmpUserModel> implements UmpUserService {
 
     @Override
-    public UmpUserModel findByAccount(String account) {
+    public UmpUserModel queryByAccount(String account) {
         log.info("UmpUserServiceImpl->findByAccount->account:" + account);
         UmpUserModel umpUserModel = new UmpUserModel();
         umpUserModel.setAccount(account);
@@ -37,7 +37,7 @@ public class UmpUserServiceImpl extends BaseServiceImpl<UmpUserMapper, UmpUserMo
     }
 
     @Override
-    public Page<UmpUserModel> findListPage(Page<UmpUserModel> page) {
+    public Page<UmpUserModel> queryListPage(Page<UmpUserModel> page) {
         log.info("UmpUserServiceImpl->findListPage->page:" + page.toString());
         log.info("UmpUserServiceImpl->findListPage->page->condition:" + JSON.toJSONString(page.getCondition()));
         UmpUserModel umpUserModel = new UmpUserModel();

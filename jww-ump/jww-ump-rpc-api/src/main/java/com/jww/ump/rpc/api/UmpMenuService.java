@@ -23,7 +23,7 @@ public interface UmpMenuService extends BaseService<UmpMenuModel> {
      * @author wanyong
      * @date 2017-12-02 13:59
      */
-    public List<UmpMenuModel> findList();
+    public List<UmpMenuModel> queryList();
 
     /**
      * 根据用户ID查找菜单树
@@ -33,5 +33,5 @@ public interface UmpMenuService extends BaseService<UmpMenuModel> {
      * @author wanyong
      * @date 2017-12-03 00:56
      */
-    public List<UmpMenuModel> findMenuTreeByUserId(Long userId);
+    public List<UmpMenuModel> queryMenuTreeByUserId(Long userId);
 }

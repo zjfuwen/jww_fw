@@ -9,7 +9,6 @@ import com.jww.common.web.util.ResultUtil;
 import com.jww.ump.model.UmpDeptModel;
 import com.jww.ump.rpc.api.UmpDeptService;
 import com.xiaoleilu.hutool.lang.Assert;
-import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +18,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @Title:部门管理控制器
- * @Description:
+ * 部门管理控制器
+ *
  * @Author: Ricky Wang
  * @Date: 17/12/1 11:23:17
  */
@@ -43,7 +42,7 @@ public class SysDeptController extends BaseController {
     @PostMapping("/query")
     public ResultModel<UmpDeptModel> query(@RequestBody Long id) {
         Assert.notNull(id);
-        UmpDeptModel umpDeptModel = umpDeptService.findById(id);
+        UmpDeptModel umpDeptModel = umpDeptService.queryById(id);
         return ResultUtil.ok(umpDeptModel);
     }
 
