@@ -1,4 +1,4 @@
-package com.jww.common.db.configuration;
+package com.jww.common.mdb.configuration;
 
 import com.baomidou.mybatisplus.MybatisConfiguration;
 import com.baomidou.mybatisplus.MybatisXMLLanguageDriver;
@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.spring.boot.starter.ConfigurationCustomizer;
 import com.baomidou.mybatisplus.spring.boot.starter.MybatisPlusProperties;
 import com.baomidou.mybatisplus.spring.boot.starter.SpringBootVFS;
 import com.jww.common.core.Constants;
-import com.jww.common.db.DynamicDataSource;
+import com.jww.common.mdb.DynamicDataSource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.mapping.DatabaseIdProvider;
 import org.apache.ibatis.plugin.Interceptor;
@@ -34,8 +34,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 多数据源自动配置
+ *
  * @author wanyong
- * @description: 多数据源自动配置
  * @date 2017/11/20 23:15
  */
 @Slf4j
@@ -69,8 +70,9 @@ public class MultipleDataSourceAutoConfiguration {
     }
 
     /**
+     * 主数据源
+     *
      * @return DataSource
-     * @description: 主数据源
      * @author wanyong
      * @date 2017/11/21 00:05
      */
@@ -78,33 +80,35 @@ public class MultipleDataSourceAutoConfiguration {
     @Bean("masterDataSource")
     @ConfigurationProperties(prefix = "datasource.master")
     public DataSource masterDataSource() {
-        log.info("===========初始化masterDataSource=============");
+        log.debug("===========初始化masterDataSource=============");
         return DataSourceBuilder.create().type(dataSourceType).build();
     }
 
     /**
+     * 从数据源
+     *
      * @return DataSource
-     * @description: 从数据源
      * @author wanyong
      * @date 2017/11/21 00:05
      */
     @Bean("slaverDataSource")
     @ConfigurationProperties(prefix = "datasource.slaver")
     public DataSource slaverDataSource() {
-        log.info("===========初始化slaverDataSource=============");
+        log.debug("===========初始化slaverDataSource=============");
         return DataSourceBuilder.create().type(dataSourceType).build();
     }
 
     /**
+     * 动态数据源
+     *
      * @return DynamicDataSource
-     * @description: 动态数据源
      * @author wanyong
      * @date 2017/11/21 00:56
      */
     @Bean("dynamicDataSource")
     public DynamicDataSource dynamicDataSource(@Qualifier("masterDataSource") DataSource masterDataSource,
                                                @Qualifier("slaverDataSource") DataSource slaverDataSource) {
-        log.info("===========初始化dynamicDataSource=============");
+        log.debug("===========初始化dynamicDataSource=============");
         Map<Object, Object> targetDataSources = new HashMap<Object, Object>(2);
         targetDataSources.put(Constants.DataSourceEnum.MASTER.getName(), masterDataSource);
         targetDataSources.put(Constants.DataSourceEnum.SLAVE.getName(), slaverDataSource);
@@ -115,16 +119,17 @@ public class MultipleDataSourceAutoConfiguration {
     }
 
     /**
+     * sqlsession工厂
+     *
      * @param dynamicDataSource
      * @return SqlSessionFactory
-     * @description: sqlsession工厂
      * @author wanyong
      * @date 2017/11/21 00:56
      */
     @Bean
     public SqlSessionFactory sqlSessionFactory(@Qualifier("dynamicDataSource") DynamicDataSource dynamicDataSource)
             throws Exception {
-        log.info("================创建sqlSessionFactory====================");
+        log.debug("================创建sqlSessionFactory====================");
         MybatisSqlSessionFactoryBean factory = new MybatisSqlSessionFactoryBean();
         factory.setDataSource(dynamicDataSource);
         factory.setVfs(SpringBootVFS.class);
@@ -171,15 +176,16 @@ public class MultipleDataSourceAutoConfiguration {
     }
 
     /**
+     * 事务管理
+     *
      * @param dynamicDataSource
      * @return DataSourceTransactionManager
-     * @description: 事务管理
      * @author wanyong
      * @date 2017/11/21 00:57
      */
     @Bean
     public DataSourceTransactionManager transactionManager(DynamicDataSource dynamicDataSource) throws Exception {
-        log.info("================初始化transactionManager====================");
+        log.debug("================初始化transactionManager====================");
         return new DataSourceTransactionManager(dynamicDataSource);
     }
 }

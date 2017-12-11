@@ -12,7 +12,7 @@
     <artifactId>jww-common</artifactId>
     <version>1.0.0</version>
     <modules>
-        <module>jww-common-db</module>
+        <module>jww-common-mdb</module>
         <module>jww-common-web</module>
         <module>jww-common-redis</module>
         <module>jww-common-http</module>

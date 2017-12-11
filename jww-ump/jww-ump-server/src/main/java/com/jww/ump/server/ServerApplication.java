@@ -7,8 +7,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ImportResource;
 
 /**
+ * 启动类
+ *
  * @author wanyong
- * @description: 启动类
  * @date 2017/11/17 00:34
  */
 @SpringBootApplication

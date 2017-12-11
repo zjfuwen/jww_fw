@@ -1,7 +1,7 @@
-package com.jww.common.db.aspect;
+package com.jww.common.mdb.aspect;
 
 import com.jww.common.core.Constants;
-import com.jww.common.db.DbContextHolder;
+import com.jww.common.mdb.DbContextHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
@@ -14,18 +14,15 @@ import org.springframework.stereotype.Component;
 import java.lang.reflect.Method;
 
 /**
+ * 数据源切面处理类
+ *
  * @author wanyong
- * @description: 数据源切面处理类
  * @date 2017/11/17 13:59
  */
 @Slf4j
 @Aspect
 @Component
 public class DataSourceAspect {
-
-    public DataSourceAspect() {
-        log.info("---------------DataSourceAspect----------------------");
-    }
 
     @Pointcut("execution(* com.jww..mapper.*.*(..))")
     public void dataSourcePointCut() {

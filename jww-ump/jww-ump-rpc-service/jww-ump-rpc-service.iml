@@ -16,7 +16,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="jww-common-db" />
+    <orderEntry type="module" module-name="jww-common-mdb" />
     <orderEntry type="module" module-name="jww-common-core" />
     <orderEntry type="library" name="Maven: com.baomidou:mybatis-plus:2.1.6" level="project" />
     <orderEntry type="library" name="Maven: com.baomidou:mybatis-plus-support:2.1.6" level="project" />
@@ -27,10 +27,10 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-beans:4.3.12.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-expression:4.3.12.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba:fastjson:1.2.41" level="project" />
-    <orderEntry type="library" name="Maven: com.xiaoleilu:hutool-crypto:3.2.1" level="project" />
-    <orderEntry type="library" name="Maven: com.xiaoleilu:hutool-core:3.2.1" level="project" />
-    <orderEntry type="library" name="Maven: com.xiaoleilu:hutool-poi:3.2.1" level="project" />
-    <orderEntry type="library" name="Maven: com.xiaoleilu:hutool-log:3.2.1" level="project" />
+    <orderEntry type="library" name="Maven: com.xiaoleilu:hutool-crypto:3.2.2" level="project" />
+    <orderEntry type="library" name="Maven: com.xiaoleilu:hutool-core:3.2.2" level="project" />
+    <orderEntry type="library" name="Maven: com.xiaoleilu:hutool-poi:3.2.2" level="project" />
+    <orderEntry type="library" name="Maven: com.xiaoleilu:hutool-log:3.2.2" level="project" />
     <orderEntry type="library" name="Maven: org.hibernate:hibernate-validator:5.3.5.Final" level="project" />
     <orderEntry type="library" name="Maven: javax.validation:validation-api:1.1.0.Final" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.logging:jboss-logging:3.3.1.Final" level="project" />
@@ -50,9 +50,12 @@
     <orderEntry type="library" name="Maven: com.baomidou:mybatisplus-spring-boot-starter:1.0.5" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-configuration-processor:1.5.8.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: com.vaadin.external.google:android-json:0.0.20131108.vaadin1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.6" level="project" />
+    <orderEntry type="library" name="Maven: com.xiaoleilu:hutool-setting:3.2.2" level="project" />
     <orderEntry type="module" module-name="jww-ump-common" />
     <orderEntry type="module" module-name="jww-common-log" />
+    <orderEntry type="module" module-name="jww-common-http" />
+    <orderEntry type="library" name="Maven: com.xiaoleilu:hutool-http:3.2.2" level="project" />
+    <orderEntry type="library" name="Maven: com.xiaoleilu:hutool-json:3.2.2" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-web:1.5.8.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-tomcat:1.5.8.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.apache.tomcat.embed:tomcat-embed-core:8.5.23" level="project" />

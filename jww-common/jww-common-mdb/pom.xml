@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>jww-common-db</artifactId>
+    <artifactId>jww-common-mdb</artifactId>
 
     <dependencies>
         <dependency>
@@ -46,11 +46,20 @@
             <artifactId>druid</artifactId>
             <version>${druid.version}</version>
         </dependency>
-        <!-- apache-commons -->
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>${commons.lang3.version}</version>
+            <groupId>com.xiaoleilu</groupId>
+            <artifactId>hutool-setting</artifactId>
+            <version>${hutool.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.xiaoleilu</groupId>
+                    <artifactId>hutool-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.xiaoleilu</groupId>
+                    <artifactId>hutool-log</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
