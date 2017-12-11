@@ -9,11 +9,11 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
- * 登录
+ * 登录实体
  *
- * @author waner
- * @since 2017-11-30
- **/
+ * @author wanyong
+ * @date 2017/11/12 11:54
+ */
 @ToString
 public class LoginModel implements Serializable {
     private static final long serialVersionUID = 3951474329069548585L;
