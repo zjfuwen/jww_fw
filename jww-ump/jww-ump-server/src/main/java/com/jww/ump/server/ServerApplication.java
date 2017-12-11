@@ -13,7 +13,7 @@ import org.springframework.context.annotation.ImportResource;
  * @date 2017/11/17 00:34
  */
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.jww.ump.server", "com.jww.common.web", "com.jww.common.log.web"})
+@ComponentScan(basePackages = {"com.jww.ump.server", "com.jww.common.web","com.jww.common.session", "com.jww.common.log.web"})
 @ServletComponentScan("com.jww.common.web.filter")
 @ImportResource(value = {"classpath:dubbo/consumers.xml"})
 public class ServerApplication {

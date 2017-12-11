@@ -2,9 +2,7 @@ package com.jww.common.core.base;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.jww.common.core.exception.BusinessException;
-import com.jww.common.core.util.CacheUtil;
-import com.xiaoleilu.hutool.util.StrUtil;
+import com.jww.common.core.annotation.DistributedLock;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -21,19 +19,13 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseModel>
         extends ServiceImpl<BaseMapper<T>, T> implements BaseService<T> {
 
     @Override
+    @DistributedLock
     @CacheEvict(value = "data")
     public T modifyById(T entity) {
         T resultEntity = null;
         entity.setUpdateTime(new Date());
-        String lockKey = CacheUtil.getLockKey(entity.getId(), this.getClass());
-        String lockValue = CacheUtil.getCache().lock(lockKey);
-        if (StrUtil.isNotBlank(lockValue)) {
-            if (super.updateById(entity)) {
-                resultEntity = entity;
-            }
-            CacheUtil.getCache().unlock(lockKey, lockValue);
-        } else {
-            throw new BusinessException("数据不一致,请刷新页面重新编辑!");
+        if (super.updateById(entity)) {
+            resultEntity = entity;
         }
         return resultEntity;
     }

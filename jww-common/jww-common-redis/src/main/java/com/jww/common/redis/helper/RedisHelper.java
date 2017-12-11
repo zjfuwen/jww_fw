@@ -1,7 +1,7 @@
 package com.jww.common.redis.helper;
 
-import com.jww.common.core.manager.CacheManager;
-import com.jww.common.core.util.CacheUtil;
+import com.jww.common.redis.manager.CacheManager;
+import com.jww.common.redis.util.CacheUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

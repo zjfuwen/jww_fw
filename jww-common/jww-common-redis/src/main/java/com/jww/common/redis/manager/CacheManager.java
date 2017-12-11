@@ -1,4 +1,4 @@
-package com.jww.common.core.manager;
+package com.jww.common.redis.manager;
 
 import java.io.Serializable;
 import java.util.Set;

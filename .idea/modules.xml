@@ -11,6 +11,7 @@
       <module fileurl="file://$PROJECT_DIR$/jww-common/jww-common-mq/jww-common-mq.iml" filepath="$PROJECT_DIR$/jww-common/jww-common-mq/jww-common-mq.iml" />
       <module fileurl="file://$PROJECT_DIR$/jww-common/jww-common-pay/jww-common-pay.iml" filepath="$PROJECT_DIR$/jww-common/jww-common-pay/jww-common-pay.iml" />
       <module fileurl="file://$PROJECT_DIR$/jww-common/jww-common-redis/jww-common-redis.iml" filepath="$PROJECT_DIR$/jww-common/jww-common-redis/jww-common-redis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jww-common/jww-common-session/jww-common-session.iml" filepath="$PROJECT_DIR$/jww-common/jww-common-session/jww-common-session.iml" />
       <module fileurl="file://$PROJECT_DIR$/jww-common/jww-common-web/jww-common-web.iml" filepath="$PROJECT_DIR$/jww-common/jww-common-web/jww-common-web.iml" />
       <module fileurl="file://$PROJECT_DIR$/jww-ump/jww-ump.iml" filepath="$PROJECT_DIR$/jww-ump/jww-ump.iml" />
       <module fileurl="file://$PROJECT_DIR$/jww-ump/jww-ump-common/jww-ump-common.iml" filepath="$PROJECT_DIR$/jww-ump/jww-ump-common/jww-ump-common.iml" />

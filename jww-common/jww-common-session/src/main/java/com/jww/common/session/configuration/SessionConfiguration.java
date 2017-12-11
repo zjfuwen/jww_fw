@@ -1,4 +1,4 @@
-package com.jww.common.web.configuration;
+package com.jww.common.session.configuration;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;

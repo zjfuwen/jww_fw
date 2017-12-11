@@ -17,6 +17,7 @@
         <module name="jww-common-pay" />
         <module name="jww-common-redis" />
         <module name="jww-common-service" />
+        <module name="jww-common-session" />
         <module name="jww-common-web" />
         <module name="jww-ump-common" />
         <module name="jww-ump-dao" />
@@ -42,6 +43,7 @@
       <module name="jww-common-pay" target="1.8" />
       <module name="jww-common-redis" target="1.8" />
       <module name="jww-common-service" target="1.8" />
+      <module name="jww-common-session" target="1.8" />
       <module name="jww-common-web" target="1.8" />
       <module name="jww-ump" target="1.8" />
       <module name="jww-ump-common" target="1.8" />
