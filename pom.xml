@@ -54,6 +54,10 @@
         <hutool.version>3.2.2</hutool.version>
         <!-- 支付 -->
         <com.egzosn.pay.version>2.0.4-RELEASE</com.egzosn.pay.version>
+        <!-- 接口文档 -->
+        <swagger2.spring.boot.starter.version>0.1.2</swagger2.spring.boot.starter.version>
+        <!-- aspectjweaver -->
+        <aspectjweaver.version>1.8.11</aspectjweaver.version>
     </properties>
 
 

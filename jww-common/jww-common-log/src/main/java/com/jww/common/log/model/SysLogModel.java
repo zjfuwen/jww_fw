@@ -6,8 +6,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
+ * 系统日志实体类
+ *
  * @author wanyong
- * @description: 系统日志实体类
  * @date 2017/11/9 17:37
  */
 @Data
