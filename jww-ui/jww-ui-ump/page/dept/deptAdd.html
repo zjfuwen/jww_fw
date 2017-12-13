@@ -21,21 +21,30 @@
 		</div>
 		<div class="layui-form-item">
 			<div class="layui-inline">
-				<label class="layui-form-label">状态</label>
-				<div class="layui-input-block">
-					<input type="checkbox" name="enable" value="1" class="isEnable" title="启用" checked>
-				</div>
-			</div>
-			<div class="layui-inline">		
 				<label class="layui-form-label">排序</label>
 				<div class="layui-input-inline">
 					<input type="text" name="sortNo" class="layui-input sortNo" lay-verify="required" placeholder="请输入序号">
 				</div>
 			</div>
 			<div class="layui-inline">
+				<label class="layui-form-label">状态</label>
+				<div class="layui-input-block">
+					<input type="checkbox" name="enable" value="1" class="isEnable" title="启用" checked>
+				</div>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-inline">
 				<label class="layui-form-label">上级部门</label>
 				<div class="layui-input-inline">
+					<input type="hidden" name="parentId" class="layui-input parentId">
+					<input type="text" name="parentName" class="layui-input parentName" lay-verify="required" placeholder="右侧选择上级部门" readonly>
+				</div>
+				<div class="layui-input-inline">
+					<!--
 					<input type="text" name="parentId" class="layui-input parentId" lay-verify="required" placeholder="请输入上级部门号">
+					-->
+					<ul id="demo"></ul>
 				</div>
 			</div>
 		</div>
@@ -47,6 +56,6 @@
 		</div>
 	</form>
 	<script type="text/javascript" src="../../layui/layui.js"></script>
-	<script type="text/javascript" src="deptAdd.js?v=5"></script>
+	<script type="text/javascript" src="deptAdd.js?v=8"></script>
 </body>
 </html>

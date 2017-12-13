@@ -14,7 +14,7 @@ layui.config({
             {type: 'checkbox', fixed: 'left'},
             {field: 'deptName', title: '部门名称', sort: true, edit: 'text'},
             {field: 'sortNo', title: '排序', sort: true, edit: 'text'},
-            {field: 'parentId', title: '上级部门', sort: true, edit: 'text'},
+            {field: 'parentName', title: '上级部门', sort: true},
             {field: 'enable', title: '状态', templet: '#checkboxTpl', unresize: true},
             {field: 'opt', title: '操作', fixed: 'right', width: 160, align: 'center', toolbar: '#toolBar'}
         ]],
@@ -37,7 +37,7 @@ layui.config({
 
     //监听状态操作
     form.on('checkbox(enableCbx)', function(obj){
-        // layer.tips(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
+        layer.tips(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
         var enable = 0;
         if(obj.elem.checked == true){
             enable = 1;
@@ -113,7 +113,7 @@ layui.config({
         var index = layui.layer.open({
             title: "添加部门",
             type: 2,
-            content: "deptAdd.html?v=4",
+            content: "deptAdd.html?v=5",
             success: function (layero, index) {
                 setTimeout(function () {
                     layui.layer.tips('点击此处返回部门列表', '.layui-layer-setwin .layui-layer-close', {

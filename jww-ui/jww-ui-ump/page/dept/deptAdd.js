@@ -1,6 +1,6 @@
 layui.config({
     base : "../../js/"
-}).use(['base','form','layer','jquery','layedit','laydate'],function(){
+}).use(['base','form','layer','jquery','laydate','tree'],function(){
 	var base = layui.base,
 		form = layui.form,
 		layer = parent.layer === undefined ? layui.layer : parent.layer,
@@ -33,6 +33,25 @@ layui.config({
         });
 
  		return false;
- 	})
-	
+ 	});
+    $.ajax({
+        type: "GET",
+        url: "dept/queryTree",
+        success: function(data){
+            if(data.code==200){
+                layui.tree({
+                    elem: '#demo' //传入元素选择器
+                    ,nodes: [data.data],
+                    click: function(node){
+                        $("input[name='parentId']").val(node.id);
+                        $("input[name='parentName']").val(node.name);
+                        // console.log(node) //node即为当前点击的节点数据
+                    }
+                });
+            }else{
+                top.layer.msg("部门加载失败！");
+            }
+        },
+        contentType: "application/json"
+    });
 })

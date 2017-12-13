@@ -34,6 +34,11 @@ public class UmpDeptModel extends BaseModel {
      */
 	@TableField("parent_id")
 	private Long parentId;
+	/**
+	 * 上级部门名称
+	 */
+	@TableField(exist = false)
+	private String parentName;
     /**
      * 排序号
      */
@@ -44,56 +49,4 @@ public class UmpDeptModel extends BaseModel {
      */
 	@TableField("leaf_")
 	private Integer leaf;
-
-
-	public Long getUnitId() {
-		return unitId;
-	}
-
-	public void setUnitId(Long unitId) {
-		this.unitId = unitId;
-	}
-
-	public String getDeptName() {
-		return deptName;
-	}
-
-	public void setDeptName(String deptName) {
-		this.deptName = deptName;
-	}
-
-	public Long getParentId() {
-		return parentId;
-	}
-
-	public void setParentId(Long parentId) {
-		this.parentId = parentId;
-	}
-
-	public Integer getSortNo() {
-		return sortNo;
-	}
-
-	public void setSortNo(Integer sortNo) {
-		this.sortNo = sortNo;
-	}
-
-	public Integer getLeaf() {
-		return leaf;
-	}
-
-	public void setLeaf(Integer leaf) {
-		this.leaf = leaf;
-	}
-
-	@Override
-	public String toString() {
-		return "SysDept{" +
-			", unitId=" + unitId +
-			", deptName=" + deptName +
-			", parentId=" + parentId +
-			", sortNo=" + sortNo +
-			", leaf=" + leaf +
-			"}";
-	}
 }

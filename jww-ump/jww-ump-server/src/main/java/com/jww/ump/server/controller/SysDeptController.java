@@ -7,10 +7,13 @@ import com.jww.common.web.BaseController;
 import com.jww.common.web.ResultModel;
 import com.jww.common.web.util.ResultUtil;
 import com.jww.ump.model.UmpDeptModel;
+import com.jww.ump.model.UmpTreeModel;
+import com.jww.ump.model.UmpUserModel;
 import com.jww.ump.rpc.api.UmpDeptService;
 import com.xiaoleilu.hutool.lang.Assert;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -73,7 +76,6 @@ public class SysDeptController extends BaseController {
     @PostMapping("/add")
     public ResultModel add(@Valid @RequestBody UmpDeptModel UmpDeptModel) {
         log.info("DeptController->add: UmpDeptModel={}", UmpDeptModel);
-
         if (UmpDeptModel != null) {
             UmpDeptModel.setUnitId(Long.valueOf(1));
             Date now = new Date();
@@ -106,10 +108,14 @@ public class SysDeptController extends BaseController {
 
     @PostMapping("/delBatchByIds")
     public ResultModel delBatchByIds(@RequestBody List<Long> ids) {
-        if (ids.size() == 0) {
-            throw new BusinessException("部门ID集合不能为空");
-        }
+        Assert.notNull(ids);
         return ResultUtil.ok(umpDeptService.delBatchByIds(ids));
+    }
+
+    @GetMapping("/queryTree")
+    public ResultModel queryTree() {
+        UmpTreeModel umpTreeModel = umpDeptService.queryTree();
+        return ResultUtil.ok(umpTreeModel);
     }
 
 }
