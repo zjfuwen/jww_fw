@@ -4,7 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/jww-common.iml" filepath="$PROJECT_DIR$/jww-common.iml" />
       <module fileurl="file://$PROJECT_DIR$/jww-common-constant/jww-common-constant.iml" filepath="$PROJECT_DIR$/jww-common-constant/jww-common-constant.iml" />
-      <module fileurl="file://$PROJECT_DIR$/jww-common-db/jww-common-db.iml" filepath="$PROJECT_DIR$/jww-common-db/jww-common-db.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jww-common-mdb/jww-common-mdb.iml" filepath="$PROJECT_DIR$/jww-common-mdb/jww-common-mdb.iml" />
       <module fileurl="file://$PROJECT_DIR$/jww-common-exception/jww-common-exception.iml" filepath="$PROJECT_DIR$/jww-common-exception/jww-common-exception.iml" />
       <module fileurl="file://$PROJECT_DIR$/jww-common-http/jww-common-http.iml" filepath="$PROJECT_DIR$/jww-common-http/jww-common-http.iml" />
       <module fileurl="file://$PROJECT_DIR$/jww-common-log/jww-common-log.iml" filepath="$PROJECT_DIR$/jww-common-log/jww-common-log.iml" />

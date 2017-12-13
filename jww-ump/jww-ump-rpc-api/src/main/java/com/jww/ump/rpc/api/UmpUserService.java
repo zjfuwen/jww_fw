@@ -23,7 +23,7 @@ public interface UmpUserService extends BaseService<UmpUserModel> {
      * @author wanyong
      * @date 2017-12-05 12:48
      */
-    UmpUserModel findByAccount(String account);
+    UmpUserModel queryByAccount(String account);
 
     /**
      * 分页查找所有用户
@@ -33,7 +33,7 @@ public interface UmpUserService extends BaseService<UmpUserModel> {
      * @author wanyong
      * @date 2017/12/4 14:45
      */
-    Page<UmpUserModel> findListPage(Page<UmpUserModel> page);
+    Page<UmpUserModel> queryListPage(Page<UmpUserModel> page);
 
     /**
      * 根据ID集合批量删除

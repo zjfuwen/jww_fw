@@ -44,7 +44,7 @@ public class RedisConfig extends CachingConfigurerSupport {
     @Bean
     @Override
     public KeyGenerator keyGenerator() {
-        log.debug("================自定义KEY生成器====================");
+        log.info("================自定义KEY生成器====================");
         return new KeyGenerator() {
             @Override
             public Object generate(Object target, Method method, Object... params) {

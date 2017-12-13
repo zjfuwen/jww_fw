@@ -2,14 +2,13 @@ package com.jww.common.core.util;
 
 import com.xiaoleilu.hutool.crypto.SecureUtil;
 import com.xiaoleilu.hutool.lang.Base64;
-import lombok.extern.slf4j.Slf4j;
 
 /**
- * 使用一段文字进行描述
+ * 加解密工具类
  *
- * @author waner
- * @create 2017-11-30
- **/
+ * @author wanyong
+ * @date 2017/11/12 11:54
+ */
 public class SecurityUtil {
 
     /**
@@ -17,6 +16,8 @@ public class SecurityUtil {
      *
      * @param password
      * @return String
+     * @author wanyong
+     * @date 2017-12-12 00:20
      */
     public static String encryptPassword(String password) {
         return encryptMd5(encryptSHA(password));

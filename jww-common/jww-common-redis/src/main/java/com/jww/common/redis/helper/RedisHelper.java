@@ -1,7 +1,7 @@
 package com.jww.common.redis.helper;
 
-import com.jww.common.core.manager.CacheManager;
-import com.jww.common.core.util.CacheUtil;
+import com.jww.common.redis.manager.CacheManager;
+import com.jww.common.redis.util.CacheUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -148,24 +148,23 @@ public final class RedisHelper implements CacheManager {
     }
 
     @Override
-    public String lock(String lockName, long userWaitTimeOut, int userLockTimeOut) {
-        String lockKey = "lock:" + lockName;
+    public String lock(String key, long userWaitTimeOut, int userLockTimeOut) {
         // 随机生成一个value
         String lockValue = UUID.randomUUID().toString();
         // 计算获取锁的最后时间
         long end = System.currentTimeMillis() + userWaitTimeOut * 1000;
         int i = 0;
         while (System.currentTimeMillis() < end) {
-            boolean flag = redisTemplate.opsForValue().setIfAbsent(lockKey, lockValue);
+            boolean flag = redisTemplate.opsForValue().setIfAbsent(key, lockValue);
             // 获取锁成功后，还要设置锁的有效期
             if (flag) {
-                this.expire(lockKey, userLockTimeOut);
-                log.info("set lock '" + lockName + "',lockValue=" + lockValue + ",retry " + i);
+                this.expire(key, userLockTimeOut);
+                log.info("set lock '" + key + "',lockValue=" + lockValue + ",retry " + i);
                 return lockValue;
             }
             // 返回-1代表key没有设置超时时间，为key设置一个超时时间
-            if (this.ttl(lockKey) == -1) {
-                this.expire(lockKey, userLockTimeOut);
+            if (this.ttl(key) == -1) {
+                this.expire(key, userLockTimeOut);
             }
             //等待10毫秒再继续获取锁
             try {
@@ -175,21 +174,20 @@ public final class RedisHelper implements CacheManager {
             }
             i++;
         }
-        log.info("get lock false, lockName:" + lockName + ",retry " + i);
+        log.info("get lock false, lockKey:" + key + ",retry " + i);
         return null;
     }
 
     @Override
-    public boolean unlock(String lockName, String lockValue) {
+    public boolean unlock(String key, String lockValue) {
         if (lockValue == null || "".equals(lockValue)) {
             log.error("lockValue must be not empty");
             throw new IllegalArgumentException("lockValue must be not empty");
         }
-        String lockKey = "lock:" + lockName;
-        redisTemplate.watch(lockKey);
-        if (lockValue.equals(this.get(lockKey))) {
-            this.del(lockKey);
-            log.info("release lock '" + lockName + "',lockValue=" + lockValue);
+        redisTemplate.watch(key);
+        if (lockValue.equals(this.get(key))) {
+            this.del(key);
+            log.info("release lock '" + key + "',lockValue=" + lockValue);
             return true;
         }
         redisTemplate.unwatch();

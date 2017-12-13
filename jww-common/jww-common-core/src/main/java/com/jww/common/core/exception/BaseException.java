@@ -3,8 +3,9 @@ package com.jww.common.core.exception;
 import com.jww.common.core.Constants;
 
 /**
+ * 统一异常基类
+ *
  * @author wanyong
- * @description: 统一异常基类
  * @date 2017/11/9 23:02
  */
 public abstract class BaseException extends RuntimeException {

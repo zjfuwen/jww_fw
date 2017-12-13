@@ -7,7 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="jww-common-constant" />
-        <module name="jww-common-db" />
+        <module name="jww-common-mdb" />
         <module name="jww-common-exception" />
         <module name="jww-common-http" />
         <module name="jww-common-log" />
@@ -20,7 +20,7 @@
     <bytecodeTargetLevel>
       <module name="jww-common" target="1.8" />
       <module name="jww-common-constant" target="1.8" />
-      <module name="jww-common-db" target="1.8" />
+      <module name="jww-common-mdb" target="1.8" />
       <module name="jww-common-exception" target="1.8" />
       <module name="jww-common-http" target="1.8" />
       <module name="jww-common-log" target="1.8" />

@@ -15,7 +15,10 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -48,7 +51,7 @@ public class SysUserController extends BaseController {
     @PostMapping("/query")
     public ResultModel<UmpUserModel> query(@RequestBody Long id) {
         Assert.notNull(id);
-        UmpUserModel umpUserModel = umpUserService.findById(id);
+        UmpUserModel umpUserModel = umpUserService.queryById(id);
         return ResultUtil.ok(umpUserModel);
     }
 
@@ -62,7 +65,7 @@ public class SysUserController extends BaseController {
      */
     @PostMapping("/listPage")
     public ResultModel queryListPage(@RequestBody PageModel<UmpUserModel> pageModel) {
-        pageModel = (PageModel<UmpUserModel>) umpUserService.findListPage(pageModel);
+        pageModel = (PageModel<UmpUserModel>) umpUserService.queryListPage(pageModel);
         return ResultUtil.ok(pageModel);
     }
 
@@ -76,14 +79,14 @@ public class SysUserController extends BaseController {
      */
     @PostMapping("/add")
     public ResultModel add(@Valid @RequestBody UmpUserModel umpUserModel) {
-        UmpUserModel existUmpUserModel = umpUserService.findByAccount(umpUserModel.getAccount());
+        UmpUserModel existUmpUserModel = umpUserService.queryByAccount(umpUserModel.getAccount());
         if (ObjectUtil.isNotNull(existUmpUserModel)) {
             throw new BusinessException("已存在相同账号的用户");
         }
         // 设置初始密码: 123456
         umpUserModel.setPassword(SecurityUtil.encryptPassword("123456"));
         umpUserModel.setCreateBy(getCurrUser());
-        umpUserService.save(umpUserModel);
+        umpUserService.add(umpUserModel);
         return ResultUtil.ok();
     }
 
@@ -98,7 +101,7 @@ public class SysUserController extends BaseController {
 
     @PostMapping("/modify")
     public ResultModel modify(@RequestBody UmpUserModel umpUserModel) {
-        return ResultUtil.ok(umpUserService.renewById(umpUserModel));
+        return ResultUtil.ok(umpUserService.modifyById(umpUserModel));
     }
 
 }

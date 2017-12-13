@@ -19,14 +19,21 @@ import java.util.Date;
 public abstract class BaseModel implements Serializable {
     private static final long serialVersionUID = 7258436689721815928L;
 
+    /**
+     * 主键
+     */
     @TableId(value = "id_", type = IdType.ID_WORKER)
     private Long id;
-
     /**
      * 是否启用
      */
     @TableField("enable_")
     private Integer enable;
+    /**
+     * 是否删除
+     */
+    @TableField("is_del")
+    private Integer isDel;
     /**
      * 备注
      */
@@ -54,4 +61,6 @@ public abstract class BaseModel implements Serializable {
      */
     @TableField("update_by")
     private Long updateBy;
+
+
 }

@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * TODO
+ * shiro权限获取
  *
  * @author wanyong
  * @date 2017/11/29 15:00
@@ -36,9 +36,9 @@ public class UmpUserRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         String account = (String) principals.getPrimaryPrincipal();
-        UmpUserModel umpUserModel = umpUserService.findByAccount(account);
+        UmpUserModel umpUserModel = umpUserService.queryByAccount(account);
         if (umpUserModel != null) {
-            List<String> permissionList = umpAuthorizeService.findPermissionByUserId(umpUserModel.getId());
+            List<String> permissionList = umpAuthorizeService.queryPermissionByUserId(umpUserModel.getId());
             for (String permission : permissionList) {
                 if (StrUtil.isNotBlank(permission)) {
                     simpleAuthorizationInfo.addStringPermission(permission);
@@ -53,7 +53,7 @@ public class UmpUserRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) token;
-        UmpUserModel umpUserModel = umpUserService.findByAccount(usernamePasswordToken.getUsername());
+        UmpUserModel umpUserModel = umpUserService.queryByAccount(usernamePasswordToken.getUsername());
         if (null == umpUserModel) {
             throw new UnknownAccountException();
         }

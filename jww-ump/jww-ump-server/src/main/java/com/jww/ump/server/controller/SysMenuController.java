@@ -7,13 +7,11 @@ import com.jww.common.web.util.ResultUtil;
 import com.jww.ump.model.UmpMenuModel;
 import com.jww.ump.rpc.api.UmpMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -41,12 +39,12 @@ public class SysMenuController extends BaseController {
      */
     @GetMapping("/list")
     public ResultModel<List<UmpMenuModel>> queryList() {
-        return ResultUtil.ok(umpMenuService.findList());
+        return ResultUtil.ok(umpMenuService.queryList());
     }
 
     @GetMapping("/tree/{userId}")
-    public ResultModel<List<UmpMenuModel>> queryMenuTreeByUserId(@PathVariable(value="userId") Long userId) {
-        return ResultUtil.ok(umpMenuService.findMenuTreeByUserId(userId));
+    public ResultModel<List<UmpMenuModel>> queryMenuTreeByUserId(@PathVariable(value = "userId") Long userId) {
+        return ResultUtil.ok(umpMenuService.queryMenuTreeByUserId(userId));
     }
 
 }
