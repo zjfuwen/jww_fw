@@ -7,24 +7,32 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="jww-common-constant" />
-        <module name="jww-common-mdb" />
+        <module name="jww-common-core" />
+        <module name="jww-common-db" />
+        <module name="jww-common-dsession" />
         <module name="jww-common-exception" />
         <module name="jww-common-http" />
         <module name="jww-common-log" />
+        <module name="jww-common-mdb" />
         <module name="jww-common-mq" />
+        <module name="jww-common-pay" />
         <module name="jww-common-redis" />
         <module name="jww-common-service" />
         <module name="jww-common-web" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="jww-common" target="1.8" />
+      <module name="jww-common" target="1.5" />
       <module name="jww-common-constant" target="1.8" />
-      <module name="jww-common-mdb" target="1.8" />
+      <module name="jww-common-core" target="1.8" />
+      <module name="jww-common-db" target="1.5" />
+      <module name="jww-common-dsession" target="1.8" />
       <module name="jww-common-exception" target="1.8" />
       <module name="jww-common-http" target="1.8" />
       <module name="jww-common-log" target="1.8" />
+      <module name="jww-common-mdb" target="1.8" />
       <module name="jww-common-mq" target="1.8" />
+      <module name="jww-common-pay" target="1.5" />
       <module name="jww-common-redis" target="1.8" />
       <module name="jww-common-service" target="1.8" />
       <module name="jww-common-web" target="1.8" />

@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="jww-ump-common" />
         <module name="jww-ump-dao" />
+        <module name="jww-ump-generator" />
         <module name="jww-ump-model" />
         <module name="jww-ump-mq" />
         <module name="jww-ump-rpc-api" />
@@ -18,7 +19,8 @@
     <bytecodeTargetLevel>
       <module name="jww-ump" target="1.5" />
       <module name="jww-ump-common" target="1.5" />
-      <module name="jww-ump-dao" target="1.5" />
+      <module name="jww-ump-dao" target="1.8" />
+      <module name="jww-ump-generator" target="1.8" />
       <module name="jww-ump-model" target="1.5" />
       <module name="jww-ump-mq" target="1.5" />
       <module name="jww-ump-rpc-api" target="1.5" />

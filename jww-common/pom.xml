@@ -20,7 +20,8 @@
         <module>jww-common-log</module>
         <module>jww-common-core</module>
         <module>jww-common-pay</module>
-        <module>jww-common-session</module>
+        <module>jww-common-dsession</module>
+        <module>jww-common-db</module>
     </modules>
     <packaging>pom</packaging>
 

@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/jww-ump.iml" filepath="$PROJECT_DIR$/jww-ump.iml" />
       <module fileurl="file://$PROJECT_DIR$/jww-ump-common/jww-ump-common.iml" filepath="$PROJECT_DIR$/jww-ump-common/jww-ump-common.iml" />
       <module fileurl="file://$PROJECT_DIR$/jww-ump-dao/jww-ump-dao.iml" filepath="$PROJECT_DIR$/jww-ump-dao/jww-ump-dao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jww-ump-generator/jww-ump-generator.iml" filepath="$PROJECT_DIR$/jww-ump-generator/jww-ump-generator.iml" />
       <module fileurl="file://$PROJECT_DIR$/jww-ump-model/jww-ump-model.iml" filepath="$PROJECT_DIR$/jww-ump-model/jww-ump-model.iml" />
       <module fileurl="file://$PROJECT_DIR$/jww-ump-mq/jww-ump-mq.iml" filepath="$PROJECT_DIR$/jww-ump-mq/jww-ump-mq.iml" />
       <module fileurl="file://$PROJECT_DIR$/jww-ump-rpc-api/jww-ump-rpc-api.iml" filepath="$PROJECT_DIR$/jww-ump-rpc-api/jww-ump-rpc-api.iml" />

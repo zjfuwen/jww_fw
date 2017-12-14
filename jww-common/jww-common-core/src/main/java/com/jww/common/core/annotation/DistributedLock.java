@@ -12,6 +12,5 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface DistributedLock {
-
     String value() default "";
 }

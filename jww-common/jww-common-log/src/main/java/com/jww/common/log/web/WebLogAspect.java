@@ -18,8 +18,9 @@ import java.util.Arrays;
 
 
 /**
+ * 系统日志，切面处理类
+ *
  * @author wanyong
- * @description: 系统日志，切面处理类
  * @date 2017/11/16 17:04
  */
 @Slf4j
@@ -35,7 +36,7 @@ public class WebLogAspect {
     }
 
     @Around("webLogPointCut()")
-    public Object doAround(ProceedingJoinPoint pjp) throws Throwable{
+    public Object doAround(ProceedingJoinPoint pjp) throws Throwable {
         startTime = System.currentTimeMillis();
         //异常标记
         boolean eFlag = false;
@@ -44,16 +45,16 @@ public class WebLogAspect {
         //拼接请求日志
         StringBuffer logbf = appendLogStrPre(pjp, request);
         Object result = null;
-        try{
+        try {
             result = pjp.proceed();
-        }catch (Throwable throwable){
+        } catch (Throwable throwable) {
             eFlag = true;
-            log.error(Constants.ResultCodeEnum.INTERNAL_SERVER_ERROR.getMessage(),throwable);
+            log.error(Constants.ResultCodeEnum.INTERNAL_SERVER_ERROR.getMessage(), throwable);
             throw throwable;
-        }finally {
+        } finally {
             //拼接返回日志
             String logStr = appendLogStrAfter(logbf, result);
-            if(eFlag){
+            if (eFlag) {
                 log.error(logStr);
             }
             log.info(logStr);
@@ -61,8 +62,16 @@ public class WebLogAspect {
         return result;
     }
 
-    //记录下请求内容
-    private StringBuffer appendLogStrPre(ProceedingJoinPoint pjp, HttpServletRequest request){
+    /**
+     * 记录下请求内容
+     *
+     * @param pjp
+     * @param request
+     * @return StringBuffer
+     * @author wanyong
+     * @date 2017-12-12 11:07
+     */
+    private StringBuffer appendLogStrPre(ProceedingJoinPoint pjp, HttpServletRequest request) {
         startTime = System.currentTimeMillis();
         StringBuffer logbf = new StringBuffer();
         logbf.append("URL:").append(request.getRequestURL());
@@ -73,8 +82,16 @@ public class WebLogAspect {
         return logbf;
     }
 
-    //处理完请求，返回内容
-    private String appendLogStrAfter(StringBuffer logbf, Object result){
+    /**
+     * 处理完请求，返回内容
+     *
+     * @param logbf
+     * @param result
+     * @return String
+     * @author wanyong
+     * @date 2017-12-12 11:08
+     */
+    private String appendLogStrAfter(StringBuffer logbf, Object result) {
         logbf.append(",RESPONSE:").append(JSON.toJSONString(result));
         logbf.append(",START_TIME:").append(DateUtil.date(startTime));
         logbf.append(",SEPEND_TIME:").append(System.currentTimeMillis() - startTime + "ms}");
