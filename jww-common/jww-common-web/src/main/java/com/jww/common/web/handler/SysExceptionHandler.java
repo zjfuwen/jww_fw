@@ -2,9 +2,7 @@ package com.jww.common.web.handler;
 
 import com.jww.common.core.Constants;
 import com.jww.common.core.exception.BaseException;
-import com.jww.common.core.exception.BusinessException;
-import com.jww.common.core.exception.LoginException;
-import com.jww.common.web.ResultModel;
+import com.jww.common.web.model.ResultModel;
 import com.jww.common.web.util.ResultUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.FieldError;

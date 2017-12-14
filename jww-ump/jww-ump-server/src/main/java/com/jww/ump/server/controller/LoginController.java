@@ -5,7 +5,7 @@ import com.jww.common.core.exception.LoginException;
 import com.jww.common.core.model.LoginModel;
 import com.jww.common.core.util.SecurityUtil;
 import com.jww.common.web.BaseController;
-import com.jww.common.web.ResultModel;
+import com.jww.common.web.model.ResultModel;
 import com.jww.common.web.util.ResultUtil;
 import com.jww.ump.model.UmpUserModel;
 import com.jww.ump.rpc.api.UmpUserService;

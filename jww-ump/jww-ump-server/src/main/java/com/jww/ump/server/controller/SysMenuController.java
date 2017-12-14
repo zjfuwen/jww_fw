@@ -2,7 +2,7 @@ package com.jww.ump.server.controller;
 
 
 import com.jww.common.web.BaseController;
-import com.jww.common.web.ResultModel;
+import com.jww.common.web.model.ResultModel;
 import com.jww.common.web.util.ResultUtil;
 import com.jww.ump.model.UmpMenuModel;
 import com.jww.ump.rpc.api.UmpMenuService;

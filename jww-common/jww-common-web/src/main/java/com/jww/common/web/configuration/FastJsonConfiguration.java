@@ -74,6 +74,7 @@ public class FastJsonConfiguration {
     public List<MediaType> getSupportedMediaType() {
         ArrayList<MediaType> mediaTypes = new ArrayList<>();
         mediaTypes.add(MediaType.APPLICATION_JSON_UTF8);
+        mediaTypes.add(MediaType.APPLICATION_FORM_URLENCODED);
         return mediaTypes;
     }
 }

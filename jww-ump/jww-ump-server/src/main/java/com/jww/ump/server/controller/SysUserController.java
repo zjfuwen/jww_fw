@@ -4,7 +4,7 @@ import com.jww.common.core.exception.BusinessException;
 import com.jww.common.core.model.PageModel;
 import com.jww.common.core.util.SecurityUtil;
 import com.jww.common.web.BaseController;
-import com.jww.common.web.ResultModel;
+import com.jww.common.web.model.ResultModel;
 import com.jww.common.web.util.ResultUtil;
 import com.jww.ump.model.UmpUserModel;
 import com.jww.ump.rpc.api.UmpUserService;
@@ -64,7 +64,7 @@ public class SysUserController extends BaseController {
      * @date 2017/12/2 14:31
      */
     @PostMapping("/listPage")
-    public ResultModel queryListPage(@RequestBody PageModel<UmpUserModel> pageModel) {
+    public ResultModel queryListPage(PageModel<UmpUserModel> pageModel) {
         pageModel = (PageModel<UmpUserModel>) umpUserService.queryListPage(pageModel);
         return ResultUtil.ok(pageModel);
     }

@@ -1,12 +1,14 @@
 package com.jww.common.web.util;
 
 import com.jww.common.core.Constants;
-import com.jww.common.web.ResultModel;
+import com.jww.common.core.model.PageModel;
+import com.jww.common.web.model.ResultModel;
 import com.xiaoleilu.hutool.util.StrUtil;
 
 /**
+ * 返回结果工具类
+ *
  * @author wanyong
- * @description: 返回结果工具类
  * @date 2017/11/11 20:28
  */
 public class ResultUtil {
@@ -16,6 +18,11 @@ public class ResultUtil {
     }
 
     public static ResultModel ok(Object object) {
+        if (object instanceof PageModel) {
+            PageModel pageModel = (PageModel) object;
+            return new ResultModel(Constants.ResultCodeEnum.SUCCESS.value(),
+                    Constants.ResultCodeEnum.SUCCESS.getMessage(), pageModel.getRecords(), pageModel.getTotal());
+        }
         return new ResultModel(Constants.ResultCodeEnum.SUCCESS.value(),
                 Constants.ResultCodeEnum.SUCCESS.getMessage(), object);
     }

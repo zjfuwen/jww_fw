@@ -1,18 +1,15 @@
 package com.jww.ump.server.controller;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.jww.common.core.exception.BusinessException;
 import com.jww.common.core.model.PageModel;
 import com.jww.common.web.BaseController;
-import com.jww.common.web.ResultModel;
+import com.jww.common.web.model.ResultModel;
 import com.jww.common.web.util.ResultUtil;
 import com.jww.ump.model.UmpDeptModel;
 import com.jww.ump.model.UmpTreeModel;
-import com.jww.ump.model.UmpUserModel;
 import com.jww.ump.rpc.api.UmpDeptService;
 import com.xiaoleilu.hutool.lang.Assert;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -67,7 +64,7 @@ public class SysDeptController extends BaseController {
     }
 
     @PostMapping("/queryListPage")
-    public ResultModel queryListPage(@RequestBody PageModel<UmpDeptModel> pageModel) {
+    public ResultModel queryListPage(PageModel<UmpDeptModel> pageModel) {
         pageModel = (PageModel<UmpDeptModel>) umpDeptService.queryListPage(pageModel);
         return ResultUtil.ok(pageModel);
     }
