@@ -14,9 +14,17 @@ import java.util.List;
  * @Date: 17/12/1 11:26:33
  */
 public interface UmpDeptService extends BaseService<UmpDeptModel> {
+    public boolean addDept(UmpDeptModel umpDeptModel);
+
+    public boolean modifyDept(UmpDeptModel umpDeptModel);
+
     Page<UmpDeptModel> queryListPage(Page<UmpDeptModel> page);
+
+    public UmpDeptModel queryOne(Long id);
 
     boolean delBatchByIds(List<Long> ids);
 
     public UmpTreeModel queryTree();
+
+    public UmpTreeModel queryTree(Long id);
 }

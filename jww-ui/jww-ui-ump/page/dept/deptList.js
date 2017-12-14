@@ -7,6 +7,13 @@ layui.config({
         $ = layui.jquery,
         table = layui.table;
 
+    $(function(){
+        window.iframeConfig = {
+            iframe_1: {
+                attr_name: 'iframe_1'
+            }
+        };
+    });
     //列表加载
     var tableIns = table.render({
         //设置表头
@@ -37,7 +44,7 @@ layui.config({
 
     //监听状态操作
     form.on('checkbox(enableCbx)', function(obj){
-        layer.tips(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
+        // layer.tips(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
         var enable = 0;
         if(obj.elem.checked == true){
             enable = 1;
@@ -62,9 +69,32 @@ layui.config({
     //监听工具条
     table.on('tool(deptTable)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
         var data = obj.data;
+        if(data.parentId==0){
+            layer.msg("根节点不能操作", {icon: 7, time: 2000});
+            return false;
+        }
+        $('#deptId').val(data.id);
         var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
         if (layEvent === 'detail') { //查看
-            layer.msg("功能正在开发中，敬请期待...", {icon: 0});
+            // console.log(JSON.stringify(data));
+            $('#pageOpt').val('detail');
+            var index = layui.layer.open({
+                title: "查看部门",
+                type: 2,
+                content: "deptAdd.html?v=11",
+                success: function (layero, index) {
+                    setTimeout(function () {
+                        layui.layer.tips('点击此处返回部门列表', '.layui-layer-setwin .layui-layer-close', {
+                            tips: 3
+                        });
+                    }, 500)
+                }
+            });
+            //改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
+            $(window).resize(function () {
+                layui.layer.full(index);
+            });
+            layui.layer.full(index);
         } else if (layEvent === 'del') { //删除
             var deptIds = [data.id];
             layer.confirm('您确定要删除吗？', {icon: 3, title: '确认'}, function () {
@@ -85,7 +115,24 @@ layui.config({
                 });
             });
         } else if (layEvent === 'edit') { //编辑
-            layer.msg("功能正在开发中，敬请期待...", {icon: 0});
+            $('#pageOpt').val('edit');
+            var index = layui.layer.open({
+                title: "编辑部门",
+                type: 2,
+                content: "deptAdd.html?v=15",
+                success: function (layero, index) {
+                    setTimeout(function () {
+                        layui.layer.tips('点击此处返回部门列表', '.layui-layer-setwin .layui-layer-close', {
+                            tips: 3
+                        });
+                    }, 500)
+                }
+            });
+            //改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
+            $(window).resize(function () {
+                layui.layer.full(index);
+            });
+            layui.layer.full(index);
         }
     });
 
@@ -110,6 +157,8 @@ layui.config({
 
     //添加部门
     $(".deptAdd_btn").click(function () {
+        $('#pageOpt').val('add');
+        $('#deptId').val('');
         var index = layui.layer.open({
             title: "添加部门",
             type: 2,

@@ -17,4 +17,5 @@ import java.util.List;
  */
 public interface UmpDeptMapper extends BaseMapper<UmpDeptModel> {
     public List<UmpDeptModel> selectPage(Page<UmpDeptModel> page,@Param("dept_name") String dept_name);
+    public UmpDeptModel selectOne(@Param("id") Long id);
 }

@@ -45,7 +45,7 @@ public class SysDeptController extends BaseController {
     @PostMapping("/query")
     public ResultModel<UmpDeptModel> query(@RequestBody Long id) {
         Assert.notNull(id);
-        UmpDeptModel umpDeptModel = umpDeptService.queryById(id);
+        UmpDeptModel umpDeptModel = umpDeptService.queryOne(id);
         return ResultUtil.ok(umpDeptModel);
     }
 
@@ -73,35 +73,38 @@ public class SysDeptController extends BaseController {
     }
 
     @PostMapping("/add")
-    public ResultModel add(@Valid @RequestBody UmpDeptModel UmpDeptModel) {
-        log.info("DeptController->add: UmpDeptModel={}", UmpDeptModel);
-        if (UmpDeptModel != null) {
-            UmpDeptModel.setUnitId(Long.valueOf(1));
+    public ResultModel add(@Valid @RequestBody UmpDeptModel umpDeptModel) {
+        log.info("DeptController->add: UmpDeptModel={}", umpDeptModel);
+        if (umpDeptModel != null) {
+            umpDeptModel.setUnitId(Long.valueOf(1));
             Date now = new Date();
-            UmpDeptModel.setCreateTime(now);
-            UmpDeptModel.setCreateBy(this.getCurrUser());
-            UmpDeptModel.setUpdateBy(this.getCurrUser());
-            UmpDeptModel.setUpdateTime(now);
+            umpDeptModel.setCreateTime(now);
+            umpDeptModel.setCreateBy(this.getCurrUser());
+            umpDeptModel.setUpdateBy(this.getCurrUser());
+            umpDeptModel.setUpdateTime(now);
         }
-        umpDeptService.insert(UmpDeptModel);
+        umpDeptService.insert(umpDeptModel);
         return ResultUtil.ok();
     }
 
     @PostMapping("/del")
-    public ResultModel del(@RequestBody UmpDeptModel UmpDeptModel) {
-        log.info("DeptController->del: UmpDeptModel={}", UmpDeptModel.getId());
+    public ResultModel del(@RequestBody UmpDeptModel umpDeptModel) {
+        log.info("DeptController->del: UmpDeptModel={}", umpDeptModel.getId());
         EntityWrapper<UmpDeptModel> entityWrapper = new EntityWrapper<UmpDeptModel>();
-        entityWrapper.setEntity(UmpDeptModel);
+        entityWrapper.setEntity(umpDeptModel);
         umpDeptService.delete(entityWrapper);
         return ResultUtil.ok();
     }
 
     @PostMapping("/modify")
-    public ResultModel modify(@RequestBody UmpDeptModel UmpDeptModel) {
-        log.info("DeptController->mod: UmpDeptModel={}", UmpDeptModel.getId());
-        UmpDeptModel.setUpdateBy(this.getCurrUser());
-        UmpDeptModel.setUpdateTime(new Date());
-        umpDeptService.updateById(UmpDeptModel);
+    public ResultModel modify(@RequestBody UmpDeptModel umpDeptModel) {
+        log.info("DeptController->mod: UmpDeptModel={}", umpDeptModel);
+        if(umpDeptModel.getEnable()==null){
+            umpDeptModel.setEnable(0);
+        }
+        umpDeptModel.setUpdateBy(this.getCurrUser());
+        umpDeptModel.setUpdateTime(new Date());
+        umpDeptService.modifyById(umpDeptModel);
         return ResultUtil.ok();
     }
 
@@ -111,9 +114,9 @@ public class SysDeptController extends BaseController {
         return ResultUtil.ok(umpDeptService.delBatchByIds(ids));
     }
 
-    @GetMapping("/queryTree")
-    public ResultModel queryTree() {
-        UmpTreeModel umpTreeModel = umpDeptService.queryTree();
+    @PostMapping("/queryTree")
+    public ResultModel queryTree(@RequestBody(required = false) Long id) {
+        UmpTreeModel umpTreeModel = umpDeptService.queryTree(id);
         return ResultUtil.ok(umpTreeModel);
     }
 

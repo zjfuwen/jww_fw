@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jww.ump.dao.mapper.UmpTreeMapper">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.jww.ump.model.UmpTreeModel">
+        <result column="id" property="id"/>
+        <result column="parentId" property="parentId"/>
+        <result column="name" property="name"/>
+    </resultMap>
+    <select id="selectDeptTree"  resultMap="BaseResultMap">
+         SELECT a.id_ AS id,a.dept_name AS name,
+         a.parent_id AS parentId FROM sys_dept a
+        left join sys_dept b on a.parent_id = b.id_
+        where 1=1
+        <if test="id != null">
+           and a.id_ != #{id} and a.parent_id != #{id}
+        </if>
+    </select>
+
+</mapper>
