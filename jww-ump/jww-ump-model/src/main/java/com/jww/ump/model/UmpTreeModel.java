@@ -30,9 +30,6 @@ public class UmpTreeModel  implements Serializable {
         if(umpTreeModelList==null || umpTreeModelList.size()==0){
             return null;
         }
-        rootNode.setParentId(0L);
-        rootNode.setLevel(0);
-        rootNode.setLeaf(false);
         List<UmpTreeModel> childNodeList = new ArrayList<UmpTreeModel>();
         for(UmpTreeModel umpTreeModel: umpTreeModelList){
             if(umpTreeModel.getParentId().equals(rootNode.getId())){

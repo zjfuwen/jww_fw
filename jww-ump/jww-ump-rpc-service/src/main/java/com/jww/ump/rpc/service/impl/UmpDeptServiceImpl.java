@@ -71,12 +71,14 @@ public class UmpDeptServiceImpl extends BaseServiceImpl<UmpDeptMapper, UmpDeptMo
     @Override
     public UmpTreeModel queryTree(Long id){
         List<UmpTreeModel> umpTreeModelList = umpTreeMapper.selectDeptTree(id);
-        Map<Long,List<UmpTreeModel>> map = new TreeMap<>();
         UmpTreeModel rootNode = new UmpTreeModel();
         for(UmpTreeModel umpTreeModel : umpTreeModelList){
             if(umpTreeModel.getParentId().equals(0L)){
                 rootNode.setId(umpTreeModel.getId());
                 rootNode.setName(umpTreeModel.getName());
+                rootNode.setParentId(0L);
+                rootNode.setLevel(0);
+                rootNode.setLeaf(false);
                 break;
             }
         }
