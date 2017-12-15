@@ -26,6 +26,21 @@ public class UmpTreeModel  implements Serializable {
     private List<UmpTreeModel> children;
 
 
+    public static UmpTreeModel getRootNote(List<UmpTreeModel> umpTreeModelList){
+        UmpTreeModel rootNode = new UmpTreeModel();
+        for(UmpTreeModel umpTreeModel : umpTreeModelList){
+            if(umpTreeModel.getParentId().equals(0L)){
+                rootNode.setId(umpTreeModel.getId());
+                rootNode.setName(umpTreeModel.getName());
+                rootNode.setParentId(0L);
+                rootNode.setLevel(0);
+                rootNode.setLeaf(false);
+                break;
+            }
+        }
+        return rootNode;
+    }
+
     public static UmpTreeModel constructTree(UmpTreeModel rootNode, List<UmpTreeModel> umpTreeModelList, int rootLevel){
         if(umpTreeModelList==null || umpTreeModelList.size()==0){
             return null;
