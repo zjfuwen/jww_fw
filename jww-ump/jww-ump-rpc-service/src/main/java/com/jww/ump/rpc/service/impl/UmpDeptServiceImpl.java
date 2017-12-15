@@ -60,14 +60,6 @@ public class UmpDeptServiceImpl extends BaseServiceImpl<UmpDeptMapper, UmpDeptMo
 
     @Override
     public boolean delBatchByIds(List<Long> ids) {
-//        List<UmpDept> umpDeptList = new ArrayList<>(5);
-//        for (Long id : ids) {
-//            UmpDept umpDept = new UmpDept();
-//            umpDept.setId(id);
-//            umpDept.setEnable(0);
-//            umpDeptList.add(umpDept);
-//        }
-//        return super.updateBatchById(umpDeptList);
         return super.deleteBatchIds(ids);
     }
 
@@ -78,21 +70,6 @@ public class UmpDeptServiceImpl extends BaseServiceImpl<UmpDeptMapper, UmpDeptMo
 
     @Override
     public UmpTreeModel queryTree(Long id){
-//        List<UmpDeptModel> deptModelList = super.selectList(null);
-//        Map<Long,List<UmpTreeModel>> map = new TreeMap<>();
-//        List<UmpTreeModel> umpTreeModelList = new ArrayList<>();
-//        UmpTreeModel rootNode = new UmpTreeModel();
-//        for(UmpDeptModel umpDeptModel : deptModelList){
-//            UmpTreeModel umpTreeModel = new UmpTreeModel();
-//            umpTreeModel.setId(umpDeptModel.getId());
-//            umpTreeModel.setParentId(umpDeptModel.getParentId());
-//            umpTreeModel.setName(umpDeptModel.getDeptName());
-//            umpTreeModelList.add(umpTreeModel);
-//            if(umpTreeModel.getParentId().equals(0L)){
-//                rootNode.setId(umpTreeModel.getId());
-//                rootNode.setName(umpTreeModel.getName());
-//            }
-//        }
         List<UmpTreeModel> umpTreeModelList = umpTreeMapper.selectDeptTree(id);
         Map<Long,List<UmpTreeModel>> map = new TreeMap<>();
         UmpTreeModel rootNode = new UmpTreeModel();
@@ -100,6 +77,7 @@ public class UmpDeptServiceImpl extends BaseServiceImpl<UmpDeptMapper, UmpDeptMo
             if(umpTreeModel.getParentId().equals(0L)){
                 rootNode.setId(umpTreeModel.getId());
                 rootNode.setName(umpTreeModel.getName());
+                break;
             }
         }
         rootNode = UmpTreeModel.constructTree(rootNode, umpTreeModelList, 0);
