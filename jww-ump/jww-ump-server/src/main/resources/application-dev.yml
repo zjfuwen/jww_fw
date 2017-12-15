@@ -1,9 +1,9 @@
 spring:
   redis:
     database: 0
-    host: 127.0.0.1
+    host: 119.29.114.28
     port: 6379
-    password: 123456
+    password: jww`12345
     timeout: 0
     pool:
       max-active: 8
