@@ -7,10 +7,7 @@ import com.jww.common.web.util.ResultUtil;
 import com.jww.ump.model.UmpMenuModel;
 import com.jww.ump.rpc.api.UmpMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -37,7 +34,7 @@ public class SysMenuController extends BaseController {
      * @author wanyong
      * @date 2017-12-02 00:24
      */
-    @GetMapping("/list")
+    @PostMapping("/queryList")
     public ResultModel<List<UmpMenuModel>> queryList() {
         return ResultUtil.ok(umpMenuService.queryList());
     }

@@ -33,7 +33,7 @@ public class XssFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        log.info("XssFilter.doFilter ...");
+        log.info("XssFilter.doFilter. request uri: {}",((HttpServletRequest) servletRequest).getRequestURI());
         if (excludePaths != null) {
             HttpServletRequest request = (HttpServletRequest) servletRequest;
             String uri = request.getRequestURI();

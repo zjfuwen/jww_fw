@@ -42,6 +42,7 @@ public class DistributedLockAspect {
                 log.error("获取分布式锁失败，lockName ：{}",lockName);
                 throw new BusinessException("获取分布式锁失败，lockName ：" + lockName);
             }
+            log.info("获取分布式锁成功，lockName ：{}，lockValue : {}",lockName, lockValue);
             try {
                 Object result = pjp.proceed();
             } catch (Throwable throwable) {
@@ -51,6 +52,7 @@ public class DistributedLockAspect {
         } finally {
             try{
                 CacheUtil.getCache().unlock(lockName,lockValue);
+                log.info("释放分布式锁成功，lockName ：{}，lockValue : {}",lockName, lockValue);
             } catch (Throwable throwable){
                 log.error("分布式锁解锁失败，lockName ：{}",lockName);
             }
