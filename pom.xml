@@ -58,6 +58,10 @@
         <swagger2.spring.boot.starter.version>0.1.2</swagger2.spring.boot.starter.version>
         <!-- aspectjweaver -->
         <aspectjweaver.version>1.8.11</aspectjweaver.version>
+
+        <!-- 代码生成器相关 -->
+        <velocity.engine.core.version>2.0</velocity.engine.core.version>
+
     </properties>
 
 

@@ -64,7 +64,7 @@ public class SysUserController extends BaseController {
      * @date 2017/12/2 14:31
      */
     @PostMapping("/listPage")
-    public ResultModel queryListPage(PageModel<UmpUserModel> pageModel) {
+    public ResultModel queryListPage(@RequestBody PageModel pageModel) {
         pageModel = (PageModel<UmpUserModel>) umpUserService.queryListPage(pageModel);
         return ResultUtil.ok(pageModel);
     }

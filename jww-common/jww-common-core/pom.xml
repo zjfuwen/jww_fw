@@ -47,6 +47,11 @@
             <artifactId>hutool-poi</artifactId>
             <version>${hutool.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.xiaoleilu</groupId>
+            <artifactId>hutool-setting</artifactId>
+            <version>${hutool.version}</version>
+        </dependency>
         <!-- springboot配套的验证器 -->
         <dependency>
             <groupId>org.hibernate</groupId>
