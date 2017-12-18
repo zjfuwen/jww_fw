@@ -69,10 +69,6 @@ layui.config({
     //监听工具条
     table.on('tool(deptTable)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
         var data = obj.data;
-        if(data.parentId==0){
-            layer.msg("根节点不能操作", {icon: 7, time: 2000});
-            return false;
-        }
         $('#deptId').val(data.id);
         var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
         if (layEvent === 'detail') { //查看
@@ -119,7 +115,7 @@ layui.config({
             var index = layui.layer.open({
                 title: "编辑部门",
                 type: 2,
-                content: "deptAdd.html?v=15",
+                content: "deptAdd.html?v=16",
                 success: function (layero, index) {
                     setTimeout(function () {
                         layui.layer.tips('点击此处返回部门列表', '.layui-layer-setwin .layui-layer-close', {
@@ -162,7 +158,7 @@ layui.config({
         var index = layui.layer.open({
             title: "添加部门",
             type: 2,
-            content: "deptAdd.html?v=5",
+            content: "deptAdd.html?v=7",
             success: function (layero, index) {
                 setTimeout(function () {
                     layui.layer.tips('点击此处返回部门列表', '.layui-layer-setwin .layui-layer-close', {

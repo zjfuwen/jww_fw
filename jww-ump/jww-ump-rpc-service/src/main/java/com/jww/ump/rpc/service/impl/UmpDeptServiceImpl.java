@@ -64,15 +64,14 @@ public class UmpDeptServiceImpl extends BaseServiceImpl<UmpDeptMapper, UmpDeptMo
     }
 
     @Override
-    public UmpTreeModel queryTree(){
+    public List<UmpTreeModel> queryTree(){
         return this.queryTree(null);
     };
 
     @Override
-    public UmpTreeModel queryTree(Long id){
+    public List<UmpTreeModel> queryTree(Long id){
         List<UmpTreeModel> umpTreeModelList = umpTreeMapper.selectDeptTree(id);
-        UmpTreeModel rootNode  = UmpTreeModel.getRootNote(umpTreeModelList);
-        rootNode = UmpTreeModel.constructTree(rootNode, umpTreeModelList, 0);
-        return rootNode;
+        List<UmpTreeModel> list  = UmpTreeModel.getTree(umpTreeModelList);
+        return list;
     }
 }

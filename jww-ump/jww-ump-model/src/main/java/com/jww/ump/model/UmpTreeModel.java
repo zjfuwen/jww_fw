@@ -26,22 +26,17 @@ public class UmpTreeModel  implements Serializable {
     private List<UmpTreeModel> children;
 
 
-    public static UmpTreeModel getRootNote(List<UmpTreeModel> umpTreeModelList){
+    private static UmpTreeModel getRootNote(List<UmpTreeModel> umpTreeModelList){
         UmpTreeModel rootNode = new UmpTreeModel();
-        for(UmpTreeModel umpTreeModel : umpTreeModelList){
-            if(umpTreeModel.getParentId().equals(0L)){
-                rootNode.setId(umpTreeModel.getId());
-                rootNode.setName(umpTreeModel.getName());
-                rootNode.setParentId(0L);
-                rootNode.setLevel(0);
-                rootNode.setLeaf(false);
-                break;
-            }
-        }
+        rootNode.setParentId(-999L);
+        rootNode.setId(0L);
+        rootNode.setName("root");
+        rootNode.setLevel(0);
+        rootNode.setLeaf(false);
         return rootNode;
     }
 
-    public static UmpTreeModel constructTree(UmpTreeModel rootNode, List<UmpTreeModel> umpTreeModelList, int rootLevel){
+    private static UmpTreeModel constructTree(UmpTreeModel rootNode, List<UmpTreeModel> umpTreeModelList, int rootLevel){
         if(umpTreeModelList==null || umpTreeModelList.size()==0){
             return null;
         }
@@ -67,5 +62,11 @@ public class UmpTreeModel  implements Serializable {
             --rootLevel;
         }
         return rootNode;
+    }
+
+    public static List<UmpTreeModel> getTree(List<UmpTreeModel> umpTreeModelList){
+        UmpTreeModel rootNode  = UmpTreeModel.getRootNote(umpTreeModelList);
+        rootNode = UmpTreeModel.constructTree(rootNode, umpTreeModelList, 0);
+        return rootNode.getChildren();
     }
 }

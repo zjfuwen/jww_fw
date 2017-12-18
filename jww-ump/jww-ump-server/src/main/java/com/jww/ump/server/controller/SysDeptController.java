@@ -79,7 +79,11 @@ public class SysDeptController extends BaseController {
             umpDeptModel.setCreateBy(this.getCurrUser());
             umpDeptModel.setUpdateBy(this.getCurrUser());
             umpDeptModel.setUpdateTime(now);
+            if(umpDeptModel.getParentId()==null){
+                umpDeptModel.setParentId(0L);
+            }
         }
+
         umpDeptService.insert(umpDeptModel);
         return ResultUtil.ok();
     }
@@ -113,8 +117,8 @@ public class SysDeptController extends BaseController {
 
     @PostMapping("/queryTree")
     public ResultModel queryTree(@RequestBody(required = false) Long id) {
-        UmpTreeModel umpTreeModel = umpDeptService.queryTree(id);
-        return ResultUtil.ok(umpTreeModel);
+        List<UmpTreeModel> list = umpDeptService.queryTree(id);
+        return ResultUtil.ok(list);
     }
 
 }

@@ -20,7 +20,7 @@ layui.config({
                 if (data.code == 200) {
                     layui.tree({
                         elem: '#demo' //传入元素选择器
-                        , nodes: [data.data],
+                        , nodes: data.data,
                         click: function (node) {
                             $("input[name='parentId']").val(node.id);
                             $("input[name='parentName']").val(node.name);
