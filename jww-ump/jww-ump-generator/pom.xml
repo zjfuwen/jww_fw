@@ -12,22 +12,6 @@
     <artifactId>jww-ump-generator</artifactId>
 
     <dependencies>
-        <!-- 生成代码相关 -->
-        <dependency>
-            <groupId>org.apache.velocity</groupId>
-            <artifactId>velocity-engine-core</artifactId>
-            <version>2.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus</artifactId>
-            <version>${mybatis.plus.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql.connector.java.version}</version>
-        </dependency>
         <dependency>
             <groupId>com.jww</groupId>
             <artifactId>jww-common-core</artifactId>
@@ -35,18 +19,19 @@
         </dependency>
         <dependency>
             <groupId>com.jww</groupId>
-            <artifactId>jww-common-db</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.jww</groupId>
-            <artifactId>jww-common-service</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.jww</groupId>
             <artifactId>jww-common-web</artifactId>
             <version>1.0.0</version>
+        </dependency>
+        <!-- 生成代码相关 -->
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity-engine-core</artifactId>
+            <version>${velocity.engine.core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.connector.java.version}</version>
         </dependency>
     </dependencies>
 

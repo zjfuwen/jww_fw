@@ -46,6 +46,8 @@ jww
 ├─jww-common 公共模块
 │  ├─jww-common-core 核心组件
 │  ├─jww-common-db 数据访问组件
+│  ├─jww-common-mdb 多数据源组件
+│  ├─jww-common-dsession 分布式session
 │  ├─jww-common-http HTTP客户端
 │  ├─jww-common-log 日志服务
 │  ├─jww-common-mq 队列服务
@@ -56,7 +58,7 @@ jww
 ├─jww-ui 页面模块
 │  └─jww-ui-ump 统一管理平台页面
 │ 
-├─pay-ump 统一管理平台项目
+├─jww-ump 统一管理平台项目
 │  ├─jww-ump-common 项目公共组件
 │  ├─jww-ump-dao 项目数据访问模块
 │  ├─jww-ump-generator 项目代码生成器
