@@ -39,8 +39,8 @@ public class SysDeptController extends BaseController {
      * @author wanyong
      * @date 2017-12-05 13:35
      */
-    @PostMapping("/query")
-    public ResultModel<UmpDeptModel> query(@RequestBody Long id) {
+    @GetMapping("/query/{id}")
+    public ResultModel<UmpDeptModel> query(@PathVariable Long id) {
         Assert.notNull(id);
         UmpDeptModel umpDeptModel = umpDeptService.queryOne(id);
         return ResultUtil.ok(umpDeptModel);
@@ -88,16 +88,7 @@ public class SysDeptController extends BaseController {
         return ResultUtil.ok();
     }
 
-    @PostMapping("/del")
-    public ResultModel del(@RequestBody UmpDeptModel umpDeptModel) {
-        log.info("DeptController->del: UmpDeptModel={}", umpDeptModel.getId());
-        EntityWrapper<UmpDeptModel> entityWrapper = new EntityWrapper<UmpDeptModel>();
-        entityWrapper.setEntity(umpDeptModel);
-        umpDeptService.delete(entityWrapper);
-        return ResultUtil.ok();
-    }
-
-    @PostMapping("/modify")
+    @PutMapping("/modify")
     public ResultModel modify(@RequestBody UmpDeptModel umpDeptModel) {
         log.info("DeptController->mod: UmpDeptModel={}", umpDeptModel);
         if(umpDeptModel.getEnable()==null){
@@ -109,15 +100,21 @@ public class SysDeptController extends BaseController {
         return ResultUtil.ok();
     }
 
-    @PostMapping("/delBatchByIds")
+    @DeleteMapping("/delBatchByIds")
     public ResultModel delBatchByIds(@RequestBody List<Long> ids) {
         Assert.notNull(ids);
         return ResultUtil.ok(umpDeptService.delBatchByIds(ids));
     }
 
-    @PostMapping("/queryTree")
-    public ResultModel queryTree(@RequestBody(required = false) Long id) {
+    @GetMapping("/queryTree/{id}")
+    public ResultModel queryTree(@PathVariable(required = false) Long id) {
         List<UmpTreeModel> list = umpDeptService.queryTree(id);
+        return ResultUtil.ok(list);
+    }
+
+    @GetMapping("/queryTree")
+    public ResultModel queryTree() {
+        List<UmpTreeModel> list = umpDeptService.queryTree();
         return ResultUtil.ok(list);
     }
 
