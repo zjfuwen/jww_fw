@@ -7,13 +7,6 @@ layui.config({
         $ = layui.jquery,
         table = layui.table;
 
-    $(function(){
-        window.iframeConfig = {
-            iframe_1: {
-                attr_name: 'iframe_1'
-            }
-        };
-    });
     //列表加载
     var tableIns = table.render({
         //设置表头
@@ -33,6 +26,7 @@ layui.config({
         },
         response: {
             statusCode: 200, //成功的状态码，默认：0
+            msgName: 'message', //状态信息的字段名称，默认：msg
         },
         elem: '#deptTable',
         page: {

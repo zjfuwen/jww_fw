@@ -64,7 +64,7 @@ public class SysDeptController extends BaseController {
     }
 
     @PostMapping("/queryListPage")
-    public ResultModel queryListPage(PageModel<UmpDeptModel> pageModel) {
+    public ResultModel queryListPage(@RequestBody PageModel<UmpDeptModel> pageModel) {
         pageModel = (PageModel<UmpDeptModel>) umpDeptService.queryListPage(pageModel);
         return ResultUtil.ok(pageModel);
     }
