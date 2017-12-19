@@ -60,7 +60,14 @@ public class UmpDeptServiceImpl extends BaseServiceImpl<UmpDeptMapper, UmpDeptMo
 
     @Override
     public boolean delBatchByIds(List<Long> ids) {
-        return super.deleteBatchIds(ids);
+        List<UmpDeptModel> list = new ArrayList<>();
+        for(Long id : ids){
+            UmpDeptModel umpdeptModel = new UmpDeptModel();
+            umpdeptModel.setId(id);
+            umpdeptModel.setIsDel(1);
+            list.add(umpdeptModel);
+        }
+        return super.updateBatchById(list);
     }
 
     @Override

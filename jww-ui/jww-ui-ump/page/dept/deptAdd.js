@@ -13,9 +13,8 @@ layui.config({
     //新增、编辑跳转则加载部门树
     if(pageOpt=='add'||pageOpt=='edit') {
         $.ajax({
-            type: "POST",
-            url: "dept/queryTree",
-            data: deptId,
+            type: "GET",
+            url: "dept/queryTree/"+deptId,
             success: function (data) {
                 if (data.code == 200) {
                     layui.tree({
@@ -65,9 +64,8 @@ layui.config({
     }
     if(pageOpt=='detail'||pageOpt=='edit') {
         $.ajax({
-            type: "POST",
-            url: "dept/query",
-            data: deptId,
+            type: "GET",
+            url: "dept/query/"+deptId,
             success: function(data){
                 if(data.code==200){
                     // alert(JSON.stringify(data));

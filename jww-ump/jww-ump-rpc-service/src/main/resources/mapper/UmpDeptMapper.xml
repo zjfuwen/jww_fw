@@ -23,7 +23,7 @@
          a.create_time AS createTime,a.create_by AS createBy,
          a.update_time AS updateTime,a.update_by AS updateBy FROM sys_dept a
         left join sys_dept b on a.parent_id = b.id_
-        where 1=1
+        where a.is_del = 0
         <if test="dept_name != null">
             and a.dept_name like "%"#{dept_name}"%"
         </if>

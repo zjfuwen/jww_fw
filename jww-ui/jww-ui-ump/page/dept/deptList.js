@@ -22,11 +22,11 @@ layui.config({
             {field: 'deptName', title: '部门名称', sort: true, edit: 'text'},
             {field: 'sortNo', title: '排序', sort: true, edit: 'text'},
             {field: 'parentName', title: '上级部门', sort: true},
-            {field: 'enable', title: '状态', templet: '#checkboxTpl', unresize: true},
+            //{field: 'enable', title: '状态', templet: '#checkboxTpl', unresize: true},
             {field: 'opt', title: '操作', fixed: 'right', width: 160, align: 'center', toolbar: '#toolBar'}
         ]],
         url: 'dept/queryListPage',
-        method: 'post',
+        method: 'POST',
         request: {
             pageName: 'current', //页码的参数名称，默认：page
             limitName: 'size' //每页数据量的参数名，默认：limit
@@ -42,6 +42,7 @@ layui.config({
         }
     });
 
+    /**注释状态操作
     //监听状态操作
     form.on('checkbox(enableCbx)', function(obj){
         // layer.tips(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
@@ -52,7 +53,7 @@ layui.config({
         var modData = {"id":$(this).attr("data-id"),"enable":enable};
         modDeptData(modData);
     });
-
+    */
     //监听单元格编辑
     table.on('edit(deptTable)', function(obj){
         var value = obj.value //得到修改后的值
@@ -95,7 +96,7 @@ layui.config({
             var deptIds = [data.id];
             layer.confirm('您确定要删除吗？', {icon: 3, title: '确认'}, function () {
                 $.ajax({
-                    type: 'POST',
+                    type: 'DELETE',
                     url: 'dept/delBatchByIds',
                     data: JSON.stringify(deptIds),
                     success: function (data) {
@@ -188,7 +189,7 @@ layui.config({
                 deptIds[i] = checkStatus.data[i].id;
             }
             $.ajax({
-                type: 'POST',
+                type: 'DELETE',
                 url: 'dept/delBatchByIds',
                 data: JSON.stringify(deptIds),
                 success: function (data) {
@@ -213,7 +214,7 @@ layui.config({
     function modDeptData(modData) {
         var index = layer.msg('修改中，请稍候',{icon: 16,time:false,shade:0.8});
         $.ajax({
-            type: "POST",
+            type: "PUT",
             url: "dept/modify",
             data: JSON.stringify(modData),
             success: function(data){
