@@ -1,8 +1,8 @@
 package com.jww.ump.rpc.api;
 
-import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.jww.common.core.base.BaseService;
 import com.jww.ump.model.UmpMenuModel;
+import com.jww.ump.model.UmpTreeModel;
 
 import java.util.List;
 
@@ -23,15 +23,24 @@ public interface UmpMenuService extends BaseService<UmpMenuModel> {
      * @author wanyong
      * @date 2017-12-02 13:59
      */
-    public List<UmpMenuModel> queryList();
+    List<UmpMenuModel> queryList();
 
     /**
-     * 根据用户ID查找菜单树
+     * 根据用户ID查找菜单树（包含目录和菜单，不包含按钮）
      *
      * @param userId
      * @return List<UmpMenuModel>
      * @author wanyong
      * @date 2017-12-03 00:56
      */
-    public List<UmpMenuModel> queryMenuTreeByUserId(Long userId);
+    List<UmpTreeModel> queryMenuTreeByUserId(Long userId);
+
+    /**
+     * 查找功能菜单树（包含目录、菜单和按钮）
+     *
+     * @return List<TreeModel>
+     * @author wanyong
+     * @date 2017-12-19 11:14
+     */
+    List<UmpTreeModel> queryFuncMenuTree();
 }

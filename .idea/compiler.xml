@@ -45,7 +45,7 @@
       <module name="jww-ump-generator" target="1.8" />
       <module name="jww-ump-model" target="1.5" />
       <module name="jww-ump-mq" target="1.5" />
-      <module name="jww-ump-rpc-api" target="1.5" />
+      <module name="jww-ump-rpc-api" target="1.8" />
       <module name="jww-ump-rpc-service" target="1.8" />
       <module name="jww-ump-server" target="1.5" />
     </bytecodeTargetLevel>
