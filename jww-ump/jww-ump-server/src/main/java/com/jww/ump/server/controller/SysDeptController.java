@@ -91,9 +91,9 @@ public class SysDeptController extends BaseController {
     @PutMapping("/modify")
     public ResultModel modify(@RequestBody UmpDeptModel umpDeptModel) {
         log.info("DeptController->mod: UmpDeptModel={}", umpDeptModel);
-        if(umpDeptModel.getEnable()==null){
-            umpDeptModel.setEnable(0);
-        }
+//        if(umpDeptModel.getEnable()==null){
+//            umpDeptModel.setEnable(0);
+//        }
         umpDeptModel.setUpdateBy(this.getCurrUser());
         umpDeptModel.setUpdateTime(new Date());
         umpDeptService.modifyById(umpDeptModel);

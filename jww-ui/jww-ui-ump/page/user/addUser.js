@@ -16,6 +16,10 @@ layui.config({
 
     // 监听submit
     form.on('submit(addUser)', function (data) {
+        if(typeof(data.field.enable) == "undefined"|| data.field.enable =='undefined'){
+            data.field.enable=0;
+        }
+        alert(JSON.stringify(data.field));
         $.ajax({
             type: 'POST',
             url: 'user/add',

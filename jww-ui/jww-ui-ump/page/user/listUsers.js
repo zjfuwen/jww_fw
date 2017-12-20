@@ -19,6 +19,7 @@ layui.config({
             {field: 'dept', title: '部门'},
             {field: 'position', title: '职位'},
             {field: 'email', title: '邮箱'},
+            {field: 'enable', title: '状态', templet: '<div>{{d.enable === 1 ? "启用" : "禁用"}}</div>'},
             {field: 'opt', title: '操作', fixed: 'right', width: 160, align: 'center', toolbar: '#toolBar'}
         ]],
         url: 'user/listPage',
@@ -95,7 +96,7 @@ layui.config({
         var index = layui.layer.open({
             title: "添加会员",
             type: 2,
-            content: "addUser.html",
+            content: "addUser.html?v=7",
             success: function (layero, index) {
                 setTimeout(function () {
                     layui.layer.tips('点击此处返回会员列表', '.layui-layer-setwin .layui-layer-close', {

@@ -72,7 +72,7 @@ layui.config({
             var index = layui.layer.open({
                 title: "查看部门",
                 type: 2,
-                content: "deptAdd.html?v=11",
+                content: "deptAdd.html?v=145",
                 success: function (layero, index) {
                     setTimeout(function () {
                         layui.layer.tips('点击此处返回部门列表', '.layui-layer-setwin .layui-layer-close', {
@@ -110,7 +110,7 @@ layui.config({
             var index = layui.layer.open({
                 title: "编辑部门",
                 type: 2,
-                content: "deptAdd.html?v=16",
+                content: "deptAdd.html?v=111",
                 success: function (layero, index) {
                     setTimeout(function () {
                         layui.layer.tips('点击此处返回部门列表', '.layui-layer-setwin .layui-layer-close', {
@@ -153,7 +153,7 @@ layui.config({
         var index = layui.layer.open({
             title: "添加部门",
             type: 2,
-            content: "deptAdd.html?v=7",
+            content: "deptAdd.html?v=126",
             success: function (layero, index) {
                 setTimeout(function () {
                     layui.layer.tips('点击此处返回部门列表', '.layui-layer-setwin .layui-layer-close', {

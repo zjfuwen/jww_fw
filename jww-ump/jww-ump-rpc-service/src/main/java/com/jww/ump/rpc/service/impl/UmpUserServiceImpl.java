@@ -41,7 +41,7 @@ public class UmpUserServiceImpl extends BaseServiceImpl<UmpUserMapper, UmpUserMo
         log.info("UmpUserServiceImpl->findListPage->page:" + page.toString());
         log.info("UmpUserServiceImpl->findListPage->page->condition:" + JSON.toJSONString(page.getCondition()));
         UmpUserModel umpUserModel = new UmpUserModel();
-        umpUserModel.setEnable(1);
+        umpUserModel.setIsDel(0);
         EntityWrapper<UmpUserModel> entityWrapper = new EntityWrapper<>(umpUserModel);
         if (ObjectUtil.isNotNull(page.getCondition())) {
             StringBuilder conditionSql = new StringBuilder();
@@ -64,7 +64,7 @@ public class UmpUserServiceImpl extends BaseServiceImpl<UmpUserMapper, UmpUserMo
         for (Long id : ids) {
             UmpUserModel umpUserModel = new UmpUserModel();
             umpUserModel.setId(id);
-            umpUserModel.setEnable(0);
+            umpUserModel.setIsDel(1);
 
             umpUserModelList.add(umpUserModel);
         }
