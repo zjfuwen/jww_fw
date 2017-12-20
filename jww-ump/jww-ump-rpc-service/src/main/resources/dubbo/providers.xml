@@ -17,5 +17,6 @@
     <dubbo:service interface="com.jww.ump.rpc.api.UmpUserService" ref="umpUserService" timeout="10000"/>
     <dubbo:service interface="com.jww.ump.rpc.api.UmpAuthorizeService" ref="umpAuthorizeService" timeout="10000"/>
     <dubbo:service interface="com.jww.ump.rpc.api.UmpMenuService" ref="umpMenuService" timeout="10000"/>
-    <dubbo:service interface="com.jww.ump.rpc.api.UmpDeptService"  ref="umpDeptService" timeout="10000"/>
+    <dubbo:service interface="com.jww.ump.rpc.api.UmpDeptService" ref="umpDeptService" timeout="10000"/>
+    <dubbo:service interface="com.jww.ump.rpc.api.UmpRoleService" ref="umpRoleService" timeout="10000"/>
 </beans>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jww.ump.dao.mapper.UmpRoleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.jww.ump.model.UmpRoleModel">
+        <result column="id_" property="id"/>
+        <result column="enable_" property="enable"/>
+        <result column="is_del" property="isDel"/>
+        <result column="remark_" property="remark"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="role_name" property="roleName"/>
+        <result column="dept_id" property="deptId"/>
+        <result column="role_type" property="roleType"/>
+    </resultMap>
+
+    <select id="selectRoleList" resultMap="BaseResultMap">
+        SELECT
+            r.id_,
+            role_name,
+            dept_id,
+            d.dept_name AS deptName,
+            role_type,
+            enable_,
+            is_del,
+            remark_,
+            create_time,
+            create_by,
+            update_time,
+            update_by
+        FROM
+            sys_role AS r
+        LEFT JOIN (
+            SELECT
+                id_,
+                dept_name
+            FROM
+                sys_dept
+            WHERE
+                is_del = 0
+        ) AS d ON r.dept_id = d.id_
+        AND r.is_del = 0
+        <where>
+            ${ew.sqlSegment}
+        </where>
+    </select>
+
+</mapper>
