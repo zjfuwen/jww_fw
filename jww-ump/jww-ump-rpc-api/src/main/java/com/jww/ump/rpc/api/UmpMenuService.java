@@ -1,5 +1,6 @@
 package com.jww.ump.rpc.api;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.jww.common.core.base.BaseService;
 import com.jww.ump.model.UmpMenuModel;
 import com.jww.ump.model.UmpTreeModel;
@@ -24,6 +25,16 @@ public interface UmpMenuService extends BaseService<UmpMenuModel> {
      * @date 2017-12-02 13:59
      */
     List<UmpMenuModel> queryList();
+
+    /**
+     * 分页查询所有菜单
+     *
+     * @param page
+     * @return Page<UmpMenuModel>
+     * @author shadj
+     * @date 2017/12/18 13:52
+     */
+    public Page<UmpMenuModel> queryListPage(Page<UmpMenuModel> page);
 
     /**
      * 根据用户ID查找菜单树（包含目录和菜单，不包含按钮）

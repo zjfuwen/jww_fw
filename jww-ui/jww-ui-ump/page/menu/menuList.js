@@ -15,17 +15,26 @@ layui.config({
             {type: 'checkbox', fixed: 'left'},
             {field: 'id', title: '菜单ID', sort: true},
             {field: 'menuName', title: '菜单名称', edit: 'text'},
-            {field: 'parentId', title: '上级菜单', sort: true, edit: 'text'},
-            {field: 'menuType', title: '类型', sort: true, edit: 'text',templet: '<div>{{d.menuType === 0 ? "目录" : d.menuType === 1 ? "菜单" : "按钮"}}</div>'},
+            {field: 'parentId', title: '上级菜单', sort: true},
+            {field: 'menuType', title: '类型', sort: true, templet: '<div>{{d.menuType === 0 ? "目录" : d.menuType === 1 ? "菜单" : "按钮"}}</div>'},
             {field: 'iconcls', title: '菜单图标样式', sort: false, edit: 'text'},
             {field: 'sortNo', title: '排序', sort: true, edit: 'text'},
             {field: 'request', title: '请求地址', sort: false, edit: 'text'},
             {field: 'permission', title: '权限标识', sort: false, edit: 'text'}
         ]],
-        url: 'menu/queryList',
+        url: 'menu/queryListPage',
         method: 'post',
         response: {
             statusCode: 200 //成功的状态码，默认：0
+        },
+        request: {
+            pageName: 'current', //页码的参数名称，默认：page
+            limitName: 'size' //每页数据量的参数名，默认：limit
+        },
+        page: {
+            elem: 'pageDiv',
+            limit: 10,
+            limits: [10, 20, 30, 40, 50]
         },
         elem: '#menuTable'
     });

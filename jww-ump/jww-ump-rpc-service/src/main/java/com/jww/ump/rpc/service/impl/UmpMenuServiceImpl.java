@@ -1,6 +1,7 @@
 package com.jww.ump.rpc.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.jww.common.core.base.BaseServiceImpl;
 import com.jww.ump.dao.mapper.UmpMenuMapper;
 import com.jww.ump.model.UmpMenuModel;
@@ -38,6 +39,15 @@ public class UmpMenuServiceImpl extends BaseServiceImpl<UmpMenuMapper, UmpMenuMo
         EntityWrapper<UmpMenuModel> entityWrapper = new EntityWrapper<>(umpMenuModel);
         entityWrapper.orderBy(" parent_id, sort_no ", true);
         return super.selectList(entityWrapper);
+    }
+
+    @Override
+    public Page<UmpMenuModel> queryListPage(Page<UmpMenuModel> page) {
+        UmpMenuModel menu = new UmpMenuModel();
+        menu.setEnable(1);
+        EntityWrapper<UmpMenuModel> wrapper = new EntityWrapper<>(menu);
+        page.setCondition(null);
+        return super.selectPage(page,wrapper);
     }
 
     @Override
