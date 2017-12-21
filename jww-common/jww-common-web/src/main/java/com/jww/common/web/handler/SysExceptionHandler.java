@@ -31,7 +31,7 @@ public class SysExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResultModel exceptionHandler(Exception e) {
         log.info("SysExceptionHandler->exceptionHandler->comein...");
-        log.info(e.getMessage(), e);
+        log.error(e.getMessage(), e);
         // 媒体类型
         if (e instanceof HttpMediaTypeNotSupportedException) {
             return ResultUtil.fail(Constants.ResultCodeEnum.NO_SUPPORTED_MEDIATYPE);

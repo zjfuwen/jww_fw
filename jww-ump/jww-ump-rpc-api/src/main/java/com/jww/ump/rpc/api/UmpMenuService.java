@@ -49,9 +49,10 @@ public interface UmpMenuService extends BaseService<UmpMenuModel> {
     /**
      * 查找功能菜单树（包含目录、菜单和按钮）
      *
+     * @param roleId
      * @return List<TreeModel>
      * @author wanyong
      * @date 2017-12-19 11:14
      */
-    List<UmpTreeModel> queryFuncMenuTree();
+    List<UmpTreeModel> queryFuncMenuTree(Long roleId);
 }

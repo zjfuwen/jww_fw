@@ -30,6 +30,7 @@ layui.config({
             }
         });
     }
+
     initDeptSelect();
 
     // 初始化功能权限tree
@@ -48,11 +49,18 @@ layui.config({
 
     // 监听submit
     form.on('submit(addFilter)', function (data) {
+        var parentMenuIdArray = [];
         var menuIdArray = [];
         var oCks = tree.GetChecked();
         for (var i = 0; i < oCks.length; i++) {
             menuIdArray[i] = oCks[i].value;
+            var parentCks = tree.GetParent(oCks[i].value);
+            for (var j = 0; j < parentCks.length; j++) {
+                parentMenuIdArray[j] = parentCks[j].value;
+                alert(parentCks[j].value);
+            }
         }
+        alert(JSON.stringify(parentMenuIdArray));
         data.field["menuIdList"] = menuIdArray;
         $.ajax({
             type: 'POST',

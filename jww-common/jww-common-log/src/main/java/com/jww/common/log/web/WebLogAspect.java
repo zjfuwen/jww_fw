@@ -1,7 +1,6 @@
 package com.jww.common.log.web;
 
 import com.alibaba.fastjson.JSON;
-import com.jww.common.core.Constants;
 import com.xiaoleilu.hutool.date.DateUtil;
 import com.xiaoleilu.hutool.http.HttpUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +26,9 @@ import java.util.Arrays;
 @Aspect
 @Component
 public class WebLogAspect {
-    // 开始时间
+    /**
+     * 开始时间
+     */
     private long startTime = 0L;
 
     @Pointcut("execution(* *..controller..*.*(..))")
@@ -47,16 +48,9 @@ public class WebLogAspect {
         Object result = null;
         try {
             result = pjp.proceed();
-        } catch (Throwable throwable) {
-            eFlag = true;
-            log.error(Constants.ResultCodeEnum.INTERNAL_SERVER_ERROR.getMessage(), throwable);
-            throw throwable;
         } finally {
             //拼接返回日志
             String logStr = appendLogStrAfter(logbf, result);
-            if (eFlag) {
-                log.error(logStr);
-            }
             log.info(logStr);
         }
         return result;

@@ -2,13 +2,12 @@ package com.jww.ump.server.controller;
 
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
 import com.jww.common.core.model.PageModel;
 import com.jww.common.web.BaseController;
 import com.jww.common.web.model.ResultModel;
 import com.jww.common.web.util.ResultUtil;
-import com.jww.ump.model.UmpDeptModel;
 import com.jww.ump.model.UmpMenuModel;
+import com.jww.ump.model.UmpTreeModel;
 import com.jww.ump.rpc.api.UmpMenuService;
 import com.xiaoleilu.hutool.lang.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +35,7 @@ public class SysMenuController extends BaseController {
     /**
      * 查询所有菜单
      *
-     * @param
-     * @return
+     * @return ResultModel<List<UmpMenuModel>>
      * @author wanyong
      * @date 2017-12-02 00:24
      */
@@ -91,7 +89,7 @@ public class SysMenuController extends BaseController {
     /**
      * 批量删除菜单
      *
-     * @param java.util.List<Long> ids
+     * @param ids
      * @return ResultModel
      * @author shadj
      * @date 2017/12/18 21:52
@@ -112,7 +110,7 @@ public class SysMenuController extends BaseController {
      */
     @PostMapping("/modify")
     public ResultModel modify(@RequestBody UmpMenuModel umpMenuModel) {
-        if(umpMenuModel.getEnable()==null){
+        if (umpMenuModel.getEnable() == null) {
             umpMenuModel.setEnable(0);
         }
         umpMenuModel.setUpdateBy(this.getCurrUser());
@@ -124,7 +122,7 @@ public class SysMenuController extends BaseController {
     /**
      * 新增菜单
      *
-     * @param com.jww.ump.model.UmpMenuModel
+     * @param umpMenuModel
      * @return ResultModel
      * @author shadj
      * @date 2017/12/18 21:54
@@ -140,6 +138,18 @@ public class SysMenuController extends BaseController {
         }
         umpMenuService.insert(umpMenuModel);
         return ResultUtil.ok();
+    }
+
+    @GetMapping("/functree/roleId")
+    public ResultModel queryFuncMenuTree(@PathVariable(value = "userId") Long roleId) {
+        List<UmpTreeModel> treeModelList = umpMenuService.queryFuncMenuTree(roleId);
+        return ResultUtil.ok(treeModelList);
+    }
+
+    @PostMapping("/functree")
+    public ResultModel queryFuncMenuTree() {
+        List<UmpTreeModel> treeModelList = umpMenuService.queryFuncMenuTree(null);
+        return ResultUtil.ok(treeModelList);
     }
 }
 

@@ -47,7 +47,7 @@ public class UmpMenuServiceImpl extends BaseServiceImpl<UmpMenuMapper, UmpMenuMo
         menu.setEnable(1);
         EntityWrapper<UmpMenuModel> wrapper = new EntityWrapper<>(menu);
         page.setCondition(null);
-        return super.selectPage(page,wrapper);
+        return super.selectPage(page, wrapper);
     }
 
     @Override
@@ -57,8 +57,18 @@ public class UmpMenuServiceImpl extends BaseServiceImpl<UmpMenuMapper, UmpMenuMo
     }
 
     @Override
-    public List<UmpTreeModel> queryFuncMenuTree() {
-        List<UmpMenuModel> umpMenuModelList = queryList();
+    public List<UmpTreeModel> queryFuncMenuTree(Long roleId) {
+        UmpMenuModel umpMenuModel = new UmpMenuModel();
+        // 状态为：启用
+        umpMenuModel.setEnable(1);
+        // 是否删除：否
+        umpMenuModel.setIsDel(0);
+        if (roleId != null) {
+
+        }
+        EntityWrapper<UmpMenuModel> entityWrapper = new EntityWrapper<>(umpMenuModel);
+        entityWrapper.orderBy(" parent_id, sort_no ", true);
+        List<UmpMenuModel> umpMenuModelList = super.selectList(entityWrapper);
         return convertTreeData(umpMenuModelList);
     }
 
