@@ -5,6 +5,7 @@ import com.jww.common.core.base.BaseService;
 import com.jww.ump.model.UmpMenuModel;
 import com.jww.ump.model.UmpTreeModel;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -55,4 +56,14 @@ public interface UmpMenuService extends BaseService<UmpMenuModel> {
      * @date 2017-12-19 11:14
      */
     List<UmpTreeModel> queryFuncMenuTree(Long roleId);
+
+    /**
+     * 查询菜单树，供页面选择父菜单使用，过滤自己及子菜单
+     *
+     * @param  id
+     * @return  List<UmpTreeModel>
+     * @author shadj
+     * @date 2017/12/22 22:59
+     */
+    List<UmpTreeModel> queryTree(Long id);
 }

@@ -73,17 +73,14 @@ public class SysMenuController extends BaseController {
     /**
      * 根据ID删除菜单
      *
-     * @param umpMenuModel
+     * @param id
      * @return ResultModel
      * @author shadj
      * @date 2017/12/18 21:51
      */
-    @PostMapping("/del")
-    public ResultModel del(@RequestBody UmpMenuModel umpMenuModel) {
-        EntityWrapper<UmpMenuModel> entityWrapper = new EntityWrapper<UmpMenuModel>();
-        entityWrapper.setEntity(umpMenuModel);
-        umpMenuService.delete(entityWrapper);
-        return ResultUtil.ok();
+    @PostMapping("/delete")
+    public ResultModel delete(@RequestBody Long id) {
+        return ResultUtil.ok(umpMenuService.deleteById(id));
     }
 
     /**
@@ -150,6 +147,18 @@ public class SysMenuController extends BaseController {
     public ResultModel queryFuncMenuTree() {
         List<UmpTreeModel> treeModelList = umpMenuService.queryFuncMenuTree(null);
         return ResultUtil.ok(treeModelList);
+    }
+
+    @GetMapping("/queryTree/{id}")
+    public ResultModel queryTree(@PathVariable(required = false) Long id) {
+        List<UmpTreeModel> list = umpMenuService.queryTree(id);
+        return ResultUtil.ok(list);
+    }
+
+    @GetMapping("/queryTree")
+    public ResultModel queryTree() {
+        List<UmpTreeModel> list = umpMenuService.queryTree(null);
+        return ResultUtil.ok(list);
     }
 }
 

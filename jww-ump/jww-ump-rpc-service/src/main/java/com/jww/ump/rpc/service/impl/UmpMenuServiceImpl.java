@@ -2,18 +2,22 @@ package com.jww.ump.rpc.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.jww.common.core.annotation.DistributedLock;
 import com.jww.common.core.base.BaseServiceImpl;
+import com.jww.common.core.exception.BusinessException;
 import com.jww.ump.dao.mapper.UmpMenuMapper;
+import com.jww.ump.dao.mapper.UmpTreeMapper;
 import com.jww.ump.model.UmpMenuModel;
 import com.jww.ump.model.UmpTreeModel;
 import com.jww.ump.rpc.api.UmpMenuService;
+import com.xiaoleilu.hutool.util.ArrayUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.Serializable;
+import java.util.*;
 
 /**
  * <p>
@@ -23,11 +27,14 @@ import java.util.Map;
  * @author wanyong
  * @since 2017-11-29
  */
+@Slf4j
 @Service("umpMenuService")
 public class UmpMenuServiceImpl extends BaseServiceImpl<UmpMenuMapper, UmpMenuModel> implements UmpMenuService {
 
     @Autowired
     private UmpMenuMapper umpMenuMapper;
+    @Autowired
+    private UmpTreeMapper umpTreeMapper;
 
     @Override
     public List<UmpMenuModel> queryList() {
@@ -70,6 +77,36 @@ public class UmpMenuServiceImpl extends BaseServiceImpl<UmpMenuMapper, UmpMenuMo
         entityWrapper.orderBy(" parent_id, sort_no ", true);
         List<UmpMenuModel> umpMenuModelList = super.selectList(entityWrapper);
         return convertTreeData(umpMenuModelList);
+    }
+
+    @Override
+    public List<UmpTreeModel> queryTree(Long id) {
+        List<UmpTreeModel> umpTreeModelList = umpTreeMapper.selectMenuTree(id);
+        List<UmpTreeModel> list  = UmpTreeModel.getTree(umpTreeModelList);
+        return list;
+    }
+
+    @Override
+    @DistributedLock
+    public boolean deleteById(Serializable id) {
+        //查询是否有子菜单，如果有则返回false，否则允许删除
+        EntityWrapper<UmpMenuModel> entityWrapper = new EntityWrapper<UmpMenuModel>();
+        UmpMenuModel umpMenuModel = new UmpMenuModel();
+        umpMenuModel.setParentId((Long) id);
+        entityWrapper.setEntity(umpMenuModel);
+        List<UmpMenuModel> childs = super.selectList(entityWrapper);
+        if(ArrayUtil.isNotEmpty(childs)){
+            log.error("删除菜单[id:{}]失败，请先删除子菜单",id);
+            throw new BusinessException("删除菜单失败，请先删除子菜单");
+        }
+        return super.deleteById(id);
+    }
+
+    @Override
+    @CachePut(value = "data")
+    @DistributedLock(value = "#umpMenuModel.getParentId()")
+    public UmpMenuModel add(UmpMenuModel umpMenuModel) {
+        return super.add(umpMenuModel);
     }
 
     /**

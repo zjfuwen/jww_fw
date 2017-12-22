@@ -159,7 +159,7 @@ public final class RedisHelper implements CacheManager {
             // 获取锁成功后，还要设置锁的有效期
             if (flag) {
                 this.expire(key, userLockTimeOut);
-                log.info("set lock '" + key + "',lockValue=" + lockValue + ",retry " + i);
+                log.info("set lock , key: {}, lockValue: {} ,retry: {} ", key, lockValue, i);
                 return lockValue;
             }
             // 返回-1代表key没有设置超时时间，为key设置一个超时时间
@@ -174,7 +174,7 @@ public final class RedisHelper implements CacheManager {
             }
             i++;
         }
-        log.info("get lock false, lockKey:" + key + ",retry " + i);
+        log.error("get lock false, key: {} ,retry: {} ", key, i);
         return null;
     }
 
@@ -187,7 +187,7 @@ public final class RedisHelper implements CacheManager {
         redisTemplate.watch(key);
         if (lockValue.equals(this.get(key))) {
             this.del(key);
-            log.info("release lock '" + key + "',lockValue=" + lockValue);
+            log.info("release lock, key: {}, lockValue: {}", key, lockValue);
             return true;
         }
         redisTemplate.unwatch();

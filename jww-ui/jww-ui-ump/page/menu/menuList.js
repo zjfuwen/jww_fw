@@ -20,7 +20,8 @@ layui.config({
             {field: 'iconcls', title: '菜单图标样式', sort: false, edit: 'text'},
             {field: 'sortNo', title: '排序', sort: true, edit: 'text'},
             {field: 'request', title: '请求地址', sort: false, edit: 'text'},
-            {field: 'permission', title: '权限标识', sort: false, edit: 'text'}
+            {field: 'permission', title: '权限标识', sort: false, edit: 'text'},
+            {field: 'opt', title: '操作', fixed: 'right', width: 160, align: 'center', toolbar: '#toolBar'}
         ]],
         url: 'menu/queryListPage',
         method: 'post',
@@ -66,16 +67,18 @@ layui.config({
     //监听工具条
     table.on('tool(menuTable)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
         var data = obj.data;
+        var menuId = data.id;
+        $('#menuId').val(menuId);
         var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
         if (layEvent === 'detail') { //查看
+            $('#pageOpt').val('detail');
             layer.msg("功能正在开发中，敬请期待...", {icon: 0});
         } else if (layEvent === 'del') { //删除
-            var menuIds = [data.id];
             layer.confirm('您确定要删除吗？', {icon: 3, title: '确认'}, function () {
                 $.ajax({
-                    type: 'POST',
-                    url: 'menu/delBatchByIds',
-                    data: JSON.stringify(menuIds),
+                    type: 'DELETE',
+                    url: 'menu/delete',
+                    data: menuId,
                     success: function (data) {
                         if (data.code == 200) {
                             if (data.data === true) {
@@ -89,6 +92,7 @@ layui.config({
                 });
             });
         } else if (layEvent === 'edit') { //编辑
+            $('#pageOpt').val('edit');
             layer.msg("功能正在开发中，敬请期待...", {icon: 0});
         }
     });
@@ -99,6 +103,8 @@ layui.config({
 
     //添加菜单
     $(".menuAdd_btn").click(function () {
+        $('#pageOpt').val('add');
+        $('#menuId').val('');
         var index = layui.layer.open({
             title: "添加菜单",
             type: 2,

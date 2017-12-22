@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>菜单添加</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
+</head>
+<body class="childrenBody">
+	<form class="layui-form">
+		<div class="layui-form-item">
+			<label class="layui-form-label">类型</label>
+			<div class="layui-input-block">
+				<input type="radio" name="menuType" lay-filter="menuType" value="0" title="目录" >
+				<input type="radio" name="menuType" lay-filter="menuType" value="1" title="菜单" checked>
+				<input type="radio" name="menuType" lay-filter="menuType" value="2" title="按钮" >
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">菜单名称</label>
+			<div class="layui-input-inline">
+				<input type="text" name="menuName" class="layui-input menuName" lay-verify="required" placeholder="请输入菜单名称">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label">上级菜单</label>
+				<div class="layui-input-inline">
+					<input type="hidden" id="id" name="id" class="id">
+					<input type="hidden" id="parentId" name="parentId" class="parentId">
+					<input type="text" id="parentName" name="parentName" class="layui-input parentName" placeholder="请选择上级菜单" readonly>
+				</div>
+			</div>
+		</div>
+		<div class="layui-form-item request">
+			<label class="layui-form-label">请求地址</label>
+			<div class="layui-input-block">
+				<input type="text" name="request" class="layui-input request" placeholder="请输入请求地址">
+			</div>
+		</div>
+		<div class="layui-form-item permission">
+			<label class="layui-form-label">权限标识</label>
+			<div class="layui-input-block">
+				<input type="text" name="permission" class="layui-input permission" placeholder="多个用逗号分隔，如：user:list,user:create">
+			</div>
+		</div>
+		<div class="layui-form-item sortNo">
+			<div class="layui-inline">
+				<label class="layui-form-label">排序号</label>
+				<div class="layui-input-inline">
+					<input type="text" name="sortNo" class="layui-input sortNo" placeholder="请输入排序号">
+				</div>
+			</div>
+		</div>
+		<div class="layui-form-item iconcls">
+			<label class="layui-form-label">图标样式</label>
+			<div class="layui-input-inline">
+				<input type="text" name="iconcls" class="layui-input iconcls" placeholder="请输入菜单图标样式">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+				<button class="layui-btn" lay-submit="" lay-filter="addmenu">立即提交</button>
+				<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+		    </div>
+		</div>
+	</form>
+	<script type="text/javascript" src="../../layui/layui.js"></script>
+	<script type="text/javascript" src="menuAdd.js?v=100"></script>
+</body>
+</html>

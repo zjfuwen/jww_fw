@@ -19,7 +19,6 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseModel>
         extends ServiceImpl<BaseMapper<T>, T> implements BaseService<T> {
 
     @Override
-    @DistributedLock
     @CacheEvict(value = "data")
     public T modifyById(T entity) {
         T resultEntity = null;

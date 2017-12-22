@@ -31,7 +31,7 @@ public class UmpMenuModel extends BaseModel {
     @TableField("menu_name")
     private String menuName;
     /**
-     * 菜单类型(0:CURD;1:系统菜单;2:业务菜单;)
+     * 菜单类型(0:目录;1:菜单;2:按钮;)
      */
     @TableField("menu_type")
     private Integer menuType;
