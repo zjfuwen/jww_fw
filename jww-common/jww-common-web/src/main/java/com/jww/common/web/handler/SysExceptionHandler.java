@@ -31,6 +31,8 @@ public class SysExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     public ResultModel exceptionHandler(Exception e) {
+        log.info("SysExceptionHandler->exceptionHandler->comein...");
+        log.info(e.getMessage(), e);
         // 媒体类型
         if (e instanceof HttpMediaTypeNotSupportedException) {
             return ResultUtil.fail(Constants.ResultCodeEnum.NO_SUPPORTED_MEDIATYPE);
@@ -43,11 +45,9 @@ public class SysExceptionHandler {
         }
         if (e instanceof BaseException) {
             BaseException baseException = (BaseException) e;
-            log.info("SysExceptionHandler->e instanceof BaseException...");
             return ResultUtil.fail(baseException.getCode(), baseException.getMessage());
         }
         if(e instanceof RuntimeException && e.getMessage().contains(BusinessException.class.getName())){
-            log.info("SysExceptionHandler->e instanceof RuntimeException...");
             String message =  e.getMessage().substring(BusinessException.class.getName().length()+1,e.getMessage().indexOf("\r\n")).trim();;
             return ResultUtil.fail(Constants.ResultCodeEnum.INTERNAL_SERVER_ERROR, message);
         }
