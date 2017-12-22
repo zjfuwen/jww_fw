@@ -10,6 +10,10 @@ import com.jww.common.core.Constants;
  */
 public class LoginException extends BaseException {
 
+    public LoginException() {
+        super();
+    }
+
     public LoginException(Throwable ex) {
         super(ex);
     }

@@ -10,6 +10,10 @@ import com.jww.common.core.Constants;
  */
 public class BusinessException extends BaseException {
 
+    public BusinessException() {
+        super();
+    }
+
     public BusinessException(Throwable ex) {
         super(ex);
     }

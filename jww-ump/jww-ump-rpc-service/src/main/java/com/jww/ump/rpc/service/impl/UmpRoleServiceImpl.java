@@ -3,6 +3,7 @@ package com.jww.ump.rpc.service.impl;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.jww.common.core.base.BaseServiceImpl;
+import com.jww.common.core.exception.BusinessException;
 import com.jww.ump.dao.mapper.UmpRoleMapper;
 import com.jww.ump.model.UmpRoleMenuModel;
 import com.jww.ump.model.UmpRoleModel;
@@ -60,7 +61,16 @@ public class UmpRoleServiceImpl extends BaseServiceImpl<UmpRoleMapper, UmpRoleMo
     }
 
     @Override
-    public UmpRoleModel add(UmpRoleModel umpRoleModel) {
+    public UmpRoleModel add(UmpRoleModel umpRoleModel) throws BusinessException {
+        // 根据角色名称和部门检查是否存在相同的角色
+        UmpRoleModel checkModel = new UmpRoleModel();
+        checkModel.setIsDel(0);
+        checkModel.setRoleName(umpRoleModel.getRoleName());
+        checkModel.setDeptId(umpRoleModel.getDeptId());
+        EntityWrapper<UmpRoleModel> entityWrapper = new EntityWrapper<>(checkModel);
+        if (ObjectUtil.isNotNull(super.selectOne(entityWrapper))) {
+            throw new BusinessException("已存在相同名称的角色");
+        }
         UmpRoleModel result = super.add(umpRoleModel);
         if (result != null) {
             List<UmpRoleMenuModel> umpRoleMenuModelList = new ArrayList<>(5);

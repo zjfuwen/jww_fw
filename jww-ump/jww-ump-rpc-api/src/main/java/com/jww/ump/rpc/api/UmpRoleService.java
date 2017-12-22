@@ -2,6 +2,7 @@ package com.jww.ump.rpc.api;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.jww.common.core.base.BaseService;
+import com.jww.common.core.exception.BusinessException;
 import com.jww.ump.model.UmpRoleModel;
 
 /**
@@ -34,6 +35,6 @@ public interface UmpRoleService extends BaseService<UmpRoleModel> {
      * @date 2017-12-19 15:37
      */
     @Override
-    UmpRoleModel add(UmpRoleModel umpRoleModel);
+    UmpRoleModel add(UmpRoleModel umpRoleModel) throws BusinessException;
 
 }

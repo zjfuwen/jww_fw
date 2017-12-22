@@ -121,5 +121,6 @@
     <orderEntry type="module" module-name="jww-ump-rpc-api" />
     <orderEntry type="module" module-name="jww-ump-model" />
     <orderEntry type="library" name="Maven: org.projectlombok:lombok:1.16.18" level="project" />
+    <orderEntry type="library" name="Maven: com.alibaba:druid:1.1.5" level="project" />
   </component>
 </module>

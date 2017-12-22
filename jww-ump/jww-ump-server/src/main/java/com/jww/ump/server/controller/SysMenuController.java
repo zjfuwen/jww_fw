@@ -1,15 +1,20 @@
 package com.jww.ump.server.controller;
 
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.jww.common.core.model.PageModel;
 import com.jww.common.web.BaseController;
 import com.jww.common.web.model.ResultModel;
 import com.jww.common.web.util.ResultUtil;
 import com.jww.ump.model.UmpMenuModel;
 import com.jww.ump.model.UmpTreeModel;
 import com.jww.ump.rpc.api.UmpMenuService;
+import com.xiaoleilu.hutool.lang.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -39,52 +44,112 @@ public class SysMenuController extends BaseController {
         return ResultUtil.ok(umpMenuService.queryList());
     }
 
+    /**
+     * 分页查询菜单列表
+     *
+     * @param pageModel
+     * @return com.jww.common.web.model.ResultModel<java.util.List<com.jww.ump.model.UmpMenuModel>>
+     * @author shadj
+     * @date 2017/12/18 21:34
+     */
+    @PostMapping("/queryListPage")
+    public ResultModel<List<UmpMenuModel>> queryListPage(@RequestBody PageModel pageModel) {
+        return ResultUtil.ok(umpMenuService.queryListPage(pageModel));
+    }
+
+    /**
+     * 查询用户权限菜单
+     *
+     * @param userId
+     * @return ResultModel
+     * @author shadj
+     * @date 2017/12/18 21:36
+     */
     @GetMapping("/tree/{userId}")
-    public ResultModel<List<UmpTreeModel>> queryMenuTreeByUserId(@PathVariable(value = "userId") Long userId) {
+    public ResultModel<List<UmpMenuModel>> queryMenuTreeByUserId(@PathVariable(value = "userId") Long userId) {
         return ResultUtil.ok(umpMenuService.queryMenuTreeByUserId(userId));
+    }
+
+    /**
+     * 根据ID删除菜单
+     *
+     * @param umpMenuModel
+     * @return ResultModel
+     * @author shadj
+     * @date 2017/12/18 21:51
+     */
+    @PostMapping("/del")
+    public ResultModel del(@RequestBody UmpMenuModel umpMenuModel) {
+        EntityWrapper<UmpMenuModel> entityWrapper = new EntityWrapper<UmpMenuModel>();
+        entityWrapper.setEntity(umpMenuModel);
+        umpMenuService.delete(entityWrapper);
+        return ResultUtil.ok();
+    }
+
+    /**
+     * 批量删除菜单
+     *
+     * @param ids
+     * @return ResultModel
+     * @author shadj
+     * @date 2017/12/18 21:52
+     */
+    @PostMapping("/deleteBatchIds")
+    public ResultModel deleteBatchIds(@RequestBody List<Long> ids) {
+        Assert.notNull(ids);
+        return ResultUtil.ok(umpMenuService.deleteBatchIds(ids));
+    }
+
+    /**
+     * 根据ID修改菜单
+     *
+     * @param umpMenuModel
+     * @return ResultModel
+     * @author shadj
+     * @date 2017/12/18 21:54
+     */
+    @PostMapping("/modify")
+    public ResultModel modify(@RequestBody UmpMenuModel umpMenuModel) {
+        if (umpMenuModel.getEnable() == null) {
+            umpMenuModel.setEnable(0);
+        }
+        umpMenuModel.setUpdateBy(this.getCurrUser());
+        umpMenuModel.setUpdateTime(new Date());
+        umpMenuService.modifyById(umpMenuModel);
+        return ResultUtil.ok();
+    }
+
+    /**
+     * 新增菜单
+     *
+     * @param umpMenuModel
+     * @return ResultModel
+     * @author shadj
+     * @date 2017/12/18 21:54
+     */
+    @PostMapping("/add")
+    public ResultModel add(@Valid @RequestBody UmpMenuModel umpMenuModel) {
+        if (umpMenuModel != null) {
+            Date now = new Date();
+            umpMenuModel.setCreateTime(now);
+            umpMenuModel.setCreateBy(this.getCurrUser());
+            umpMenuModel.setUpdateBy(this.getCurrUser());
+            umpMenuModel.setUpdateTime(now);
+        }
+        umpMenuService.insert(umpMenuModel);
+        return ResultUtil.ok();
+    }
+
+    @GetMapping("/functree/roleId")
+    public ResultModel queryFuncMenuTree(@PathVariable(value = "userId") Long roleId) {
+        List<UmpTreeModel> treeModelList = umpMenuService.queryFuncMenuTree(roleId);
+        return ResultUtil.ok(treeModelList);
     }
 
     @PostMapping("/functree")
     public ResultModel queryFuncMenuTree() {
-        /*StringBuilder str = new StringBuilder();
-        str.append("[");
-        str.append("{title:\"节点1\",value:\"jd1\",checked:false,disabled:false,data:[");
-        str.append("{title:\"节点1.1\",value:\"jd1.1\",checked:false,disabled:false,data:[]}");
-        str.append(",{title:\"节点1.2\",value:\"jd1.2\",checked:false,disabled:false,data:[]}");
-        str.append(",{title:\"节点1.3\",value:\"jd1.3\",checked:false,disabled:false,data:[]}");
-        str.append(",{title:\"节点1.4\",value:\"jd1.4\",checked:false,disabled:false,data:[]}");
-        str.append("]}");
-        str.append(",{title:\"节点2\",value:\"jd2\",checked:false,disabled:false,data:[");
-        str.append("{title:\"节点2.1\",value:\"jd2.1\",checked:false,disabled:false,data:[]}");
-        str.append(",{title:\"节点2.2\",value:\"jd2.2\",checked:false,disabled:true,data:[");
-        str.append("{title:\"节点2.2.1\",value:\"jd2.2.1\",checked:true,disabled:false,data:[]}");
-        str.append(",{title:\"节点2.2.2\",value:\"jd2.2.2\",checked:false,disabled:false,data:[]}");
-        str.append(",{title:\"节点2.2.3\",value:\"jd2.2.3\",checked:false,disabled:true,data:[]}");
-        str.append(",{title:\"节点2.2.4\",value:\"jd2.2.4\",checked:true,disabled:true,data:[]}]}");
-        str.append(",{title:\"节点2.3\",value:\"jd2.3\",checked:false,disabled:false,data:[]}");
-        str.append(",{title:\"节点2.4\",value:\"jd2.4\",checked:false,disabled:false,data:[]}");
-        str.append("]}");
-        str.append(",{title:\"节点3\",value:\"jd3\",checked:false,disabled:false,data:[]}");
-        str.append(",{title:\"节点4\",value:\"jd4\",checked:false,disabled:false,data:[");
-        str.append("{title:\"节点4.1\",value:\"jd4.1\",checked:false,disabled:false,data:[");
-        str.append("{title:\"节点4.1.1\",value:\"jd4.1.1\",checked:false,disabled:false,data:[");
-        str.append("{title:\"节点4.1.1.1\",value:\"jd4.1.1.1\",checked:false,disabled:false,data:[]}");
-        str.append(",{title:\"节点4.1.1.2\",value:\"jd4.1.1.2\",checked:false,disabled:false,data:[");
-        str.append("{title:\"节点4.1.1.2.1\",value:\"jd4.1.1.2.1\",checked:false,disabled:false,data:[]}");
-        str.append("]}");
-        str.append("]}");
-        str.append("]}");
-        str.append(",{title:\"节点4.2\",value:\"jd4.2\",checked:false,disabled:true,data:[]}");
-        str.append(",{title:\"节点4.3\",value:\"jd4.3\",checked:false,disabled:true,data:[]}");
-        str.append(",{title:\"节点4.4\",value:\"jd4.4\",checked:false,disabled:false,data:[]}");
-        str.append(",{title:\"节点4.5\",value:\"jd4.5\",checked:false,disabled:false,data:[]}");
-        str.append(",{title:\"节点4.6\",value:\"jd4.6\",checked:false,disabled:false,data:[]}");
-        str.append("]}");
-        str.append("]");
-        return ResultUtil.ok(str);*/
-        List<UmpTreeModel> treeModelList = umpMenuService.queryFuncMenuTree();
+        List<UmpTreeModel> treeModelList = umpMenuService.queryFuncMenuTree(null);
         return ResultUtil.ok(treeModelList);
     }
-
 }
 
