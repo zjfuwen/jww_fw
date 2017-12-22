@@ -31,23 +31,21 @@
     <div class="layui-form-item">
         <label class="layui-form-label">角色名称</label>
         <div class="layui-input-block">
-            <input type="text" class="layui-input" name="roleName" lay-verify="required" placeholder="请输入角色名称">
+            <input type="text" class="layui-input" name="roleName" id="roleName" lay-verify="required" placeholder="请输入角色名称">
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">所属部门</label>
         <div class="layui-input-block">
-            <select name="deptId" id="deptId" lay-filter="deptFilter" lay-verify="required">
-                <option value="">请选择所属部门</option>
-            </select>
+            <input type="text" class="layui-input" name="deptId" id="deptId" placeholder="请选择所属部门">
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">备　　注</label>
         <div class="layui-input-block">
-            <input type="text" class="layui-input" name="remark" placeholder="请输入备注信息">
+            <input type="text" class="layui-input" name="remark" id="remark" placeholder="请输入备注信息">
         </div>
     </div>
 
@@ -70,6 +68,6 @@
     </div>
 </form>
 <script type="text/javascript" src="../../layui/layui.js"></script>
-<script type="text/javascript" src="addRole.js?_444"></script>
+<script type="text/javascript" src="role.js?_1"></script>
 </body>
 </html>

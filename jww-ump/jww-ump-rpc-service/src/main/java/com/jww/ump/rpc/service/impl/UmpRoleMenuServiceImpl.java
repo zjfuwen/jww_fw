@@ -16,5 +16,4 @@ import org.springframework.stereotype.Service;
  */
 @Service("UmpRoleMenuService")
 public class UmpRoleMenuServiceImpl extends BaseServiceImpl<UmpRoleMenuMapper, UmpRoleMenuModel> implements UmpRoleMenuService {
-
 }

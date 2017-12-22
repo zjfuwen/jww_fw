@@ -23,7 +23,8 @@
 
         $.ajax({
             type: 'POST',
-            url: options.data,
+            url: options.url,
+            data: options.data,
             success: function (data) {
                 if (data.code == 200) {
                     // _this._dataJson = eval('(' + data.data + ')'); //将返回的数据转为json
@@ -37,6 +38,7 @@
                     _this._iconOpen = options.icon.open != null ? options.icon.open : "&#xe625;"; //打开图标
                     _this._iconClose = options.icon.close != null ? options.icon.close : "&#xe623;"; //关闭图标
                     _this._iconEnd = options.icon.end != null ? options.icon.end : "&#xe65f;"; //末级图标
+                    _this._allDisable = options.allDisable ? options.allDisable : false;
 
                     _this.dataBind(_this._dataJson);
                     _this.Rendering();
@@ -55,7 +57,7 @@
             for (i in d) {
                 var xtree_isend = '';
                 var xtree_ischecked = '';
-                var xtree_isdisabled = d[i].disabled ? ' disabled="disabled" ' : '';
+                var xtree_isdisabled = d[i].disabled || _this._allDisable ? ' disabled="disabled" ' : '';
                 _this._domStr += '<div class="layui-xtree-item">';
                 if (d[i].children.length > 0)
                     _this._domStr += '<i class="layui-icon layui-xtree-icon" data-xtree="' + (_this._isopen ? '1' : '0') + '">' + (_this._isopen ? _this._iconOpen : _this._iconClose) + '</i>';
@@ -63,7 +65,7 @@
                     _this._domStr += '<i class="layui-icon layui-xtree-icon-null">' + _this._iconEnd + '</i>';
                     xtree_isend = 'data-xend="1"';
                     xtree_ischecked = d[i].checked ? ' checked ' : '';
-                    xtree_isdisabled = d[i].disabled ? ' disabled="disabled" ' : '';
+                    xtree_isdisabled = d[i].disabled || _this._allDisable ? ' disabled="disabled" ' : '';
                 }
                 _this._domStr += '<input type="checkbox" class="layui-xtree-checkbox" ' + xtree_isend + xtree_ischecked + xtree_isdisabled + ' value="' + d[i].id + '" title="' + d[i].name + '" lay-skin="primary" lay-filter="xtreeck">';
                 _this.dataBind(d[i].children);
@@ -197,6 +199,20 @@
         for (var i = 0; i < cks.length; i++) {
             if (cks[i].checked && cks[i].getAttribute('data-xend') == '1') {
                 arr[arrIndex] = cks[i];
+                arrIndex++;
+            }
+        }
+        return arr;
+    };
+
+    // 获取全部选中的checkbox对象value
+    TreeCheck.prototype.GetAllCheckedValue = function () {
+        var arr = new Array();
+        var arrIndex = 0;
+        var cks = document.getElementsByClassName('layui-xtree-checkbox');
+        for (var i = 0; i < cks.length; i++) {
+            if (cks[i].checked) {
+                arr[arrIndex] = cks[i].value;
                 arrIndex++;
             }
         }

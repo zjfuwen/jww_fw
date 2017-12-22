@@ -35,7 +35,7 @@ public interface UmpMenuService extends BaseService<UmpMenuModel> {
      * @author shadj
      * @date 2017/12/18 13:52
      */
-    public Page<UmpMenuModel> queryListPage(Page<UmpMenuModel> page);
+    Page<UmpMenuModel> queryListPage(Page<UmpMenuModel> page);
 
     /**
      * 根据用户ID查找菜单树（包含目录和菜单，不包含按钮）
@@ -49,6 +49,15 @@ public interface UmpMenuService extends BaseService<UmpMenuModel> {
 
     /**
      * 查找功能菜单树（包含目录、菜单和按钮）
+     *
+     * @return List<TreeModel>
+     * @author wanyong
+     * @date 2017-12-19 11:14
+     */
+    List<UmpTreeModel> queryFuncMenuTree();
+
+    /**
+     * 根据角色ID查找功能菜单树（包含目录、菜单和按钮）
      *
      * @param roleId
      * @return List<TreeModel>

@@ -1,11 +1,13 @@
 package com.jww.ump.rpc.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.jww.common.core.annotation.DistributedLock;
 import com.jww.common.core.base.BaseServiceImpl;
 import com.jww.common.core.exception.BusinessException;
 import com.jww.ump.dao.mapper.UmpMenuMapper;
+import com.jww.ump.dao.mapper.UmpRoleMenuMapper;
 import com.jww.ump.dao.mapper.UmpTreeMapper;
 import com.jww.ump.model.UmpMenuModel;
 import com.jww.ump.model.UmpTreeModel;
@@ -17,7 +19,10 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -33,8 +38,12 @@ public class UmpMenuServiceImpl extends BaseServiceImpl<UmpMenuMapper, UmpMenuMo
 
     @Autowired
     private UmpMenuMapper umpMenuMapper;
+    
     @Autowired
     private UmpTreeMapper umpTreeMapper;
+
+    @Autowired
+    private UmpRoleMenuMapper umpRoleMenuMapper;
 
     @Override
     public List<UmpMenuModel> queryList() {
@@ -60,29 +69,27 @@ public class UmpMenuServiceImpl extends BaseServiceImpl<UmpMenuMapper, UmpMenuMo
     @Override
     public List<UmpTreeModel> queryMenuTreeByUserId(Long userId) {
         List<UmpMenuModel> umpMenuModelList = umpMenuMapper.selectMenuTreeByUserId(userId);
-        return convertTreeData(umpMenuModelList);
+        return convertTreeData(umpMenuModelList, null);
+    }
+
+    @Override
+    public List<UmpTreeModel> queryFuncMenuTree() {
+        List<UmpMenuModel> umpMenuModelList = queryList();
+        return convertTreeData(umpMenuModelList, null);
     }
 
     @Override
     public List<UmpTreeModel> queryFuncMenuTree(Long roleId) {
-        UmpMenuModel umpMenuModel = new UmpMenuModel();
-        // 状态为：启用
-        umpMenuModel.setEnable(1);
-        // 是否删除：否
-        umpMenuModel.setIsDel(0);
-        if (roleId != null) {
-
-        }
-        EntityWrapper<UmpMenuModel> entityWrapper = new EntityWrapper<>(umpMenuModel);
-        entityWrapper.orderBy(" parent_id, sort_no ", true);
-        List<UmpMenuModel> umpMenuModelList = super.selectList(entityWrapper);
-        return convertTreeData(umpMenuModelList);
+        List<UmpMenuModel> umpMenuModelList = queryList();
+        List<Long> menuIdList = umpRoleMenuMapper.selectMenuIdListByRoleId(roleId);
+        System.out.println("menuIdList:" + JSON.toJSONString(menuIdList));
+        return convertTreeData(umpMenuModelList, menuIdList.toArray());
     }
 
     @Override
     public List<UmpTreeModel> queryTree(Long id) {
         List<UmpTreeModel> umpTreeModelList = umpTreeMapper.selectMenuTree(id);
-        List<UmpTreeModel> list  = UmpTreeModel.getTree(umpTreeModelList);
+        List<UmpTreeModel> list = UmpTreeModel.getTree(umpTreeModelList);
         return list;
     }
 
@@ -95,8 +102,8 @@ public class UmpMenuServiceImpl extends BaseServiceImpl<UmpMenuMapper, UmpMenuMo
         umpMenuModel.setParentId((Long) id);
         entityWrapper.setEntity(umpMenuModel);
         List<UmpMenuModel> childs = super.selectList(entityWrapper);
-        if(ArrayUtil.isNotEmpty(childs)){
-            log.error("删除菜单[id:{}]失败，请先删除子菜单",id);
+        if (ArrayUtil.isNotEmpty(childs)) {
+            log.error("删除菜单[id:{}]失败，请先删除子菜单", id);
             throw new BusinessException("删除菜单失败，请先删除子菜单");
         }
         return super.deleteById(id);
@@ -113,24 +120,25 @@ public class UmpMenuServiceImpl extends BaseServiceImpl<UmpMenuMapper, UmpMenuMo
      * 获取树模型结构数据
      *
      * @param umpMenuModelList
+     * @param checkedMenuIds
      * @return List<UmpTreeModel>
      * @author wanyong
      * @date 2017-12-19 10:55
      */
-    private List<UmpTreeModel> convertTreeData(List<UmpMenuModel> umpMenuModelList) {
+    private List<UmpTreeModel> convertTreeData(List<UmpMenuModel> umpMenuModelList, Object[] checkedMenuIds) {
         Map<Long, List<UmpTreeModel>> map = new HashMap<>(3);
         for (UmpMenuModel umpMenuModel : umpMenuModelList) {
             if (umpMenuModel != null && map.get(umpMenuModel.getParentId()) == null) {
                 List<UmpTreeModel> children = new ArrayList<>();
                 map.put(umpMenuModel.getParentId(), children);
             }
-            map.get(umpMenuModel.getParentId()).add(convertTreeModel(umpMenuModel));
+            map.get(umpMenuModel.getParentId()).add(convertTreeModel(umpMenuModel, checkedMenuIds));
         }
         List<UmpTreeModel> result = new ArrayList<>();
         for (UmpMenuModel umpMenuModel : umpMenuModelList) {
             boolean flag = umpMenuModel != null && umpMenuModel.getParentId() == null || umpMenuModel.getParentId() == 0;
             if (flag) {
-                UmpTreeModel umpTreeModel = convertTreeModel(umpMenuModel);
+                UmpTreeModel umpTreeModel = convertTreeModel(umpMenuModel, checkedMenuIds);
                 umpTreeModel.setChildren(getChild(map, umpMenuModel.getId()));
                 result.add(umpTreeModel);
             }
@@ -163,18 +171,19 @@ public class UmpMenuServiceImpl extends BaseServiceImpl<UmpMenuMapper, UmpMenuMo
      * 把菜单模型对象转换成树模型对象
      *
      * @param umpMenuModel
+     * @param checkedMenuIds
      * @return UmpTreeModel
      * @author wanyong
      * @date 2017-12-19 14:22
      */
-    private UmpTreeModel convertTreeModel(UmpMenuModel umpMenuModel) {
+    private UmpTreeModel convertTreeModel(UmpMenuModel umpMenuModel, Object[] checkedMenuIds) {
         UmpTreeModel umpTreeModel = new UmpTreeModel();
         umpTreeModel.setId(umpMenuModel.getId());
         umpTreeModel.setName(umpMenuModel.getMenuName());
         umpTreeModel.setIcon(umpMenuModel.getIconcls());
         umpTreeModel.setSpread(umpMenuModel.getExpand() == 1);
         umpTreeModel.setHref(umpMenuModel.getRequest());
-        umpTreeModel.setChecked(false);
+        umpTreeModel.setChecked(checkedMenuIds != null && ArrayUtil.contains(checkedMenuIds, umpMenuModel.getId()));
         umpTreeModel.setDisabled(false);
         return umpTreeModel;
     }

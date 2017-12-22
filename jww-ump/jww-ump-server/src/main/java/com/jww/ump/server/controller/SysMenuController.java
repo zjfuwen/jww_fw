@@ -137,13 +137,13 @@ public class SysMenuController extends BaseController {
         return ResultUtil.ok();
     }
 
-    @GetMapping("/functree/roleId")
-    public ResultModel queryFuncMenuTree(@PathVariable(value = "userId") Long roleId) {
+    @PostMapping("/roleFuncTree")
+    public ResultModel queryFuncMenuTree(@RequestBody Long roleId) {
         List<UmpTreeModel> treeModelList = umpMenuService.queryFuncMenuTree(roleId);
         return ResultUtil.ok(treeModelList);
     }
 
-    @PostMapping("/functree")
+    @PostMapping("/funcTree")
     public ResultModel queryFuncMenuTree() {
         List<UmpTreeModel> treeModelList = umpMenuService.queryFuncMenuTree(null);
         return ResultUtil.ok(treeModelList);

@@ -2,6 +2,8 @@ package com.jww.common.core.base;
 
 import com.baomidou.mybatisplus.service.IService;
 
+import java.util.List;
+
 /**
  * 业务处理基类接口
  *
@@ -39,5 +41,8 @@ public interface BaseService<T extends BaseModel> extends IService<T> {
      * @date 2017/12/6 13:29
      */
     T queryById(Long id);
+
+
+    boolean delBatchByIds(T entity, List<Long> ids);
 
 }

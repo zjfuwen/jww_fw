@@ -12,5 +12,4 @@ import com.jww.ump.model.UmpRoleMenuModel;
  * @since 2017-12-17
  */
 public interface UmpRoleMenuService extends BaseService<UmpRoleMenuModel> {
-
 }

@@ -8,6 +8,7 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 业务处理基类实现
@@ -43,5 +44,15 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseModel>
             return entity;
         }
         return null;
+    }
+
+    @Override
+    public boolean delBatchByIds(T entity, List<Long> ids) {
+        ids.forEach(id -> {
+            entity.setId(id);
+            entity.setIsDel(1);
+            this.modifyById(entity);
+        });
+        return true;
     }
 }
