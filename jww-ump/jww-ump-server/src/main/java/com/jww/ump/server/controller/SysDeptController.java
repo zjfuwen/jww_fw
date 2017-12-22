@@ -1,6 +1,7 @@
 package com.jww.ump.server.controller;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.jww.common.core.exception.BusinessException;
 import com.jww.common.core.model.PageModel;
 import com.jww.common.web.BaseController;
 import com.jww.common.web.model.ResultModel;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -83,17 +85,12 @@ public class SysDeptController extends BaseController {
                 umpDeptModel.setParentId(0L);
             }
         }
-
-        umpDeptService.insert(umpDeptModel);
-        return ResultUtil.ok();
+        return ResultUtil.ok(umpDeptService.add(umpDeptModel));
     }
 
     @PutMapping("/modify")
     public ResultModel modify(@RequestBody UmpDeptModel umpDeptModel) {
         log.info("DeptController->mod: UmpDeptModel={}", umpDeptModel);
-//        if(umpDeptModel.getEnable()==null){
-//            umpDeptModel.setEnable(0);
-//        }
         umpDeptModel.setUpdateBy(this.getCurrUser());
         umpDeptModel.setUpdateTime(new Date());
         umpDeptService.modifyById(umpDeptModel);
@@ -101,7 +98,7 @@ public class SysDeptController extends BaseController {
     }
 
     @DeleteMapping("/delBatchByIds")
-    public ResultModel delBatchByIds(@RequestBody List<Long> ids) {
+    public ResultModel delBatchByIds(@RequestBody Long[] ids) {
         Assert.notNull(ids);
         return ResultUtil.ok(umpDeptService.delBatchByIds(ids));
     }
@@ -116,6 +113,12 @@ public class SysDeptController extends BaseController {
     public ResultModel queryTree() {
         List<UmpTreeModel> list = umpDeptService.queryTree();
         return ResultUtil.ok(list);
+    }
+
+    @DeleteMapping("/delDept")
+    public ResultModel delDept(@RequestBody Long id) {
+        Assert.notNull(id);
+        return ResultUtil.ok(umpDeptService.delDept(id));
     }
 
 }

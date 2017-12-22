@@ -87,12 +87,11 @@ layui.config({
             });
             layui.layer.full(index);
         } else if (layEvent === 'del') { //删除
-            var deptIds = [data.id];
             layer.confirm('您确定要删除吗？', {icon: 3, title: '确认'}, function () {
                 $.ajax({
                     type: 'DELETE',
-                    url: 'dept/delBatchByIds',
-                    data: JSON.stringify(deptIds),
+                    url: 'dept/delDept',
+                    data: JSON.stringify(data.id),
                     success: function (data) {
                         if (data.code == 200) {
                             if (data.data === true) {
@@ -153,7 +152,7 @@ layui.config({
         var index = layui.layer.open({
             title: "添加部门",
             type: 2,
-            content: "deptAdd.html?v=126",
+            content: "deptAdd.html?v=129",
             success: function (layero, index) {
                 setTimeout(function () {
                     layui.layer.tips('点击此处返回部门列表', '.layui-layer-setwin .layui-layer-close', {
@@ -198,12 +197,13 @@ layui.config({
                             });
                         }
                     } else {
+                        // alert(JSON.stringify(data));
                         layer.msg(data.message, {icon: 2});
                     }
                 }
             });
         });
-    })
+    });
 
     function modDeptData(modData) {
         var index = layer.msg('修改中，请稍候',{icon: 16,time:false,shade:0.8});

@@ -1,7 +1,11 @@
 package com.jww.ump.dao.mapper;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.jww.common.core.base.BaseMapper;
 import com.jww.ump.model.UmpUserModel;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * @author wanyong
@@ -9,5 +13,5 @@ import com.jww.ump.model.UmpUserModel;
  * @date 2017/11/17 15:51
  */
 public interface UmpUserMapper extends BaseMapper<UmpUserModel> {
-
+    public List<UmpUserModel> selectPage(Page<UmpUserModel> page, @Param("searchKey") String searchKey);
 }

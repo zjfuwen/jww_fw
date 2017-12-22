@@ -111,6 +111,11 @@ public class UmpUserModel extends BaseModel {
     @TableField("dept_id")
     private Long deptId;
     /**
+     * 部门名称
+     */
+    @TableField(exist = false)
+    private String deptName;
+    /**
      * 职位
      */
     @TableField("position_")

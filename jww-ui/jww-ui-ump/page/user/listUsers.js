@@ -16,7 +16,7 @@ layui.config({
             {field: 'sex', title: '性别', templet: '<div>{{d.sex === 1 ? "男" : "女"}}</div>'},
             {field: 'phone', title: '手机号'},
             {field: 'idCard', title: '身份证'},
-            {field: 'dept', title: '部门'},
+            {field: 'deptName', title: '部门'},
             {field: 'position', title: '职位'},
             {field: 'email', title: '邮箱'},
             {field: 'enable', title: '状态', templet: '<div>{{d.enable === 1 ? "启用" : "禁用"}}</div>'},
@@ -80,9 +80,7 @@ layui.config({
         tableIns.reload({
             where: { //设定异步数据接口的额外参数，任意设
                 condition: {
-                    account_: searchKey,
-                    user_name: searchKey,
-                    phone_: searchKey
+                    searchKey: searchKey
                 }
             },
             page: {
@@ -94,9 +92,9 @@ layui.config({
     //添加会员
     $(".usersAdd_btn").click(function () {
         var index = layui.layer.open({
-            title: "添加会员",
+            title: "添加用户",
             type: 2,
-            content: "addUser.html?v=7",
+            content: "addUser.html?v=9",
             success: function (layero, index) {
                 setTimeout(function () {
                     layui.layer.tips('点击此处返回会员列表', '.layui-layer-setwin .layui-layer-close', {

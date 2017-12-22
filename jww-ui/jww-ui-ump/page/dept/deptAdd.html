@@ -40,11 +40,12 @@
 				<label class="layui-form-label">上级部门</label>
 				<div class="layui-input-inline">
 					<input type="hidden" name="id" class="id">
-					<input type="hidden" name="parentId" class="parentId">
-					<input type="text" name="parentName" class="layui-input parentName" placeholder="右侧选择上级部门" readonly>
+					<input type="hidden" id="parentId" name="parentId" class="parentId">
+					<input type="text" id="parentName" name="parentName" class="layui-input parentName" placeholder="请选择上级部门" readonly>
 				</div>
 			</div>
 		</div>
+		<!--
 		<div class="layui-form-item">
 			<div class="layui-inline">
 				<label class="layui-form-label"></label>
@@ -53,6 +54,7 @@
 				</div>
 			</div>
 		</div>
+		-->
 		<div class="layui-form-item">
 			<div class="layui-input-block">
 				<button class="layui-btn" lay-submit="" lay-filter="adddept">立即提交</button>
@@ -61,6 +63,6 @@
 		</div>
 	</form>
 	<script type="text/javascript" src="../../layui/layui.js"></script>
-	<script type="text/javascript" src="deptAdd.js?v=100"></script>
+	<script type="text/javascript" src="deptAdd.js?v=103"></script>
 </body>
 </html>

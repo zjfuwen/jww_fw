@@ -10,6 +10,7 @@ import com.jww.ump.rpc.api.UmpUserService;
 import com.xiaoleilu.hutool.util.ObjectUtil;
 import com.xiaoleilu.hutool.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,6 +27,9 @@ import java.util.Map;
 @Service("umpUserService")
 public class UmpUserServiceImpl extends BaseServiceImpl<UmpUserMapper, UmpUserModel> implements UmpUserService {
 
+    @Autowired
+    private UmpUserMapper umpUserMapper;
+
     @Override
     public UmpUserModel queryByAccount(String account) {
         log.info("UmpUserServiceImpl->findByAccount->account:" + account);
@@ -40,22 +44,10 @@ public class UmpUserServiceImpl extends BaseServiceImpl<UmpUserMapper, UmpUserMo
     public Page<UmpUserModel> queryListPage(Page<UmpUserModel> page) {
         log.info("UmpUserServiceImpl->findListPage->page:" + page.toString());
         log.info("UmpUserServiceImpl->findListPage->page->condition:" + JSON.toJSONString(page.getCondition()));
-        UmpUserModel umpUserModel = new UmpUserModel();
-        umpUserModel.setIsDel(0);
-        EntityWrapper<UmpUserModel> entityWrapper = new EntityWrapper<>(umpUserModel);
-        if (ObjectUtil.isNotNull(page.getCondition())) {
-            StringBuilder conditionSql = new StringBuilder();
-            Map<String, Object> paramMap = page.getCondition();
-            paramMap.forEach((k, v) -> {
-                if (StrUtil.isNotBlank(v + "")) {
-                    conditionSql.append(k + " like '%" + v + "%' OR ");
-                }
-            });
-            entityWrapper.and(StrUtil.removeSuffix(conditionSql.toString(), "OR "));
-        }
-        page.setCondition(null);
-
-        return super.selectPage(page, entityWrapper);
+        String searchKey = page.getCondition()==null? null :page.getCondition().get("searchKey").toString();
+        List<UmpUserModel> list =  umpUserMapper.selectPage(page,searchKey);
+        page.setRecords(list);
+        return page;
     }
 
     @Override

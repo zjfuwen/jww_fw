@@ -22,9 +22,17 @@ public interface UmpDeptService extends BaseService<UmpDeptModel> {
 
     public UmpDeptModel queryOne(Long id);
 
-    boolean delBatchByIds(List<Long> ids);
+    boolean delBatchByIds(Long[] ids);
 
     public List<UmpTreeModel> queryTree();
 
     public List<UmpTreeModel> queryTree(Long id);
+
+    public boolean delDept(Long id);
+
+    public List<UmpDeptModel> querySubDept(Long id);
+
+    public int querySubDeptCount(Long id);
+
+    public int querySubDeptCount(Long[] ids);
 }

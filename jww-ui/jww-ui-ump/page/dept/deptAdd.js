@@ -12,26 +12,26 @@ layui.config({
     var pageOpt = window.parent.document.getElementById("pageOpt").value;
     //新增、编辑跳转则加载部门树
     if(pageOpt=='add'||pageOpt=='edit') {
-        $.ajax({
-            type: "GET",
-            url: "dept/queryTree/"+deptId,
-            success: function (data) {
-                if (data.code == 200) {
-                    layui.tree({
-                        elem: '#demo' //传入元素选择器
-                        , nodes: data.data,
-                        click: function (node) {
-                            $("input[name='parentId']").val(node.id);
-                            $("input[name='parentName']").val(node.name);
-                            // console.log(node) //node即为当前点击的节点数据
-                        }
-                    });
-                } else {
-                    top.layer.msg("部门加载失败！");
-                }
-            },
-            contentType: "application/json"
-        });
+        // $.ajax({
+        //     type: "GET",
+        //     url: "dept/queryTree/"+deptId,
+        //     success: function (data) {
+        //         if (data.code == 200) {
+        //             layui.tree({
+        //                 elem: '#demo' //传入元素选择器
+        //                 , nodes: data.data,
+        //                 click: function (node) {
+        //                     $("input[name='parentId']").val(node.id);
+        //                     $("input[name='parentName']").val(node.name);
+        //                     // console.log(node) //node即为当前点击的节点数据
+        //                 }
+        //             });
+        //         } else {
+        //             top.layer.msg("部门加载失败！");
+        //         }
+        //     },
+        //     contentType: "application/json"
+        // });
         //新增则提交到新增url，编辑则提交到修改url
         var url = pageOpt=='add' ? "dept/add" : "dept/modify";
         form.on("submit(adddept)",function(data){
@@ -100,4 +100,14 @@ layui.config({
             $('.layui-form button').hide();
         }
     }
+    $(".parentName").click(function(){
+        layer.open({
+            type: 2,
+            title: '选择部门',
+            shadeClose: true,
+            shade: 0.8,
+            area: ['380px', '90%'],
+            content: 'deptTree.html?v=1' //iframe的url
+        });
+    });
 })
