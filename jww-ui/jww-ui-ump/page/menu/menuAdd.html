@@ -17,7 +17,7 @@
 			<label class="layui-form-label">类型</label>
 			<div class="layui-input-block">
 				<input type="radio" name="menuType" lay-filter="menuType" value="0" title="目录" >
-				<input type="radio" name="menuType" lay-filter="menuType" value="1" title="菜单" checked>
+				<input type="radio" name="menuType" lay-filter="menuType" value="1" title="菜单1" >
 				<input type="radio" name="menuType" lay-filter="menuType" value="2" title="按钮" >
 			</div>
 		</div>
@@ -31,9 +31,8 @@
 			<div class="layui-inline">
 				<label class="layui-form-label">上级菜单</label>
 				<div class="layui-input-inline">
-					<input type="hidden" id="id" name="id" class="id">
-					<input type="hidden" id="parentId" name="parentId" class="parentId">
-					<input type="text" id="parentName" name="parentName" class="layui-input parentName" placeholder="请选择上级菜单" readonly>
+					<input type="hidden" id="parentId" name="parentId" class="parentId" value="0">
+					<input type="text" id="parentName" name="parentName" class="layui-input parentName" placeholder="一级菜单" readonly>
 				</div>
 			</div>
 		</div>
@@ -53,7 +52,7 @@
 			<div class="layui-inline">
 				<label class="layui-form-label">排序号</label>
 				<div class="layui-input-inline">
-					<input type="text" name="sortNo" class="layui-input sortNo" placeholder="请输入排序号">
+					<input type="text" name="sortNo" class="layui-input sortNo" lay-verify="number" placeholder="请输入排序号">
 				</div>
 			</div>
 		</div>
@@ -65,12 +64,13 @@
 		</div>
 		<div class="layui-form-item">
 			<div class="layui-input-block">
+				<input type="hidden" id="id" name="id" class="id">
 				<button class="layui-btn" lay-submit="" lay-filter="addmenu">立即提交</button>
 				<button type="reset" class="layui-btn layui-btn-primary">重置</button>
 		    </div>
 		</div>
 	</form>
 	<script type="text/javascript" src="../../layui/layui.js"></script>
-	<script type="text/javascript" src="menuAdd.js?v=100"></script>
+	<script type="text/javascript" src="menuAdd.js?v=101"></script>
 </body>
 </html>

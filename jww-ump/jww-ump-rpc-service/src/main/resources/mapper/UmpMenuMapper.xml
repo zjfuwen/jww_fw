@@ -14,6 +14,7 @@
         <result column="menu_name" property="menuName"/>
         <result column="menu_type" property="menuType"/>
         <result column="parent_id" property="parentId"/>
+        <result column="parent_name" property="parentName"/>
         <result column="iconcls_" property="iconcls"/>
         <result column="request_" property="request"/>
         <result column="expand_" property="expand"/>
@@ -48,6 +49,20 @@
                     ORDER BY
                         parent_id,
                         sort_no
+    </select>
+
+    <select id="selectPage"  resultMap="BaseResultMap">
+        SELECT a.*, b.menu_name as parent_name from sys_menu a
+            left join sys_menu b
+              on a.parent_id = b.id_
+          where a.is_del = 0
+    </select>
+
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT a.*, b.menu_name as parent_name from sys_menu a
+              left join sys_menu b
+                  on a.parent_id = b.id_
+              WHERE a.id_ = #{id}
     </select>
 
 </mapper>

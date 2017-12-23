@@ -15,7 +15,7 @@ layui.config({
             {type: 'checkbox', fixed: 'left'},
             {field: 'id', title: '菜单ID', sort: true},
             {field: 'menuName', title: '菜单名称', edit: 'text'},
-            {field: 'parentId', title: '上级菜单', sort: true},
+            {field: 'parentName', title: '上级菜单', sort: true},
             {field: 'menuType', title: '类型', sort: true, templet: '<div>{{d.menuType === 0 ? "目录" : d.menuType === 1 ? "菜单" : "按钮"}}</div>'},
             {field: 'iconcls', title: '菜单图标样式', sort: false, edit: 'text'},
             {field: 'sortNo', title: '排序', sort: true, edit: 'text'},
@@ -43,12 +43,6 @@ layui.config({
     //监听状态操作
     form.on('checkbox(enableCbx)', function(obj){
         // layer.tips(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
-        var enable = 0;
-        if(obj.elem.checked == true){
-            enable = 1;
-        }
-        var modData = {"id":$(this).attr("data-id"),"enable":enable};
-        modMenuData(modData);
     });
 
     //监听单元格编辑
@@ -72,7 +66,23 @@ layui.config({
         var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
         if (layEvent === 'detail') { //查看
             $('#pageOpt').val('detail');
-            layer.msg("功能正在开发中，敬请期待...", {icon: 0});
+            var index = layui.layer.open({
+                title: "查看菜单",
+                type: 2,
+                content: "menuAdd.html",
+                success: function (layero, index) {
+                    setTimeout(function () {
+                        layui.layer.tips('点击此处返回菜单列表', '.layui-layer-setwin .layui-layer-close', {
+                            tips: 3
+                        });
+                    }, 500)
+                }
+            });
+            //改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
+            $(window).resize(function () {
+                layui.layer.full(index);
+            });
+            layui.layer.full(index);
         } else if (layEvent === 'del') { //删除
             layer.confirm('您确定要删除吗？', {icon: 3, title: '确认'}, function () {
                 $.ajax({
@@ -93,7 +103,23 @@ layui.config({
             });
         } else if (layEvent === 'edit') { //编辑
             $('#pageOpt').val('edit');
-            layer.msg("功能正在开发中，敬请期待...", {icon: 0});
+            var index = layui.layer.open({
+                title: "编辑菜单",
+                type: 2,
+                content: "menuAdd.html",
+                success: function (layero, index) {
+                    setTimeout(function () {
+                        layui.layer.tips('点击此处返回菜单列表', '.layui-layer-setwin .layui-layer-close', {
+                            tips: 3
+                        });
+                    }, 500)
+                }
+            });
+            //改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
+            $(window).resize(function () {
+                layui.layer.full(index);
+            });
+            layui.layer.full(index);
         }
     });
 

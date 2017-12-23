@@ -41,32 +41,74 @@ layui.config({
 
             return false;
         });
+        $(".parentName").click(function(){
+            layer.open({
+                type: 2,
+                title: '选择上级菜单',
+                shadeClose: true,
+                shade: 0.8,
+                area: ['380px', '90%'],
+                content: 'menuTree.html'
+            });
+        });
+
+        //菜单类型选择事件监听，不同选项显示不同字段
+        form.on('radio(menuType)', function(data){
+            switch (data.value){
+                case '0':
+                    $(".layui-form-item.request").hide();
+                    $(".layui-input.request").attr("disabled", "disabled");
+                    $(".layui-form-item.permission").hide();
+                    $(".layui-input.permission").attr("disabled", "disabled");
+
+                    $(".layui-form-item.iconcls").show();
+                    $(".layui-input.iconcls").removeAttr("disabled");
+                    $(".layui-form-item.sortNo").show();
+                    $(".layui-input.sortNo").removeAttr("disabled");
+                    break;
+                case '1':
+                    $(".layui-form-item.request").show();
+                    $(".layui-input.request").removeAttr("disabled");
+                    $(".layui-form-item.permission").show();
+                    $(".layui-input.permission").removeAttr("disabled");
+                    $(".layui-form-item.iconcls").show();
+                    $(".layui-input.iconcls").removeAttr("disabled");
+                    $(".layui-form-item.sortNo").show();
+                    $(".layui-input.sortNo").removeAttr("disabled");
+                    break;
+                case '2':
+                    $(".layui-form-item.request").hide();
+                    $(".layui-input.request").attr("disabled", "disabled");
+                    $(".layui-form-item.permission").show();
+                    $(".layui-input.permission").removeAttr("disabled");
+                    $(".layui-form-item.iconcls").hide();
+                    $(".layui-input.iconcls").removeAttr("disabled");
+                    $(".layui-form-item.sortNo").hide();
+                    $(".layui-input.sortNo").removeAttr("disabled");
+                    break;
+                default:
+
+            }
+
+        });
     }
     if(pageOpt=='detail'||pageOpt=='edit') {
+        $("#id").val(menuId);
         $.ajax({
             type: "GET",
             url: "menu/query/"+menuId,
             success: function(data){
                 if(data.code==200){
-                    // alert(JSON.stringify(data));
-                    var rest = eval(data.data);
-                    //循环实体
-                    for (var i in rest) {
-                        // console.log(i + '='+ rest[i]+ ' '+$("." + i).attr("type"));
-                        //文本框赋值
-                        if($("." + i).attr("type")=="text"||$("." + i).attr("type")=="hidden"){
-                            $("." + i).val(rest[i]);
-                            if(pageOpt=='detail'){
-                                $("." + i).prop("placeholder","");
-                            }
-                        //复选框改变状态
-                        }else if($("." + i).attr("type")=="checkbox"){
-                            if(rest[i]==0){
-                                $("." + i).removeAttr("checked");
-                                form.render('checkbox');
-                            }
-                        }
-                    }
+                    //$(".layui-form input:radio[name='menuType']").eq(data.data.menuType).attr("checked",'checked');
+                    $(':radio[name="menuType"]').eq(data.data.menuType).attr("checked","checked");
+                    form.render('radio');
+                    $(".layui-input.menuName").val(data.data.menuName);
+                    $(".layui-input.parentId").val(data.data.parentId);
+                    $(".layui-input.parentName").val(data.data.parentName);
+                    $(".layui-input.request").val(data.data.request);
+                    $(".layui-input.permission").val(data.data.permission);
+                    $(".layui-input.sortNo").val(data.data.sortNo);
+                    $(".layui-input.iconcls").val(data.data.iconcls);
                 }else{
                     top.layer.close(index);
                     top.layer.msg("查询异常！");
@@ -75,59 +117,14 @@ layui.config({
             contentType: "application/json"
         });
         if(pageOpt=='detail') {
-            $(".layui-form input").prop("readonly", true);
-            $(".enable").prop("disabled", "disabled");
+            $(".layui-form input").attr("readonly", true);
+            $(".layui-form input").attr("placeholder", "");
             $('.layui-form button').hide();
+            $(".layui-form input:radio").attr("disabled", true);
         }
     }
 
-    form.on('radio(menuType)', function(data){
-        switch (data.value){
-            case '0':
-                $(".layui-form-item.request").hide();
-                $(".layui-input.request").attr("disabled", "disabled");
-                $(".layui-form-item.permission").hide();
-                $(".layui-input.permission").attr("disabled", "disabled");
 
-                $(".layui-form-item.iconcls").show();
-                $(".layui-input.iconcls").removeAttr("disabled");
-                $(".layui-form-item.sortNo").show();
-                $(".layui-input.sortNo").removeAttr("disabled");
-                break;
-            case '1':
-                $(".layui-form-item.request").show();
-                $(".layui-input.request").removeAttr("disabled");
-                $(".layui-form-item.permission").show();
-                $(".layui-input.permission").removeAttr("disabled");
-                $(".layui-form-item.iconcls").show();
-                $(".layui-input.iconcls").removeAttr("disabled");
-                $(".layui-form-item.sortNo").show();
-                $(".layui-input.sortNo").removeAttr("disabled");
-                break;
-            case '2':
-                $(".layui-form-item.request").hide();
-                $(".layui-input.request").attr("disabled", "disabled");
-                $(".layui-form-item.permission").show();
-                $(".layui-input.permission").removeAttr("disabled");
-                $(".layui-form-item.iconcls").hide();
-                $(".layui-input.iconcls").removeAttr("disabled");
-                $(".layui-form-item.sortNo").hide();
-                $(".layui-input.sortNo").removeAttr("disabled");
-                break;
-            default:
-                alert('default');
-        }
 
-    });
 
-    $(".parentName").click(function(){
-        layer.open({
-            type: 2,
-            title: '选择上级菜单',
-            shadeClose: true,
-            shade: 0.8,
-            area: ['380px', '90%'],
-            content: 'menuTree.html'
-        });
-    });
 })

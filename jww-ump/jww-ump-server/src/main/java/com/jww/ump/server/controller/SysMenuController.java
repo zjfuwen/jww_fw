@@ -6,6 +6,7 @@ import com.jww.common.core.model.PageModel;
 import com.jww.common.web.BaseController;
 import com.jww.common.web.model.ResultModel;
 import com.jww.common.web.util.ResultUtil;
+import com.jww.ump.model.UmpDeptModel;
 import com.jww.ump.model.UmpMenuModel;
 import com.jww.ump.model.UmpTreeModel;
 import com.jww.ump.rpc.api.UmpMenuService;
@@ -95,6 +96,13 @@ public class SysMenuController extends BaseController {
     public ResultModel deleteBatchIds(@RequestBody List<Long> ids) {
         Assert.notNull(ids);
         return ResultUtil.ok(umpMenuService.deleteBatchIds(ids));
+    }
+
+    @GetMapping("/query/{id}")
+    public ResultModel<UmpMenuModel> query(@PathVariable Long id) {
+        Assert.notNull(id);
+        UmpMenuModel umpMenuModel = umpMenuService.selectById(id);
+        return ResultUtil.ok(umpMenuModel);
     }
 
     /**
