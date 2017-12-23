@@ -46,8 +46,8 @@ layui.config({
                 type: 2,
                 title: '选择上级菜单',
                 shadeClose: true,
-                shade: 0.8,
-                area: ['380px', '90%'],
+                shade: 0.5,
+                area: ['320px', '70%'],
                 content: 'menuTree.html'
             });
         });
