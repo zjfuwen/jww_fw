@@ -97,7 +97,7 @@ layui.config({
             title: '选择部门',
             shadeClose: true,
             shade: 0.5,
-            area: ['300px', '60%'],
+            area: ['320px', '70%'],
             content: '/page/dept/deptTree.html' //iframe的url
         });
     });
