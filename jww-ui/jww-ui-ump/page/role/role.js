@@ -5,23 +5,18 @@ layui.config({
         form = layui.form,
         layer = parent.layer === undefined ? layui.layer : parent.layer,
         $ = layui.jquery,
-        treecheck = layui.treecheck,
         treeUrl = "menu/funcTree",
         treeData = "",
         treeCheckBoxAllDisable = false,
         submitUrl = "role/add";
 
     // 获取父页面的pageOperation，判断是查看、添加、修改
-    if (parent.pageOperation === 1) {
-        // 添加角色
-
-    } else if (parent.pageOperation === 2) {
-        // 修改角色
+    if (parent.pageOperation === 1) { // 添加角色
+    } else if (parent.pageOperation === 2) { // 修改角色
         treeUrl = "menu/roleFuncTree";
         treeData = JSON.stringify(parent.checkedRoleId);
         submitUrl = "role/modify";
-    } else {
-        // 查看角色
+    } else { // 查看角色
         treeUrl = "menu/roleFuncTree";
         treeData = JSON.stringify(parent.checkedRoleId);
         treeCheckBoxAllDisable = true;
@@ -30,34 +25,8 @@ layui.config({
         $('.layui-form button').hide();
     }
 
-    // 初始化部门列表
-    /*function initDeptSelect() {
-     var param = {
-     size: 99999,
-     current: 1
-     };
-     $.ajax({
-     type: 'POST',
-     url: 'dept/queryListPage',
-     data: JSON.stringify(param),
-     success: function (data) {
-     if (data.code == 200) {
-     var array = data.data;
-     for (var i = 0; i < array.length; i++) {
-     $("#deptId").append("<option value='" + array[i].id + "'>" + array[i].deptName + "</option>");
-     }
-     form.render('select'); //刷新select选择框渲染
-     } else {
-     layer.msg(data.message, {icon: 2});
-     }
-     }
-     });
-     }*/
-
-    // initDeptSelect();
-
     // 初始化功能权限tree
-    var tree = treecheck({
+    var tree = layui.treecheck({
         elem: 'funcAuthTree', // 放xtree的容器，id，不要带#号（必填）
         form: form, // layui form对象 （必填）
         url: treeUrl, // 服务端地址（必填）
@@ -83,6 +52,7 @@ layui.config({
                     if (data.data !== null) {
                         $("#roleName").val(data.data.roleName);
                         $("#deptId").val(data.data.deptId);
+                        $("#deptName").val(data.data.deptName);
                         $("#remark").val(data.data.remark);
                     }
                 } else {
@@ -104,7 +74,7 @@ layui.config({
                 if (data.code === 200) {
                     if (parent.pageOperation === 1) {
                         // 重置表单
-                        $("#userForm")[0].reset();
+                        $("#roleForm")[0].reset();
                         layer.msg('角色添加成功', {icon: 1});
                     } else {
                         layer.msg('角色修改成功', {icon: 1});
@@ -115,9 +85,27 @@ layui.config({
             }
         });
 
-        //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        // 阻止表单跳转。如果需要表单跳转，去掉这段即可。
         return false;
     });
 
+    // 监听部门文本框单击事件
+    $("#deptName").click(function () {
+        // 不直接使用layer.open而使用layui.layer.open，是因为layer.open实际是调用父窗口的layer对象
+        layui.layer.open({
+            type: 2,
+            title: '选择部门',
+            shadeClose: true,
+            shade: 0.5,
+            area: ['300px', '60%'],
+            content: '/page/dept/deptTree.html' //iframe的url
+        });
+    });
+
+    // 选择部门树页面选中后回调函数
+    deptTreeCallBack = function (deptId, deptName) {
+        $("#deptId").val(deptId);
+        $("#deptName").val(deptName);
+    }
 });
 

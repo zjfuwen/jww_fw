@@ -1,7 +1,6 @@
 package com.jww.ump.server.controller;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.jww.common.core.exception.BusinessException;
 import com.jww.common.core.model.PageModel;
 import com.jww.common.web.BaseController;
 import com.jww.common.web.model.ResultModel;
@@ -15,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -81,7 +79,7 @@ public class SysDeptController extends BaseController {
             umpDeptModel.setCreateBy(this.getCurrUser());
             umpDeptModel.setUpdateBy(this.getCurrUser());
             umpDeptModel.setUpdateTime(now);
-            if(umpDeptModel.getParentId()==null){
+            if (umpDeptModel.getParentId() == null) {
                 umpDeptModel.setParentId(0L);
             }
         }
@@ -104,7 +102,7 @@ public class SysDeptController extends BaseController {
     }
 
     @GetMapping("/queryTree/{id}")
-    public ResultModel queryTree(@PathVariable(required = false) Long id) {
+    public ResultModel queryTree(@PathVariable(value = "id", required = false) Long id) {
         List<UmpTreeModel> list = umpDeptService.queryTree(id);
         return ResultUtil.ok(list);
     }

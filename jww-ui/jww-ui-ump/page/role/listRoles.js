@@ -10,7 +10,6 @@ layui.config({
     pageOperation = 0;
     checkedRoleId = "";
 
-
     // 渲染表格
     var tableIns = table.render({
         //设置表头

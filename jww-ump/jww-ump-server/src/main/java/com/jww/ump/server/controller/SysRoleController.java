@@ -5,7 +5,9 @@ import com.jww.common.core.model.PageModel;
 import com.jww.common.web.BaseController;
 import com.jww.common.web.model.ResultModel;
 import com.jww.common.web.util.ResultUtil;
+import com.jww.ump.model.UmpDeptModel;
 import com.jww.ump.model.UmpRoleModel;
+import com.jww.ump.rpc.api.UmpDeptService;
 import com.jww.ump.rpc.api.UmpRoleService;
 import com.xiaoleilu.hutool.lang.Assert;
 import io.swagger.annotations.ApiImplicitParam;
@@ -34,6 +36,9 @@ public class SysRoleController extends BaseController {
     @Autowired
     private UmpRoleService umpRoleService;
 
+    @Autowired
+    private UmpDeptService umpDeptService;
+
     /**
      * 根据角色ID查询角色
      *
@@ -48,6 +53,8 @@ public class SysRoleController extends BaseController {
     public ResultModel<UmpRoleModel> query(@RequestBody Long roleId) {
         Assert.notNull(roleId);
         UmpRoleModel umpRoleModel = umpRoleService.queryById(roleId);
+        UmpDeptModel umpDeptModel = umpDeptService.queryById(umpRoleModel.getDeptId());
+        umpRoleModel.setDeptName(umpDeptModel.getDeptName());
         return ResultUtil.ok(umpRoleModel);
     }
 

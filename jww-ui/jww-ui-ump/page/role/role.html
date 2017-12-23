@@ -27,18 +27,20 @@
     </style>
 </head>
 <body class="childrenBody">
-<form class="layui-form" style="width:80%;" id="userForm">
+<form class="layui-form" style="width:80%;" id="roleForm">
     <div class="layui-form-item">
         <label class="layui-form-label">角色名称</label>
         <div class="layui-input-block">
-            <input type="text" class="layui-input" name="roleName" id="roleName" lay-verify="required" placeholder="请输入角色名称">
+            <input type="text" class="layui-input" name="roleName" id="roleName" lay-verify="required"
+                   placeholder="请输入角色名称">
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">所属部门</label>
         <div class="layui-input-block">
-            <input type="text" class="layui-input" name="deptId" id="deptId" placeholder="请选择所属部门">
+            <input type="hidden" id="deptId" name="deptId">
+            <input type="text" class="layui-input" id="deptName" placeholder="请选择所属部门" readonly="readonly">
         </div>
     </div>
 
