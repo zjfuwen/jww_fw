@@ -15,15 +15,15 @@ layui.config({
         //设置表头
         cols: [[
             {type: 'checkbox', fixed: 'left'},
-            {field: 'paramKey', title: '参数名', align: 'center',edit: 'text'},
-            {field: 'paramValue', title: '参数值', align: 'center',edit: 'text'},
-            {field: 'remark', title: '备注', align: 'center',edit: 'text'},
+            {field: 'paramKey', title: '参数名', align: 'center', edit: 'text'},
+            {field: 'paramValue', title: '参数值', align: 'center', edit: 'text'},
+            {field: 'remark', title: '备注', align: 'center', edit: 'text'},
             {
                 field: 'enable',
                 title: '启用状态',
-                sort: true,
                 align: 'center',
-                templet: '<div>{{d.enable === 1 ? "启用" : "禁用"}}</div>'
+                //templet: '<div>{{d.enable === 1 ? "启用" : "禁用"}}</div>'
+                templet: '#switchTpl'
             },
             {field: 'createTime', title: '创建时间', align: 'center'},
             {field: 'opt', title: '操作', fixed: 'right', width: 160, align: 'center', toolbar: '#toolBar'}
@@ -116,7 +116,7 @@ layui.config({
     table.on('checkbox(tableFilter)', function (obj) {
     });
 
-    //查询
+    //点击查询按钮事件监听
     $(".search_btn").click(function () {
         var searchKey = $(".search_input").val();
         tableIns.reload({
@@ -131,7 +131,7 @@ layui.config({
         });
     });
 
-    // 添加参数
+    // 添加参数按钮监听
     $(".addBtn").click(function () {
         pageOperation = 1;
         var index = layui.layer.open({
@@ -153,7 +153,7 @@ layui.config({
         layui.layer.full(index);
     });
 
-    //批量删除
+    //批量删除按钮监听
     $(".batchDel").click(function () {
         var checkStatus = table.checkStatus('paramTable');
         if (checkStatus.data.length === 0) {
@@ -220,5 +220,14 @@ layui.config({
             contentType: "application/json"
         });
     }
+
+    //监听启用状态操作
+    form.on('switch(enable)', function (obj) {
+        //layer.msg('value: ' + this.value + ',name: ' + this.name + ',开关是否选中：' + (this.checked ? 'true' : 'false'));
+        var modData = {};
+        modData["id"] = this.value;
+        modData[this.name] = (this.checked ? '1' : '0');
+        modMenuData(modData);
+    });
 
 });

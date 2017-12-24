@@ -18,7 +18,7 @@ layui.config({
 
     if (parent.pageOperation === 2 || parent.pageOperation === 0) {
         $("#id").val(parent.checkedparamId);
-        // 查询参数
+        // 查询参数数据，初始化页面属性值
         $.ajax({
             type: 'POST',
             url: 'param/query',
@@ -38,30 +38,31 @@ layui.config({
             }
         });
     }
-
     // 监听submit
-    form.on('submit(addFilter)', function (data) {
-        $.ajax({
-            type: 'POST',
-            url: submitUrl,
-            data: JSON.stringify(data.field),
-            success: function (data) {
-                if (data.code === 200) {
-                    if (parent.pageOperation === 1) {
-                        // 重置表单
-                        $("#paramForm")[0].reset();
-                        layer.msg('参数添加成功', {icon: 1});
+    if (parent.pageOperation === 1 || parent.pageOperation === 2) {
+        form.on('submit(addFilter)', function (data) {
+            $.ajax({
+                type: 'POST',
+                url: submitUrl,
+                data: JSON.stringify(data.field),
+                success: function (data) {
+                    if (data.code === 200) {
+                        if (parent.pageOperation === 1) {
+                            // 重置表单
+                            $("#paramForm")[0].reset();
+                            layer.msg('参数添加成功', {icon: 1});
+                        } else {
+                            layer.msg('参数修改成功', {icon: 1});
+                        }
                     } else {
-                        layer.msg('参数修改成功', {icon: 1});
+                        layer.msg(data.message, {icon: 2});
                     }
-                } else {
-                    layer.msg(data.message, {icon: 2});
                 }
-            }
-        });
+            });
 
-        // 阻止表单跳转。如果需要表单跳转，去掉这段即可。
-        return false;
-    });
+            // 阻止表单跳转。如果需要表单跳转，去掉这段即可。
+            return false;
+        });
+    }
 });
 

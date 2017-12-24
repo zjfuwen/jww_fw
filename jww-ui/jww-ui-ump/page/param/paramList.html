@@ -48,6 +48,9 @@
 </script>
 <script type="text/javascript" src="../../layui/layui.js"></script>
 <script type="text/javascript" src="paramList.js"></script>
-
+<!-- 启用状态转换器 -->
+<script type="text/html" id="switchTpl">
+    <input type="checkbox" name="enable" value="{{d.id}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="enable" {{ d.enable === 1 ? 'checked' : '' }}>
+</script>
 </body>
 </html>
