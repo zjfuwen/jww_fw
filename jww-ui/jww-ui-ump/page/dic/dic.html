@@ -27,20 +27,35 @@
     </style>
 </head>
 <body class="childrenBody">
-<form class="layui-form" style="width:80%;" id="roleForm">
+<form class="layui-form" style="width:80%;" id="dicForm">
     <div class="layui-form-item">
-        <label class="layui-form-label">角色名称</label>
+        <label class="layui-form-label">字典类型</label>
         <div class="layui-input-block">
-            <input type="text" class="layui-input" name="roleName" id="roleName" lay-verify="required"
-                   placeholder="请输入角色名称">
+            <input type="text" class="layui-input" name="type" id="type" lay-verify="required"
+                   placeholder="请输入字典类型">
         </div>
     </div>
 
     <div class="layui-form-item">
-        <label class="layui-form-label">所属部门</label>
-        <div class="layui-input-block">
-            <input type="hidden" id="deptId" name="deptId">
-            <input type="text" class="layui-input" id="deptName" placeholder="请选择所属部门" readonly="readonly">
+        <div class="layui-inline">
+            <label class="layui-form-label">字典名称</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" name="codeText" id="codeText" placeholder="请输入字典名称"
+                       lay-verify="required">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">关 键 字</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" name="code" id="code" placeholder="请输入关键字" lay-verify="required">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">排　　序</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" name="sortNo" id="sortNo" lay-verify="required|number"
+                       placeholder="请输入排序">
+            </div>
         </div>
     </div>
 
@@ -52,13 +67,10 @@
     </div>
 
     <div class="layui-form-item">
-        <div class="layui-inline">
-            <label class="layui-form-label">功能权限</label>
-            <div class="layui-input-block ">
-                <div id="funcAuthTree" style="width:500px;height:400px; border:1px solid #e2e2e2;overflow:auto;">
-                    <ul id="treeDemo" class="ztree"></ul>
-                </div>
-            </div>
+        <label class="layui-form-label">启用状态</label>
+        <div class="layui-input-block ">
+            <input type="radio" name="enable" value="1" title="启用" checked>
+            <input type="radio" name="enable" value="0" title="禁用">
         </div>
     </div>
 
@@ -71,6 +83,6 @@
     <input type="hidden" name="id" id="id"/>
 </form>
 <script type="text/javascript" src="../../layui/layui.js"></script>
-<script type="text/javascript" src="role.js?_1"></script>
+<script type="text/javascript" src="dic.js"></script>
 </body>
 </html>

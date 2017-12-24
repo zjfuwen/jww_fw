@@ -18,13 +18,6 @@ layui.config({
             {field: 'roleName', title: '角色名称', align: 'center'},
             {field: 'deptName', title: '所属部门', align: 'center'},
             {field: 'remark', title: '备注', align: 'center'},
-            {
-                field: 'enable',
-                title: '启用状态',
-                sort: true,
-                align: 'center',
-                templet: '<div>{{d.enable === 1 ? "启用" : "禁用"}}</div>'
-            },
             {field: 'createTime', title: '创建时间', align: 'center'},
             {field: 'opt', title: '操作', fixed: 'right', width: 160, align: 'center', toolbar: '#toolBar'}
         ]],

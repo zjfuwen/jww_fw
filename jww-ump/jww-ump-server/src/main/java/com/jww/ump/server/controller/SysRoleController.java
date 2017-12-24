@@ -71,6 +71,13 @@ public class SysRoleController extends BaseController {
         return ResultUtil.ok(umpRoleService.add(umpRoleModel));
     }
 
+    @PostMapping("/modify")
+    public ResultModel modify(@Valid @RequestBody UmpRoleModel umpRoleModel) {
+        umpRoleModel.setUpdateBy(getCurrUser());
+        umpRoleService.modifyById(umpRoleModel);
+        return ResultUtil.ok();
+    }
+
     /**
      * 根据角色ID集合批量删除
      *

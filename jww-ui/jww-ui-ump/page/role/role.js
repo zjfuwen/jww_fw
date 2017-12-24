@@ -1,6 +1,6 @@
 layui.config({
     base: "../../js/"
-}).use(['base', 'form', 'layer', 'jquery', 'laydate', 'laypage', "treecheck"], function () {
+}).use(['base', 'form', 'layer', 'jquery', "treecheck"], function () {
     var base = layui.base,
         form = layui.form,
         layer = parent.layer === undefined ? layui.layer : parent.layer,
@@ -42,6 +42,7 @@ layui.config({
     });
 
     if (parent.pageOperation === 2 || parent.pageOperation === 0) {
+        $("#id").val(parent.checkedRoleId);
         // 查询角色
         $.ajax({
             type: 'POST',
