@@ -24,7 +24,6 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseModel>
     public T modifyById(T entity) {
         T resultEntity = null;
         entity.setUpdateTime(new Date());
-        System.out.println(JSON.toJSONString(entity));
         if (super.updateById(entity)) {
             resultEntity = entity;
         }
@@ -41,6 +40,7 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseModel>
     @CachePut(value = "data")
     public T add(T entity) {
         entity.setCreateTime(new Date());
+        entity.setUpdateTime(new Date());
         if (super.insert(entity)) {
             return entity;
         }

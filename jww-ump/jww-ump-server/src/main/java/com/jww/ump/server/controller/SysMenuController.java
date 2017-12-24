@@ -115,9 +115,6 @@ public class SysMenuController extends BaseController {
      */
     @PostMapping("/modify")
     public ResultModel modify(@RequestBody UmpMenuModel umpMenuModel) {
-        if (umpMenuModel.getEnable() == null) {
-            umpMenuModel.setEnable(0);
-        }
         umpMenuModel.setUpdateBy(this.getCurrUser());
         umpMenuModel.setUpdateTime(new Date());
         umpMenuService.modifyById(umpMenuModel);
