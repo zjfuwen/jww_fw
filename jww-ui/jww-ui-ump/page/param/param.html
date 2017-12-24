@@ -30,34 +30,40 @@
 <form class="layui-form" style="width:80%;" id="paramForm">
     <div class="layui-form-item">
         <div class="layui-inline">
-            <label class="layui-form-label">参  数  名</label>
+            <label class="layui-form-label">参&nbsp;&nbsp;数&nbsp;&nbsp;名</label>
             <div class="layui-input-block">
                 <input type="text" class="layui-input" name="paramKey" id="paramKey" placeholder="请输入参数名"
                        lay-verify="required">
             </div>
         </div>
+    </div>
+    <div class="layui-form-item">
         <div class="layui-inline">
-            <label class="layui-form-label">参  数  值</label>
+            <label class="layui-form-label">参&nbsp;&nbsp;数&nbsp;&nbsp;值</label>
             <div class="layui-input-block">
-                <input type="text" class="layui-input" name="paramValue" id="paramValue" placeholder="请输入关键字" lay-verify="required">
+                <input type="text" class="layui-input" name="paramValue" id="paramValue" placeholder="请输入关键字"
+                       lay-verify="required">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" name="remark" id="remark" placeholder="请输入备注信息">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">启用状态</label>
+            <div class="layui-input-block ">
+                <input type="radio" name="enable" value="1" title="启用" checked>
+                <input type="radio" name="enable" value="0" title="禁用">
             </div>
         </div>
     </div>
 
-    <div class="layui-form-item">
-        <label class="layui-form-label">备　　注</label>
-        <div class="layui-input-block">
-            <input type="text" class="layui-input" name="remark" id="remark" placeholder="请输入备注信息">
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">启用状态</label>
-        <div class="layui-input-block ">
-            <input type="radio" name="enable" value="1" title="启用" checked>
-            <input type="radio" name="enable" value="0" title="禁用">
-        </div>
-    </div>
 
     <div class="layui-form-item">
         <div class="layui-input-block">
