@@ -6,11 +6,11 @@ layui.config({
         layer = parent.layer === undefined ? layui.layer : parent.layer,
         $ = layui.jquery;
     // var deptId = window.parent.document.getElementById("deptId").value;
-    // var treeUrl = deptId === undefined || deptId === '' ? "dept/queryTree" : "dept/queryTree/" + deptId;
+    var treeUrl = parent.deptParentId===undefined||parent.deptParentId==='' ? "dept/queryTree" : "dept/queryTree/" + parent.deptParentId;
     // 新增、编辑跳转则加载部门树
     $.ajax({
         type: "GET",
-        url: "dept/queryTree",
+        url: treeUrl,
         success: function (data) {
             if (data.code === 200) {
                 layui.tree({
