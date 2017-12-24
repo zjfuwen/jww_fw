@@ -16,4 +16,9 @@ import org.springframework.stereotype.Service;
  */
 @Service("UmpRoleMenuService")
 public class UmpRoleMenuServiceImpl extends BaseServiceImpl<UmpRoleMenuMapper, UmpRoleMenuModel> implements UmpRoleMenuService {
+
+    @Override
+    public boolean delBatchByRoleId(Long roleId) {
+        return false;
+    }
 }

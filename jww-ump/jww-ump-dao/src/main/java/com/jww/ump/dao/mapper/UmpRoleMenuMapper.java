@@ -17,5 +17,4 @@ import java.util.List;
 public interface UmpRoleMenuMapper extends BaseMapper<UmpRoleMenuModel> {
 
     List<Long> selectMenuIdListByRoleId(@Param("roleId") Long roleId);
-
 }

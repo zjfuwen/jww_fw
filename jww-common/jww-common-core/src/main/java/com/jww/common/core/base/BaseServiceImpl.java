@@ -3,7 +3,6 @@ package com.jww.common.core.base;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.jww.common.core.annotation.DistributedLock;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;

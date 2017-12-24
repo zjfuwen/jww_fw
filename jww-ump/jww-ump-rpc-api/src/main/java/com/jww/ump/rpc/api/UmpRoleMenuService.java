@@ -12,4 +12,14 @@ import com.jww.ump.model.UmpRoleMenuModel;
  * @since 2017-12-17
  */
 public interface UmpRoleMenuService extends BaseService<UmpRoleMenuModel> {
+
+    /**
+     * 根据角色ID批量删除角色和菜单的关系
+     *
+     * @param roleId
+     * @return boolean
+     * @author wanyong
+     * @date 2017-12-24 15:01
+     */
+    boolean delBatchByRoleId(Long roleId);
 }

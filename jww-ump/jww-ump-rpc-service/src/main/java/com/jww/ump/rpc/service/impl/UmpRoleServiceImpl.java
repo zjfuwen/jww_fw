@@ -12,7 +12,9 @@ import com.jww.ump.rpc.api.UmpRoleService;
 import com.xiaoleilu.hutool.util.ObjectUtil;
 import com.xiaoleilu.hutool.util.StrUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +63,7 @@ public class UmpRoleServiceImpl extends BaseServiceImpl<UmpRoleMapper, UmpRoleMo
     }
 
     @Override
-    public UmpRoleModel add(UmpRoleModel umpRoleModel) throws BusinessException {
+    public UmpRoleModel add(UmpRoleModel umpRoleModel) {
         // 根据角色名称和部门检查是否存在相同的角色
         UmpRoleModel checkModel = new UmpRoleModel();
         checkModel.setIsDel(0);
@@ -73,18 +75,47 @@ public class UmpRoleServiceImpl extends BaseServiceImpl<UmpRoleMapper, UmpRoleMo
         }
         UmpRoleModel result = super.add(umpRoleModel);
         if (result != null) {
-            List<UmpRoleMenuModel> umpRoleMenuModelList = new ArrayList<>(5);
-            for (Long menuId : umpRoleModel.getMenuIdList()) {
-                UmpRoleMenuModel umpRoleMenuModel = new UmpRoleMenuModel();
-                umpRoleMenuModel.setRoleId(umpRoleModel.getId());
-                umpRoleMenuModel.setMenuId(menuId);
-                umpRoleMenuModel.setPermission("123");
-                umpRoleMenuModel.setCreateBy(umpRoleModel.getCreateBy());
-                umpRoleMenuModel.setUpdateBy(umpRoleModel.getUpdateBy());
-                umpRoleMenuModelList.add(umpRoleMenuModel);
-            }
-            umpRoleMenuService.insertBatch(umpRoleMenuModelList);
+            umpRoleMenuService.insertBatch(getRoleMenuListByMenuIds(umpRoleModel, umpRoleModel.getMenuIdList()));
         }
         return result;
+    }
+
+
+    @Override
+    @CacheEvict(value = "data")
+    @Transactional(rollbackFor = Exception.class)
+    public UmpRoleModel modifyById(UmpRoleModel umpRoleModel) {
+        UmpRoleModel result = super.modifyById(umpRoleModel);
+        UmpRoleMenuModel umpRoleMenuModel = new UmpRoleMenuModel();
+        umpRoleMenuModel.setRoleId(umpRoleModel.getId());
+        EntityWrapper<UmpRoleMenuModel> entityWrapper = new EntityWrapper<>(umpRoleMenuModel);
+        // 关系数据相对不重要，直接数据库删除
+        umpRoleMenuService.delete(entityWrapper);
+        umpRoleMenuService.insertBatch(getRoleMenuListByMenuIds(umpRoleModel, umpRoleModel.getMenuIdList()));
+        return result;
+    }
+
+    /**
+     * 根据角色实体和角色对应的菜单ID集合获取角色菜单实体集合
+     *
+     * @param umpRoleModel
+     * @param menuIds
+     * @return
+     * @author wanyong
+     * @date 2017-12-24 14:49
+     */
+    private List<UmpRoleMenuModel> getRoleMenuListByMenuIds(UmpRoleModel umpRoleModel, List<Long> menuIds) {
+        List<UmpRoleMenuModel> umpRoleMenuModelList = new ArrayList<>(5);
+        for (Long menuId : menuIds) {
+            UmpRoleMenuModel umpRoleMenuModel = new UmpRoleMenuModel();
+            umpRoleMenuModel.setRoleId(umpRoleModel.getId());
+            umpRoleMenuModel.setMenuId(menuId);
+            umpRoleMenuModel.setPermission("123");
+            // 取umpRoleModel的修改人作为umpRoleMenuModel的创建人
+            umpRoleMenuModel.setCreateBy(umpRoleModel.getUpdateBy());
+            umpRoleMenuModel.setUpdateBy(umpRoleModel.getUpdateBy());
+            umpRoleMenuModelList.add(umpRoleMenuModel);
+        }
+        return umpRoleMenuModelList;
     }
 }
