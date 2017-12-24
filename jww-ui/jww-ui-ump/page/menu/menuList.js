@@ -8,6 +8,11 @@ layui.config({
         $ = layui.jquery,
         table = layui.table;
 
+    // 页面操作：0：查看，1：添加，2：修改
+    pageOperation = 0;
+    menuId = "";
+
+
     //列表加载
     var tableIns = table.render({
         //设置表头
@@ -16,7 +21,12 @@ layui.config({
             {field: 'id', title: '菜单ID', sort: true},
             {field: 'menuName', title: '菜单名称', edit: 'text'},
             {field: 'parentName', title: '上级菜单', sort: true},
-            {field: 'menuType', title: '类型', sort: true, templet: '<div>{{d.menuType === 0 ? "目录" : d.menuType === 1 ? "菜单" : "按钮"}}</div>'},
+            {
+                field: 'menuType',
+                title: '类型',
+                sort: true,
+                templet: '<div>{{d.menuType === 0 ? "目录" : d.menuType === 1 ? "菜单" : "按钮"}}</div>'
+            },
             {field: 'iconcls', title: '菜单图标样式', sort: false, edit: 'text'},
             {field: 'sortNo', title: '排序', sort: true, edit: 'text'},
             {field: 'request', title: '请求地址', sort: false, edit: 'text'},
@@ -41,35 +51,33 @@ layui.config({
     });
 
     //监听状态操作
-    form.on('checkbox(enableCbx)', function(obj){
+    form.on('checkbox(enableCbx)', function (obj) {
         // layer.tips(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
     });
 
     //监听单元格编辑
-    table.on('edit(menuTable)', function(obj){
+    table.on('edit(menuTable)', function (obj) {
         var value = obj.value //得到修改后的值
-            ,data = obj.data //得到所在行所有键值
-            ,field = obj.field; //得到字段
+            , data = obj.data //得到所在行所有键值
+            , field = obj.field; //得到字段
         // layer.msg('[ID: '+ data.id +'] ' + field + ' 字段更改为：'+ value);
         var modData = {};
         modData["id"] = data.id;
         modData[field] = value;
-        // alert(JSON.stringify(modData));
         modMenuData(modData);
     });
 
     //监听工具条
     table.on('tool(menuTable)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
         var data = obj.data;
-        var menuId = data.id;
-        $('#menuId').val(menuId);
+        menuId = data.id;
         var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
         if (layEvent === 'detail') { //查看
-            $('#pageOpt').val('detail');
+            pageOperation = 0;
             var index = layui.layer.open({
                 title: "查看菜单",
                 type: 2,
-                content: "menuAdd.html",
+                content: "menu.html",
                 success: function (layero, index) {
                     setTimeout(function () {
                         layui.layer.tips('点击此处返回菜单列表', '.layui-layer-setwin .layui-layer-close', {
@@ -90,10 +98,12 @@ layui.config({
                     url: 'menu/delete',
                     data: menuId,
                     success: function (data) {
-                        if (data.code == 200) {
+                        if (data.code === 200) {
                             if (data.data === true) {
                                 obj.del();
                                 layer.msg("删除成功", {icon: 1, time: 2000});
+                            } else {
+                                layer.msg("删除失败，请重试", {icon: 2});
                             }
                         } else {
                             layer.msg(data.message, {icon: 2});
@@ -102,11 +112,11 @@ layui.config({
                 });
             });
         } else if (layEvent === 'edit') { //编辑
-            $('#pageOpt').val('edit');
+            pageOperation = 2;
             var index = layui.layer.open({
                 title: "编辑菜单",
                 type: 2,
-                content: "menuAdd.html",
+                content: "menu.html",
                 success: function (layero, index) {
                     setTimeout(function () {
                         layui.layer.tips('点击此处返回菜单列表', '.layui-layer-setwin .layui-layer-close', {
@@ -129,12 +139,12 @@ layui.config({
 
     //添加菜单
     $(".menuAdd_btn").click(function () {
-        $('#pageOpt').val('add');
-        $('#menuId').val('');
+        pageOperation = 1;
+        menuId = "";
         var index = layui.layer.open({
             title: "添加菜单",
             type: 2,
-            content: "menuAdd.html",
+            content: "menu.html",
             success: function (layero, index) {
                 setTimeout(function () {
                     layui.layer.tips('点击此处返回菜单列表', '.layui-layer-setwin .layui-layer-close', {
@@ -165,15 +175,13 @@ layui.config({
             }
             $.ajax({
                 type: 'POST',
-                url: 'menu/delBatchByIds',
+                url: 'menu/deleteBatchIds',
                 data: JSON.stringify(menuIds),
                 success: function (data) {
-                    if (data.code == 200) {
-                        if (data.data === true) {
-                            layer.close(indexMsg);
-                            layer.msg("删除成功", {icon: 1, time: 2000});
-                            tableIns.reload();
-                        }
+                    if (data.code === 200) {
+                        //layer.close(indexMsg);
+                        layer.msg("操作成功，成功删除记录数" + data.data, {icon: 1, time: 2000});
+                        tableIns.reload();
                     } else {
                         layer.msg(data.message, {icon: 2});
                     }
@@ -183,18 +191,18 @@ layui.config({
     })
 
     function modMenuData(modData) {
-        var index = layer.msg('修改中，请稍候',{icon: 16,time:false,shade:0.8});
+        var index = layer.msg('修改中，请稍候', {icon: 16, time: false, shade: 0.8});
         $.ajax({
             type: "POST",
             url: "menu/modify",
             data: JSON.stringify(modData),
-            success: function(data){
-                if(data.code==200){
-                    setTimeout(function(){
+            success: function (data) {
+                if (data.code === 200) {
+                    setTimeout(function () {
                         layer.close(index);
                         layer.msg("修改成功！");
-                    },500);
-                }else{
+                    }, 500);
+                } else {
                     top.layer.close(index);
                     top.layer.msg("修改失败！");
                 }

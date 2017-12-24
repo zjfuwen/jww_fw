@@ -42,7 +42,8 @@ public class DistributedLockAspect {
     }
 
     @Around("pointCut()")
-    public void doAround(ProceedingJoinPoint pjp) {
+    public Object doAround(ProceedingJoinPoint pjp) {
+        Object result = null;
         /*
         如果注释中配置了key(支持SpEL表达式)，则lockName的规则为：lock:{cacheName}：{key}
         否则，lockName的规则为：lock:{cacheName}：{param0.id}_{param1.id}
@@ -59,7 +60,7 @@ public class DistributedLockAspect {
             }
             log.info("获取分布式锁成功，lockName ：{}，lockValue : {}", lockName, lockValue);
             try {
-                Object result = pjp.proceed();
+                result = pjp.proceed();
             } catch (Throwable throwable) {
                 log.error("方法执行失败", throwable);
                 throw new BusinessException(throwable);
@@ -72,6 +73,7 @@ public class DistributedLockAspect {
                 log.error("分布式锁解锁失败，lockName ：{}", lockName);
             }
         }
+        return result;
     }
 
     /**

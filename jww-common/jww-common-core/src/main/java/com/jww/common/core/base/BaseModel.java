@@ -30,7 +30,7 @@ public abstract class BaseModel implements Serializable {
     @TableField("enable_")
     private Integer enable;
     /**
-     * 是否删除
+     * 是否删除(0:未删除;1:已删除)
      */
     @TableField("is_del")
     private Integer isDel;

@@ -13,16 +13,15 @@ import com.jww.ump.model.UmpMenuModel;
 import com.jww.ump.model.UmpTreeModel;
 import com.jww.ump.rpc.api.UmpMenuService;
 import com.xiaoleilu.hutool.util.ArrayUtil;
+import com.xiaoleilu.hutool.util.CollectionUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <p>
@@ -38,7 +37,7 @@ public class UmpMenuServiceImpl extends BaseServiceImpl<UmpMenuMapper, UmpMenuMo
 
     @Autowired
     private UmpMenuMapper umpMenuMapper;
-    
+
     @Autowired
     private UmpTreeMapper umpTreeMapper;
 
@@ -95,18 +94,45 @@ public class UmpMenuServiceImpl extends BaseServiceImpl<UmpMenuMapper, UmpMenuMo
 
     @Override
     @DistributedLock
-    public boolean deleteById(Serializable id) {
+    public Boolean delete(Long id) {
         //查询是否有子菜单，如果有则返回false，否则允许删除
         EntityWrapper<UmpMenuModel> entityWrapper = new EntityWrapper<UmpMenuModel>();
         UmpMenuModel umpMenuModel = new UmpMenuModel();
         umpMenuModel.setParentId((Long) id);
+        umpMenuModel.setIsDel(0);
         entityWrapper.setEntity(umpMenuModel);
         List<UmpMenuModel> childs = super.selectList(entityWrapper);
-        if (ArrayUtil.isNotEmpty(childs)) {
+        if (CollectionUtil.isNotEmpty(childs)) {
             log.error("删除菜单[id:{}]失败，请先删除子菜单", id);
             throw new BusinessException("删除菜单失败，请先删除子菜单");
         }
-        return super.deleteById(id);
+        umpMenuModel = new UmpMenuModel();
+        umpMenuModel.setId(id);
+        umpMenuModel.setIsDel(1);
+        umpMenuModel = super.modifyById(umpMenuModel);
+        if (umpMenuModel != null) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    @CacheEvict(value = "data",allEntries = true)
+    public Integer deleteBatch(Long[] ids) {
+        int succ = 0;
+        for (Long id : ids) {
+            Boolean res = false;
+            try {
+                res = this.delete(id);
+            } catch (Exception e) {
+                log.error("删除菜单失败，id:{}", id, e);
+            }
+            if (res) {
+                succ++;
+            }
+            log.debug("删除菜单完成，id:{}，执行结果：{}", id, res);
+        }
+        return succ;
     }
 
     @Override

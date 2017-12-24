@@ -79,9 +79,9 @@ public class SysMenuController extends BaseController {
      * @author shadj
      * @date 2017/12/18 21:51
      */
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     public ResultModel delete(@RequestBody Long id) {
-        return ResultUtil.ok(umpMenuService.deleteById(id));
+        return ResultUtil.ok(umpMenuService.delete(id));
     }
 
     /**
@@ -93,9 +93,9 @@ public class SysMenuController extends BaseController {
      * @date 2017/12/18 21:52
      */
     @PostMapping("/deleteBatchIds")
-    public ResultModel deleteBatchIds(@RequestBody List<Long> ids) {
+    public ResultModel deleteBatchIds(@RequestBody Long[] ids) {
         Assert.notNull(ids);
-        return ResultUtil.ok(umpMenuService.deleteBatchIds(ids));
+        return ResultUtil.ok(umpMenuService.deleteBatch(ids));
     }
 
     @GetMapping("/query/{id}")

@@ -75,4 +75,24 @@ public interface UmpMenuService extends BaseService<UmpMenuModel> {
      * @date 2017/12/22 22:59
      */
     List<UmpTreeModel> queryTree(Long id);
+
+    /**
+     * 删除单个菜单（设置删除状态为是）
+     *
+     * @param id 菜单编号
+     * @return Boolean 删除成功返回true,否则返回false
+     * @author shadj
+     * @date 2017/12/23 23:20
+     */
+    Boolean delete(Long id);
+
+    /**
+     * 批量删除菜单
+     *
+     * @param ids 要删除的菜单编号数组
+     * @return 返回删除成功记录数
+     * @author shadj
+     * @date 2017/12/24 14:06
+     */
+    Integer deleteBatch(Long[] ids);
 }
