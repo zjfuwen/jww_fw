@@ -6,6 +6,9 @@ layui.config({
         layer = parent.layer === undefined ? layui.layer : parent.layer,
         $ = layui.jquery,
         table = layui.table;
+        //页面操作：0：查看，1：添加，2：修改
+        pageOperation = 0;
+        userId = "";
 
     var tableIns = table.render({
         //设置表头
@@ -13,7 +16,7 @@ layui.config({
             {type: 'checkbox', fixed: 'left'},
             {field: 'account', title: '账号'},
             {field: 'userName', title: '姓名'},
-            {field: 'sex', title: '性别', templet: '<div>{{d.sex === 1 ? "男" : "女"}}</div>'},
+            {field: 'sex', title: '性别', templet: '#sexTpl'},
             {field: 'phone', title: '手机号'},
             {field: 'idCard', title: '身份证'},
             {field: 'deptName', title: '部门'},
@@ -43,9 +46,27 @@ layui.config({
     //监听工具条
     table.on('tool(tableFilter)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
         var data = obj.data;
+        userId = data.id;
         var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
         if (layEvent === 'detail') { //查看
-            layer.msg("功能正在开发中，敬请期待...", {icon: 0});
+            pageOperation = 0;
+            var index = layui.layer.open({
+                title: "查看用户",
+                type: 2,
+                content: "user.html",
+                success: function (layero, index) {
+                    setTimeout(function () {
+                        layui.layer.tips('点击此处返回会员列表', '.layui-layer-setwin .layui-layer-close', {
+                            tips: 3
+                        });
+                    }, 500)
+                }
+            });
+            //改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
+            $(window).resize(function () {
+                layui.layer.full(index);
+            });
+            layui.layer.full(index);
         } else if (layEvent === 'del') { //删除
             var userIds = [data.id];
             layer.confirm('您确定要删除吗？', {icon: 3, title: '确认'}, function () {
@@ -66,7 +87,24 @@ layui.config({
                 });
             });
         } else if (layEvent === 'edit') { //编辑
-            layer.msg("功能正在开发中，敬请期待...", {icon: 0});
+            pageOperation = 2;
+            var index = layui.layer.open({
+                title: "编辑用户",
+                type: 2,
+                content: "user.html",
+                success: function (layero, index) {
+                    setTimeout(function () {
+                        layui.layer.tips('点击此处返回会员列表', '.layui-layer-setwin .layui-layer-close', {
+                            tips: 3
+                        });
+                    }, 500)
+                }
+            });
+            //改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
+            $(window).resize(function () {
+                layui.layer.full(index);
+            });
+            layui.layer.full(index);
         }
     });
 
@@ -91,6 +129,7 @@ layui.config({
 
     //添加会员
     $(".usersAdd_btn").click(function () {
+        pageOperation = 1;
         var index = layui.layer.open({
             title: "添加用户",
             type: 2,

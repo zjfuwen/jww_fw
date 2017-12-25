@@ -42,6 +42,16 @@
 </script>
 <script type="text/javascript" src="../../layui/layui.js"></script>
 <script type="text/javascript" src="userList.js"></script>
-
+<script type="text/html" id="sexTpl">
+    {{#  if(d.sex === 1){ }}
+    <div>{{"男"}}</div>
+    {{#  } }}
+    {{#  if(d.sex === 2){ }}
+    <div>{{"女"}}</div>
+    {{#  } }}
+    {{#  if(d.sex === 0){ }}
+    <div>{{"保密"}}</div>
+    {{#  } }}
+</script>
 </body>
 </html>

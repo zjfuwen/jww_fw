@@ -6,7 +6,9 @@ import com.jww.common.core.util.SecurityUtil;
 import com.jww.common.web.BaseController;
 import com.jww.common.web.model.ResultModel;
 import com.jww.common.web.util.ResultUtil;
+import com.jww.ump.model.UmpRoleModel;
 import com.jww.ump.model.UmpUserModel;
+import com.jww.ump.model.UmpUserRoleModel;
 import com.jww.ump.rpc.api.UmpUserService;
 import com.xiaoleilu.hutool.lang.Assert;
 import com.xiaoleilu.hutool.util.ObjectUtil;
@@ -15,12 +17,10 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -48,10 +48,10 @@ public class SysUserController extends BaseController {
      */
     @ApiOperation(value = "查询用户", notes = "根据用户主键ID查询用户")
     @ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "Long")
-    @PostMapping("/query")
-    public ResultModel<UmpUserModel> query(@RequestBody Long id) {
+    @GetMapping("/query/{id}")
+    public ResultModel<UmpUserModel> query(@PathVariable Long id) {
         Assert.notNull(id);
-        UmpUserModel umpUserModel = umpUserService.queryById(id);
+        UmpUserModel umpUserModel = umpUserService.queryOne(id);
         return ResultUtil.ok(umpUserModel);
     }
 
@@ -101,7 +101,31 @@ public class SysUserController extends BaseController {
 
     @PostMapping("/modify")
     public ResultModel modify(@RequestBody UmpUserModel umpUserModel) {
-        return ResultUtil.ok(umpUserService.modifyById(umpUserModel));
+        umpUserModel.setCreateBy(this.getCurrUser());
+        umpUserModel.setUpdateTime(new Date());
+        return ResultUtil.ok(umpUserService.modifyUser(umpUserModel));
+    }
+
+    @GetMapping("/queryRoles/{deptId}")
+    public ResultModel queryRoles(@PathVariable Long deptId) {
+        Assert.notNull(deptId);
+        List<UmpRoleModel> list = umpUserService.queryRoles(deptId);
+        return ResultUtil.ok(list);
+    }
+
+    /**
+     * 根据用户id查询用户角色关系
+     *
+     * @param userId
+     * @return com.jww.common.web.model.ResultModel
+     * @author RickyWang
+     * @date 17/12/25 21:26:57
+     */
+    @GetMapping("/queryUserRoles/{userId}")
+    public ResultModel queryUserRoles(@PathVariable Long userId) {
+        Assert.notNull(userId);
+        List<UmpUserRoleModel> list = umpUserService.queryUserRoles(userId);
+        return ResultUtil.ok(list);
     }
 
 }

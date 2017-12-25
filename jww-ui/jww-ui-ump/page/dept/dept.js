@@ -4,17 +4,18 @@ layui.config({
 	var base = layui.base,
 		form = layui.form,
 		layer = parent.layer === undefined ? layui.layer : parent.layer,
+        $ = layui.jquery;
         //新增则提交到新增url，编辑则提交到修改url
         submitUrl = parent.pageOperation === 1?"dept/add":"dept/modify";
+        submitType = parent.pageOperation === 1?"POST":"PUT";
 	    deptParentId = "";
-		$ = layui.jquery;
     //新增、编辑跳转则加载部门树
     if(parent.pageOperation===1||parent.pageOperation===2) {
         form.on("submit(adddept)",function(data){
             var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
             // alert(JSON.stringify(data.field));
             $.ajax({
-                type: "POST",
+                type: submitType,
                 url: submitUrl,
                 data: JSON.stringify(data.field),
                 success: function(data){
@@ -26,7 +27,7 @@ layui.config({
                             layer.closeAll("iframe");
                             //刷新父页面
                             parent.location.reload();
-                        },1000);
+                        },500);
                     }else{
                         top.layer.close(index);
                         top.layer.msg("操作失败！");

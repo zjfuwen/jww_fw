@@ -14,4 +14,5 @@ import java.util.List;
  */
 public interface UmpUserMapper extends BaseMapper<UmpUserModel> {
     public List<UmpUserModel> selectPage(Page<UmpUserModel> page, @Param("searchKey") String searchKey);
+    public UmpUserModel selectOne(@Param("id") Long id);
 }

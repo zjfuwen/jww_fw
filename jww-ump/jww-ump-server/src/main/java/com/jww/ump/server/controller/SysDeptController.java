@@ -9,6 +9,9 @@ import com.jww.ump.model.UmpDeptModel;
 import com.jww.ump.model.UmpTreeModel;
 import com.jww.ump.rpc.api.UmpDeptService;
 import com.xiaoleilu.hutool.lang.Assert;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,19 +29,22 @@ import java.util.List;
 @RestController
 @RequestMapping("/dept")
 @Slf4j
+@Api(value = "部门管理", description = "部门管理")
 public class SysDeptController extends BaseController {
 
     @Autowired
     private UmpDeptService umpDeptService;
 
     /**
-     * 根据用户ID查询
+     * 根据部门ID查询
      *
      * @param id
      * @return ResultModel<UmpDeptModel>
-     * @author wanyong
+     * @author RickyWang
      * @date 2017-12-05 13:35
      */
+    @ApiOperation(value = "查询部门", notes = "根据部门主键ID查询部门")
+    @ApiImplicitParam(name = "id", value = "部门ID", required = true, dataType = "Long")
     @GetMapping("/query/{id}")
     public ResultModel<UmpDeptModel> query(@PathVariable Long id) {
         Assert.notNull(id);
@@ -46,29 +52,28 @@ public class SysDeptController extends BaseController {
         return ResultUtil.ok(umpDeptModel);
     }
 
-    @GetMapping("/query/{current}/{size}/{deptName}")
-    public ResultModel query(@PathVariable int current, @PathVariable int size, @PathVariable String deptName) {
-        log.info("DeptController->query: current={},size={},deptName={}", current, size, deptName);
-        // PageModel<UmpUserModel> pageModel = new PageModel<UmpUserModel>(current, size);
-        PageModel<UmpDeptModel> pageModel = new PageModel<UmpDeptModel>();
-        pageModel.setCurrent(current);
-        pageModel.setSize(size);
-        if ("all".equals(deptName.trim())) {
-            pageModel = (PageModel<UmpDeptModel>) umpDeptService.selectPage(pageModel);
-        } else {
-            EntityWrapper entityWrapper = new EntityWrapper<UmpDeptModel>();
-            entityWrapper.like("dept_name", deptName);
-            pageModel = (PageModel<UmpDeptModel>) umpDeptService.selectPage(pageModel, entityWrapper);
-        }
-        return ResultUtil.ok(pageModel);
-    }
-
+    /**
+     * 查询部门分页方法
+     *
+     * @param pageModel
+     * @return com.jww.common.web.model.ResultModel
+     * @author RickyWang
+     * @date 17/12/25 21:28:13
+     */
     @PostMapping("/queryListPage")
     public ResultModel queryListPage(@RequestBody PageModel<UmpDeptModel> pageModel) {
         pageModel = (PageModel<UmpDeptModel>) umpDeptService.queryListPage(pageModel);
         return ResultUtil.ok(pageModel);
     }
 
+    /**
+     * 新增部门方法
+     *
+     * @param umpDeptModel
+     * @return com.jww.common.web.model.ResultModel
+     * @author RickyWang
+     * @date 17/12/25 21:28:41
+     */
     @PostMapping("/add")
     public ResultModel add(@Valid @RequestBody UmpDeptModel umpDeptModel) {
         log.info("DeptController->add: UmpDeptModel={}", umpDeptModel);
@@ -86,6 +91,14 @@ public class SysDeptController extends BaseController {
         return ResultUtil.ok(umpDeptService.add(umpDeptModel));
     }
 
+    /**
+     * 修改部门方法
+     *
+     * @param umpDeptModel
+     * @return com.jww.common.web.model.ResultModel
+     * @author RickyWang
+     * @date 17/12/25 21:29:09
+     */
     @PutMapping("/modify")
     public ResultModel modify(@RequestBody UmpDeptModel umpDeptModel) {
         log.info("DeptController->mod: UmpDeptModel={}", umpDeptModel);
@@ -95,24 +108,56 @@ public class SysDeptController extends BaseController {
         return ResultUtil.ok();
     }
 
+    /**
+     * 批量删除部门方法
+     *
+     * @param ids
+     * @return com.jww.common.web.model.ResultModel
+     * @author RickyWang
+     * @date 17/12/25 21:29:23
+     */
     @DeleteMapping("/delBatchByIds")
     public ResultModel delBatchByIds(@RequestBody Long[] ids) {
         Assert.notNull(ids);
         return ResultUtil.ok(umpDeptService.delBatchByIds(ids));
     }
 
+    /**
+     * 根据部门id过滤查询部门树方法
+     *
+     * @param id
+     * @return com.jww.common.web.model.ResultModel
+     * @author RickyWang
+     * @date 17/12/25 21:29:52
+     */
     @GetMapping("/queryTree/{id}")
     public ResultModel queryTree(@PathVariable(value = "id", required = false) Long id) {
         List<UmpTreeModel> list = umpDeptService.queryTree(id);
         return ResultUtil.ok(list);
     }
 
+    /**
+     * 查询部门树方法
+     *
+     * @param
+     * @return com.jww.common.web.model.ResultModel
+     * @author RickyWang
+     * @date 17/12/25 21:30:28
+     */
     @GetMapping("/queryTree")
     public ResultModel queryTree() {
         List<UmpTreeModel> list = umpDeptService.queryTree();
         return ResultUtil.ok(list);
     }
 
+    /**
+     * 删除部门方法
+     *
+     * @param id
+     * @return com.jww.common.web.model.ResultModel
+     * @author RickyWang
+     * @date 17/12/25 21:30:45
+     */
     @DeleteMapping("/delDept")
     public ResultModel delDept(@RequestBody Long id) {
         Assert.notNull(id);

@@ -6,9 +6,9 @@ layui.config({
         layer = parent.layer === undefined ? layui.layer : parent.layer,
         $ = layui.jquery,
         table = layui.table;
-    // 页面操作：0：查看，1：添加，2：修改
-    pageOperation = 0;
-    deptId = "";
+        //页面操作：0：查看，1：添加，2：修改
+        pageOperation = 0;
+        deptId = "";
 
     //列表加载
     var tableIns = table.render({

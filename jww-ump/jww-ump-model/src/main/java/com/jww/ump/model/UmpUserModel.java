@@ -130,5 +130,9 @@ public class UmpUserModel extends BaseModel {
      */
     @TableField("staff_no")
     private String staffNo;
-
+    /**
+     * 角色
+     */
+    @TableField(exist = false)
+    private Long[] role;
 }
