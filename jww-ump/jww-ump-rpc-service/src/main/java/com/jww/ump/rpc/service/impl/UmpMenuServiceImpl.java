@@ -20,8 +20,10 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 
-import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -117,7 +119,7 @@ public class UmpMenuServiceImpl extends BaseServiceImpl<UmpMenuMapper, UmpMenuMo
     }
 
     @Override
-    @CacheEvict(value = "data",allEntries = true)
+    @CacheEvict(value = "data", allEntries = true)
     public Integer deleteBatch(Long[] ids) {
         int succ = 0;
         for (Long id : ids) {
@@ -209,6 +211,7 @@ public class UmpMenuServiceImpl extends BaseServiceImpl<UmpMenuMapper, UmpMenuMo
         umpTreeModel.setIcon(umpMenuModel.getIconcls());
         umpTreeModel.setSpread(umpMenuModel.getExpand() == 1);
         umpTreeModel.setHref(umpMenuModel.getRequest());
+        umpTreeModel.setPermission(umpMenuModel.getPermission());
         umpTreeModel.setChecked(checkedMenuIds != null && ArrayUtil.contains(checkedMenuIds, umpMenuModel.getId()));
         umpTreeModel.setDisabled(false);
         return umpTreeModel;

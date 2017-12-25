@@ -20,7 +20,7 @@ public class UmpAuthorizeServiceImpl implements UmpAuthorizeService {
     private UmpAuthorizeMapper umpAuthorizeMapper;
 
     @Override
-    public List<String> queryPermissionByUserId(Long userId) {
-        return umpAuthorizeMapper.selectPermissionByUserId(userId);
+    public List<String> queryPermissionsByUserId(Long userId) {
+        return umpAuthorizeMapper.selectPermissionsByUserId(userId);
     }
 }

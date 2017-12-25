@@ -10,6 +10,12 @@ layui.config({
     pageOperation = 0;
     checkedRoleId = "";
 
+    // 初始化页面权限
+    var permissions = window.sessionStorage.getItem("JWW_UMP_USER_PERMISSIONS");
+    if (permissions.indexOf("sys:role:add") < 0) {
+        $("#addPermission").hide();
+    }
+
     // 渲染表格
     var tableIns = table.render({
         //设置表头

@@ -2,33 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jww.ump.dao.mapper.UmpAuthorizeMapper">
 
-    <select id="selectPermissionByUserId" resultType="java.lang.String">
+    <select id="selectPermissionsByUserId" resultType="java.lang.String">
         SELECT
-            CONCAT(
-                menu.permission_,
-                '.',
-                um.permission_
-            ) permission
+            m.permission_ AS permission
         FROM
-            sys_menu menu
-        JOIN sys_user_menu um ON um.menu_id = menu.id_
-        WHERE
-            length(menu.permission_) > 0
-        AND um.user_id = #{userId}
-        UNION
+            (
+                SELECT
+                    id_
+                FROM
+                    sys_user
+                WHERE
+                    is_del = 0
+                AND enable_ = 1
+                AND id_ = #{userId}
+            ) AS u
+        LEFT JOIN sys_user_role AS ur ON u.id_ = ur.user_id
+        LEFT JOIN sys_role_menu AS rm ON ur.role_id = rm.role_id
+        LEFT JOIN (
             SELECT
-                CONCAT(
-                    menu.permission_,
-                    '.',
-                    rm.permission_
-                ) permission
+                id_,
+                permission_
             FROM
-                sys_menu menu
-            JOIN sys_role_menu rm ON rm.menu_id = menu.id_
-            JOIN sys_user_role ur ON ur.role_id = rm.role_id
+                sys_menu
             WHERE
-                length(menu.permission_) > 0
-            AND ur.user_id = #{userId}
+                is_del = 0
+            AND enable_ = 1
+        ) AS m ON rm.menu_id = m.id_
     </select>
 
 </mapper>

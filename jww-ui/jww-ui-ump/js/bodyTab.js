@@ -24,7 +24,7 @@ layui.define(["element", "jquery"], function (exports) {
         $.get(url, function (data) {
             data = data.data;
             //显示左侧菜单
-            if ($(".navBar").html() == '') {
+            if ($(".navBar").html() === '') {
                 var _this = this;
                 $(".navBar").html(navBar(data)).height($(window).height() - 245);
                 element.init();  //初始化页面元素
@@ -33,7 +33,7 @@ layui.define(["element", "jquery"], function (exports) {
                 })
             }
         })
-    }
+    };
 
     //参数设置
     Tab.prototype.set = function (option) {
@@ -45,22 +45,22 @@ layui.define(["element", "jquery"], function (exports) {
     //通过title获取lay-id
     Tab.prototype.getLayId = function (title) {
         $(".layui-tab-title.top_tab li").each(function () {
-            if ($(this).find("cite").text() == title) {
+            if ($(this).find("cite").text() === title) {
                 layId = $(this).attr("lay-id");
             }
-        })
+        });
         return layId;
-    }
+    };
     //通过title判断tab是否存在
     Tab.prototype.hasTab = function (title) {
         var tabIndex = -1;
         $(".layui-tab-title.top_tab li").each(function () {
-            if ($(this).find("cite").text() == title) {
+            if ($(this).find("cite").text() === title) {
                 tabIndex = 1;
             }
-        })
+        });
         return tabIndex;
-    }
+    };
 
     //右侧内容tab操作
     var tabIdIndex = 0;
@@ -72,20 +72,20 @@ layui.define(["element", "jquery"], function (exports) {
         var closed = that.tabConfig.closed,
             openTabNum = that.tabConfig.openTabNum;
         tabFilter = that.tabConfig.tabFilter;
-        if (_this.attr("target") == "_blank") {
+        if (_this.attr("target") === "_blank") {
             window.location.href = _this.attr("data-url");
-        } else if (_this.attr("data-url") != undefined) {
+        } else if (_this.attr("data-url") !== undefined) {
             var title = '';
-            if (_this.find("i.iconfont,i.layui-icon").attr("data-icon") != undefined) {
-                if (_this.find("i.iconfont").attr("data-icon") != undefined) {
+            if (_this.find("i.iconfont,i.layui-icon").attr("data-icon") !== undefined) {
+                if (_this.find("i.iconfont").attr("data-icon") !== undefined) {
                     title += '<i class="iconfont ' + _this.find("i.iconfont").attr("data-icon") + '"></i>';
                 } else {
                     title += '<i class="layui-icon">' + _this.find("i.layui-icon").attr("data-icon") + '</i>';
                 }
             }
             //已打开的窗口中不存在
-            if (that.hasTab(_this.find("cite").text()) == -1 && _this.siblings("dl.layui-nav-child").length == 0) {
-                if ($(".layui-tab-title.top_tab li").length == openTabNum) {
+            if (that.hasTab(_this.find("cite").text()) === -1 && _this.siblings("dl.layui-nav-child").length === 0) {
+                if ($(".layui-tab-title.top_tab li").length === openTabNum) {
                     layer.msg('只能同时打开' + openTabNum + '个选项卡哦。不然系统会卡的！');
                     return;
                 }
@@ -96,14 +96,14 @@ layui.define(["element", "jquery"], function (exports) {
                     title: title,
                     content: "<iframe src='" + _this.attr("data-url") + "' data-id='" + tabIdIndex + "'></frame>",
                     id: new Date().getTime()
-                })
+                });
                 //当前窗口内容
                 var curmenu = {
-                    "icon": _this.find("i.iconfont").attr("data-icon") != undefined ? _this.find("i.iconfont").attr("data-icon") : _this.find("i.layui-icon").attr("data-icon"),
+                    "icon": _this.find("i.iconfont").attr("data-icon") !== undefined ? _this.find("i.iconfont").attr("data-icon") : _this.find("i.layui-icon").attr("data-icon"),
                     "title": _this.find("cite").text(),
                     "href": _this.attr("data-url"),
                     "layId": new Date().getTime()
-                }
+                };
                 menu.push(curmenu);
                 window.sessionStorage.setItem("menu", JSON.stringify(menu)); //打开的窗口
                 window.sessionStorage.setItem("curmenu", JSON.stringify(curmenu));  //当前的窗口
@@ -112,16 +112,16 @@ layui.define(["element", "jquery"], function (exports) {
             } else {
                 //当前窗口内容
                 var curmenu = {
-                    "icon": _this.find("i.iconfont").attr("data-icon") != undefined ? _this.find("i.iconfont").attr("data-icon") : _this.find("i.layui-icon").attr("data-icon"),
+                    "icon": _this.find("i.iconfont").attr("data-icon") !== undefined ? _this.find("i.iconfont").attr("data-icon") : _this.find("i.layui-icon").attr("data-icon"),
                     "title": _this.find("cite").text(),
                     "href": _this.attr("data-url")
-                }
+                };
                 window.sessionStorage.setItem("curmenu", JSON.stringify(curmenu));  //当前的窗口
                 element.tabChange(tabFilter, that.getLayId(_this.find("cite").text()));
                 that.tabMove(); //顶部窗口是否可滚动
             }
         }
-    }
+    };
 
     //顶部窗口移动
     Tab.prototype.tabMove = function () {
@@ -132,7 +132,6 @@ layui.define(["element", "jquery"], function (exports) {
                 topTabsWidth = $("#top_tabs").width(),
                 tabLi = topTabs.find("li.layui-this"),
                 top_tabs = document.getElementById("top_tabs");
-            ;
 
             if (topTabsWidth > topTabsBoxWidth) {
                 if (tabLi.position().left > topTabsBoxWidth || tabLi.position().left + topTabsBoxWidth > topTabsWidth) {
@@ -145,7 +144,7 @@ layui.define(["element", "jquery"], function (exports) {
                 var cur = {
                     x: 0,
                     y: 0
-                }
+                };
                 var nx, dx, x;
 
                 function down() {
@@ -222,13 +221,13 @@ layui.define(["element", "jquery"], function (exports) {
         var curmenu = '';
         var menu = JSON.parse(window.sessionStorage.getItem("menu"));
         curmenu = menu[$(this).index() - 1];
-        if ($(this).index() == 0) {
+        if ($(this).index() === 0) {
             window.sessionStorage.setItem("curmenu", '');
         } else {
             window.sessionStorage.setItem("curmenu", JSON.stringify(curmenu));
-            if (window.sessionStorage.getItem("curmenu") == "undefined") {
+            if (window.sessionStorage.getItem("curmenu") === "undefined") {
                 //如果删除的不是当前选中的tab,则将curmenu设置成当前选中的tab
-                if (curNav != JSON.stringify(delMenu)) {
+                if (curNav !== JSON.stringify(delMenu)) {
                     window.sessionStorage.setItem("curmenu", curNav);
                 } else {
                     window.sessionStorage.setItem("curmenu", JSON.stringify(menu[liIndex - 1]));
@@ -246,8 +245,8 @@ layui.define(["element", "jquery"], function (exports) {
         var menu = JSON.parse(window.sessionStorage.getItem("menu"));
         //获取被删除元素
         delMenu = menu[liIndex - 1];
-        var curmenu = window.sessionStorage.getItem("curmenu") == "undefined" ? undefined : window.sessionStorage.getItem("curmenu") == "" ? '' : JSON.parse(window.sessionStorage.getItem("curmenu"));
-        if (JSON.stringify(curmenu) != JSON.stringify(menu[liIndex - 1])) {  //如果删除的不是当前选中的tab
+        var curmenu = window.sessionStorage.getItem("curmenu") === "undefined" ? undefined : window.sessionStorage.getItem("curmenu") === "" ? '' : JSON.parse(window.sessionStorage.getItem("curmenu"));
+        if (JSON.stringify(curmenu) !== JSON.stringify(menu[liIndex - 1])) {  //如果删除的不是当前选中的tab
             // window.sessionStorage.setItem("curmenu",JSON.stringify(curmenu));
             curNav = JSON.stringify(curmenu);
         } else {

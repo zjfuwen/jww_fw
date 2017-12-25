@@ -35,6 +35,10 @@ public class UmpTreeModel implements Serializable {
      * 节点图标
      */
     private String icon;
+    /**
+     * 权限
+     */
+    private String permission;
 
 
     private static UmpTreeModel getRootNote(List<UmpTreeModel> umpTreeModelList) {

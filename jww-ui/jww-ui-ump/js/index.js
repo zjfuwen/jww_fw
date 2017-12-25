@@ -10,23 +10,24 @@ layui.config({
 
     //渲染用户名和头像
     var currentUser = layui.data("JWW_UMP").CUURENT_USER;
-    if (typeof(currentUser) == "undefined") {
+    if (typeof(currentUser) === "undefined") {
         window.location.href = "/page/login/login.html";
     }
     var userName = layui.data("JWW_UMP").CUURENT_USER.userName;
     $("span[name='userName']").text(userName);
+    var userId = layui.data("JWW_UMP").CUURENT_USER.id;
 
     tab = layui.bodyTab({
-        openTabNum: "50",  //最大可打开窗口数量
+        openTabNum: "50",  // 最大可打开窗口数量
         // url: "json/navs.json"
-        url: "menu/tree/1" //获取菜单json地址
+        url: "menu/tree/" + userId // 获取菜单json地址
     });
 
     //更换皮肤
     function skins() {
         var skin = window.sessionStorage.getItem("skin");
         if (skin) {  //如果更换过皮肤
-            if (window.sessionStorage.getItem("skinValue") != "自定义") {
+            if (window.sessionStorage.getItem("skinValue") !== "自定义") {
                 $("body").addClass(window.sessionStorage.getItem("skin"));
             } else {
                 $(".layui-layout-admin .layui-header").css("background-color", skin.split(',')[0]);
@@ -366,19 +367,5 @@ layui.config({
 //打开新窗口
 function addTab(_this) {
     tab.tabAdd(_this);
-}
-
-//捐赠弹窗
-function donation() {
-    layer.tab({
-        area: ['260px', '367px'],
-        tab: [{
-            title: "微信",
-            content: "<div style='padding:30px;overflow:hidden;background:#d2d0d0;'><img src='images/wechat.jpg'></div>"
-        }, {
-            title: "支付宝",
-            content: "<div style='padding:30px;overflow:hidden;background:#d2d0d0;'><img src='images/alipay.jpg'></div>"
-        }]
-    })
 }
 

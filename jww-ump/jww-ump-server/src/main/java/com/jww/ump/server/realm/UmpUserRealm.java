@@ -1,5 +1,6 @@
 package com.jww.ump.server.realm;
 
+import com.alibaba.fastjson.JSON;
 import com.jww.common.web.util.WebUtil;
 import com.jww.ump.model.UmpUserModel;
 import com.jww.ump.rpc.api.UmpAuthorizeService;
@@ -32,24 +33,38 @@ public class UmpUserRealm extends AuthorizingRealm {
     @Autowired
     private UmpAuthorizeService umpAuthorizeService;
 
+    /**
+     * 权限验证
+     *
+     * @param principals
+     * @return AuthorizationInfo
+     * @author wanyong
+     * @date 2017-12-25 19:52
+     */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
-        String account = (String) principals.getPrimaryPrincipal();
-        UmpUserModel umpUserModel = umpUserService.queryByAccount(account);
+        UmpUserModel umpUserModel = (UmpUserModel) principals.getPrimaryPrincipal();
         if (umpUserModel != null) {
-            List<String> permissionList = umpAuthorizeService.queryPermissionByUserId(umpUserModel.getId());
+            List<String> permissionList = umpAuthorizeService.queryPermissionsByUserId(umpUserModel.getId());
             for (String permission : permissionList) {
                 if (StrUtil.isNotBlank(permission)) {
                     simpleAuthorizationInfo.addStringPermission(permission);
                 }
             }
+            log.info("permissionList:" + JSON.toJSONString(permissionList));
         }
-        // 添加用户权限
-        simpleAuthorizationInfo.addStringPermission("user");
         return simpleAuthorizationInfo;
     }
 
+    /**
+     * 登录验证
+     *
+     * @param token
+     * @return AuthenticationInfo
+     * @author wanyong
+     * @date 2017-12-25 19:51
+     */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) token;
@@ -61,7 +76,6 @@ public class UmpUserRealm extends AuthorizingRealm {
             throw new IncorrectCredentialsException();
         }
         WebUtil.saveCurrentUser(umpUserModel.getId());
-        // return new SimpleAuthenticationInfo(umpUserModel.getAccount(), umpUserModel.getPassword(), umpUserModel.getUserName());
         return new SimpleAuthenticationInfo(umpUserModel, umpUserModel.getPassword(), umpUserModel.getUserName());
     }
 }
