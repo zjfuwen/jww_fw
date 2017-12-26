@@ -18,5 +18,5 @@ public interface UmpAuthorizeService {
      * @author wanyong
      * @date 2017-12-02 22:49
      */
-    List<String> queryPermissionByUserId(Long userId);
+    List<String> queryPermissionsByUserId(Long userId);
 }

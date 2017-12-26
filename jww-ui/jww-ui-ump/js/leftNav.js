@@ -1,18 +1,23 @@
 function navBar(strData) {
     var data;
-    if (typeof(strData) == "string") {
-        var data = JSON.parse(strData); //部分用户解析出来的是字符串，转换一下
+    var permissionArray = new Array(); // 用户权限集合
+    if (typeof(strData) === "string") {
+        data = JSON.parse(strData); //部分用户解析出来的是字符串，转换一下
     } else {
         data = strData;
     }
     var ulHtml = '<ul class="layui-nav layui-nav-tree">';
     for (var i = 0; i < data.length; i++) {
+        // 添加用户权限
+        if (data[i].permission !== undefined && data[i].permission.length > 0) {
+            permissionArray.push(data[i].permission);
+        }
         if (data[i].spread) {
             ulHtml += '<li class="layui-nav-item layui-nav-itemed">';
         } else {
             ulHtml += '<li class="layui-nav-item">';
         }
-        if (data[i].children != undefined && data[i].children.length > 0) {
+        if (data[i].children !== undefined && data[i].children.length > 0) {
             ulHtml += '<a href="javascript:;">';
             if (data[i].icon != undefined && data[i].icon != '') {
                 if (data[i].icon.indexOf("icon-") != -1) {
@@ -26,6 +31,10 @@ function navBar(strData) {
             ulHtml += '</a>';
             ulHtml += '<dl class="layui-nav-child">';
             for (var j = 0; j < data[i].children.length; j++) {
+                // 添加用户权限
+                if (data[i].children[j].permission !== undefined && data[i].children[j].permission.length > 0) {
+                    permissionArray.push(data[i].children[j].permission);
+                }
                 if (data[i].children[j].target == "_blank") {
                     ulHtml += '<dd><a href="javascript:;" data-url="' + data[i].children[j].href + '" target="' + data[i].children[j].target + '">';
                 } else {
@@ -39,16 +48,25 @@ function navBar(strData) {
                     }
                 }
                 ulHtml += '<cite>' + data[i].children[j].name + '</cite></a></dd>';
+
+                if (data[i].children[j].children !== undefined && data[i].children[j].children.length > 0) {
+                    for (var k = 0; k < data[i].children[j].children.length; k++) {
+                        // 添加用户权限
+                        if (data[i].children[j].children[k].permission !== undefined && data[i].children[j].children[k].permission.length > 0) {
+                            permissionArray.push(data[i].children[j].children[k].permission);
+                        }
+                    }
+                }
             }
             ulHtml += "</dl>";
         } else {
-            if (data[i].target == "_blank") {
+            if (data[i].target === "_blank") {
                 ulHtml += '<a href="javascript:;" data-url="' + data[i].href + '" target="' + data[i].target + '">';
             } else {
                 ulHtml += '<a href="javascript:;" data-url="' + data[i].href + '">';
             }
-            if (data[i].icon != undefined && data[i].icon != '') {
-                if (data[i].icon.indexOf("icon-") != -1) {
+            if (data[i].icon !== undefined && data[i].icon !== '') {
+                if (data[i].icon.indexOf("icon-") !== -1) {
                     ulHtml += '<i class="iconfont ' + data[i].icon + '" data-icon="' + data[i].icon + '"></i>';
                 } else {
                     ulHtml += '<i class="layui-icon" data-icon="' + data[i].icon + '">' + data[i].icon + '</i>';
@@ -59,5 +77,7 @@ function navBar(strData) {
         ulHtml += '</li>';
     }
     ulHtml += '</ul>';
+    // 设置用户权限到浏览器本地sessionStorage中
+    window.sessionStorage.setItem("JWW_UMP_USER_PERMISSIONS", permissionArray);
     return ulHtml;
 }

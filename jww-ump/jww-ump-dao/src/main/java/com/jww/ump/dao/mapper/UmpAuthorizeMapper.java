@@ -1,6 +1,5 @@
 package com.jww.ump.dao.mapper;
 
-import com.jww.ump.model.UmpMenuModel;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -12,5 +11,5 @@ import java.util.List;
  * @create 2017-11-29
  **/
 public interface UmpAuthorizeMapper {
-    List<String> selectPermissionByUserId(@Param("userId") Long userId);
+    List<String> selectPermissionsByUserId(@Param("userId") Long userId);
 }
