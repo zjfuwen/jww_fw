@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>日志管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="../../layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_495397_jzxo653foj6skyb9.css" media="all"/>
+    <link rel="stylesheet" href="../../css/common.css" media="all"/>
+</head>
+<body class="childrenBody">
+<blockquote class="layui-elem-quote news_search">
+    <div class="layui-inline">
+        <div class="layui-input-inline">
+            <input type="text" value="" placeholder="用户名、用户操作" class="layui-input search_input">
+        </div>
+        <a class="layui-btn search_btn">查询</a>
+    </div>
+</blockquote>
+
+<table class="layui-table" id="logTable" lay-filter="logTable"></table>
+
+<!-- 分页控件div -->
+<div id="pageDiv"></div>
+<script type="text/javascript" src="../../layui/layui.js"></script>
+<script type="text/javascript" src="logList.js"></script>
+</body>
+</html>

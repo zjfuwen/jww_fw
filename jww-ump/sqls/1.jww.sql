@@ -263,6 +263,7 @@ INSERT INTO `sys_menu` (`id_`,`menu_name`,`menu_type`,`parent_id`,`iconcls_`,`re
 INSERT INTO `sys_menu` (`id_`,`menu_name`,`menu_type`,`parent_id`,`iconcls_`,`request_`,`expand_`,`sort_no`,`is_show`,`permission_`,`remark_`,`enable_`,`create_by`,`create_time`,`update_by`,`update_time`) VALUES (16,'用户角色',1,1,NULL,NULL,0,11,0,'sys.permisson.useRole',NULL,1,1,'2016-06-20 09:16:56',1,'2016-06-29 09:39:29');
 INSERT INTO `sys_menu` (`id_`,`menu_name`,`menu_type`,`parent_id`,`iconcls_`,`request_`,`expand_`,`sort_no`,`is_show`,`permission_`,`remark_`,`enable_`,`create_by`,`create_time`,`update_by`,`update_time`) VALUES (17,'角色权限',1,1,NULL,NULL,0,12,0,'sys.permisson.userMenu',NULL,1,1,'2016-06-20 09:16:56',1,'2016-06-29 09:39:33');
 INSERT INTO `sys_menu` (`id_`,`menu_name`,`menu_type`,`parent_id`,`iconcls_`,`request_`,`expand_`,`sort_no`,`is_show`,`permission_`,`remark_`,`enable_`,`create_by`,`create_time`,`update_by`,`update_time`) VALUES (22,'SQL监控',1,1,'icon-jiaoseguanli','druid/sql.html',0,12,1,NULL,NULL,1,1,'2016-06-20 09:16:56',1,'2016-06-29 09:39:33');
+INSERT INTO `sys_menu` (`id_`, `menu_name`, `menu_type`, `parent_id`, `iconcls_`, `request_`, `expand_`, `sort_no`, `is_show`, `permission_`, `remark_`, `is_del`, `enable_`, `create_by`, `create_time`, `update_by`, `update_time`) VALUES ('23', '日志管理', '1', '1', 'icon-ccgl-shujuzidian-1', 'page/log/logList.html', '0', '9', '1', 'sys:log', '', '0', '1', '1', '2016-06-20 09:16:56', '1', '2016-06-28 18:07:52');
 
 -- 导出  表 jww.sys_msg 结构
 DROP TABLE IF EXISTS `sys_msg`;
@@ -651,3 +652,20 @@ CREATE TABLE IF NOT EXISTS `task_fire_log` (
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+
+-- ----------------------------
+-- Table structure for sys_log
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_log`;
+CREATE TABLE `sys_log` (
+  `id_` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_name` varchar(30) DEFAULT NULL COMMENT '用户名',
+  `operation` varchar(50) DEFAULT NULL COMMENT '用户操作',
+  `method` varchar(200) DEFAULT NULL COMMENT '请求方法',
+  `params` varchar(5000) DEFAULT NULL COMMENT '请求参数',
+  `time` bigint(20) NOT NULL COMMENT '执行时长(毫秒)',
+  `ip` varchar(64) DEFAULT NULL COMMENT 'IP地址',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `is_del` tinyint(1) DEFAULT 0 COMMENT '是否删除',
+  PRIMARY KEY (`id_`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统日志';
