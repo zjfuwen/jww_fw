@@ -7,6 +7,16 @@
 layui.define(["jquery"], function (exports) {
     var $ = layui.jquery;
 
+    // 初始化页面权限
+    var permissions = window.sessionStorage.getItem("JWW_UMP_USER_PERMISSIONS");
+    var permissionDoms = $("permission");
+    permissionDoms.each(function () {
+        if (permissions.indexOf($(this).attr("value")) < 0) {
+            $(this).hide();
+        }
+    });
+
+    // 设置jquery的ajax请求
     $.ajaxSetup({
         dataType: 'json',
         contentType: "application/json",
