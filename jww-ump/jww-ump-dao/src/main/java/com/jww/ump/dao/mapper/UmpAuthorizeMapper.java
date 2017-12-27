@@ -5,11 +5,20 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
- * 使用一段文字进行描述
+ * 权限mapper
  *
  * @author waner
- * @create 2017-11-29
+ * @date 2017-11-29
  **/
 public interface UmpAuthorizeMapper {
+
+    /**
+     * 根据用户ID获取用户权限集合
+     *
+     * @param userId 用户ID
+     * @return List<String>
+     * @author wanyong
+     * @date 2017-12-27 11:55
+     */
     List<String> selectPermissionsByUserId(@Param("userId") Long userId);
 }

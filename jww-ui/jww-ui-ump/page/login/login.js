@@ -6,7 +6,7 @@ layui.config({
         layer = parent.layer === undefined ? layui.layer : parent.layer,
         $ = layui.jquery;
 
-    //video背景
+    // video背景
     $(window).resize(function () {
         if ($(".video-player").width() > $(window).width()) {
             $(".video-player").css({

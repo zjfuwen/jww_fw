@@ -47,6 +47,9 @@ public final class Constants {
     public static final Map<Class<?>, String> CACHE_KEY_MAP = new HashMap<>(5);
 
     public enum ResultCodeEnum {
+        /**
+         * 成功
+         */
         SUCCESS(200, "成功"),
         INTERNAL_SERVER_ERROR(500, "服务器出错"),
         BAD_REQUEST(400, "求参数出错"),
@@ -84,9 +87,13 @@ public final class Constants {
         // 从库
         SLAVE("slaveDataSource", false);
 
-        // 数据源名称
+        /**
+         * 数据源名称
+         */
         private String name;
-        // 是否是默认数据源
+        /**
+         * 是否是默认数据源
+         */
         private boolean master;
 
         DataSourceEnum(String name, boolean master) {

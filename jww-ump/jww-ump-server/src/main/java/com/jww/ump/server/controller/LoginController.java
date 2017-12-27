@@ -45,7 +45,6 @@ public class LoginController extends BaseController {
         log.info("request->getSession->getId:" + request.getSession().getId());
         log.info(loginModel.toString());
         UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(loginModel.getAccount(), SecurityUtil.encryptPassword(loginModel.getPassword()));
-        // usernamePasswordToken.setRememberMe(true);
         Subject subject = SecurityUtils.getSubject();
         try {
             subject.login(usernamePasswordToken);

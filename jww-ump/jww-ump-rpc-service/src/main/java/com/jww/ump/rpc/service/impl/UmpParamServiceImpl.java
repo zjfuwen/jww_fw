@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.jww.common.core.base.BaseServiceImpl;
 import com.jww.ump.dao.mapper.UmpParamMapper;
 import com.jww.ump.model.UmpParamModel;
-import com.jww.ump.model.UmpParamModel;
 import com.jww.ump.rpc.api.UmpParamService;
 import com.xiaoleilu.hutool.util.ObjectUtil;
 import com.xiaoleilu.hutool.util.StrUtil;
@@ -26,9 +25,9 @@ public class UmpParamServiceImpl extends BaseServiceImpl<UmpParamMapper, UmpPara
 
     @Override
     public Page<UmpParamModel> queryListPage(Page<UmpParamModel> page) {
-        UmpParamModel UmpParamModel = new UmpParamModel();
-        UmpParamModel.setIsDel(0);
-        EntityWrapper<UmpParamModel> entityWrapper = new EntityWrapper<>(UmpParamModel);
+        UmpParamModel umpParamModel = new UmpParamModel();
+        umpParamModel.setIsDel(0);
+        EntityWrapper<UmpParamModel> entityWrapper = new EntityWrapper<>(umpParamModel);
         if (ObjectUtil.isNotNull(page.getCondition())) {
             StringBuilder conditionSql = new StringBuilder();
             Map<String, Object> paramMap = page.getCondition();

@@ -43,6 +43,15 @@ public interface BaseService<T extends BaseModel> extends IService<T> {
     T queryById(Long id);
 
 
+    /**
+     * 根据ID集合批量删除
+     *
+     * @param entity 实体对象
+     * @param ids    ID集合
+     * @return boolean
+     * @author wanyong
+     * @date 2017-12-27 11:45
+     */
     boolean delBatchByIds(T entity, List<Long> ids);
 
 }

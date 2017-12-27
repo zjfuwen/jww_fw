@@ -8,11 +8,31 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
+ * 用户表 Mapper 接口
+ *
  * @author wanyong
- * @description: 用户Mapper
  * @date 2017/11/17 15:51
  */
 public interface UmpUserMapper extends BaseMapper<UmpUserModel> {
-    public List<UmpUserModel> selectPage(Page<UmpUserModel> page, @Param("searchKey") String searchKey);
-    public UmpUserModel selectOne(@Param("id") Long id);
+
+    /**
+     * 根据关键字分页查询
+     *
+     * @param page      分页对象
+     * @param searchKey 关键字
+     * @return List<UmpUserModel>
+     * @author wanyong
+     * @date 2017-12-27 12:06
+     */
+    List<UmpUserModel> selectPage(Page<UmpUserModel> page, @Param("searchKey") String searchKey);
+
+    /**
+     * 根据用户ID查询
+     *
+     * @param id 用户ID
+     * @return UmpUserModel
+     * @author wanyong
+     * @date 2017-12-27 12:07
+     */
+    UmpUserModel selectOne(@Param("id") Long id);
 }

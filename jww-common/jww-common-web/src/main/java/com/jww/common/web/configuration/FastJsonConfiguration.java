@@ -4,7 +4,7 @@ import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.serializer.ToStringSerializer;
 import com.alibaba.fastjson.serializer.ValueFilter;
-import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter4;
+import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -27,18 +27,18 @@ import java.util.List;
 @Slf4j
 @Configuration
 @ConditionalOnClass(com.alibaba.fastjson.JSON.class)
-@ConditionalOnMissingBean(FastJsonHttpMessageConverter4.class)
+@ConditionalOnMissingBean(FastJsonHttpMessageConverter.class)
 @ConditionalOnWebApplication
 public class FastJsonConfiguration {
     @Bean
-    public FastJsonHttpMessageConverter4 fastJsonHttpMessageConverter() {
-        FastJsonHttpMessageConverter4 converter = new FastJsonHttpMessageConverter4();
+    public FastJsonHttpMessageConverter fastJsonHttpMessageConverter() {
+        FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
         converter.setFastJsonConfig(fastjsonConfig());
         converter.setSupportedMediaTypes(getSupportedMediaType());
         return converter;
     }
 
-    public com.alibaba.fastjson.support.config.FastJsonConfig fastjsonConfig() {
+    private com.alibaba.fastjson.support.config.FastJsonConfig fastjsonConfig() {
         com.alibaba.fastjson.support.config.FastJsonConfig fastJsonConfig = new com.alibaba.fastjson.support.config.FastJsonConfig();
         fastJsonConfig.setSerializerFeatures(
                 SerializerFeature.PrettyFormat,
@@ -71,10 +71,9 @@ public class FastJsonConfiguration {
     /**
      * 支持的mediaType类型
      */
-    public List<MediaType> getSupportedMediaType() {
+    private List<MediaType> getSupportedMediaType() {
         ArrayList<MediaType> mediaTypes = new ArrayList<>();
         mediaTypes.add(MediaType.APPLICATION_JSON_UTF8);
-        mediaTypes.add(MediaType.APPLICATION_FORM_URLENCODED);
         return mediaTypes;
     }
 }

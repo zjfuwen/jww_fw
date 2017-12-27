@@ -7,14 +7,20 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
- * <p>
  * 角色授权表 Mapper 接口
- * </p>
  *
  * @author wanyong
- * @since 2017-12-17
+ * @date 2017-12-17
  */
 public interface UmpRoleMenuMapper extends BaseMapper<UmpRoleMenuModel> {
 
+    /**
+     * 根据角色ID查询对应菜单ID集合
+     *
+     * @param roleId 角色ID
+     * @return List<Long>
+     * @author wanyong
+     * @date 2017-12-27 12:05
+     */
     List<Long> selectMenuIdListByRoleId(@Param("roleId") Long roleId);
 }

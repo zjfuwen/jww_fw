@@ -9,14 +9,21 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
- * <p>
  * 角色信息表 Mapper 接口
- * </p>
  *
  * @author wanyong
  * @since 2017-12-17
  */
 public interface UmpRoleMapper extends BaseMapper<UmpRoleModel> {
 
+    /**
+     * 分页查询
+     *
+     * @param page    分页实体
+     * @param wrapper wrapper条件
+     * @return List<UmpRoleModel>
+     * @author wanyong
+     * @date 2017-12-27 12:03
+     */
     List<UmpRoleModel> selectRoleList(Pagination page, @Param("ew") Wrapper<UmpRoleModel> wrapper);
 }

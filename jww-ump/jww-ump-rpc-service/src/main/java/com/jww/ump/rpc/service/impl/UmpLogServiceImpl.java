@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.jww.common.core.base.BaseServiceImpl;
-import com.jww.common.core.exception.BusinessException;
 import com.jww.ump.dao.mapper.UmpLogMapper;
 import com.jww.ump.model.UmpLogModel;
 import com.jww.ump.rpc.api.UmpLogService;
@@ -41,7 +40,7 @@ public class UmpLogServiceImpl extends BaseServiceImpl<UmpLogMapper, UmpLogModel
         UmpLogModel umpLogModel = new UmpLogModel();
         umpLogModel.setIsDel(0);
         EntityWrapper<UmpLogModel> entityWrapper = new EntityWrapper<>(umpLogModel);
-        entityWrapper.setSqlSelect("id_","user_name","operation","method","params","time","ip","create_time");
+        entityWrapper.setSqlSelect("id_", "user_name", "operation", "method", "params", "time", "ip", "create_time");
         if (ObjectUtil.isNotNull(page.getCondition())) {
             StringBuilder conditionSql = new StringBuilder();
             Map<String, Object> paramMap = page.getCondition();
@@ -59,7 +58,7 @@ public class UmpLogServiceImpl extends BaseServiceImpl<UmpLogMapper, UmpLogModel
     @Override
     public boolean delBatchByIds(Long[] ids) {
         List<UmpLogModel> list = new ArrayList<>();
-        for(Long id : ids){
+        for (Long id : ids) {
             UmpLogModel umpLogModel = new UmpLogModel();
             umpLogModel.setId(id);
             umpLogModel.setIsDel(1);

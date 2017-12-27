@@ -8,14 +8,30 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
- * <p>
  * 部门 Mapper 接口
- * </p>
  *
  * @author wanyong
- * @since 2017-11-25
+ * @date 2017-11-25
  */
 public interface UmpDeptMapper extends BaseMapper<UmpDeptModel> {
-    public List<UmpDeptModel> selectPage(Page<UmpDeptModel> page,@Param("dept_name") String dept_name);
-    public UmpDeptModel selectOne(@Param("id") Long id);
+
+    /**
+     * 分页查询
+     *
+     * @param deptName 部门名称
+     * @return List<UmpDeptModel>
+     * @author wanyong
+     * @date 2017-12-27 11:57
+     */
+    List<UmpDeptModel> selectPage(Page<UmpDeptModel> page, @Param("deptName") String deptName);
+
+    /**
+     * 根据部门ID查询
+     *
+     * @param id 部门ID
+     * @return UmpDeptModel
+     * @author wanyong
+     * @date 2017-12-27 11:58
+     */
+    UmpDeptModel selectOne(@Param("id") Long id);
 }

@@ -16,8 +16,9 @@ import java.util.Enumeration;
 import java.util.ResourceBundle;
 
 /**
+ * Web层辅助类
+ *
  * @author wanyong
- * @description: Web层辅助类
  * @date 2017/11/16 17:13
  */
 @Slf4j
@@ -28,21 +29,21 @@ public final class WebUtil {
     /**
      * 保存当前用户
      */
-    public static final void saveCurrentUser(Object user) {
+    public static void saveCurrentUser(Object user) {
         setSession(Constants.CURRENT_USER, user);
     }
 
     /**
      * 保存当前用户
      */
-    public static final void saveCurrentUser(HttpServletRequest request, Object user) {
+    public static void saveCurrentUser(HttpServletRequest request, Object user) {
         setSession(request, Constants.CURRENT_USER, user);
     }
 
     /**
      * 获取当前用户
      */
-    public static final Long getCurrentUser() {
+    public static Long getCurrentUser() {
         Subject currentUser = SecurityUtils.getSubject();
         if (null != currentUser) {
             try {
@@ -60,7 +61,7 @@ public final class WebUtil {
     /**
      * 获取当前用户
      */
-    public static final Object getCurrentUser(HttpServletRequest request) {
+    public static Object getCurrentUser(HttpServletRequest request) {
         try {
             HttpSession session = request.getSession();
             if (null != session) {
@@ -74,10 +75,8 @@ public final class WebUtil {
 
     /**
      * 将一些数据放到ShiroSession中,以便于其它地方使用
-     *
-     * @see 比如Controller,使用时直接用HttpSession.getAttribute(key)就可以取到
      */
-    public static final void setSession(Object key, Object value) {
+    private static void setSession(Object key, Object value) {
         Subject currentUser = SecurityUtils.getSubject();
         if (null != currentUser) {
             Session session = currentUser.getSession();
@@ -89,10 +88,8 @@ public final class WebUtil {
 
     /**
      * 将一些数据放到ShiroSession中,以便于其它地方使用
-     *
-     * @see 比如Controller,使用时直接用HttpSession.getAttribute(key)就可以取到
      */
-    public static final void setSession(HttpServletRequest request, String key, Object value) {
+    private static void setSession(HttpServletRequest request, String key, Object value) {
         HttpSession session = request.getSession();
         if (null != session) {
             session.setAttribute(key, value);
@@ -102,7 +99,7 @@ public final class WebUtil {
     /**
      * 移除当前用户
      */
-    public static final void removeCurrentUser(HttpServletRequest request) {
+    public static void removeCurrentUser(HttpServletRequest request) {
         request.getSession().removeAttribute(Constants.CURRENT_USER);
     }
 
@@ -110,10 +107,10 @@ public final class WebUtil {
      * 获得国际化信息
      *
      * @param key     键
-     * @param request
-     * @return
+     * @param request http请求
+     * @return String
      */
-    public static final String getApplicationResource(String key, HttpServletRequest request) {
+    public static String getApplicationResource(String key, HttpServletRequest request) {
         ResourceBundle resourceBundle = ResourceBundle.getBundle("ApplicationResources", request.getLocale());
         return resourceBundle.getString(key);
     }
@@ -121,31 +118,35 @@ public final class WebUtil {
     /**
      * 获取客户端IP
      */
-    public static final String getHost(HttpServletRequest request) {
+    public static String getHost(HttpServletRequest request) {
         String ip = request.getHeader("X-Forwarded-For");
-        if (ip != null && ip.indexOf(",") > 0) {
+        String key = ",";
+        if (ip != null && ip.indexOf(key) > 0) {
             // 对于通过多个代理的情况，第一个IP为客户端真实IP,多个IP按照','分割
             ip = ip.substring(0, ip.indexOf(","));
         }
-        if (StrUtil.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
+        key = "unknown";
+        if (StrUtil.isBlank(ip) || key.equalsIgnoreCase(ip)) {
             ip = request.getHeader("Proxy-Client-IP");
         }
-        if (StrUtil.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
+        if (StrUtil.isBlank(ip) || key.equalsIgnoreCase(ip)) {
             ip = request.getHeader("WL-Proxy-Client-IP");
         }
-        if (StrUtil.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
+        if (StrUtil.isBlank(ip) || key.equalsIgnoreCase(ip)) {
             ip = request.getHeader("HTTP_CLIENT_IP");
         }
-        if (StrUtil.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
+        if (StrUtil.isBlank(ip) || key.equalsIgnoreCase(ip)) {
             ip = request.getHeader("HTTP_X_FORWARDED_FOR");
         }
-        if (StrUtil.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
+        if (StrUtil.isBlank(ip) || key.equalsIgnoreCase(ip)) {
             ip = request.getHeader("X-Real-IP");
         }
-        if (StrUtil.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
+        if (StrUtil.isBlank(ip) || key.equalsIgnoreCase(ip)) {
             ip = request.getRemoteAddr();
         }
-        if ("127.0.0.1".equals(ip) || "0:0:0:0:0:0:0:1".equals(ip)) {
+        String localhostIp = "127.0.0.1";
+        String remoteIp = "0:0:0:0:0:0:0:1";
+        if (localhostIp.equals(ip) || remoteIp.equals(ip)) {
             Enumeration<NetworkInterface> netInterfaces = null;
             try {
                 netInterfaces = NetworkInterface.getNetworkInterfaces();

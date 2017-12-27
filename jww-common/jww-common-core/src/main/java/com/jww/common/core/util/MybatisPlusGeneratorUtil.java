@@ -49,12 +49,6 @@ public class MybatisPlusGeneratorUtil {
         gc.setBaseColumnList(false);
         // .setKotlin(true) 是否生成 kotlin 代码
         gc.setAuthor(props.getStr("global.author"));
-        // 自定义文件命名，注意 %s 会自动填充表实体属性！
-        // gc.setMapperName("%sDao");
-        // gc.setXmlName("%sMapper");
-        // gc.setServiceName("MP%sService");
-        // gc.setServiceImplName("%sServiceDiy");
-        // gc.setControllerName("%sAction");
         mpg.setGlobalConfig(gc);
 
         // 数据源配置
@@ -77,7 +71,6 @@ public class MybatisPlusGeneratorUtil {
 
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
-        // strategy.setCapitalMode(true);// 全局大写命名 ORACLE 注意
         // 此处可以修改为您的表前缀
         strategy.setTablePrefix(props.getStr("strategy.tableprefix"));
         // 表名生成策略
@@ -98,12 +91,6 @@ public class MybatisPlusGeneratorUtil {
         strategy.setSuperServiceImplClass(props.getStr("strategy.superserviceimplclass"));
         // 自定义 controller 父类
         strategy.setSuperControllerClass(props.getStr("strategy.superCcontrollerclass"));
-        // 【实体】是否生成字段常量（默认 false）
-        // public static final String ID = "test_id";
-        // strategy.setEntityColumnConstant(true);
-        // 【实体】是否为构建者模型（默认 false）
-        // public User setName(String name) {this.name = name; return this;}
-        // strategy.setEntityBuilderModel(true);
         mpg.setStrategy(strategy);
 
         // 包配置
@@ -124,15 +111,6 @@ public class MybatisPlusGeneratorUtil {
 
         // 自定义 xxList.jsp 生成
         List<FileOutConfig> focList = new ArrayList<>();
-        /*focList.add(new FileOutConfig("/template/list.jsp.vm") {
-            @Override
-            public String outputFile(TableInfo tableInfo) {
-                // 自定义输入文件名称
-                return "D://my_" + tableInfo.getEntityName() + ".jsp";
-            }
-        });
-        cfg.setFileOutConfigList(focList);
-        mpg.setCfg(cfg);*/
 
         // 调整 xml 生成目录
         FileOutConfig fileOutConfig = new FileOutConfig("/templates/mapper.xml.vm") {
@@ -149,18 +127,6 @@ public class MybatisPlusGeneratorUtil {
         TemplateConfig tc = new TemplateConfig();
         tc.setXml(null);
         mpg.setTemplate(tc);
-
-        // 自定义模板配置，可以 copy 源码 mybatis-plus/src/main/resources/templates 下面内容修改，
-        // 放置自己项目的 src/main/resources/templates 目录下, 默认名称一下可以不配置，也可以自定义模板名称
-        // TemplateConfig tc = new TemplateConfig();
-        // tc.setController("...");
-        // tc.setEntity("...");
-        // tc.setMapper("...");
-        // tc.setXml("...");
-        // tc.setService("...");
-        // tc.setServiceImpl("...");
-        // 如上任何一个模块如果设置 空 OR Null 将不生成该模块。
-        // mpg.setTemplate(tc);
 
         // 执行生成
         mpg.execute();
