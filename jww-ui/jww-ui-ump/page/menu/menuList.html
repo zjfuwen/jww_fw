@@ -16,11 +16,21 @@
 <body class="childrenBody">
 <blockquote class="layui-elem-quote news_search">
     <div class="layui-inline">
-        <a class="layui-btn layui-btn-normal menuAdd_btn">添加菜单</a>
+        <div class="layui-input-inline">
+            <input type="text" value="" placeholder="菜单名称" class="layui-input search_input">
+        </div>
+        <a class="layui-btn search_btn">查询</a>
     </div>
-    <div class="layui-inline">
-        <a class="layui-btn layui-btn-danger batchDel">批量删除</a>
-    </div>
+    <permission value="sys:menu:add">
+        <div class="layui-inline">
+            <a class="layui-btn layui-btn-normal menuAdd_btn">添加菜单</a>
+        </div>
+    </permission>
+    <permission value="sys:menu:delete">
+        <div class="layui-inline">
+            <a class="layui-btn layui-btn-danger batchDel">批量删除</a>
+        </div>
+    </permission>
 </blockquote>
 
 <table class="layui-table" id="menuTable" lay-filter="menuTable"></table>
@@ -28,11 +38,15 @@
 <!-- 分页控件div -->
 <div id="pageDiv"></div>
 <!-- 工具栏模板 -->
-<script type="text/html" id="toolBar">
+<div style="display: none;" id="toolBar">
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-</script>
+    <permission value="sys:menu:update">
+        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    </permission>
+    <permission value="sys:menu:delete">
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </permission>
+</div>
 <script type="text/javascript" src="../../layui/layui.js"></script>
 <script type="text/javascript" src="menuList.js?v=11"></script>
 </body>
