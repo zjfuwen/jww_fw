@@ -16,5 +16,5 @@ import java.util.List;
 public interface UmpTreeMapper extends com.baomidou.mybatisplus.mapper.BaseMapper<UmpTreeModel>{
     public List<UmpTreeModel> selectDeptTree(@Param("id") Long id);
 
-    public List<UmpTreeModel> selectMenuTree(@Param("id") Long id);
+    public List<UmpTreeModel> selectMenuTree(@Param("id") Long id,@Param("menuType") Integer menuType);
 }

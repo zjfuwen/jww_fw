@@ -88,8 +88,8 @@ public class UmpMenuServiceImpl extends BaseServiceImpl<UmpMenuMapper, UmpMenuMo
     }
 
     @Override
-    public List<UmpTreeModel> queryTree(Long id) {
-        List<UmpTreeModel> umpTreeModelList = umpTreeMapper.selectMenuTree(id);
+    public List<UmpTreeModel> queryTree(Long id,Integer menuType) {
+        List<UmpTreeModel> umpTreeModelList = umpTreeMapper.selectMenuTree(id,menuType);
         List<UmpTreeModel> list = UmpTreeModel.getTree(umpTreeModelList);
         return list;
     }

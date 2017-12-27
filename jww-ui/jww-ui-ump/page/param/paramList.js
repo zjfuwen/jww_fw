@@ -15,15 +15,15 @@ layui.config({
         //设置表头
         cols: [[
             {type: 'checkbox', fixed: 'left'},
-            {field: 'paramKey', title: '参数名', align: 'center', edit: 'text'},
-            {field: 'paramValue', title: '参数值', align: 'center', edit: 'text'},
-            {field: 'remark', title: '备注', align: 'center', edit: 'text'},
+            {field: 'paramKey', title: '参数名', align: 'center', edit: 'text', event: 'editColumn'},
+            {field: 'paramValue', title: '参数值', align: 'center', edit: 'text', event: 'editColumn'},
+            {field: 'remark', title: '备注', align: 'center', edit: 'text', event: 'editColumn'},
             {
                 field: 'enable',
                 title: '启用状态',
                 align: 'center',
                 //templet: '<div>{{d.enable === 1 ? "启用" : "禁用"}}</div>'
-                templet: '#switchTpl'
+                templet: '#switchTpl', event: 'editColumn'
             },
             {field: 'createTime', title: '创建时间', align: 'center'},
             {field: 'opt', title: '操作', fixed: 'right', width: 160, align: 'center', toolbar: '#toolBar'}
@@ -198,6 +198,14 @@ layui.config({
         modData["id"] = data.id;
         modData[field] = value;
         modMenuData(modData);
+    });
+
+    //监听单元格事件
+    table.on('tool(tableFilter)', function(obj){
+        var data = obj.data;
+        if(obj.event === 'editColumn'){
+            layer.msg(data);
+        }
     });
 
     function modMenuData(modData) {
