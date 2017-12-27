@@ -29,11 +29,11 @@ layui.config({
             type: 'GET',
             url: 'captcha/' + $("#captchaId").val(),
             success: function (data) {
-                if (data.code == 200) {
+                if (data.code === 200) {
                     $("#captchaImg").attr('src', 'data:image/jpeg;base64,' + data.data.captcha);
                     $("#captchaId").val(data.data.captchaId);
                 } else {
-                    layer.alert(data.message);
+                    layer.msg(data.message, {icon: 2});
                 }
             }
         });
@@ -45,24 +45,25 @@ layui.config({
         getCaptcha();
     });
 
-    //表单验证
+    // 表单验证
     form.verify({
         code: function (value, item) {
-            if (value != "jgmxj") {
-                return "验证码填写有误";
+            if (value.length !== 4) {
+                return "验证码输入有误";
             }
         }
     });
 
     //登录按钮事件
     form.on("submit(login)", function (data) {
-        var url = "login";
+        var loadingIndex = base.loading(layer);
         $.ajax({
             type: 'POST',
-            url: url,
+            url: "login",
             data: JSON.stringify(data.field),
             success: function (data) {
-                if (data.code == 200) {
+                layer.close(loadingIndex);
+                if (data.code === 200) {
                     layui.data('JWW_UMP', {
                         key: 'CUURENT_USER', value: data.data
                     });
@@ -72,7 +73,6 @@ layui.config({
                 }
             }
         });
-        // window.location.href = "../../index.html";
         return false;
     })
 })

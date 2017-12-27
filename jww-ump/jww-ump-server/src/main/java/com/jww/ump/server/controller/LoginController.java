@@ -99,8 +99,10 @@ public class LoginController extends BaseController {
         } catch (Exception e) {
             throw new LoginException(e);
         }
-        UmpUserModel crrentUser = (UmpUserModel) subject.getPrincipal();
+        // 清空验证码缓存
+        CacheUtil.getCache().del(Constants.CAPTCHA_CACHE_NAMESPACE + loginModel.getCaptchaId());
         // 验证通过，返回前端所需的用户信息
+        UmpUserModel crrentUser = (UmpUserModel) subject.getPrincipal();
         UmpUserModel umpUserModel = new UmpUserModel();
         umpUserModel.setId(crrentUser.getId());
         umpUserModel.setAccount(crrentUser.getAccount());
