@@ -9,8 +9,8 @@ import java.util.List;
 /**
  * 树模型
  *
- * @Author: Ricky Wang
- * @Date: 17/12/11 21:50:42
+ * @author Ricky Wang
+ * @date 17/12/11 21:50:42
  */
 @Data
 public class UmpTreeModel implements Serializable {

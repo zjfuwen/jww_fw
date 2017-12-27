@@ -43,11 +43,13 @@ layui.config({
 
     // 监听submit
     form.on('submit(addFilter)', function (data) {
+        var loadingIndex = base.loading(layer);
         $.ajax({
             type: 'POST',
             url: submitUrl,
             data: JSON.stringify(data.field),
             success: function (data) {
+                layer.close(loadingIndex);
                 if (data.code === 200) {
                     if (parent.pageOperation === 1) {
                         // 重置表单
