@@ -77,7 +77,6 @@ layui.config({
         $.ajax({
             type: "GET",
             url: "user/query/"+parent.userId,
-            async: false,
             success: function(data){
                 if(data.code==200){
                     var rest = data.data;
@@ -105,27 +104,6 @@ layui.config({
                                 form.render('radio');
                             }
                         }
-                        //加载部门角色
-                        if(i=="deptId" && rest[i]!=""){
-                            loadDeptRoles(rest[i]);
-                            $.ajax({
-                                type: "GET",
-                                url: "user/queryUserRoles/"+parent.userId,
-                                async: false,
-                                success: function(data){
-                                    if(data.code==200){
-                                        // alert(JSON.stringify(data.data));
-                                        $.each(data.data,function(idx,obj){
-                                            $("input[name='role'][value='"+ obj.roleId+"']").attr("checked",true);
-                                            form.render('checkbox');
-                                        });
-                                    }else{
-                                        top.layer.msg("查询异常！");
-                                    }
-                                },
-                                contentType: "application/json"
-                            });
-                        }
                     }
                 }else{
                     top.layer.close(index);
@@ -134,6 +112,26 @@ layui.config({
             },
             contentType: "application/json"
         });
+        //加载部门角色
+        if(parent.deptId!=""){
+            loadDeptRoles(parent.deptId);
+            $.ajax({
+                type: "GET",
+                url: "user/queryUserRoles/"+parent.userId,
+                success: function(data){
+                    if(data.code==200){
+                        // alert(JSON.stringify(data.data));
+                        $.each(data.data,function(idx,obj){
+                            $("input[name='role'][value='"+ obj.roleId+"']").attr("checked",true);
+                            form.render('checkbox');
+                        });
+                    }else{
+                        top.layer.msg("查询异常！");
+                    }
+                },
+                contentType: "application/json"
+            });
+        }
     }
 
     if(parent.pageOperation===0){

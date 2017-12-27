@@ -9,6 +9,7 @@ layui.config({
         //页面操作：0：查看，1：添加，2：修改
         pageOperation = 0;
         userId = "";
+        deptId = "";
 
     var tableIns = table.render({
         //设置表头
@@ -47,6 +48,7 @@ layui.config({
     table.on('tool(tableFilter)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
         var data = obj.data;
         userId = data.id;
+        deptId = data.deptId;
         var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
         if (layEvent === 'detail') { //查看
             pageOperation = 0;
