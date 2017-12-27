@@ -5,50 +5,48 @@ layui.config({
     var base = layui.base,
         form = layui.form,
         layer = parent.layer === undefined ? layui.layer : parent.layer,
-        laypage = layui.laypage,
         $ = layui.jquery,
-        laydate = layui.laydate;
-        submitUrl = parent.pageOperation === 1?"user/add":"user/modify";
+        laydate = layui.laydate,
+        submitUrl = parent.pageOperation === 1 ? "user/add" : "user/modify";
 
-
-    // 监听submit
-    if(parent.pageOperation===1||parent.pageOperation===2){
+    if (parent.pageOperation === 1 || parent.pageOperation === 2) {
         //日期
         laydate.render({
             elem: '#date'
         });
+
         form.on('submit(addUser)', function (data) {
-            if(typeof(data.field.enable) == "undefined"|| data.field.enable =='undefined'){
-                data.field.enable=0;
+            if (typeof(data.field.enable) === "undefined" || data.field.enable === 'undefined') {
+                data.field.enable = 0;
             }
 
             var role = [];
-            $('input[name="role"]:checked').each(function(index,element){
+            $('input[name="role"]:checked').each(function (index, element) {
                 role[index] = $(this).val();
             });
             data.field.role = role;
 
-            var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
+            var index = top.layer.msg('数据提交中，请稍候', {icon: 16, time: false, shade: 0.8});
             $.ajax({
                 type: 'POST',
                 url: submitUrl,
                 data: JSON.stringify(data.field),
                 success: function (data) {
-                    if (data.code == 200) {
+                    if (data.code === 200) {
                         top.layer.close(index);
-                        if(parent.pageOperation === 1){
+                        if (parent.pageOperation === 1) {
                             // 重置表单
                             $("#roleDiv").empty();
                             form.render('checkbox');
                             $("#userForm")[0].reset();
                             layer.msg('用户添加成功', {icon: 1});
-                        }else if(parent.pageOperation === 2){
-                            setTimeout(function(){
+                        } else if (parent.pageOperation === 2) {
+                            setTimeout(function () {
                                 top.layer.msg("用户修改成功！");
                                 layer.closeAll("iframe");
                                 //刷新父页面
                                 parent.location.reload();
-                            },500);
+                            }, 500);
                         }
                     } else {
                         top.layer.close(index);
@@ -60,7 +58,7 @@ layui.config({
             //阻止表单跳转。如果需要表单跳转，去掉这段即可。
             return false;
         });
-        $(".deptName").click(function(){
+        $(".deptName").click(function () {
             layui.layer.open({
                 type: 2,
                 title: '选择部门',
@@ -70,42 +68,43 @@ layui.config({
                 content: '/page/dept/deptTree.html' //iframe的url
             });
         });
+
     }
 
-    if(parent.pageOperation===0||parent.pageOperation===2){
+    if (parent.pageOperation === 0 || parent.pageOperation === 2) {
         // 页面赋值
         $.ajax({
             type: "GET",
-            url: "user/query/"+parent.userId,
-            success: function(data){
-                if(data.code==200){
+            url: "user/query/" + parent.userId,
+            success: function (data) {
+                if (data.code === 200) {
                     var rest = data.data;
                     //循环实体
                     for (var i in rest) {
                         // console.log(i + '='+ rest[i]+ ' '+$("." + i).attr("type"));
                         //文本框赋值
-                        if($("." + i).attr("type")=="text"||$("." + i).attr("type")=="hidden") {
-                            if($("." + i).attr("name")=="birthDay"){
-                                rest[i] = rest[i].substring(0,10);
+                        if ($("." + i).attr("type") === "text" || $("." + i).attr("type") === "hidden") {
+                            if ($("." + i).attr("name") === "birthDay") {
+                                rest[i] = rest[i].substring(0, 10);
                             }
                             $("." + i).val(rest[i]);
-                            if(parent.pageOperation===0){
-                                $("." + i).prop("placeholder","");
+                            if (parent.pageOperation === 0) {
+                                $("." + i).prop("placeholder", "");
                             }
                             //复选框改变状态
-                        }else if($("." + i).attr("type")=="checkbox") {
-                            if ($("." + i).attr("name")=="enable" && rest[i] == 0) {
+                        } else if ($("." + i).attr("type") === "checkbox") {
+                            if ($("." + i).attr("name") === "enable" && rest[i] === 0) {
                                 $("." + i).removeAttr("checked");
                                 form.render('checkbox');
                             }
-                        }else if($("." + i).attr("type")=="radio"){
-                            if($("." + i).attr("name")=="sex"){
-                                $("input[name='sex'][value='"+ rest[i]+"']").attr("checked",true);
+                        } else if ($("." + i).attr("type") === "radio") {
+                            if ($("." + i).attr("name") === "sex") {
+                                $("input[name='sex'][value='" + rest[i] + "']").attr("checked", true);
                                 form.render('radio');
                             }
                         }
                     }
-                }else{
+                } else {
                     top.layer.close(index);
                     top.layer.msg("查询异常！");
                 }
@@ -113,19 +112,19 @@ layui.config({
             contentType: "application/json"
         });
         //加载部门角色
-        if(parent.deptId!=""){
+        if (parent.deptId !== "") {
             loadDeptRoles(parent.deptId);
             $.ajax({
                 type: "GET",
-                url: "user/queryUserRoles/"+parent.userId,
-                success: function(data){
-                    if(data.code==200){
+                url: "user/queryUserRoles/" + parent.userId,
+                success: function (data) {
+                    if (data.code === 200) {
                         // alert(JSON.stringify(data.data));
-                        $.each(data.data,function(idx,obj){
-                            $("input[name='role'][value='"+ obj.roleId+"']").attr("checked",true);
+                        $.each(data.data, function (idx, obj) {
+                            $("input[name='role'][value='" + obj.roleId + "']").attr("checked", true);
                             form.render('checkbox');
                         });
-                    }else{
+                    } else {
                         top.layer.msg("查询异常！");
                     }
                 },
@@ -134,7 +133,7 @@ layui.config({
         }
     }
 
-    if(parent.pageOperation===0){
+    if (parent.pageOperation === 0) {
         $(".layui-form input").prop("readonly", true);
         $(".sex").prop("disabled", "disabled");
         $(".enable").prop("disabled", "disabled");
@@ -147,13 +146,13 @@ layui.config({
         $("#deptId").val(deptId);
         $("#deptName").val(deptName);
         loadDeptRoles(deptId);
-    }
+    };
 
-    function loadDeptRoles(deptId){
+    function loadDeptRoles(deptId) {
         // 查询角色
         $.ajax({
             type: 'GET',
-            url: 'user/queryRoles/'+deptId,
+            url: 'user/queryRoles/' + deptId,
             async: false,
             success: function (data) {
                 if (data.code === 200) {
@@ -162,7 +161,7 @@ layui.config({
                         $("#roleDiv").empty();
                         $.each(data.data, function (index, obj) {
                             // alert(index + "..." + obj.name+"..."+obj.sex);
-                            $("#roleDiv").append('<input type="checkbox" class="role" name="role" value="'+ obj.id +'" lay-skin="primary" title="'+ obj.roleName +'">');
+                            $("#roleDiv").append('<input type="checkbox" class="role" name="role" value="' + obj.id + '" lay-skin="primary" title="' + obj.roleName + '">');
                         });
                         form.render('checkbox');
                     }
