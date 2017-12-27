@@ -50,6 +50,21 @@ layui.config({
         elem: '#menuTable'
     });
 
+    //查询
+    $(".search_btn").click(function () {
+        var searchKey = $(".search_input").val();
+        tableIns.reload({
+            where: { //设定异步数据接口的额外参数，任意设
+                condition: {
+                    menu_name: searchKey
+                }
+            },
+            page: {
+                curr: 1 //重新从第 1 页开始
+            }
+        });
+    });
+
     //监听状态操作
     form.on('checkbox(enableCbx)', function (obj) {
         // layer.tips(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);

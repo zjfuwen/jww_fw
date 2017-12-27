@@ -62,11 +62,19 @@ public final class Constants {
     public static final int LOG_OPERATION_TYPE_UNKONW = 9;
 
     /**
+     * CAPTCHA缓存命名空间
+     */
+    public static final String CAPTCHA_CACHE_NAMESPACE = CACHE_NAMESPACE + "captcha:";
+
+    /**
      * 缓存键值
      */
     public static final Map<Class<?>, String> CACHE_KEY_MAP = new HashMap<>(5);
 
     public enum ResultCodeEnum {
+        /**
+         * 成功
+         */
         SUCCESS(200, "成功"),
         INTERNAL_SERVER_ERROR(500, "服务器出错"),
         BAD_REQUEST(400, "求参数出错"),
@@ -77,6 +85,7 @@ public final class Constants {
         LOGIN_FAIL_ACCOUNT_EXPIRED(306, "用户过期"),
         LOGIN_FAIL_ACCOUNT_UNKNOWN(307, "不存在该用户"),
         LOGIN_FAIL_INCORRECT_CREDENTIALS(308, "密码不正确"),
+        LOGIN_FAIL_CAPTCHA_ERROR(309, "验证码错误"),
         UNLOGIN(401, "没有登录"),
         UNAUTHORIZED(403, "没有权限");
 
@@ -104,9 +113,13 @@ public final class Constants {
         // 从库
         SLAVE("slaveDataSource", false);
 
-        // 数据源名称
+        /**
+         * 数据源名称
+         */
         private String name;
-        // 是否是默认数据源
+        /**
+         * 是否是默认数据源
+         */
         private boolean master;
 
         DataSourceEnum(String name, boolean master) {

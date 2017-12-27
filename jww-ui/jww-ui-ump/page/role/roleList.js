@@ -106,23 +106,21 @@ layui.config({
         }
     });
 
-    //监听表格复选框选择
-    table.on('checkbox(tableFilter)', function (obj) {
-    });
-
     //查询
     $(".search_btn").click(function () {
-        var searchKey = $(".search_input").val();
-        tableIns.reload({
-            where: { //设定异步数据接口的额外参数，任意设
-                condition: {
-                    role_name: searchKey
+        if (base.fastClickCheck(".search_btn")) {
+            var searchKey = $(".search_input").val();
+            tableIns.reload({
+                where: { //设定异步数据接口的额外参数，任意设
+                    condition: {
+                        role_name: searchKey
+                    }
+                },
+                page: {
+                    curr: 1 //重新从第 1 页开始
                 }
-            },
-            page: {
-                curr: 1 //重新从第 1 页开始
-            }
-        });
+            });
+        }
     });
 
     // 添加角色

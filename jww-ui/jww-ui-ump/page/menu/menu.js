@@ -134,4 +134,10 @@ layui.config({
         ]
     });
 
+    // 选择菜单树页面选中后回调函数
+    menuTreeCallBack = function (menuId, menuName) {
+        $("#parentId").val(menuId);
+        $("#parentName").val(menuName);
+    }
+
 })

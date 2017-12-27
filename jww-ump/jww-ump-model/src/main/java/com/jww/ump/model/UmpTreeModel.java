@@ -9,8 +9,8 @@ import java.util.List;
 /**
  * 树模型
  *
- * @Author: Ricky Wang
- * @Date: 17/12/11 21:50:42
+ * @author Ricky Wang
+ * @date 17/12/11 21:50:42
  */
 @Data
 public class UmpTreeModel implements Serializable {
@@ -22,6 +22,7 @@ public class UmpTreeModel implements Serializable {
     private boolean leaf;
     private int level;
     private String href;
+    private Integer type;
     private List<UmpTreeModel> children;
     /**
      * 是否选中
@@ -63,6 +64,7 @@ public class UmpTreeModel implements Serializable {
                 childNode.setName(umpTreeModel.getName());
                 childNode.setParentId(umpTreeModel.getParentId());
                 childNode.setLevel(rootLevel + 1);
+                childNode.setType(umpTreeModel.getType());
                 childNodeList.add(childNode);
             }
         }

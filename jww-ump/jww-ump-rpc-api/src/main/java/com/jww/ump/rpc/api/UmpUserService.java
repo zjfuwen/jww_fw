@@ -5,11 +5,8 @@ import com.jww.common.core.base.BaseService;
 import com.jww.ump.model.UmpRoleModel;
 import com.jww.ump.model.UmpUserModel;
 import com.jww.ump.model.UmpUserRoleModel;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.DeleteMapping;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * 用户管理服务
@@ -22,7 +19,7 @@ public interface UmpUserService extends BaseService<UmpUserModel> {
     /**
      * 根据账号查找用户
      *
-     * @param account
+     * @param account 账号
      * @return UmpUserModel
      * @author wanyong
      * @date 2017-12-05 12:48
@@ -32,7 +29,7 @@ public interface UmpUserService extends BaseService<UmpUserModel> {
     /**
      * 分页查找所有用户
      *
-     * @param page
+     * @param page 分页对象
      * @return Page<UmpUserModel>
      * @author wanyong
      * @date 2017/12/4 14:45
@@ -42,7 +39,7 @@ public interface UmpUserService extends BaseService<UmpUserModel> {
     /**
      * 根据ID集合批量删除
      *
-     * @param ids
+     * @param ids 用户ID集合
      * @return boolean
      * @author wanyong
      * @date 2017-12-05 19:50
@@ -52,24 +49,40 @@ public interface UmpUserService extends BaseService<UmpUserModel> {
     /**
      * 根据部门ID查询角色
      *
-     * @param deptId
+     * @param deptId 部门ID
      * @return java.util.List<com.jww.ump.model.UmpRoleModel>
      * @author RickyWang
      * @date 17/12/25 15:47:20
      */
-    public List<UmpRoleModel> queryRoles(Long deptId);
+    List<UmpRoleModel> queryRoles(Long deptId);
 
     /**
      * 根据用户查询用户角色关系
      *
-     * @param userId
+     * @param userId 用户ID
      * @return java.util.List<com.jww.ump.model.UmpUserRoleModel>
      * @author RickyWang
      * @date 17/12/25 21:20:55
      */
-    public List<UmpUserRoleModel> queryUserRoles(Long userId);
+    List<UmpUserRoleModel> queryUserRoles(Long userId);
 
-    public UmpUserModel queryOne(Long id);
+    /**
+     * 根据用户ID查询
+     *
+     * @param id 用户ID
+     * @return UmpUserModel
+     * @author wanyong
+     * @date 2017-12-27 12:09
+     */
+    UmpUserModel queryOne(Long id);
 
-    public boolean modifyUser(UmpUserModel umpUserModel);
+    /**
+     * 修改
+     *
+     * @param umpUserModel 用户实体
+     * @return boolean
+     * @author wanyong
+     * @date 2017-12-27 12:09
+     */
+    boolean modifyUser(UmpUserModel umpUserModel);
 }

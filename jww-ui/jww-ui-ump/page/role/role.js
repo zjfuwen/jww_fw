@@ -65,6 +65,7 @@ layui.config({
 
     // 监听submit
     form.on('submit(addFilter)', function (data) {
+        var loadingIndex = base.loading(layer);
         var menuIdArray = tree.GetAllCheckedValue();
         data.field["menuIdList"] = menuIdArray;
         $.ajax({
@@ -72,6 +73,7 @@ layui.config({
             url: submitUrl,
             data: JSON.stringify(data.field),
             success: function (data) {
+                layer.close(loadingIndex);
                 if (data.code === 200) {
                     if (parent.pageOperation === 1) {
                         // 重置表单

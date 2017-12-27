@@ -6,7 +6,7 @@ layui.config({
         layer = parent.layer === undefined ? layui.layer : parent.layer,
         $ = layui.jquery;
 
-    //video背景
+    // video背景
     $(window).resize(function () {
         if ($(".video-player").width() > $(window).width()) {
             $(".video-player").css({
@@ -24,6 +24,27 @@ layui.config({
         }
     }).resize();
 
+    var getCaptcha = function () {
+        $.ajax({
+            type: 'GET',
+            url: 'captcha/' + $("#captchaId").val(),
+            success: function (data) {
+                if (data.code == 200) {
+                    $("#captchaImg").attr('src', 'data:image/jpeg;base64,' + data.data.captcha);
+                    $("#captchaId").val(data.data.captchaId);
+                } else {
+                    layer.alert(data.message);
+                }
+            }
+        });
+    };
+    getCaptcha();
+
+    // 单击验证码事件
+    $("#captchaImg").click(function () {
+        getCaptcha();
+    });
+
     //表单验证
     form.verify({
         code: function (value, item) {
@@ -31,7 +52,7 @@ layui.config({
                 return "验证码填写有误";
             }
         }
-    })
+    });
 
     //登录按钮事件
     form.on("submit(login)", function (data) {
@@ -47,7 +68,7 @@ layui.config({
                     });
                     window.location.href = "../../index.html";
                 } else {
-                    layer.alert(data.message);
+                    layer.msg(data.message, {icon: 2});
                 }
             }
         });

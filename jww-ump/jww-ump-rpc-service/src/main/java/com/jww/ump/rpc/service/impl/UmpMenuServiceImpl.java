@@ -14,6 +14,7 @@ import com.jww.ump.model.UmpTreeModel;
 import com.jww.ump.rpc.api.UmpMenuService;
 import com.xiaoleilu.hutool.util.ArrayUtil;
 import com.xiaoleilu.hutool.util.CollectionUtil;
+import com.xiaoleilu.hutool.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -62,7 +63,14 @@ public class UmpMenuServiceImpl extends BaseServiceImpl<UmpMenuMapper, UmpMenuMo
     public Page<UmpMenuModel> queryListPage(Page<UmpMenuModel> page) {
         UmpMenuModel menu = new UmpMenuModel();
         menu.setEnable(1);
+        menu.setIsDel(0);
         EntityWrapper<UmpMenuModel> wrapper = new EntityWrapper<>(menu);
+        String menuName = page.getCondition() == null ? null : page.getCondition().get("menu_name").toString();
+        wrapper.eq("a.is_del", 0).eq("a.enable_", 1);
+        if (StrUtil.isNotEmpty(menuName)) {
+            wrapper.like(" a.menu_name ", "%" + menuName + "%");
+        }
+        wrapper.orderBy(" a.parent_id,  a.sort_no ", true);
         page.setCondition(null);
         return super.selectPage(page, wrapper);
     }
@@ -88,8 +96,8 @@ public class UmpMenuServiceImpl extends BaseServiceImpl<UmpMenuMapper, UmpMenuMo
     }
 
     @Override
-    public List<UmpTreeModel> queryTree(Long id) {
-        List<UmpTreeModel> umpTreeModelList = umpTreeMapper.selectMenuTree(id);
+    public List<UmpTreeModel> queryTree(Long id, Integer menuType) {
+        List<UmpTreeModel> umpTreeModelList = umpTreeMapper.selectMenuTree(id, menuType);
         List<UmpTreeModel> list = UmpTreeModel.getTree(umpTreeModelList);
         return list;
     }

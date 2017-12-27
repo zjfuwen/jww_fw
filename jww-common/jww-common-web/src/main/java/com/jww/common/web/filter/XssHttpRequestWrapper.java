@@ -1,7 +1,6 @@
 package com.jww.common.web.filter;
 
 import com.xiaoleilu.hutool.util.ArrayUtil;
-import com.xiaoleilu.hutool.util.CollectionUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
@@ -83,31 +82,38 @@ public class XssHttpRequestWrapper extends HttpServletRequestWrapper {
             char c = value.charAt(i);
             switch (c) {
                 case '>':
-                    sb.append('＞');// 全角大于号
+                    // 全角大于号
+                    sb.append('＞');
                     break;
                 case '<':
-                    sb.append('＜');// 全角小于号
+                    // 全角小于号
+                    sb.append('＜');
                     break;
                 case '\'':
-                    sb.append('‘');// 全角单引号
+                    // 全角单引号
+                    sb.append('‘');
                     break;
                 case '\"':
-                    sb.append('“');// 全角双引号
+                    // 全角双引号
+                    sb.append('“');
                     break;
                 case '&':
-                    sb.append('＆');// 全角
+                    // 全角
+                    sb.append('＆');
                     break;
                 case '\\':
-                    sb.append('＼');// 全角斜线
+                    // 全角斜线
+                    sb.append('＼');
                     break;
                 case '#':
-                    sb.append('＃');// 全角井号
+                    // 全角井号
+                    sb.append('＃');
                     break;
                 case '(':
-                    sb.append('（');//
+                    sb.append('（');
                     break;
                 case ')':
-                    sb.append('）');//
+                    sb.append('）');
                     break;
                 default:
                     sb.append(c);

@@ -70,11 +70,12 @@ public interface UmpMenuService extends BaseService<UmpMenuModel> {
      * 查询菜单树，供页面选择父菜单使用，过滤自己及子菜单
      *
      * @param  id
+     * @param  menuType
      * @return  List<UmpTreeModel>
      * @author shadj
      * @date 2017/12/22 22:59
      */
-    List<UmpTreeModel> queryTree(Long id);
+    List<UmpTreeModel> queryTree(Long id,Integer menuType);
 
     /**
      * 删除单个菜单（设置删除状态为是）

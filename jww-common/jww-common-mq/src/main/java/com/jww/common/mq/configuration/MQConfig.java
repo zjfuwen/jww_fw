@@ -1,7 +1,5 @@
 package com.jww.common.mq.configuration;
 
-import javax.jms.Queue;
-
 import com.jww.common.mq.propties.MQPropties;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.ActiveMQPrefetchPolicy;
@@ -17,8 +15,15 @@ import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 import org.springframework.jms.connection.CachingConnectionFactory;
 import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.jms.core.JmsTemplate;
-import org.springframework.util.StringUtils;
 
+import javax.jms.Queue;
+
+/**
+ * MQ配置
+ *
+ * @author Ricky Wang
+ * @date 17/11/24 15:16:50
+ */
 @Configuration
 @EnableJms
 @EnableConfigurationProperties(ActiveMQProperties.class)
@@ -31,13 +36,13 @@ public class MQConfig {
     private MQPropties mqPropties;
 
     @Bean
-    public Queue queue(){
+    public Queue queue() {
         return new ActiveMQQueue();
     }
 
     @Bean
-    public RedeliveryPolicy redeliveryPolicy(){
-        RedeliveryPolicy  redeliveryPolicy=   new RedeliveryPolicy();
+    public RedeliveryPolicy redeliveryPolicy() {
+        RedeliveryPolicy redeliveryPolicy = new RedeliveryPolicy();
         //是否在每次尝试重新发送失败后,增长这个等待时间
         redeliveryPolicy.setUseExponentialBackOff(true);
         //重发次数,默认为6次   这里设置为1次
@@ -54,16 +59,17 @@ public class MQConfig {
     }
 
     @Bean
-    public ActiveMQPrefetchPolicy prefetchPolicy(){
+    public ActiveMQPrefetchPolicy prefetchPolicy() {
         ActiveMQPrefetchPolicy activeMQPrefetchPolicy = new ActiveMQPrefetchPolicy();
         //预处理条数
-        if(mqPropties.getQueuePrefetch()!=null){
+        if (mqPropties.getQueuePrefetch() != null) {
             activeMQPrefetchPolicy.setQueuePrefetch(mqPropties.getQueuePrefetch());
         }
         return activeMQPrefetchPolicy;
     }
+
     @Bean
-    public CachingConnectionFactory cachingConnectionFactory (RedeliveryPolicy redeliveryPolicy,ActiveMQPrefetchPolicy activeMQPrefetchPolicy){
+    public CachingConnectionFactory cachingConnectionFactory(RedeliveryPolicy redeliveryPolicy, ActiveMQPrefetchPolicy activeMQPrefetchPolicy) {
         ActiveMQConnectionFactory activeMQConnectionFactory =
                 new ActiveMQConnectionFactory(activeMQProperties.getUser(),
                         activeMQProperties.getPassword(),
@@ -76,8 +82,8 @@ public class MQConfig {
     }
 
     @Bean
-    public JmsTemplate jmsTemplate(CachingConnectionFactory cachingConnectionFactory,Queue queue){
-        JmsTemplate jmsTemplate=new JmsTemplate();
+    public JmsTemplate jmsTemplate(CachingConnectionFactory cachingConnectionFactory, Queue queue) {
+        JmsTemplate jmsTemplate = new JmsTemplate();
         jmsTemplate.setDeliveryMode(2);//进行持久化配置 1表示非持久化，2表示持久化
         jmsTemplate.setSessionTransacted(true);
         jmsTemplate.setConnectionFactory(cachingConnectionFactory);
@@ -88,7 +94,7 @@ public class MQConfig {
     }
 
     @Bean
-    public JmsMessagingTemplate jmsMessagingTemplate(JmsTemplate jmsTemplate){
+    public JmsMessagingTemplate jmsMessagingTemplate(JmsTemplate jmsTemplate) {
         JmsMessagingTemplate jmsMessagingTemplate = new JmsMessagingTemplate();
         jmsMessagingTemplate.setJmsTemplate(jmsTemplate);
         return jmsMessagingTemplate;

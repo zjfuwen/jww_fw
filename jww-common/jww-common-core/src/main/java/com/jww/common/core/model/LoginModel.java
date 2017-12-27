@@ -35,4 +35,19 @@ public class LoginModel implements Serializable {
     @NotBlank(message = "密码不能为空")
     @Size(min = 6, max = 50, message = "密码长度必须在6至50之间")
     private String password;
+
+    /**
+     * 验证码ID
+     */
+    @Getter
+    @Setter
+    private String captchaId;
+
+    /**
+     * 验证码值
+     */
+    @Getter
+    @Setter
+    @NotBlank(message = "验证码不能为空")
+    private String captchaValue;
 }

@@ -4,7 +4,7 @@
  @Tittle: base
  @Description: 基础配置
  */
-layui.define(["jquery"], function (exports) {
+layui.define(['jquery'], function (exports) {
     var $ = layui.jquery;
 
     // 初始化页面权限
@@ -50,7 +50,28 @@ layui.define(["jquery"], function (exports) {
         }
     });
 
-    exports("base", function () {
-        alert("======== 加载基础配置模块 ========");
-    });
+    var obj = {
+        loading: function (layer) {
+            var loadingIndex = layer.msg('数据请求中', {
+                icon: 16,
+                shade: 0.01,
+                time: -1
+            });
+            return loadingIndex;
+        },
+        fastClickCheck: function (elem) {
+            if ($(elem).attr("clickPassValue") === "1") {
+                $(elem).attr("clickPassValue", "0");
+                setTimeout(function () {
+                    $(elem).attr("clickPassValue", "1");
+                }, 5000);
+                return true;
+            } else {
+                layui.layer.tips("您点击太快，稍等五秒再点击吧！", elem, {tips: [3, '#009688'], time: 1000});
+                return false;
+            }
+        }
+    };
+
+    exports("base", obj);
 })

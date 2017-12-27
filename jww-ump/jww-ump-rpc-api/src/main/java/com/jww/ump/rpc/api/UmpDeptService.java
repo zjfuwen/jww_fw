@@ -1,17 +1,17 @@
 package com.jww.ump.rpc.api;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.jww.common.core.base.BaseService;
 import com.jww.ump.model.UmpDeptModel;
-import com.baomidou.mybatisplus.plugins.Page;
 import com.jww.ump.model.UmpTreeModel;
 
 import java.util.List;
 
 /**
- * @Title:
- * @Description:
- * @Author: Ricky Wang
- * @Date: 17/12/1 11:26:33
+ * 部门管理服务接口
+ *
+ * @author Ricky Wang
+ * @date 2017-12-27 12:02
  */
 public interface UmpDeptService extends BaseService<UmpDeptModel> {
     public boolean addDept(UmpDeptModel umpDeptModel);

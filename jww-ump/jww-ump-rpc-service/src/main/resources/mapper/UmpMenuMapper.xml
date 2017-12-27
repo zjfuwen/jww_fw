@@ -55,7 +55,9 @@
         SELECT a.*, b.menu_name as parent_name from sys_menu a
             left join sys_menu b
               on a.parent_id = b.id_
-          where a.is_del = 0
+         <where>
+            ${ew.sqlSegment}
+         </where>
     </select>
 
     <select id="selectById" resultMap="BaseResultMap">

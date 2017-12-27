@@ -154,15 +154,15 @@ public class SysMenuController extends BaseController {
         return ResultUtil.ok(treeModelList);
     }
 
-    @GetMapping("/queryTree/{id}")
-    public ResultModel queryTree(@PathVariable(required = false) Long id) {
-        List<UmpTreeModel> list = umpMenuService.queryTree(id);
+    @GetMapping("/queryTree/{menuType}/{menuId}")
+    public ResultModel queryTree(@PathVariable(required = false) Integer menuType,@PathVariable Long menuId) {
+        List<UmpTreeModel> list = umpMenuService.queryTree(menuId,menuType);
         return ResultUtil.ok(list);
     }
 
-    @GetMapping("/queryTree")
-    public ResultModel queryTree() {
-        List<UmpTreeModel> list = umpMenuService.queryTree(null);
+    @GetMapping("/queryTree/{menuType}")
+    public ResultModel queryTree(@PathVariable(required = false) Integer menuType) {
+        List<UmpTreeModel> list = umpMenuService.queryTree(null,menuType);
         return ResultUtil.ok(list);
     }
 }
