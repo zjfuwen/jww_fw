@@ -24,6 +24,27 @@ layui.config({
         }
     }).resize();
 
+    var getCaptcha = function () {
+        $.ajax({
+            type: 'GET',
+            url: 'captcha',
+            success: function (data) {
+                if (data.code == 200) {
+                    $("#captchaImg").attr('src', 'data:image/jpeg;base64,' + data.data.captcha);
+                    $("#captchaId").val(data.data.captchaId);
+                } else {
+                    layer.alert(data.message);
+                }
+            }
+        });
+    };
+    getCaptcha();
+
+    // 单击验证码事件
+    $("#captchaImg").click(function () {
+        getCaptcha();
+    });
+
     //表单验证
     form.verify({
         code: function (value, item) {

@@ -63,6 +63,7 @@ public class ShiroConfiguration {
         // authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问
         filterChainDefinitionMap.put("/login", "anon");
         filterChainDefinitionMap.put("/reg", "anon");
+        filterChainDefinitionMap.put("/captcha", "anon");
         /******** start swagger2不鉴权 ********/
         filterChainDefinitionMap.put("/*/api-docs*", "anon");
         filterChainDefinitionMap.put("/callback*", "anon");
