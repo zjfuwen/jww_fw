@@ -153,7 +153,7 @@ layui.config({
             return;
         }
         layer.confirm('确定删除选中的信息？', {icon: 3, title: '确认'}, function (index) {
-            var indexMsg = layer.msg('删除中，请稍候', {icon: 16, time: false, shade: 0.8});
+            var loadingIndex = base.loading(layer);
             var roleIds = [];
             for (var i = 0; i < checkStatus.data.length; i++) {
                 roleIds[i] = checkStatus.data[i].id;
@@ -163,9 +163,9 @@ layui.config({
                 url: 'role/delBatchByIds',
                 data: JSON.stringify(roleIds),
                 success: function (data) {
-                    if (data.code == 200) {
+                    if (data.code === 200) {
                         if (data.data === true) {
-                            layer.close(indexMsg);
+                            layer.close(loadingIndex);
                             layer.msg("删除成功", {icon: 1, time: 2000});
                             tableIns.reload({
                                 page: {

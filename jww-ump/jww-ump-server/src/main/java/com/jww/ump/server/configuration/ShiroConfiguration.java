@@ -64,6 +64,7 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/login", "anon");
         filterChainDefinitionMap.put("/reg", "anon");
         filterChainDefinitionMap.put("/captcha/*", "anon");
+        filterChainDefinitionMap.put("/logout", "anon");
         /******** start swagger2不鉴权 ********/
         filterChainDefinitionMap.put("/*/api-docs*", "anon");
         filterChainDefinitionMap.put("/callback*", "anon");

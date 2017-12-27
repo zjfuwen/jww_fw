@@ -15,6 +15,8 @@ import com.xiaoleilu.hutool.captcha.CircleCaptcha;
 import com.xiaoleilu.hutool.lang.Base64;
 import com.xiaoleilu.hutool.util.RandomUtil;
 import com.xiaoleilu.hutool.util.StrUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -35,6 +37,7 @@ import java.util.Map;
  **/
 @Slf4j
 @RestController
+@Api(value = "登录接口", description = "登录接口")
 public class LoginController extends BaseController {
 
     @Autowired
@@ -48,6 +51,7 @@ public class LoginController extends BaseController {
      * @author wanyong
      * @date 2017-12-27 21:10
      */
+    @ApiOperation(value = "获取验证码")
     @GetMapping("/captcha/{captchaId}")
     public ResultModel queryCaptcha(@PathVariable(value = "captchaId", required = false) String captchaId) throws Exception {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -72,6 +76,7 @@ public class LoginController extends BaseController {
      * @author wanyong
      * @date 2017-11-30 16:14
      */
+    @ApiOperation(value = "用户登录")
     @PostMapping("/login")
     public ResultModel login(@Valid @RequestBody LoginModel loginModel) {
         // 校验验证码
@@ -109,6 +114,13 @@ public class LoginController extends BaseController {
         umpUserModel.setUserName(crrentUser.getUserName());
         umpUserModel.setAvatar(crrentUser.getAvatar());
         return ResultUtil.ok(umpUserModel);
+    }
+
+    @ApiOperation(value = "用户登出")
+    @PostMapping("/logout")
+    public ResultModel logout() {
+        SecurityUtils.getSubject().logout();
+        return ResultUtil.ok();
     }
 
     /**
