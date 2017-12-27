@@ -11,15 +11,15 @@ layui.config({
     var tableIns = table.render({
         //设置表头
         cols: [[
-            {field: 'userName', title: '用户名'},
-            {field: 'operation', title: '用户操作'},
-            {field: 'operationType', title: '操作类型', templet: '#operationTypeTpl'},
+            {field: 'userName', title: '用户名', width: 80},
+            {field: 'operation', title: '用户操作', width: 90},
+            {field: 'operationType', title: '操作类型', templet: '#operationTypeTpl', width: 90},
             {field: 'method', title: '请求方法'},
             {field: 'params', title: '请求参数'},
-            {field: 'result', title: '结果', templet: '<div>{{d.result === 1 ? "成功" : "失败"}}</div>'},
-            {field: 'time', title: '执行时长(毫秒)'},
-            {field: 'ip', title: 'IP地址'},
-            {field: 'createTime', title: '创建时间'}
+            {field: 'result', title: '结果', templet: '<div>{{d.result === 1 ? "成功" : "失败"}}</div>', width: 60},
+            {field: 'time', title: '执行时长', width: 100},
+            {field: 'ip', title: 'IP地址', width: 120},
+            {field: 'createTime', title: '创建时间', width: 160}
         ]],
         url: 'log/queryListPage',
         method: 'POST',

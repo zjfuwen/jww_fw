@@ -26,10 +26,10 @@ import java.util.Date;
 
 
 /**
- * 系统日志，切面处理类
+ * 日志入库切面
  *
- * @author wanyong
- * @date 2017/11/16 17:04
+ * @author RickyWang
+ * @date 2017/12/27 13:56
  */
 @Slf4j
 @Aspect
