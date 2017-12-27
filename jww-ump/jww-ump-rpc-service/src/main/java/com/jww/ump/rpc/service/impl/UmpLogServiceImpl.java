@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.jww.common.core.base.BaseServiceImpl;
-import com.jww.common.core.exception.BusinessException;
 import com.jww.ump.dao.mapper.UmpLogMapper;
 import com.jww.ump.model.UmpLogModel;
 import com.jww.ump.rpc.api.UmpLogService;
@@ -12,11 +11,9 @@ import com.xiaoleilu.hutool.util.ObjectUtil;
 import com.xiaoleilu.hutool.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -60,7 +57,7 @@ public class UmpLogServiceImpl extends BaseServiceImpl<UmpLogMapper, UmpLogModel
     @Override
     public boolean delBatchByIds(Long[] ids) {
         List<UmpLogModel> list = new ArrayList<>();
-        for(Long id : ids){
+        for (Long id : ids) {
             UmpLogModel umpLogModel = new UmpLogModel();
             umpLogModel.setId(id);
             umpLogModel.setIsDel(1);
@@ -68,5 +65,4 @@ public class UmpLogServiceImpl extends BaseServiceImpl<UmpLogMapper, UmpLogModel
         }
         return super.updateBatchById(list);
     }
-
 }
