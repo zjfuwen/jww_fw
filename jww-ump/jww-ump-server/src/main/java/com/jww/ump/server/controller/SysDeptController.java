@@ -1,6 +1,7 @@
 package com.jww.ump.server.controller;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.jww.common.core.Constants;
 import com.jww.common.core.model.PageModel;
 import com.jww.common.web.BaseController;
 import com.jww.common.web.model.ResultModel;
@@ -8,6 +9,7 @@ import com.jww.common.web.util.ResultUtil;
 import com.jww.ump.model.UmpDeptModel;
 import com.jww.ump.model.UmpTreeModel;
 import com.jww.ump.rpc.api.UmpDeptService;
+import com.jww.ump.server.annotation.LogData;
 import com.xiaoleilu.hutool.lang.Assert;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -46,6 +48,7 @@ public class SysDeptController extends BaseController {
     @ApiOperation(value = "查询部门", notes = "根据部门主键ID查询部门")
     @ApiImplicitParam(name = "id", value = "部门ID", required = true, dataType = "Long")
     @GetMapping("/query/{id}")
+    @LogData(module = "部门管理", value = "部门查询", operationType = Constants.LOG_OPERATION_TYPE_QUERY)
     public ResultModel<UmpDeptModel> query(@PathVariable Long id) {
         Assert.notNull(id);
         UmpDeptModel umpDeptModel = umpDeptService.queryOne(id);
@@ -61,6 +64,7 @@ public class SysDeptController extends BaseController {
      * @date 17/12/25 21:28:13
      */
     @PostMapping("/queryListPage")
+    @LogData(module = "部门管理", value = "部门分页查询", operationType = Constants.LOG_OPERATION_TYPE_QUERY)
     public ResultModel queryListPage(@RequestBody PageModel<UmpDeptModel> pageModel) {
         pageModel = (PageModel<UmpDeptModel>) umpDeptService.queryListPage(pageModel);
         return ResultUtil.ok(pageModel);
@@ -75,6 +79,7 @@ public class SysDeptController extends BaseController {
      * @date 17/12/25 21:28:41
      */
     @PostMapping("/add")
+    @LogData(module = "部门管理", value = "部门新增", operationType = Constants.LOG_OPERATION_TYPE_INSERT)
     public ResultModel add(@Valid @RequestBody UmpDeptModel umpDeptModel) {
         log.info("DeptController->add: UmpDeptModel={}", umpDeptModel);
         if (umpDeptModel != null) {
@@ -100,6 +105,7 @@ public class SysDeptController extends BaseController {
      * @date 17/12/25 21:29:09
      */
     @PutMapping("/modify")
+    @LogData(module = "部门管理", value = "部门修改", operationType = Constants.LOG_OPERATION_TYPE_MODIFY)
     public ResultModel modify(@RequestBody UmpDeptModel umpDeptModel) {
         log.info("DeptController->mod: UmpDeptModel={}", umpDeptModel);
         umpDeptModel.setUpdateBy(this.getCurrUser());
@@ -117,6 +123,7 @@ public class SysDeptController extends BaseController {
      * @date 17/12/25 21:29:23
      */
     @DeleteMapping("/delBatchByIds")
+    @LogData(module = "部门管理", value = "部门批量删除", operationType = Constants.LOG_OPERATION_TYPE_DELETE)
     public ResultModel delBatchByIds(@RequestBody Long[] ids) {
         Assert.notNull(ids);
         return ResultUtil.ok(umpDeptService.delBatchByIds(ids));
@@ -131,6 +138,7 @@ public class SysDeptController extends BaseController {
      * @date 17/12/25 21:29:52
      */
     @GetMapping("/queryTree/{id}")
+    @LogData(module = "部门管理", value = "部门树查询", operationType = Constants.LOG_OPERATION_TYPE_QUERY)
     public ResultModel queryTree(@PathVariable(value = "id", required = false) Long id) {
         List<UmpTreeModel> list = umpDeptService.queryTree(id);
         return ResultUtil.ok(list);
@@ -145,6 +153,7 @@ public class SysDeptController extends BaseController {
      * @date 17/12/25 21:30:28
      */
     @GetMapping("/queryTree")
+    @LogData(module = "部门管理", value = "部门树查询", operationType = Constants.LOG_OPERATION_TYPE_QUERY)
     public ResultModel queryTree() {
         List<UmpTreeModel> list = umpDeptService.queryTree();
         return ResultUtil.ok(list);
@@ -159,6 +168,7 @@ public class SysDeptController extends BaseController {
      * @date 17/12/25 21:30:45
      */
     @DeleteMapping("/delDept")
+    @LogData(module = "部门管理", value = "部门删除", operationType = Constants.LOG_OPERATION_TYPE_DELETE)
     public ResultModel delDept(@RequestBody Long id) {
         Assert.notNull(id);
         return ResultUtil.ok(umpDeptService.delDept(id));

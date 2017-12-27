@@ -11,11 +11,12 @@ layui.config({
     var tableIns = table.render({
         //设置表头
         cols: [[
-            {type: 'checkbox', fixed: 'left'},
             {field: 'userName', title: '用户名'},
             {field: 'operation', title: '用户操作'},
+            {field: 'operationType', title: '操作类型', templet: '#operationTypeTpl'},
             {field: 'method', title: '请求方法'},
             {field: 'params', title: '请求参数'},
+            {field: 'result', title: '结果', templet: '<div>{{d.result === 1 ? "成功" : "失败"}}</div>'},
             {field: 'time', title: '执行时长(毫秒)'},
             {field: 'ip', title: 'IP地址'},
             {field: 'createTime', title: '创建时间'}
@@ -46,49 +47,12 @@ layui.config({
             where: { //设定异步数据接口的额外参数，任意设
                 condition: {
                     user_name: searchKey,
-                    operation: searchKey
+                    operation_: searchKey
                 }
             },
             page: {
                 curr: 1 //重新从第 1 页开始
             }
-        });
-    });
-
-    //批量删除
-    $(".batchDel").click(function () {
-        var checkStatus = table.checkStatus('logTable');
-        if (checkStatus.data.length === 0) {
-            layer.msg("请选择要删除的用户", {icon: 0, time: 2000});
-            return;
-        }
-        layer.confirm('确定删除选中的信息？', {icon: 3, title: '确认'}, function (index) {
-            var indexMsg = layer.msg('删除中，请稍候', {icon: 16, time: false, shade: 0.8});
-            var logIds = [];
-            for (var i = 0; i < checkStatus.data.length; i++) {
-                logIds[i] = checkStatus.data[i].id;
-            }
-            $.ajax({
-                type: 'DELETE',
-                url: 'log/delBatchByIds',
-                data: JSON.stringify(logIds),
-                success: function (data) {
-                    if (data.code == 200) {
-                        if (data.data === true) {
-                            layer.close(indexMsg);
-                            layer.msg("删除成功", {icon: 1, time: 2000});
-                            tableIns.reload({
-                                page: {
-                                    curr: 1 //重新从第 1 页开始
-                                }
-                            });
-                        }
-                    } else {
-                        // alert(JSON.stringify(data));
-                        layer.msg(data.message, {icon: 2});
-                    }
-                }
-            });
         });
     });
 

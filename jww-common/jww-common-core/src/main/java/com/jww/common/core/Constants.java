@@ -40,6 +40,26 @@ public final class Constants {
      * TOKEN缓存命名空间
      */
     public static final String TOKEN_CACHE_NAMESPACE = CACHE_NAMESPACE + "token:";
+    /**
+     * 日志操作类型-新增
+     */
+    public static final int LOG_OPERATION_TYPE_INSERT = 1;
+    /**
+     * 日志操作类型-修改
+     */
+    public static final int LOG_OPERATION_TYPE_MODIFY = 2;
+    /**
+     * 日志操作类型-删除
+     */
+    public static final int LOG_OPERATION_TYPE_DELETE = 3;
+    /**
+     * 日志操作类型-查询
+     */
+    public static final int LOG_OPERATION_TYPE_QUERY = 0;
+    /**
+     * 日志操作类型-其他
+     */
+    public static final int LOG_OPERATION_TYPE_UNKONW = 9;
 
     /**
      * 缓存键值
@@ -121,6 +141,24 @@ public final class Constants {
                 }
             }
             return defaultDataSource;
+        }
+
+    }
+
+    public enum OperationType {
+        QUERY(0),
+        ADD(1),
+        MODIFY(2),
+        DELETE(3);
+
+        private final int value;
+
+        OperationType(int value) {
+            this.value = value;
+        }
+
+        public int value() {
+            return this.value;
         }
 
     }

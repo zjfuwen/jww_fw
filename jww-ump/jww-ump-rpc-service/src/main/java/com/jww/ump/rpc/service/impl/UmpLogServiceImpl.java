@@ -12,9 +12,11 @@ import com.xiaoleilu.hutool.util.ObjectUtil;
 import com.xiaoleilu.hutool.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -41,7 +43,6 @@ public class UmpLogServiceImpl extends BaseServiceImpl<UmpLogMapper, UmpLogModel
         UmpLogModel umpLogModel = new UmpLogModel();
         umpLogModel.setIsDel(0);
         EntityWrapper<UmpLogModel> entityWrapper = new EntityWrapper<>(umpLogModel);
-        entityWrapper.setSqlSelect("id_","user_name","operation","method","params","time","ip","create_time");
         if (ObjectUtil.isNotNull(page.getCondition())) {
             StringBuilder conditionSql = new StringBuilder();
             Map<String, Object> paramMap = page.getCondition();
@@ -67,4 +68,5 @@ public class UmpLogServiceImpl extends BaseServiceImpl<UmpLogMapper, UmpLogModel
         }
         return super.updateBatchById(list);
     }
+
 }

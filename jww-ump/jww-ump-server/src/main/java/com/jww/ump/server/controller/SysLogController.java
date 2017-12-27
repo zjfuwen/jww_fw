@@ -1,17 +1,18 @@
 package com.jww.ump.server.controller;
 
 
+import com.jww.common.core.Constants;
 import com.jww.common.core.model.PageModel;
 import com.jww.common.web.BaseController;
 import com.jww.common.web.model.ResultModel;
 import com.jww.common.web.util.ResultUtil;
 import com.jww.ump.model.UmpLogModel;
 import com.jww.ump.rpc.api.UmpLogService;
+import com.jww.ump.server.annotation.LogData;
 import com.xiaoleilu.hutool.lang.Assert;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -39,6 +40,7 @@ public class SysLogController extends BaseController {
      * @date 17/12/26 12:28:13
      */
     @PostMapping("/queryListPage")
+    @LogData(module = "日志管理", value = "日志查询", operationType = Constants.LOG_OPERATION_TYPE_QUERY)
     public ResultModel queryListPage(@RequestBody PageModel<UmpLogModel> pageModel) {
         pageModel = (PageModel<UmpLogModel>) umpLogService.queryListPage(pageModel);
         return ResultUtil.ok(pageModel);

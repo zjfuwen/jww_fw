@@ -29,5 +29,22 @@
 <div id="pageDiv"></div>
 <script type="text/javascript" src="../../layui/layui.js"></script>
 <script type="text/javascript" src="logList.js"></script>
+<script type="text/html" id="operationTypeTpl">
+    {{#  if(d.operationType === 0){ }}
+    <div>{{"查询"}}</div>
+    {{#  } }}
+    {{#  if(d.operationType === 1){ }}
+    <div>{{"新增"}}</div>
+    {{#  } }}
+    {{#  if(d.operationType === 2){ }}
+    <div>{{"修改"}}</div>
+    {{#  } }}
+    {{#  if(d.operationType === 3){ }}
+    <div>{{"删除"}}</div>
+    {{#  } }}
+    {{#  if(d.operationType === 9){ }}
+    <div>{{"其他"}}</div>
+    {{#  } }}
+</script>
 </body>
 </html>
