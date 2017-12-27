@@ -27,7 +27,7 @@ layui.config({
     var getCaptcha = function () {
         $.ajax({
             type: 'GET',
-            url: 'captcha',
+            url: 'captcha/' + $("#captchaId").val(),
             success: function (data) {
                 if (data.code == 200) {
                     $("#captchaImg").attr('src', 'data:image/jpeg;base64,' + data.data.captcha);
@@ -52,7 +52,7 @@ layui.config({
                 return "验证码填写有误";
             }
         }
-    })
+    });
 
     //登录按钮事件
     form.on("submit(login)", function (data) {
@@ -68,7 +68,7 @@ layui.config({
                     });
                     window.location.href = "../../index.html";
                 } else {
-                    layer.alert(data.message);
+                    layer.msg(data.message, {icon: 2});
                 }
             }
         });

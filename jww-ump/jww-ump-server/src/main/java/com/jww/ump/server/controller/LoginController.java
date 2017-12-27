@@ -40,18 +40,26 @@ public class LoginController extends BaseController {
     @Autowired
     private UmpUserService umpUserService;
 
-    @GetMapping("/captcha")
-    public ResultModel queryCaptcha() throws Exception {
+    /**
+     * 获取验证码
+     *
+     * @param captchaId 验证码ID
+     * @return ResultModel
+     * @author wanyong
+     * @date 2017-12-27 21:10
+     */
+    @GetMapping("/captcha/{captchaId}")
+    public ResultModel queryCaptcha(@PathVariable(value = "captchaId", required = false) String captchaId) throws Exception {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         CircleCaptcha captcha = CaptchaUtil.createCircleCaptcha(116, 36, 4, 20);
         captcha.createCode();
-        String captchaKey = RandomUtil.randomUUID();
-        System.out.println("captchaKey:" + captchaKey);
-        System.out.println("captcha.getCode():" + captcha.getCode());
-        CacheUtil.getCache().set(Constants.CAPTCHA_CACHE_NAMESPACE + captchaKey, captcha.getCode(), 120);
+        if (StrUtil.isBlank(captchaId) || !CacheUtil.getCache().exists(Constants.CAPTCHA_CACHE_NAMESPACE + captchaId)) {
+            captchaId = RandomUtil.randomUUID();
+        }
+        CacheUtil.getCache().set(Constants.CAPTCHA_CACHE_NAMESPACE + captchaId, captcha.getCode(), 120);
         captcha.write(outputStream);
         Map<String, String> map = new HashMap(2);
-        map.put("captchaId", captchaKey);
+        map.put("captchaId", captchaId);
         map.put("captcha", Base64.encode(outputStream.toByteArray()));
         return ResultUtil.ok(map);
     }
