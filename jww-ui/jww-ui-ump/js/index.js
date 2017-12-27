@@ -308,9 +308,9 @@ layui.config({
             $(".clildFrame .layui-tab-item.layui-show").find("iframe")[0].contentWindow.location.reload(true);
             setTimeout(function () {
                 $(".refresh").addClass("refreshThis");
-            }, 2000)
+            }, 5000)
         } else {
-            layer.msg("您点击的速度超过了服务器的响应速度，还是等两秒再刷新吧！");
+            layer.msg("您刷新速度太快，稍等五秒再刷新吧！");
         }
     })
 
