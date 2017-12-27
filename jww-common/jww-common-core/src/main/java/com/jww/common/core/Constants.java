@@ -71,6 +71,9 @@ public final class Constants {
      */
     public static final Map<Class<?>, String> CACHE_KEY_MAP = new HashMap<>(5);
 
+    /**
+     * 返回码枚举
+     */
     public enum ResultCodeEnum {
         /**
          * 成功
@@ -107,6 +110,9 @@ public final class Constants {
 
     }
 
+    /**
+     * 多数据源枚举
+     */
     public enum DataSourceEnum {
         // 主库
         MASTER("masterDataSource", true),
@@ -158,7 +164,13 @@ public final class Constants {
 
     }
 
-    public enum OperationType {
+    /**
+     * 日志操作类型枚举
+     */
+    public enum LogOperationTypeEnum {
+        /**
+         * 查询
+         */
         QUERY(0),
         ADD(1),
         MODIFY(2),
@@ -166,7 +178,7 @@ public final class Constants {
 
         private final int value;
 
-        OperationType(int value) {
+        LogOperationTypeEnum(int value) {
             this.value = value;
         }
 
