@@ -13,7 +13,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
 
 
 /**
@@ -72,7 +71,7 @@ public class WebLogAspect {
         logbf.append(",HTTP_METHOD:").append(request.getMethod());
         logbf.append(",IP:").append(HttpUtil.getClientIP(request));
         logbf.append(",CLASS_METHOD:").append(pjp.getSignature().getDeclaringTypeName() + "." + pjp.getSignature().getName());
-        logbf.append(",ARGS:").append(Arrays.toString(pjp.getArgs()));
+        logbf.append(",ARGS:").append(JSON.toJSONString(pjp.getArgs()));
         return logbf;
     }
 

@@ -53,6 +53,10 @@ public final class Constants {
      */
     public static final int LOG_OPERATION_TYPE_DELETE = 3;
     /**
+     * 日志操作类型-登录
+     */
+    public static final int LOG_OPERATION_TYPE_LOGIN = 4;
+    /**
      * 日志操作类型-查询
      */
     public static final int LOG_OPERATION_TYPE_QUERY = 0;

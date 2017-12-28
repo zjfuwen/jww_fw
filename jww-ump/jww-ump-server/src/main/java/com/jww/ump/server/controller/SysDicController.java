@@ -1,5 +1,6 @@
 package com.jww.ump.server.controller;
 
+import com.jww.common.core.Constants;
 import com.jww.common.core.exception.BusinessException;
 import com.jww.common.core.model.PageModel;
 import com.jww.common.web.BaseController;
@@ -7,6 +8,7 @@ import com.jww.common.web.model.ResultModel;
 import com.jww.common.web.util.ResultUtil;
 import com.jww.ump.model.UmpDicModel;
 import com.jww.ump.rpc.api.UmpDicService;
+import com.jww.ump.server.annotation.LogData;
 import com.xiaoleilu.hutool.lang.Assert;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -45,6 +47,7 @@ public class SysDicController extends BaseController {
     @ApiOperation(value = "查询字典", notes = "根据字典主键ID查询字典")
     @ApiImplicitParam(name = "id", value = "角色ID", required = true, dataType = "Long")
     @PostMapping("/query")
+    @LogData(module = "字典管理", value = "查询字典", operationType = Constants.LOG_OPERATION_TYPE_QUERY)
     public ResultModel query(@RequestBody Long dicId) {
         Assert.notNull(dicId);
         UmpDicModel umpDicModel = umpDicService.queryById(dicId);
@@ -52,12 +55,14 @@ public class SysDicController extends BaseController {
     }
 
     @PostMapping("/listPage")
+    @LogData(module = "字典管理", value = "分页查询字典", operationType = Constants.LOG_OPERATION_TYPE_QUERY)
     public ResultModel queryListPage(@RequestBody PageModel pageModel) {
         pageModel = (PageModel) umpDicService.queryListPage(pageModel);
         return ResultUtil.ok(pageModel);
     }
 
     @PostMapping("/add")
+    @LogData(module = "字典管理", value = "字典新增", operationType = Constants.LOG_OPERATION_TYPE_INSERT)
     public ResultModel add(@Valid @RequestBody UmpDicModel umpDicModel) {
         umpDicModel.setCreateBy(getCurrUser());
         umpDicModel.setUpdateBy(getCurrUser());
@@ -65,6 +70,7 @@ public class SysDicController extends BaseController {
     }
 
     @PostMapping("/modify")
+    @LogData(module = "字典管理", value = "字典修改", operationType = Constants.LOG_OPERATION_TYPE_MODIFY)
     public ResultModel modify(@Valid @RequestBody UmpDicModel umpDicModel) {
         umpDicModel.setUpdateBy(getCurrUser());
         umpDicService.modifyById(umpDicModel);
@@ -80,6 +86,7 @@ public class SysDicController extends BaseController {
      * @date 2017-12-23 02:46
      */
     @PostMapping("/delBatchByIds")
+    @LogData(module = "字典管理", value = "字典批量删除", operationType = Constants.LOG_OPERATION_TYPE_DELETE)
     public ResultModel delBatchByIds(@RequestBody List<Long> ids) {
         if (ids.size() == 0) {
             throw new BusinessException("字典ID集合不能为空");

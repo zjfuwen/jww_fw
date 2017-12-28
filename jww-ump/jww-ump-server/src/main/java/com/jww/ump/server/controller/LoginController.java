@@ -10,6 +10,7 @@ import com.jww.common.web.model.ResultModel;
 import com.jww.common.web.util.ResultUtil;
 import com.jww.ump.model.UmpUserModel;
 import com.jww.ump.rpc.api.UmpUserService;
+import com.jww.ump.server.annotation.LogData;
 import com.xiaoleilu.hutool.captcha.CaptchaUtil;
 import com.xiaoleilu.hutool.captcha.CircleCaptcha;
 import com.xiaoleilu.hutool.lang.Base64;
@@ -78,13 +79,14 @@ public class LoginController extends BaseController {
      */
     @ApiOperation(value = "用户登录")
     @PostMapping("/login")
+    @LogData(module = "登录接口", value = "用户登录", operationType = Constants.LOG_OPERATION_TYPE_LOGIN)
     public ResultModel login(@Valid @RequestBody LoginModel loginModel) {
         // 校验验证码
         String redisCaptchaValue = (String) CacheUtil.getCache().get(Constants.CAPTCHA_CACHE_NAMESPACE + loginModel.getCaptchaId());
         if (StrUtil.isBlank(redisCaptchaValue)) {
             throw new LoginException(Constants.ResultCodeEnum.LOGIN_FAIL_CAPTCHA_ERROR.getMessage());
         }
-        if (!redisCaptchaValue.equals(loginModel.getCaptchaValue())) {
+        if (!redisCaptchaValue.equalsIgnoreCase(loginModel.getCaptchaValue())) {
             throw new LoginException(Constants.ResultCodeEnum.LOGIN_FAIL_CAPTCHA_ERROR.getMessage());
         }
         UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(loginModel.getAccount(), SecurityUtil.encryptPassword(loginModel.getPassword()));
@@ -118,6 +120,7 @@ public class LoginController extends BaseController {
 
     @ApiOperation(value = "用户登出")
     @PostMapping("/logout")
+    @LogData(module = "登录接口", value = "用户登出", operationType = Constants.LOG_OPERATION_TYPE_LOGIN)
     public ResultModel logout() {
         SecurityUtils.getSubject().logout();
         return ResultUtil.ok();

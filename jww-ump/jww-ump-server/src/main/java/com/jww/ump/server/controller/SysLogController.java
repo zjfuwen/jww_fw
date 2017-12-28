@@ -45,19 +45,5 @@ public class SysLogController extends BaseController {
         pageModel = (PageModel<UmpLogModel>) umpLogService.queryListPage(pageModel);
         return ResultUtil.ok(pageModel);
     }
-
-    /**
-     * 批量删除日志方法
-     *
-     * @param ids
-     * @return com.jww.common.web.model.ResultModel
-     * @author RickyWang
-     * @date 17/12/26 11:29:23
-     */
-    @DeleteMapping("/delBatchByIds")
-    public ResultModel delBatchByIds(@RequestBody Long[] ids) {
-        Assert.notNull(ids);
-        return ResultUtil.ok(umpLogService.delBatchByIds(ids));
-    }
 }
 
