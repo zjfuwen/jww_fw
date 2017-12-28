@@ -60,8 +60,7 @@ public class LogAspect {
             result = pjp.proceed();
         } finally {
             //查询类型不添加日志
-            if(!isQueryType){
-                logAfter(result);
+            if(!isQueryType && logAfter(result)){
                 logService.add(umpLogModel);
             }
         }
@@ -105,10 +104,6 @@ public class LogAspect {
         umpLogModel.setCreateTime(new Date());
         umpLogModel.setCreateBy(0L);
         umpLogModel.setUpdateBy(0L);
-        UmpUserModel crrentUser = (UmpUserModel) SecurityUtils.getSubject().getPrincipal();
-        if(crrentUser!=null){
-            umpLogModel.setUserName(crrentUser.getUserName());
-        }
         //方法名称
         umpLogModel.setOperation(operation);
         //操作类型
@@ -117,8 +112,16 @@ public class LogAspect {
     }
 
 
-    private void logAfter(Object result) {
+    private boolean logAfter(Object result) {
+        boolean hasLogin = false;
         ResultModel response = JSON.parseObject(JSON.toJSONString(result), ResultModel.class);
+        UmpUserModel crrentUser = (UmpUserModel) SecurityUtils.getSubject().getPrincipal();
+        if(crrentUser!=null){
+            umpLogModel.setUserName(crrentUser.getUserName());
+            hasLogin = true;
+        }else{
+            return hasLogin;
+        }
         //返回结果
         if(response!=null && response.code == Constants.ResultCodeEnum.SUCCESS.value()){
             umpLogModel.setResult(1);
@@ -128,5 +131,6 @@ public class LogAspect {
         //执行时长(毫秒)
         Long spendTime = System.currentTimeMillis() - startTime;
         umpLogModel.setTime(spendTime);
+        return hasLogin;
     }
 }
