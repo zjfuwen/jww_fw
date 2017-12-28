@@ -6,8 +6,7 @@ import com.jww.common.web.model.ResultModel;
 import com.jww.ump.model.UmpLogModel;
 import com.jww.ump.model.UmpUserModel;
 import com.jww.ump.rpc.api.UmpLogService;
-import com.jww.ump.server.annotation.LogData;
-import com.xiaoleilu.hutool.date.DateUtil;
+import com.jww.ump.server.annotation.SysLogOpt;
 import com.xiaoleilu.hutool.http.HttpUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
@@ -45,7 +44,9 @@ public class LogAspect {
 
     private UmpLogModel umpLogModel = new UmpLogModel();
 
-    @Pointcut("execution(* *..controller..*.*(..)) && @annotation(com.jww.ump.server.annotation.LogData)")
+    UmpUserModel crrentUser = null;
+
+    @Pointcut("execution(* *..controller..*.*(..)) && @annotation(com.jww.ump.server.annotation.SysLogOpt)")
     public void webLogPointCut() {
 
     }
@@ -69,6 +70,7 @@ public class LogAspect {
 
 
     private boolean logPre(ProceedingJoinPoint pjp) throws Exception{
+        crrentUser = (UmpUserModel) SecurityUtils.getSubject().getPrincipal();
         boolean isQueryType = false;
         //操作类型
         Integer operationType = null;
@@ -79,15 +81,15 @@ public class LogAspect {
                 Class[] clazzs = method.getParameterTypes();
                 if (clazzs.length == pjp.getArgs().length) {
                     //方法名称
-                    operation = method.getAnnotation(LogData.class).value();
+                    operation = method.getAnnotation(SysLogOpt.class).value();
                     //操作类型
-                    operationType = method.getAnnotation(LogData.class).operationType();
+                    operationType = method.getAnnotation(SysLogOpt.class).operationType().value();
                     break;
                 }
             }
         }
         //查询类型不添加日志
-        if(operationType==Constants.LOG_OPERATION_TYPE_UNKONW||operationType==Constants.LOG_OPERATION_TYPE_QUERY){
+        if(operationType==Constants.LogOptEnum.UNKNOW.value()||operationType==Constants.LogOptEnum.QUERY.value()){
             return true;
         }
         //获取请求对象
@@ -114,8 +116,13 @@ public class LogAspect {
 
     private boolean logAfter(Object result) {
         boolean hasLogin = false;
-        ResultModel response = JSON.parseObject(JSON.toJSONString(result), ResultModel.class);
-        UmpUserModel crrentUser = (UmpUserModel) SecurityUtils.getSubject().getPrincipal();
+        ResultModel response = null;
+        if(result!=null){
+            response = (ResultModel)result;
+        }
+        if(crrentUser==null){
+            crrentUser = (UmpUserModel) SecurityUtils.getSubject().getPrincipal();
+        }
         if(crrentUser!=null){
             umpLogModel.setUserName(crrentUser.getUserName());
             hasLogin = true;

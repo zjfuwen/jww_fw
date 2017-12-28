@@ -9,7 +9,7 @@ import com.jww.common.web.util.ResultUtil;
 import com.jww.ump.model.UmpMenuModel;
 import com.jww.ump.model.UmpTreeModel;
 import com.jww.ump.rpc.api.UmpMenuService;
-import com.jww.ump.server.annotation.LogData;
+import com.jww.ump.server.annotation.SysLogOpt;
 import com.xiaoleilu.hutool.lang.Assert;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -86,7 +86,7 @@ public class SysMenuController extends BaseController {
      */
     @DeleteMapping("/delete")
     @RequiresPermissions("sys:menu:delete")
-    @LogData(module = "菜单管理", value = "菜单删除", operationType = Constants.LOG_OPERATION_TYPE_DELETE)
+    @SysLogOpt(module = "菜单管理", value = "菜单删除", operationType = Constants.LogOptEnum.DELETE)
     public ResultModel delete(@RequestBody Long id) {
         return ResultUtil.ok(umpMenuService.delete(id));
     }
@@ -101,7 +101,7 @@ public class SysMenuController extends BaseController {
      */
     @PostMapping("/deleteBatchIds")
     @RequiresPermissions("sys:menu:delete")
-    @LogData(module = "菜单管理", value = "菜单批量删除", operationType = Constants.LOG_OPERATION_TYPE_DELETE)
+    @SysLogOpt(module = "菜单管理", value = "菜单批量删除", operationType = Constants.LogOptEnum.DELETE)
     public ResultModel deleteBatchIds(@RequestBody Long[] ids) {
         Assert.notNull(ids);
         return ResultUtil.ok(umpMenuService.deleteBatch(ids));
@@ -125,7 +125,7 @@ public class SysMenuController extends BaseController {
      */
     @PostMapping("/modify")
     @RequiresPermissions("sys:menu:update")
-    @LogData(module = "菜单管理", value = "菜单修改", operationType = Constants.LOG_OPERATION_TYPE_MODIFY)
+    @SysLogOpt(module = "菜单管理", value = "菜单修改", operationType = Constants.LogOptEnum.MODIFY)
     public ResultModel modify(@RequestBody UmpMenuModel umpMenuModel) {
         umpMenuModel.setUpdateBy(this.getCurrUser());
         umpMenuModel.setUpdateTime(new Date());
@@ -143,7 +143,7 @@ public class SysMenuController extends BaseController {
      */
     @PostMapping("/add")
     @RequiresPermissions("sys:menu:add")
-    @LogData(module = "菜单管理", value = "菜单新增", operationType = Constants.LOG_OPERATION_TYPE_INSERT)
+    @SysLogOpt(module = "菜单管理", value = "菜单新增", operationType = Constants.LogOptEnum.ADD)
     public ResultModel add(@Valid @RequestBody UmpMenuModel umpMenuModel) {
         if (umpMenuModel != null) {
             Date now = new Date();

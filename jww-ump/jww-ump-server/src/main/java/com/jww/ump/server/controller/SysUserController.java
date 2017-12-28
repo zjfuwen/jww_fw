@@ -11,7 +11,7 @@ import com.jww.ump.model.UmpRoleModel;
 import com.jww.ump.model.UmpUserModel;
 import com.jww.ump.model.UmpUserRoleModel;
 import com.jww.ump.rpc.api.UmpUserService;
-import com.jww.ump.server.annotation.LogData;
+import com.jww.ump.server.annotation.SysLogOpt;
 import com.xiaoleilu.hutool.lang.Assert;
 import com.xiaoleilu.hutool.util.ObjectUtil;
 import io.swagger.annotations.Api;
@@ -51,7 +51,6 @@ public class SysUserController extends BaseController {
     @ApiOperation(value = "查询用户", notes = "根据用户主键ID查询用户")
     @ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "Long")
     @GetMapping("/query/{id}")
-    @LogData(module = "用户管理", value = "用户查询", operationType = Constants.LOG_OPERATION_TYPE_QUERY)
     public ResultModel<UmpUserModel> query(@PathVariable Long id) {
         Assert.notNull(id);
         UmpUserModel umpUserModel = umpUserService.queryOne(id);
@@ -67,7 +66,6 @@ public class SysUserController extends BaseController {
      * @date 2017/12/2 14:31
      */
     @PostMapping("/listPage")
-    @LogData(module = "用户管理", value = "用户分页查询", operationType = Constants.LOG_OPERATION_TYPE_QUERY)
     public ResultModel queryListPage(@RequestBody PageModel pageModel) {
         pageModel = (PageModel<UmpUserModel>) umpUserService.queryListPage(pageModel);
         return ResultUtil.ok(pageModel);
@@ -82,7 +80,7 @@ public class SysUserController extends BaseController {
      * @date 2017-12-03 10:18
      */
     @PostMapping("/add")
-    @LogData(module = "用户管理", value = "用户新增", operationType = Constants.LOG_OPERATION_TYPE_INSERT)
+    @SysLogOpt(module = "用户管理", value = "用户新增", operationType = Constants.LogOptEnum.ADD)
     public ResultModel add(@Valid @RequestBody UmpUserModel umpUserModel) {
         UmpUserModel existUmpUserModel = umpUserService.queryByAccount(umpUserModel.getAccount());
         if (ObjectUtil.isNotNull(existUmpUserModel)) {
@@ -97,7 +95,7 @@ public class SysUserController extends BaseController {
 
 
     @PostMapping("/delBatchByIds")
-    @LogData(module = "用户管理", value = "用户批量删除", operationType = Constants.LOG_OPERATION_TYPE_DELETE)
+    @SysLogOpt(module = "用户管理", value = "用户批量删除", operationType = Constants.LogOptEnum.DELETE)
     public ResultModel delBatchByIds(@RequestBody List<Long> ids) {
         if (ids.size() == 0) {
             throw new BusinessException("用户ID集合不能为空");
@@ -106,7 +104,7 @@ public class SysUserController extends BaseController {
     }
 
     @PostMapping("/modify")
-    @LogData(module = "用户管理", value = "用户修改", operationType = Constants.LOG_OPERATION_TYPE_MODIFY)
+    @SysLogOpt(module = "用户管理", value = "用户修改", operationType = Constants.LogOptEnum.MODIFY)
     public ResultModel modify(@RequestBody UmpUserModel umpUserModel) {
         umpUserModel.setCreateBy(this.getCurrUser());
         umpUserModel.setUpdateTime(new Date());
@@ -129,7 +127,6 @@ public class SysUserController extends BaseController {
      * @date 17/12/25 21:26:57
      */
     @GetMapping("/queryUserRoles/{userId}")
-    @LogData(module = "用户管理", value = "用户角色关系查询", operationType = Constants.LOG_OPERATION_TYPE_QUERY)
     public ResultModel queryUserRoles(@PathVariable Long userId) {
         Assert.notNull(userId);
         List<UmpUserRoleModel> list = umpUserService.queryUserRoles(userId);
