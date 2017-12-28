@@ -56,7 +56,7 @@ public class LoginController extends BaseController {
     @GetMapping("/captcha/{captchaId}")
     public ResultModel queryCaptcha(@PathVariable(value = "captchaId", required = false) String captchaId) throws Exception {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        CircleCaptcha captcha = CaptchaUtil.createCircleCaptcha(116, 36, 4, 20);
+        CircleCaptcha captcha = CaptchaUtil.createCircleCaptcha(116, 37, 4, 15);
         captcha.createCode();
         if (StrUtil.isBlank(captchaId) || !CacheUtil.getCache().exists(Constants.CAPTCHA_CACHE_NAMESPACE + captchaId)) {
             captchaId = RandomUtil.randomUUID();
