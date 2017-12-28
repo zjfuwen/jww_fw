@@ -1,5 +1,7 @@
 package com.jww.ump.server.annotation;
 
+import com.jww.common.core.Constants;
+
 import java.lang.annotation.*;
 
 /**
@@ -11,9 +13,9 @@ import java.lang.annotation.*;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface LogData {
+public @interface SysLogOpt {
     String value();
     String module()  default "";  //模块名称 系统管理-用户管理－列表页面
     String description()  default "";  //描述
-    int operationType() default 9;//操作类型
+    Constants.LogOptEnum operationType() default Constants.LogOptEnum.UNKNOW;//操作类型
 }

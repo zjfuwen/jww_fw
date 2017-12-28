@@ -8,9 +8,8 @@ import com.jww.common.web.model.ResultModel;
 import com.jww.common.web.util.ResultUtil;
 import com.jww.ump.model.UmpParamModel;
 import com.jww.ump.rpc.api.UmpParamService;
-import com.jww.ump.server.annotation.LogData;
+import com.jww.ump.server.annotation.SysLogOpt;
 import com.xiaoleilu.hutool.lang.Assert;
-import com.xiaoleilu.hutool.util.ArrayUtil;
 import com.xiaoleilu.hutool.util.CollectionUtil;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -46,7 +45,6 @@ public class SysParamController extends BaseController {
     @ApiOperation(value = "查询参数", notes = "根据参数主键ID查询参数")
     @ApiImplicitParam(name = "id", value = "参数主键ID", required = true, dataType = "Long")
     @PostMapping("/query")
-    @LogData(module = "参数管理", value = "参数查询", operationType = Constants.LOG_OPERATION_TYPE_QUERY)
     public ResultModel query(@RequestBody Long paramId) {
         Assert.notNull(paramId);
         UmpParamModel umpParamModel = umpParamService.queryById(paramId);
@@ -54,14 +52,13 @@ public class SysParamController extends BaseController {
     }
 
     @PostMapping("/listPage")
-    @LogData(module = "参数管理", value = "参数分页查询", operationType = Constants.LOG_OPERATION_TYPE_QUERY)
     public ResultModel queryListPage(@RequestBody PageModel pageModel) {
         pageModel = (PageModel) umpParamService.queryListPage(pageModel);
         return ResultUtil.ok(pageModel);
     }
 
     @PostMapping("/add")
-    @LogData(module = "参数管理", value = "参数新增", operationType = Constants.LOG_OPERATION_TYPE_INSERT)
+    @SysLogOpt(module = "参数管理", value = "参数新增", operationType = Constants.LogOptEnum.ADD)
     public ResultModel add(@Valid @RequestBody UmpParamModel umpParamModel) {
         umpParamModel.setCreateBy(getCurrUser());
         umpParamModel.setUpdateBy(getCurrUser());
@@ -69,7 +66,7 @@ public class SysParamController extends BaseController {
     }
 
     @PostMapping("/modify")
-    @LogData(module = "参数管理", value = "参数修改", operationType = Constants.LOG_OPERATION_TYPE_MODIFY)
+    @SysLogOpt(module = "参数管理", value = "参数修改", operationType = Constants.LogOptEnum.MODIFY)
     public ResultModel modify(@RequestBody UmpParamModel umpParamModel) {
         umpParamModel.setUpdateBy(getCurrUser());
         umpParamService.modifyById(umpParamModel);
@@ -85,7 +82,7 @@ public class SysParamController extends BaseController {
      * @date 2017-12-24 18:30
      */
     @DeleteMapping("/deleteBatchByIds")
-    @LogData(module = "参数管理", value = "参数批量删除", operationType = Constants.LOG_OPERATION_TYPE_DELETE)
+    @SysLogOpt(module = "参数管理", value = "参数批量删除", operationType = Constants.LogOptEnum.DELETE)
     public ResultModel deleteBatchByIds(@RequestBody List<Long> ids) {
         if (CollectionUtil.isEmpty(ids)) {
             throw new BusinessException("参数ID集合不能为空");

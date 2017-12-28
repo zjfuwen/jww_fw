@@ -10,7 +10,7 @@ import com.jww.ump.model.UmpDeptModel;
 import com.jww.ump.model.UmpRoleModel;
 import com.jww.ump.rpc.api.UmpDeptService;
 import com.jww.ump.rpc.api.UmpRoleService;
-import com.jww.ump.server.annotation.LogData;
+import com.jww.ump.server.annotation.SysLogOpt;
 import com.xiaoleilu.hutool.lang.Assert;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -52,7 +52,6 @@ public class SysRoleController extends BaseController {
     @ApiOperation(value = "查询角色", notes = "根据角色主键ID查询角色")
     @ApiImplicitParam(name = "id", value = "角色ID", required = true, dataType = "Long")
     @PostMapping("/query")
-    @LogData(module = "角色管理", value = "角色查询", operationType = Constants.LOG_OPERATION_TYPE_QUERY)
     public ResultModel<UmpRoleModel> query(@RequestBody Long roleId) {
         Assert.notNull(roleId);
         UmpRoleModel umpRoleModel = umpRoleService.queryById(roleId);
@@ -62,14 +61,13 @@ public class SysRoleController extends BaseController {
     }
 
     @PostMapping("/listPage")
-    @LogData(module = "角色管理", value = "角色分页查询", operationType = Constants.LOG_OPERATION_TYPE_QUERY)
     public ResultModel queryListPage(@RequestBody PageModel pageModel) {
         pageModel = (PageModel<UmpRoleModel>) umpRoleService.queryListPage(pageModel);
         return ResultUtil.ok(pageModel);
     }
 
     @PostMapping("/add")
-    @LogData(module = "角色管理", value = "角色新增", operationType = Constants.LOG_OPERATION_TYPE_INSERT)
+    @SysLogOpt(module = "角色管理", value = "角色新增", operationType = Constants.LogOptEnum.ADD)
     public ResultModel add(@Valid @RequestBody UmpRoleModel umpRoleModel) {
         umpRoleModel.setCreateBy(getCurrUser());
         umpRoleModel.setUpdateBy(getCurrUser());
@@ -77,7 +75,7 @@ public class SysRoleController extends BaseController {
     }
 
     @PostMapping("/modify")
-    @LogData(module = "角色管理", value = "角色修改", operationType = Constants.LOG_OPERATION_TYPE_MODIFY)
+    @SysLogOpt(module = "角色管理", value = "角色修改", operationType = Constants.LogOptEnum.MODIFY)
     public ResultModel modify(@Valid @RequestBody UmpRoleModel umpRoleModel) {
         umpRoleModel.setUpdateBy(getCurrUser());
         umpRoleService.modifyById(umpRoleModel);
@@ -93,7 +91,7 @@ public class SysRoleController extends BaseController {
      * @date 2017-12-23 02:46
      */
     @PostMapping("/delBatchByIds")
-    @LogData(module = "角色管理", value = "角色批量删除", operationType = Constants.LOG_OPERATION_TYPE_DELETE)
+    @SysLogOpt(module = "角色管理", value = "角色批量删除", operationType = Constants.LogOptEnum.DELETE)
     public ResultModel delBatchByIds(@RequestBody List<Long> ids) {
         if (ids.size() == 0) {
             throw new BusinessException("角色ID集合不能为空");
