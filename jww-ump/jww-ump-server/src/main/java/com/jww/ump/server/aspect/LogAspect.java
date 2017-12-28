@@ -44,6 +44,8 @@ public class LogAspect {
 
     private UmpLogModel umpLogModel = new UmpLogModel();
 
+    UmpUserModel crrentUser = null;
+
     @Pointcut("execution(* *..controller..*.*(..)) && @annotation(com.jww.ump.server.annotation.SysLogOpt)")
     public void webLogPointCut() {
 
@@ -68,6 +70,7 @@ public class LogAspect {
 
 
     private boolean logPre(ProceedingJoinPoint pjp) throws Exception{
+        crrentUser = (UmpUserModel) SecurityUtils.getSubject().getPrincipal();
         boolean isQueryType = false;
         //操作类型
         Integer operationType = null;
@@ -117,7 +120,9 @@ public class LogAspect {
         if(result!=null){
             response = (ResultModel)result;
         }
-        UmpUserModel crrentUser = (UmpUserModel) SecurityUtils.getSubject().getPrincipal();
+        if(crrentUser==null){
+            crrentUser = (UmpUserModel) SecurityUtils.getSubject().getPrincipal();
+        }
         if(crrentUser!=null){
             umpLogModel.setUserName(crrentUser.getUserName());
             hasLogin = true;
