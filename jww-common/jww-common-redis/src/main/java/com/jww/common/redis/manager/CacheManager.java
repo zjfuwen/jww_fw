@@ -11,8 +11,24 @@ import java.util.Set;
  */
 public interface CacheManager {
 
+    /**
+     * 根据key获取
+     *
+     * @param key
+     * @return Object
+     * @author wanyong
+     * @date 2017-12-28 00:05
+     */
     Object get(final String key);
 
+    /**
+     * 获取所有
+     *
+     * @param pattern
+     * @return Set<Object>
+     * @author wanyong
+     * @date 2017-12-28 00:05
+     */
     Set<Object> getAll(final String pattern);
 
     void set(final String key, final Serializable value, int seconds);

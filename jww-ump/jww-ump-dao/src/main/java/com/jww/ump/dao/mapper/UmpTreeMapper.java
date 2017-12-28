@@ -13,8 +13,8 @@ import java.util.List;
  * @author wangyuxin
  * @since 2017-12-14
  */
-public interface UmpTreeMapper extends com.baomidou.mybatisplus.mapper.BaseMapper<UmpTreeModel>{
-    public List<UmpTreeModel> selectDeptTree(@Param("id") Long id);
+public interface UmpTreeMapper extends com.baomidou.mybatisplus.mapper.BaseMapper<UmpTreeModel> {
+    List<UmpTreeModel> selectDeptTree(@Param("id") Long id);
 
-    public List<UmpTreeModel> selectMenuTree(@Param("id") Long id,@Param("menuType") Integer menuType);
+    List<UmpTreeModel> selectMenuTree(@Param("id") Long id, @Param("menuType") Integer menuType);
 }

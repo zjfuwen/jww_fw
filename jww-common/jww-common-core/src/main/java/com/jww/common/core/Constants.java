@@ -40,6 +40,11 @@ public final class Constants {
      * TOKEN缓存命名空间
      */
     public static final String TOKEN_CACHE_NAMESPACE = CACHE_NAMESPACE + "token:";
+
+    /**
+     * CAPTCHA缓存命名空间
+     */
+    public static final String CAPTCHA_CACHE_NAMESPACE = CACHE_NAMESPACE + "captcha:";
     /**
      * 日志操作类型-新增
      */
@@ -64,11 +69,6 @@ public final class Constants {
      * 日志操作类型-其他
      */
     public static final int LOG_OPERATION_TYPE_UNKONW = 9;
-
-    /**
-     * CAPTCHA缓存命名空间
-     */
-    public static final String CAPTCHA_CACHE_NAMESPACE = CACHE_NAMESPACE + "captcha:";
 
     /**
      * 缓存键值

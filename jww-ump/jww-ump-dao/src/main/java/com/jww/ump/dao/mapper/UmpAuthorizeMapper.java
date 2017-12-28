@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * 权限mapper
  *
- * @author waner
+ * @author wanyong
  * @date 2017-11-29
  **/
 public interface UmpAuthorizeMapper {

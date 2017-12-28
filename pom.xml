@@ -42,6 +42,7 @@
         <zkclient.version>0.10</zkclient.version>
         <!-- shiro -->
         <shiro.spring.version>1.4.0</shiro.spring.version>
+        <shiro.aspectj.version>1.4.0</shiro.aspectj.version>
         <!-- apache-commons -->
         <commons.lang3.version>3.6</commons.lang3.version>
         <!-- maven -->

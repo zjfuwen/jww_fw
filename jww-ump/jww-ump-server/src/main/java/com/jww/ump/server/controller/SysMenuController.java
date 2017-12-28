@@ -1,13 +1,11 @@
 package com.jww.ump.server.controller;
 
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.jww.common.core.Constants;
 import com.jww.common.core.model.PageModel;
 import com.jww.common.web.BaseController;
 import com.jww.common.web.model.ResultModel;
 import com.jww.common.web.util.ResultUtil;
-import com.jww.ump.model.UmpDeptModel;
 import com.jww.ump.model.UmpMenuModel;
 import com.jww.ump.model.UmpTreeModel;
 import com.jww.ump.rpc.api.UmpMenuService;
@@ -59,7 +57,7 @@ public class SysMenuController extends BaseController {
      * @date 2017/12/18 21:34
      */
     @PostMapping("/queryListPage")
-    @RequiresPermissions("sys:menu:update")
+    @RequiresPermissions("sys:menu:update1")
     public ResultModel<List<UmpMenuModel>> queryListPage(@RequestBody PageModel pageModel) {
         return ResultUtil.ok(umpMenuService.queryListPage(pageModel));
     }
@@ -174,15 +172,15 @@ public class SysMenuController extends BaseController {
 
     @GetMapping("/queryTree/{menuType}/{menuId}")
     @RequiresPermissions("sys:menu:update")
-    public ResultModel queryTree(@PathVariable(required = false) Integer menuType,@PathVariable Long menuId) {
-        List<UmpTreeModel> list = umpMenuService.queryTree(menuId,menuType);
+    public ResultModel queryTree(@PathVariable(required = false) Integer menuType, @PathVariable Long menuId) {
+        List<UmpTreeModel> list = umpMenuService.queryTree(menuId, menuType);
         return ResultUtil.ok(list);
     }
 
     @GetMapping("/queryTree/{menuType}")
     @RequiresPermissions("sys:menu:add")
     public ResultModel queryTree(@PathVariable(required = false) Integer menuType) {
-        List<UmpTreeModel> list = umpMenuService.queryTree(null,menuType);
+        List<UmpTreeModel> list = umpMenuService.queryTree(null, menuType);
         return ResultUtil.ok(list);
     }
 }
