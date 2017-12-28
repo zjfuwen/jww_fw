@@ -33,8 +33,8 @@ import java.util.Map;
 /**
  * 登陆控制器
  *
- * @author waner
- * @create 2017-11-30
+ * @author wanyong
+ * @date 2017-11-30
  **/
 @Slf4j
 @RestController
@@ -63,7 +63,7 @@ public class LoginController extends BaseController {
         }
         CacheUtil.getCache().set(Constants.CAPTCHA_CACHE_NAMESPACE + captchaId, captcha.getCode(), 120);
         captcha.write(outputStream);
-        Map<String, String> map = new HashMap(2);
+        Map<String, String> map = new HashMap<String, String>(2);
         map.put("captchaId", captchaId);
         map.put("captcha", Base64.encode(outputStream.toByteArray()));
         return ResultUtil.ok(map);
@@ -72,7 +72,7 @@ public class LoginController extends BaseController {
     /**
      * 登陆
      *
-     * @param loginModel
+     * @param loginModel 登录对象
      * @return ResultModel
      * @author wanyong
      * @date 2017-11-30 16:14

@@ -53,7 +53,9 @@ public class UmpUserRealm extends AuthorizingRealm {
                     //一个菜单有多个权限标识，逗号分隔，需要拆分
                     String[] perms = StrUtil.split(permission, ",");
                     Arrays.stream(perms).forEach(perm -> {
-                                simpleAuthorizationInfo.addStringPermission(perm);
+                                if (StrUtil.isNotBlank(perm)) {
+                                    simpleAuthorizationInfo.addStringPermission(perm);
+                                }
                             }
                     );
                 }

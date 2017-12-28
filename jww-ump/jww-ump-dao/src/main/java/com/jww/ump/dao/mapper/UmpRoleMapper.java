@@ -12,7 +12,7 @@ import java.util.List;
  * 角色信息表 Mapper 接口
  *
  * @author wanyong
- * @since 2017-12-17
+ * @date 2017-12-17
  */
 public interface UmpRoleMapper extends BaseMapper<UmpRoleModel> {
 

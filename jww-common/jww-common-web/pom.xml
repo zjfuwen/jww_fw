@@ -42,6 +42,11 @@
             <version>${shiro.spring.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-aspectj</artifactId>
+            <version>${shiro.aspectj.version}</version>
+        </dependency>
+        <dependency>
             <groupId>io.github.jianzhichun</groupId>
             <artifactId>swagger2-spring-boot-starter</artifactId>
             <version>${swagger2.spring.boot.starter.version}</version>

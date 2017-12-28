@@ -45,12 +45,39 @@ public final class Constants {
      * CAPTCHA缓存命名空间
      */
     public static final String CAPTCHA_CACHE_NAMESPACE = CACHE_NAMESPACE + "captcha:";
+    /**
+     * 日志操作类型-新增
+     */
+    public static final int LOG_OPERATION_TYPE_INSERT = 1;
+    /**
+     * 日志操作类型-修改
+     */
+    public static final int LOG_OPERATION_TYPE_MODIFY = 2;
+    /**
+     * 日志操作类型-删除
+     */
+    public static final int LOG_OPERATION_TYPE_DELETE = 3;
+    /**
+     * 日志操作类型-登录
+     */
+    public static final int LOG_OPERATION_TYPE_LOGIN = 4;
+    /**
+     * 日志操作类型-查询
+     */
+    public static final int LOG_OPERATION_TYPE_QUERY = 0;
+    /**
+     * 日志操作类型-其他
+     */
+    public static final int LOG_OPERATION_TYPE_UNKONW = 9;
 
     /**
      * 缓存键值
      */
     public static final Map<Class<?>, String> CACHE_KEY_MAP = new HashMap<>(5);
 
+    /**
+     * 返回码枚举
+     */
     public enum ResultCodeEnum {
         /**
          * 成功
@@ -87,6 +114,9 @@ public final class Constants {
 
     }
 
+    /**
+     * 多数据源枚举
+     */
     public enum DataSourceEnum {
         // 主库
         MASTER("masterDataSource", true),
@@ -138,27 +168,26 @@ public final class Constants {
 
     }
 
-    public enum LogOptEnum {
-        QUERY(0,"查询"),
-        ADD(1,"新增"),
-        MODIFY(2,"修改"),
-        DELETE(3,"删除"),
-        LOGIN(4,"登录"),
-        UNKNOW(9,"未知");
-        private final int value;
-        private final String message;
+    /**
+     * 日志操作类型枚举
+     */
+    public enum LogOperationTypeEnum {
+        /**
+         * 查询
+         */
+        QUERY(0),
+        ADD(1),
+        MODIFY(2),
+        DELETE(3);
 
-        LogOptEnum(int value, String message) {
+        private final int value;
+
+        LogOperationTypeEnum(int value) {
             this.value = value;
-            this.message = message;
         }
 
         public int value() {
             return this.value;
-        }
-
-        public String getMessage() {
-            return this.message;
         }
 
     }
