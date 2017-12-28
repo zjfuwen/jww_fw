@@ -11,6 +11,8 @@ import com.jww.ump.model.UmpMenuModel;
 import com.jww.ump.model.UmpTreeModel;
 import com.jww.ump.rpc.api.UmpMenuService;
 import com.xiaoleilu.hutool.lang.Assert;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,6 +43,7 @@ public class SysMenuController extends BaseController {
      * @date 2017-12-02 00:24
      */
     @PostMapping("/queryList")
+    @RequiresAuthentication
     public ResultModel<List<UmpMenuModel>> queryList() {
         return ResultUtil.ok(umpMenuService.queryList());
     }
@@ -54,6 +57,7 @@ public class SysMenuController extends BaseController {
      * @date 2017/12/18 21:34
      */
     @PostMapping("/queryListPage")
+    @RequiresPermissions("sys:menu:update")
     public ResultModel<List<UmpMenuModel>> queryListPage(@RequestBody PageModel pageModel) {
         return ResultUtil.ok(umpMenuService.queryListPage(pageModel));
     }
@@ -67,6 +71,7 @@ public class SysMenuController extends BaseController {
      * @date 2017/12/18 21:36
      */
     @GetMapping("/tree/{userId}")
+    @RequiresAuthentication
     public ResultModel<List<UmpMenuModel>> queryMenuTreeByUserId(@PathVariable(value = "userId") Long userId) {
         return ResultUtil.ok(umpMenuService.queryMenuTreeByUserId(userId));
     }
@@ -80,6 +85,7 @@ public class SysMenuController extends BaseController {
      * @date 2017/12/18 21:51
      */
     @DeleteMapping("/delete")
+    @RequiresPermissions("sys:menu:delete")
     public ResultModel delete(@RequestBody Long id) {
         return ResultUtil.ok(umpMenuService.delete(id));
     }
@@ -93,12 +99,14 @@ public class SysMenuController extends BaseController {
      * @date 2017/12/18 21:52
      */
     @PostMapping("/deleteBatchIds")
+    @RequiresPermissions("sys:menu:delete")
     public ResultModel deleteBatchIds(@RequestBody Long[] ids) {
         Assert.notNull(ids);
         return ResultUtil.ok(umpMenuService.deleteBatch(ids));
     }
 
     @GetMapping("/query/{id}")
+    @RequiresPermissions("sys:menu")
     public ResultModel<UmpMenuModel> query(@PathVariable Long id) {
         Assert.notNull(id);
         UmpMenuModel umpMenuModel = umpMenuService.selectById(id);
@@ -114,6 +122,7 @@ public class SysMenuController extends BaseController {
      * @date 2017/12/18 21:54
      */
     @PostMapping("/modify")
+    @RequiresPermissions("sys:menu:update")
     public ResultModel modify(@RequestBody UmpMenuModel umpMenuModel) {
         umpMenuModel.setUpdateBy(this.getCurrUser());
         umpMenuModel.setUpdateTime(new Date());
@@ -130,6 +139,7 @@ public class SysMenuController extends BaseController {
      * @date 2017/12/18 21:54
      */
     @PostMapping("/add")
+    @RequiresPermissions("sys:menu:add")
     public ResultModel add(@Valid @RequestBody UmpMenuModel umpMenuModel) {
         if (umpMenuModel != null) {
             Date now = new Date();
@@ -143,24 +153,28 @@ public class SysMenuController extends BaseController {
     }
 
     @PostMapping("/roleFuncTree")
+    @RequiresPermissions("sys:role")
     public ResultModel queryFuncMenuTree(@RequestBody Long roleId) {
         List<UmpTreeModel> treeModelList = umpMenuService.queryFuncMenuTree(roleId);
         return ResultUtil.ok(treeModelList);
     }
 
     @PostMapping("/funcTree")
+    @RequiresPermissions("sys:role")
     public ResultModel queryFuncMenuTree() {
         List<UmpTreeModel> treeModelList = umpMenuService.queryFuncMenuTree(null);
         return ResultUtil.ok(treeModelList);
     }
 
     @GetMapping("/queryTree/{menuType}/{menuId}")
+    @RequiresPermissions("sys:menu:update")
     public ResultModel queryTree(@PathVariable(required = false) Integer menuType,@PathVariable Long menuId) {
         List<UmpTreeModel> list = umpMenuService.queryTree(menuId,menuType);
         return ResultUtil.ok(list);
     }
 
     @GetMapping("/queryTree/{menuType}")
+    @RequiresPermissions("sys:menu:add")
     public ResultModel queryTree(@PathVariable(required = false) Integer menuType) {
         List<UmpTreeModel> list = umpMenuService.queryTree(null,menuType);
         return ResultUtil.ok(list);

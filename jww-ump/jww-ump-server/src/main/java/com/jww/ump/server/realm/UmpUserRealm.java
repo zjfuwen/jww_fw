@@ -15,6 +15,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -49,10 +50,15 @@ public class UmpUserRealm extends AuthorizingRealm {
             List<String> permissionList = umpAuthorizeService.queryPermissionsByUserId(umpUserModel.getId());
             for (String permission : permissionList) {
                 if (StrUtil.isNotBlank(permission)) {
-                    simpleAuthorizationInfo.addStringPermission(permission);
+                    //一个菜单有多个权限标识，逗号分隔，需要拆分
+                    String[] perms = StrUtil.split(permission, ",");
+                    Arrays.stream(perms).forEach(perm -> {
+                                simpleAuthorizationInfo.addStringPermission(perm);
+                            }
+                    );
                 }
             }
-            log.info("permissionList:" + JSON.toJSONString(permissionList));
+            log.info("userId:{},permissionList:{}", umpUserModel.getId(), JSON.toJSONString(permissionList));
         }
         return simpleAuthorizationInfo;
     }
