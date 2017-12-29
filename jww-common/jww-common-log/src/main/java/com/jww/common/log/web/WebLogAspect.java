@@ -1,6 +1,7 @@
 package com.jww.common.log.web;
 
 import com.alibaba.fastjson.JSON;
+import com.jww.common.core.util.RegexUtil;
 import com.xiaoleilu.hutool.date.DateUtil;
 import com.xiaoleilu.hutool.http.HttpUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -71,7 +72,7 @@ public class WebLogAspect {
         logbf.append(",HTTP_METHOD:").append(request.getMethod());
         logbf.append(",IP:").append(HttpUtil.getClientIP(request));
         logbf.append(",CLASS_METHOD:").append(pjp.getSignature().getDeclaringTypeName() + "." + pjp.getSignature().getName());
-        logbf.append(",ARGS:").append(JSON.toJSONString(pjp.getArgs()));
+        logbf.append(",ARGS:").append(JSON.toJSONString(pjp.getArgs()).replaceAll(RegexUtil.getJSonValueRegex("password"),"****"));
         return logbf;
     }
 
@@ -85,7 +86,7 @@ public class WebLogAspect {
      * @date 2017-12-12 11:08
      */
     private String appendLogStrAfter(StringBuffer logbf, Object result) {
-        logbf.append(",RESPONSE:").append(JSON.toJSONString(result));
+        logbf.append(",RESPONSE:").append(JSON.toJSONString(result).replaceAll(RegexUtil.getJSonValueRegex("password"),"****"));
         logbf.append(",START_TIME:").append(DateUtil.date(startTime));
         logbf.append(",SEPEND_TIME:").append(System.currentTimeMillis() - startTime + "ms}");
         return logbf.toString();

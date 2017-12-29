@@ -2,12 +2,14 @@ package com.jww.ump.server.aspect;
 
 import com.alibaba.fastjson.JSON;
 import com.jww.common.core.Constants;
+import com.jww.common.core.util.RegexUtil;
 import com.jww.common.web.model.ResultModel;
 import com.jww.ump.model.UmpLogModel;
 import com.jww.ump.model.UmpUserModel;
 import com.jww.ump.rpc.api.UmpLogService;
 import com.jww.ump.server.annotation.SysLogOpt;
 import com.xiaoleilu.hutool.http.HttpUtil;
+import com.xiaoleilu.hutool.util.ReUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -21,7 +23,9 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -47,11 +51,11 @@ public class LogAspect {
     UmpUserModel crrentUser = null;
 
     @Pointcut("execution(* *..controller..*.*(..)) && @annotation(com.jww.ump.server.annotation.SysLogOpt)")
-    public void webLogPointCut() {
+    public void logPointCut() {
 
     }
 
-    @Around("webLogPointCut()")
+    @Around("logPointCut()")
     public Object doAround(ProceedingJoinPoint pjp) throws Throwable {
         startTime = System.currentTimeMillis();
         Object result = null;
@@ -99,7 +103,7 @@ public class LogAspect {
         //方法名含包名（com.jww.ump.server.controller.SysLogController.queryListPage）
         String classMethod = pjp.getSignature().getDeclaringTypeName() + "." + pjp.getSignature().getName();
         //请求参数
-        String args = JSON.toJSONString(pjp.getArgs());
+        String args = JSON.toJSONString(pjp.getArgs()).replaceAll(RegexUtil.getJSonValueRegex("password"),"****");
         umpLogModel.setIp(ip);
         umpLogModel.setMethod(classMethod);
         umpLogModel.setParams(args);
