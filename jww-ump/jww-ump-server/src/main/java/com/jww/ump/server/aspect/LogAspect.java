@@ -4,12 +4,11 @@ import com.alibaba.fastjson.JSON;
 import com.jww.common.core.Constants;
 import com.jww.common.core.util.RegexUtil;
 import com.jww.common.web.model.ResultModel;
-import com.jww.ump.model.UmpLogModel;
-import com.jww.ump.model.UmpUserModel;
-import com.jww.ump.rpc.api.UmpLogService;
+import com.jww.ump.model.SysLogModel;
+import com.jww.ump.model.SysUserModel;
+import com.jww.ump.rpc.api.SysLogService;
 import com.jww.ump.server.annotation.SysLogOpt;
 import com.xiaoleilu.hutool.http.HttpUtil;
-import com.xiaoleilu.hutool.util.ReUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -23,9 +22,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 
 /**
@@ -44,11 +41,11 @@ public class LogAspect {
     private long startTime = 0L;
 
     @Autowired
-    private UmpLogService logService;
+    private SysLogService logService;
 
-    private UmpLogModel umpLogModel = new UmpLogModel();
+    private SysLogModel sysLogModel = new SysLogModel();
 
-    UmpUserModel crrentUser = null;
+    SysUserModel crrentUser = null;
 
     @Pointcut("execution(* *..controller..*.*(..)) && @annotation(com.jww.ump.server.annotation.SysLogOpt)")
     public void logPointCut() {
@@ -66,7 +63,7 @@ public class LogAspect {
         } finally {
             //查询类型不添加日志
             if(!isQueryType && logAfter(result)){
-                logService.add(umpLogModel);
+                logService.add(sysLogModel);
             }
         }
         return result;
@@ -74,7 +71,7 @@ public class LogAspect {
 
 
     private boolean logPre(ProceedingJoinPoint pjp) throws Exception{
-        crrentUser = (UmpUserModel) SecurityUtils.getSubject().getPrincipal();
+        crrentUser = (SysUserModel) SecurityUtils.getSubject().getPrincipal();
         boolean isQueryType = false;
         //操作类型
         Integer operationType = null;
@@ -104,16 +101,16 @@ public class LogAspect {
         String classMethod = pjp.getSignature().getDeclaringTypeName() + "." + pjp.getSignature().getName();
         //请求参数
         String args = JSON.toJSONString(pjp.getArgs()).replaceAll(RegexUtil.getJSonValueRegex("password"),"****");
-        umpLogModel.setIp(ip);
-        umpLogModel.setMethod(classMethod);
-        umpLogModel.setParams(args);
-        umpLogModel.setCreateTime(new Date());
-        umpLogModel.setCreateBy(0L);
-        umpLogModel.setUpdateBy(0L);
+        sysLogModel.setIp(ip);
+        sysLogModel.setMethod(classMethod);
+        sysLogModel.setParams(args);
+        sysLogModel.setCreateTime(new Date());
+        sysLogModel.setCreateBy(0L);
+        sysLogModel.setUpdateBy(0L);
         //方法名称
-        umpLogModel.setOperation(operation);
+        sysLogModel.setOperation(operation);
         //操作类型
-        umpLogModel.setOperationType(operationType);
+        sysLogModel.setOperationType(operationType);
         return isQueryType;
     }
 
@@ -125,23 +122,23 @@ public class LogAspect {
             response = (ResultModel)result;
         }
         if(crrentUser==null){
-            crrentUser = (UmpUserModel) SecurityUtils.getSubject().getPrincipal();
+            crrentUser = (SysUserModel) SecurityUtils.getSubject().getPrincipal();
         }
         if(crrentUser!=null){
-            umpLogModel.setUserName(crrentUser.getUserName());
+            sysLogModel.setUserName(crrentUser.getUserName());
             hasLogin = true;
         }else{
             return hasLogin;
         }
         //返回结果
         if(response!=null && response.code == Constants.ResultCodeEnum.SUCCESS.value()){
-            umpLogModel.setResult(1);
+            sysLogModel.setResult(1);
         }else{
-            umpLogModel.setResult(0);
+            sysLogModel.setResult(0);
         }
         //执行时长(毫秒)
         Long spendTime = System.currentTimeMillis() - startTime;
-        umpLogModel.setTime(spendTime);
+        sysLogModel.setTime(spendTime);
         return hasLogin;
     }
 }
