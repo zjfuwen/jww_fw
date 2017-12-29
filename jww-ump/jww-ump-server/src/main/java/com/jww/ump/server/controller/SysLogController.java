@@ -1,14 +1,12 @@
 package com.jww.ump.server.controller;
 
 
-import com.jww.common.core.Constants;
 import com.jww.common.core.model.PageModel;
 import com.jww.common.web.BaseController;
 import com.jww.common.web.model.ResultModel;
 import com.jww.common.web.util.ResultUtil;
-import com.jww.ump.model.UmpLogModel;
-import com.jww.ump.rpc.api.UmpLogService;
-import com.jww.ump.server.annotation.SysLogOpt;
+import com.jww.ump.model.SysLogModel;
+import com.jww.ump.rpc.api.SysLogService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +26,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(value = "系统日志", description = "系统日志")
 public class SysLogController extends BaseController {
     @Autowired
-    private UmpLogService umpLogService;
+    private SysLogService sysLogService;
 
     /**
      * 查询日志分页方法
@@ -39,8 +37,8 @@ public class SysLogController extends BaseController {
      * @date 17/12/26 12:28:13
      */
     @PostMapping("/queryListPage")
-    public ResultModel queryListPage(@RequestBody PageModel<UmpLogModel> pageModel) {
-        pageModel = (PageModel<UmpLogModel>) umpLogService.queryListPage(pageModel);
+    public ResultModel queryListPage(@RequestBody PageModel<SysLogModel> pageModel) {
+        pageModel = (PageModel<SysLogModel>) sysLogService.queryListPage(pageModel);
         return ResultUtil.ok(pageModel);
     }
 }

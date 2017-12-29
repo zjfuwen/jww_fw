@@ -14,12 +14,12 @@
     <!-- 定义 Dubbo 协议名称及使用的端口，dubbo 协议缺省端口为 20880，如果配置为 -1 或者没有配置 port，则会分配一个没有被占用的端口 -->
     <dubbo:protocol name="dubbo" port="-1"/>
     <!-- 声明需要暴露的服务接口 -->
-    <dubbo:service interface="com.jww.ump.rpc.api.UmpUserService" ref="umpUserService" timeout="10000"/>
-    <dubbo:service interface="com.jww.ump.rpc.api.UmpAuthorizeService" ref="umpAuthorizeService" timeout="10000"/>
-    <dubbo:service interface="com.jww.ump.rpc.api.UmpMenuService" ref="umpMenuService" timeout="10000"/>
-    <dubbo:service interface="com.jww.ump.rpc.api.UmpDeptService" ref="umpDeptService" timeout="10000"/>
-    <dubbo:service interface="com.jww.ump.rpc.api.UmpRoleService" ref="umpRoleService" timeout="10000"/>
-    <dubbo:service interface="com.jww.ump.rpc.api.UmpDicService" ref="umpDicService" timeout="10000"/>
-    <dubbo:service interface="com.jww.ump.rpc.api.UmpParamService" ref="umpParamService" timeout="10000"/>
-    <dubbo:service interface="com.jww.ump.rpc.api.UmpLogService" ref="umpLogService" timeout="10000"/>
+    <dubbo:service interface="com.jww.ump.rpc.api.SysUserService" ref="sysUserService" timeout="10000"/>
+    <dubbo:service interface="com.jww.ump.rpc.api.SysAuthorizeService" ref="sysAuthorizeService" timeout="10000"/>
+    <dubbo:service interface="com.jww.ump.rpc.api.SysMenuService" ref="sysMenuService" timeout="10000"/>
+    <dubbo:service interface="com.jww.ump.rpc.api.SysDeptService" ref="sysDeptService" timeout="10000"/>
+    <dubbo:service interface="com.jww.ump.rpc.api.SysRoleService" ref="sysRoleService" timeout="10000"/>
+    <dubbo:service interface="com.jww.ump.rpc.api.SysDicService" ref="sysDicService" timeout="10000"/>
+    <dubbo:service interface="com.jww.ump.rpc.api.SysParamService" ref="sysParamService" timeout="10000"/>
+    <dubbo:service interface="com.jww.ump.rpc.api.SysLogService" ref="sysLogService" timeout="10000"/>
 </beans>

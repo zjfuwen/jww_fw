@@ -5,9 +5,9 @@ import com.jww.common.core.model.PageModel;
 import com.jww.common.web.BaseController;
 import com.jww.common.web.model.ResultModel;
 import com.jww.common.web.util.ResultUtil;
-import com.jww.ump.model.UmpDeptModel;
-import com.jww.ump.model.UmpTreeModel;
-import com.jww.ump.rpc.api.UmpDeptService;
+import com.jww.ump.model.SysDeptModel;
+import com.jww.ump.model.SysTreeModel;
+import com.jww.ump.rpc.api.SysDeptService;
 import com.jww.ump.server.annotation.SysLogOpt;
 import com.xiaoleilu.hutool.lang.Assert;
 import io.swagger.annotations.Api;
@@ -34,23 +34,23 @@ import java.util.List;
 public class SysDeptController extends BaseController {
 
     @Autowired
-    private UmpDeptService umpDeptService;
+    private SysDeptService sysDeptService;
 
     /**
      * 根据部门ID查询
      *
      * @param id
-     * @return ResultModel<UmpDeptModel>
+     * @return ResultModel<SysDeptModel>
      * @author RickyWang
      * @date 2017-12-05 13:35
      */
     @ApiOperation(value = "查询部门", notes = "根据部门主键ID查询部门")
     @ApiImplicitParam(name = "id", value = "部门ID", required = true, dataType = "Long")
     @GetMapping("/query/{id}")
-    public ResultModel<UmpDeptModel> query(@PathVariable Long id) {
+    public ResultModel<SysDeptModel> query(@PathVariable Long id) {
         Assert.notNull(id);
-        UmpDeptModel umpDeptModel = umpDeptService.queryOne(id);
-        return ResultUtil.ok(umpDeptModel);
+        SysDeptModel sysDeptModel = sysDeptService.queryOne(id);
+        return ResultUtil.ok(sysDeptModel);
     }
 
     /**
@@ -62,52 +62,52 @@ public class SysDeptController extends BaseController {
      * @date 17/12/25 21:28:13
      */
     @PostMapping("/queryListPage")
-    public ResultModel queryListPage(@RequestBody PageModel<UmpDeptModel> pageModel) {
-        pageModel = (PageModel<UmpDeptModel>) umpDeptService.queryListPage(pageModel);
+    public ResultModel queryListPage(@RequestBody PageModel<SysDeptModel> pageModel) {
+        pageModel = (PageModel<SysDeptModel>) sysDeptService.queryListPage(pageModel);
         return ResultUtil.ok(pageModel);
     }
 
     /**
      * 新增部门方法
      *
-     * @param umpDeptModel
+     * @param sysDeptModel
      * @return com.jww.common.web.model.ResultModel
      * @author RickyWang
      * @date 17/12/25 21:28:41
      */
     @PostMapping("/add")
     @SysLogOpt(module = "部门管理", value = "部门新增", operationType = Constants.LogOptEnum.ADD)
-    public ResultModel add(@Valid @RequestBody UmpDeptModel umpDeptModel) {
-        log.info("DeptController->add: UmpDeptModel={}", umpDeptModel);
-        if (umpDeptModel != null) {
-            umpDeptModel.setUnitId(Long.valueOf(1));
+    public ResultModel add(@Valid @RequestBody SysDeptModel sysDeptModel) {
+        log.info("DeptController->add: SysDeptModel={}", sysDeptModel);
+        if (sysDeptModel != null) {
+            sysDeptModel.setUnitId(Long.valueOf(1));
             Date now = new Date();
-            umpDeptModel.setCreateTime(now);
-            umpDeptModel.setCreateBy(this.getCurrUser());
-            umpDeptModel.setUpdateBy(this.getCurrUser());
-            umpDeptModel.setUpdateTime(now);
-            if (umpDeptModel.getParentId() == null) {
-                umpDeptModel.setParentId(0L);
+            sysDeptModel.setCreateTime(now);
+            sysDeptModel.setCreateBy(this.getCurrUser());
+            sysDeptModel.setUpdateBy(this.getCurrUser());
+            sysDeptModel.setUpdateTime(now);
+            if (sysDeptModel.getParentId() == null) {
+                sysDeptModel.setParentId(0L);
             }
         }
-        return ResultUtil.ok(umpDeptService.add(umpDeptModel));
+        return ResultUtil.ok(sysDeptService.add(sysDeptModel));
     }
 
     /**
      * 修改部门方法
      *
-     * @param umpDeptModel
+     * @param sysDeptModel
      * @return com.jww.common.web.model.ResultModel
      * @author RickyWang
      * @date 17/12/25 21:29:09
      */
     @PutMapping("/modify")
     @SysLogOpt(module = "部门管理", value = "部门修改", operationType = Constants.LogOptEnum.MODIFY)
-    public ResultModel modify(@RequestBody UmpDeptModel umpDeptModel) {
-        log.info("DeptController->mod: UmpDeptModel={}", umpDeptModel);
-        umpDeptModel.setUpdateBy(this.getCurrUser());
-        umpDeptModel.setUpdateTime(new Date());
-        umpDeptService.modifyById(umpDeptModel);
+    public ResultModel modify(@RequestBody SysDeptModel sysDeptModel) {
+        log.info("DeptController->mod: SysDeptModel={}", sysDeptModel);
+        sysDeptModel.setUpdateBy(this.getCurrUser());
+        sysDeptModel.setUpdateTime(new Date());
+        sysDeptService.modifyById(sysDeptModel);
         return ResultUtil.ok();
     }
 
@@ -123,7 +123,7 @@ public class SysDeptController extends BaseController {
     @SysLogOpt(module = "部门管理", value = "部门批量删除", operationType = Constants.LogOptEnum.DELETE)
     public ResultModel delBatchByIds(@RequestBody Long[] ids) {
         Assert.notNull(ids);
-        return ResultUtil.ok(umpDeptService.delBatchByIds(ids));
+        return ResultUtil.ok(sysDeptService.delBatchByIds(ids));
     }
 
     /**
@@ -136,7 +136,7 @@ public class SysDeptController extends BaseController {
      */
     @GetMapping("/queryTree/{id}")
     public ResultModel queryTree(@PathVariable(value = "id", required = false) Long id) {
-        List<UmpTreeModel> list = umpDeptService.queryTree(id);
+        List<SysTreeModel> list = sysDeptService.queryTree(id);
         return ResultUtil.ok(list);
     }
 
@@ -150,7 +150,7 @@ public class SysDeptController extends BaseController {
      */
     @GetMapping("/queryTree")
     public ResultModel queryTree() {
-        List<UmpTreeModel> list = umpDeptService.queryTree();
+        List<SysTreeModel> list = sysDeptService.queryTree();
         return ResultUtil.ok(list);
     }
 
@@ -166,7 +166,7 @@ public class SysDeptController extends BaseController {
     @SysLogOpt(module = "部门管理", value = "部门删除", operationType = Constants.LogOptEnum.DELETE)
     public ResultModel delDept(@RequestBody Long id) {
         Assert.notNull(id);
-        return ResultUtil.ok(umpDeptService.delDept(id));
+        return ResultUtil.ok(sysDeptService.delDept(id));
     }
 
 }

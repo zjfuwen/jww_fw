@@ -6,6 +6,7 @@ import com.jww.common.core.exception.BusinessException;
 import com.jww.common.web.model.ResultModel;
 import com.jww.common.web.util.ResultUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.AuthorizationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -43,12 +44,17 @@ public class SysExceptionHandler {
             FieldError fieldError = methodArgumentNotValidException.getBindingResult().getFieldError();
             return ResultUtil.fail(Constants.ResultCodeEnum.BAD_REQUEST, fieldError.getDefaultMessage());
         }
+        // Shiro 安全校验失败
+        if (e instanceof AuthorizationException) {
+            return ResultUtil.fail(Constants.ResultCodeEnum.UNAUTHORIZED, Constants.ResultCodeEnum.UNAUTHORIZED.getMessage());
+        }
         if (e instanceof BaseException) {
             BaseException baseException = (BaseException) e;
             return ResultUtil.fail(baseException.getCode(), baseException.getMessage());
         }
-        if(e instanceof RuntimeException && e.getMessage().contains(BusinessException.class.getName())){
-            String message =  e.getMessage().substring(BusinessException.class.getName().length()+1,e.getMessage().indexOf("\r\n")).trim();;
+        if (e instanceof RuntimeException && e.getMessage().contains(BusinessException.class.getName())) {
+            String message = e.getMessage().substring(BusinessException.class.getName().length() + 1, e.getMessage().indexOf("\r\n")).trim();
+            ;
             return ResultUtil.fail(Constants.ResultCodeEnum.INTERNAL_SERVER_ERROR, message);
         }
         return ResultUtil.fail(Constants.ResultCodeEnum.INTERNAL_SERVER_ERROR);
