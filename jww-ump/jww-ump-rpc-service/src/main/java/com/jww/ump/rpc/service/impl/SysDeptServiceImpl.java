@@ -49,8 +49,8 @@ public class SysDeptServiceImpl extends BaseServiceImpl<SysDeptMapper, SysDeptMo
 
     @Override
     public Page<SysDeptModel> queryListPage(Page<SysDeptModel> page) {
-        log.info("UmpDeptServiceImpl->queryListPage->page:" + page.toString());
-        log.info("UmpDeptServiceImpl->queryListPage->page->condition:" + JSON.toJSONString(page.getCondition()));
+        log.info("SysDeptServiceImpl->queryListPage->page:" + page.toString());
+        log.info("SysDeptServiceImpl->queryListPage->page->condition:" + JSON.toJSONString(page.getCondition()));
         String deptName = page.getCondition() == null ? null : page.getCondition().get("dept_name").toString();
         List<SysDeptModel> list = sysDeptMapper.selectPage(page, deptName);
         page.setRecords(list);
@@ -60,7 +60,7 @@ public class SysDeptServiceImpl extends BaseServiceImpl<SysDeptMapper, SysDeptMo
     @Override
     @Cacheable(value = "data")
     public SysDeptModel queryOne(Long id) {
-        log.info("UmpDeptServiceImpl->queryOne->id:" + id);
+        log.info("SysDeptServiceImpl->queryOne->id:" + id);
         SysDeptModel sysDeptModel = sysDeptMapper.selectOne(id);
         return sysDeptModel;
     }
