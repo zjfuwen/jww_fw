@@ -1,6 +1,6 @@
 package com.jww.ump.server.configuration;
 
-import com.jww.ump.server.realm.UmpUserRealm;
+import com.jww.ump.server.realm.SysUserRealm;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
@@ -31,16 +31,16 @@ public class ShiroConfiguration {
     /**
      * 配置核心安全事务管理器
      *
-     * @param umpUserRealm
+     * @param sysUserRealm
      * @return SecurityManager
      * @author wanyong
      * @date 2017/11/29 13:29
      */
     @Bean
-    public SecurityManager securityManager(UmpUserRealm umpUserRealm) {
+    public SecurityManager securityManager(SysUserRealm sysUserRealm) {
         log.info("========== 注入securityManager ==========");
         DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
-        defaultWebSecurityManager.setRealm(umpUserRealm);
+        defaultWebSecurityManager.setRealm(sysUserRealm);
         //TODO 注入缓存管理器(优先使用redis实现)
         return defaultWebSecurityManager;
     }

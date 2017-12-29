@@ -6,9 +6,9 @@ import com.jww.common.core.model.PageModel;
 import com.jww.common.web.BaseController;
 import com.jww.common.web.model.ResultModel;
 import com.jww.common.web.util.ResultUtil;
-import com.jww.ump.model.UmpMenuModel;
-import com.jww.ump.model.UmpTreeModel;
-import com.jww.ump.rpc.api.UmpMenuService;
+import com.jww.ump.model.SysMenuModel;
+import com.jww.ump.model.SysTreeModel;
+import com.jww.ump.rpc.api.SysMenuService;
 import com.jww.ump.server.annotation.SysLogOpt;
 import com.xiaoleilu.hutool.lang.Assert;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
@@ -33,33 +33,33 @@ import java.util.List;
 public class SysMenuController extends BaseController {
 
     @Autowired
-    private UmpMenuService umpMenuService;
+    private SysMenuService sysMenuService;
 
     /**
      * 查询所有菜单
      *
-     * @return ResultModel<List<UmpMenuModel>>
+     * @return ResultModel<List<SysMenuModel>>
      * @author wanyong
      * @date 2017-12-02 00:24
      */
     @PostMapping("/queryList")
     @RequiresAuthentication
-    public ResultModel<List<UmpMenuModel>> queryList() {
-        return ResultUtil.ok(umpMenuService.queryList());
+    public ResultModel<List<SysMenuModel>> queryList() {
+        return ResultUtil.ok(sysMenuService.queryList());
     }
 
     /**
      * 分页查询菜单列表
      *
      * @param pageModel
-     * @return com.jww.common.web.model.ResultModel<java.util.List<com.jww.ump.model.UmpMenuModel>>
+     * @return com.jww.common.web.model.ResultModel<java.util.List<com.jww.ump.model.SysMenuModel>>
      * @author shadj
      * @date 2017/12/18 21:34
      */
     @PostMapping("/queryListPage")
     @RequiresPermissions("sys:menu:read")
-    public ResultModel<List<UmpMenuModel>> queryListPage(@RequestBody PageModel pageModel) {
-        return ResultUtil.ok(umpMenuService.queryListPage(pageModel));
+    public ResultModel<List<SysMenuModel>> queryListPage(@RequestBody PageModel pageModel) {
+        return ResultUtil.ok(sysMenuService.queryListPage(pageModel));
     }
 
     /**
@@ -72,8 +72,8 @@ public class SysMenuController extends BaseController {
      */
     @GetMapping("/tree/{userId}")
     @RequiresAuthentication
-    public ResultModel<List<UmpMenuModel>> queryMenuTreeByUserId(@PathVariable(value = "userId") Long userId) {
-        return ResultUtil.ok(umpMenuService.queryMenuTreeByUserId(userId));
+    public ResultModel<List<SysMenuModel>> queryMenuTreeByUserId(@PathVariable(value = "userId") Long userId) {
+        return ResultUtil.ok(sysMenuService.queryMenuTreeByUserId(userId));
     }
 
     /**
@@ -88,7 +88,7 @@ public class SysMenuController extends BaseController {
     @RequiresPermissions("sys:menu:delete")
     @SysLogOpt(module = "菜单管理", value = "菜单删除", operationType = Constants.LogOptEnum.DELETE)
     public ResultModel delete(@RequestBody Long id) {
-        return ResultUtil.ok(umpMenuService.delete(id));
+        return ResultUtil.ok(sysMenuService.delete(id));
     }
 
     /**
@@ -104,21 +104,21 @@ public class SysMenuController extends BaseController {
     @SysLogOpt(module = "菜单管理", value = "菜单批量删除", operationType = Constants.LogOptEnum.DELETE)
     public ResultModel deleteBatchIds(@RequestBody Long[] ids) {
         Assert.notNull(ids);
-        return ResultUtil.ok(umpMenuService.deleteBatch(ids));
+        return ResultUtil.ok(sysMenuService.deleteBatch(ids));
     }
 
     @GetMapping("/query/{id}")
     @RequiresPermissions("sys:menu:read")
-    public ResultModel<UmpMenuModel> query(@PathVariable Long id) {
+    public ResultModel<SysMenuModel> query(@PathVariable Long id) {
         Assert.notNull(id);
-        UmpMenuModel umpMenuModel = umpMenuService.selectById(id);
-        return ResultUtil.ok(umpMenuModel);
+        SysMenuModel sysMenuModel = sysMenuService.selectById(id);
+        return ResultUtil.ok(sysMenuModel);
     }
 
     /**
      * 根据ID修改菜单
      *
-     * @param umpMenuModel
+     * @param sysMenuModel
      * @return ResultModel
      * @author shadj
      * @date 2017/12/18 21:54
@@ -126,17 +126,17 @@ public class SysMenuController extends BaseController {
     @PostMapping("/modify")
     @RequiresPermissions("sys:menu:update")
     @SysLogOpt(module = "菜单管理", value = "菜单修改", operationType = Constants.LogOptEnum.MODIFY)
-    public ResultModel modify(@RequestBody UmpMenuModel umpMenuModel) {
-        umpMenuModel.setUpdateBy(this.getCurrUser());
-        umpMenuModel.setUpdateTime(new Date());
-        umpMenuService.modifyById(umpMenuModel);
+    public ResultModel modify(@RequestBody SysMenuModel sysMenuModel) {
+        sysMenuModel.setUpdateBy(this.getCurrUser());
+        sysMenuModel.setUpdateTime(new Date());
+        sysMenuService.modifyById(sysMenuModel);
         return ResultUtil.ok();
     }
 
     /**
      * 新增菜单
      *
-     * @param umpMenuModel
+     * @param sysMenuModel
      * @return ResultModel
      * @author shadj
      * @date 2017/12/18 21:54
@@ -144,43 +144,43 @@ public class SysMenuController extends BaseController {
     @PostMapping("/add")
     @RequiresPermissions("sys:menu:add")
     @SysLogOpt(module = "菜单管理", value = "菜单新增", operationType = Constants.LogOptEnum.ADD)
-    public ResultModel add(@Valid @RequestBody UmpMenuModel umpMenuModel) {
-        if (umpMenuModel != null) {
+    public ResultModel add(@Valid @RequestBody SysMenuModel sysMenuModel) {
+        if (sysMenuModel != null) {
             Date now = new Date();
-            umpMenuModel.setCreateTime(now);
-            umpMenuModel.setCreateBy(this.getCurrUser());
-            umpMenuModel.setUpdateBy(this.getCurrUser());
-            umpMenuModel.setUpdateTime(now);
+            sysMenuModel.setCreateTime(now);
+            sysMenuModel.setCreateBy(this.getCurrUser());
+            sysMenuModel.setUpdateBy(this.getCurrUser());
+            sysMenuModel.setUpdateTime(now);
         }
-        umpMenuService.insert(umpMenuModel);
+        sysMenuService.insert(sysMenuModel);
         return ResultUtil.ok();
     }
 
     @PostMapping("/roleFuncTree")
     @RequiresPermissions("sys:menu:tree")
     public ResultModel queryFuncMenuTree(@RequestBody Long roleId) {
-        List<UmpTreeModel> treeModelList = umpMenuService.queryFuncMenuTree(roleId);
+        List<SysTreeModel> treeModelList = sysMenuService.queryFuncMenuTree(roleId);
         return ResultUtil.ok(treeModelList);
     }
 
     @PostMapping("/funcTree")
     @RequiresPermissions("sys:menu:tree")
     public ResultModel queryFuncMenuTree() {
-        List<UmpTreeModel> treeModelList = umpMenuService.queryFuncMenuTree(null);
+        List<SysTreeModel> treeModelList = sysMenuService.queryFuncMenuTree(null);
         return ResultUtil.ok(treeModelList);
     }
 
     @GetMapping("/queryTree/{menuType}/{menuId}")
     @RequiresPermissions("sys:menu:update")
     public ResultModel queryTree(@PathVariable(required = false) Integer menuType, @PathVariable Long menuId) {
-        List<UmpTreeModel> list = umpMenuService.queryTree(menuId, menuType);
+        List<SysTreeModel> list = sysMenuService.queryTree(menuId, menuType);
         return ResultUtil.ok(list);
     }
 
     @GetMapping("/queryTree/{menuType}")
     @RequiresPermissions("sys:menu:add")
     public ResultModel queryTree(@PathVariable(required = false) Integer menuType) {
-        List<UmpTreeModel> list = umpMenuService.queryTree(null, menuType);
+        List<SysTreeModel> list = sysMenuService.queryTree(null, menuType);
         return ResultUtil.ok(list);
     }
 }

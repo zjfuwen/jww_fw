@@ -200,14 +200,6 @@ layui.config({
         modMenuData(modData);
     });
 
-    //监听单元格事件
-    table.on('tool(tableFilter)', function(obj){
-        var data = obj.data;
-        if(obj.event === 'editColumn'){
-            layer.msg(data);
-        }
-    });
-
     function modMenuData(modData) {
         var index = layer.msg('修改中，请稍候', {icon: 16, time: false, shade: 0.8});
         $.ajax({

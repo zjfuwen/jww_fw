@@ -12,12 +12,12 @@
     <!-- 定义 zookeeper 注册中心地址及协议 -->
     <dubbo:registry protocol="zookeeper" address="localhost:2181" client="zkclient"/>
     <!-- 生成远程服务代理，可以和本地 bean 一样使用 testService -->
-    <dubbo:reference id="umpUserService" interface="com.jww.ump.rpc.api.UmpUserService"/>
-    <dubbo:reference id="umpAuthorizeService" interface="com.jww.ump.rpc.api.UmpAuthorizeService"/>
-    <dubbo:reference id="umpMenuService" interface="com.jww.ump.rpc.api.UmpMenuService"/>
-    <dubbo:reference id="umpDeptService" interface="com.jww.ump.rpc.api.UmpDeptService"/>
-    <dubbo:reference id="umpRoleService" interface="com.jww.ump.rpc.api.UmpRoleService"/>
-    <dubbo:reference id="umpDicService" interface="com.jww.ump.rpc.api.UmpDicService"/>
-    <dubbo:reference id="umpParamService" interface="com.jww.ump.rpc.api.UmpParamService"/>
-    <dubbo:reference id="umpLogService" interface="com.jww.ump.rpc.api.UmpLogService"/>
+    <dubbo:reference id="sysUserService" interface="com.jww.ump.rpc.api.SysUserService"/>
+    <dubbo:reference id="sysAuthorizeService" interface="com.jww.ump.rpc.api.SysAuthorizeService"/>
+    <dubbo:reference id="sysMenuService" interface="com.jww.ump.rpc.api.SysMenuService"/>
+    <dubbo:reference id="sysDeptService" interface="com.jww.ump.rpc.api.SysDeptService"/>
+    <dubbo:reference id="sysRoleService" interface="com.jww.ump.rpc.api.SysRoleService"/>
+    <dubbo:reference id="sysDicService" interface="com.jww.ump.rpc.api.SysDicService"/>
+    <dubbo:reference id="sysParamService" interface="com.jww.ump.rpc.api.SysParamService"/>
+    <dubbo:reference id="sysLogService" interface="com.jww.ump.rpc.api.SysLogService"/>
 </beans>

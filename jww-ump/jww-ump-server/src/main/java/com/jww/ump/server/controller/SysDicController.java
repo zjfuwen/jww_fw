@@ -6,8 +6,8 @@ import com.jww.common.core.model.PageModel;
 import com.jww.common.web.BaseController;
 import com.jww.common.web.model.ResultModel;
 import com.jww.common.web.util.ResultUtil;
-import com.jww.ump.model.UmpDicModel;
-import com.jww.ump.rpc.api.UmpDicService;
+import com.jww.ump.model.SysDicModel;
+import com.jww.ump.rpc.api.SysDicService;
 import com.jww.ump.server.annotation.SysLogOpt;
 import com.xiaoleilu.hutool.lang.Assert;
 import io.swagger.annotations.ApiImplicitParam;
@@ -34,13 +34,13 @@ import java.util.List;
 public class SysDicController extends BaseController {
 
     @Autowired
-    private UmpDicService umpDicService;
+    private SysDicService umpDicService;
 
     /**
      * 根据字典ID查询字典
      *
      * @param dicId 字典主键
-     * @return ResultModel<UmpDicModel>
+     * @return ResultModel<SysDicModel>
      * @author wanyong
      * @date 2017-12-05 13:35
      */
@@ -49,8 +49,8 @@ public class SysDicController extends BaseController {
     @PostMapping("/query")
     public ResultModel query(@RequestBody Long dicId) {
         Assert.notNull(dicId);
-        UmpDicModel umpDicModel = umpDicService.queryById(dicId);
-        return ResultUtil.ok(umpDicModel);
+        SysDicModel sysDicModel = umpDicService.queryById(dicId);
+        return ResultUtil.ok(sysDicModel);
     }
 
     @PostMapping("/listPage")
@@ -61,17 +61,17 @@ public class SysDicController extends BaseController {
 
     @PostMapping("/add")
     @SysLogOpt(module = "字典管理", value = "字典新增", operationType = Constants.LogOptEnum.ADD)
-    public ResultModel add(@Valid @RequestBody UmpDicModel umpDicModel) {
-        umpDicModel.setCreateBy(getCurrUser());
-        umpDicModel.setUpdateBy(getCurrUser());
-        return ResultUtil.ok(umpDicService.add(umpDicModel));
+    public ResultModel add(@Valid @RequestBody SysDicModel sysDicModel) {
+        sysDicModel.setCreateBy(getCurrUser());
+        sysDicModel.setUpdateBy(getCurrUser());
+        return ResultUtil.ok(umpDicService.add(sysDicModel));
     }
 
     @PostMapping("/modify")
     @SysLogOpt(module = "字典管理", value = "字典修改", operationType = Constants.LogOptEnum.MODIFY)
-    public ResultModel modify(@Valid @RequestBody UmpDicModel umpDicModel) {
-        umpDicModel.setUpdateBy(getCurrUser());
-        umpDicService.modifyById(umpDicModel);
+    public ResultModel modify(@Valid @RequestBody SysDicModel sysDicModel) {
+        sysDicModel.setUpdateBy(getCurrUser());
+        umpDicService.modifyById(sysDicModel);
         return ResultUtil.ok();
     }
 
@@ -89,7 +89,7 @@ public class SysDicController extends BaseController {
         if (ids.size() == 0) {
             throw new BusinessException("字典ID集合不能为空");
         }
-        return ResultUtil.ok(umpDicService.delBatchByIds(new UmpDicModel(), ids));
+        return ResultUtil.ok(umpDicService.delBatchByIds(new SysDicModel(), ids));
     }
 }
 

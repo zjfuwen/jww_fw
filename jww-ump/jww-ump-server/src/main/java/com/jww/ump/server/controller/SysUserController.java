@@ -7,10 +7,10 @@ import com.jww.common.core.util.SecurityUtil;
 import com.jww.common.web.BaseController;
 import com.jww.common.web.model.ResultModel;
 import com.jww.common.web.util.ResultUtil;
-import com.jww.ump.model.UmpRoleModel;
-import com.jww.ump.model.UmpUserModel;
-import com.jww.ump.model.UmpUserRoleModel;
-import com.jww.ump.rpc.api.UmpUserService;
+import com.jww.ump.model.SysRoleModel;
+import com.jww.ump.model.SysUserModel;
+import com.jww.ump.model.SysUserRoleModel;
+import com.jww.ump.rpc.api.SysUserService;
 import com.jww.ump.server.annotation.SysLogOpt;
 import com.xiaoleilu.hutool.lang.Assert;
 import com.xiaoleilu.hutool.util.ObjectUtil;
@@ -38,23 +38,23 @@ import java.util.List;
 public class SysUserController extends BaseController {
 
     @Autowired
-    private UmpUserService umpUserService;
+    private SysUserService sysUserService;
 
     /**
      * 根据用户ID查询用户
      *
      * @param id
-     * @return ResultModel<UmpUserModel>
+     * @return ResultModel<SysUserModel>
      * @author wanyong
      * @date 2017-12-05 13:35
      */
     @ApiOperation(value = "查询用户", notes = "根据用户主键ID查询用户")
     @ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "Long")
     @GetMapping("/query/{id}")
-    public ResultModel<UmpUserModel> query(@PathVariable Long id) {
+    public ResultModel<SysUserModel> query(@PathVariable Long id) {
         Assert.notNull(id);
-        UmpUserModel umpUserModel = umpUserService.queryOne(id);
-        return ResultUtil.ok(umpUserModel);
+        SysUserModel sysUserModel = sysUserService.queryOne(id);
+        return ResultUtil.ok(sysUserModel);
     }
 
     /**
@@ -67,29 +67,29 @@ public class SysUserController extends BaseController {
      */
     @PostMapping("/listPage")
     public ResultModel queryListPage(@RequestBody PageModel pageModel) {
-        pageModel = (PageModel<UmpUserModel>) umpUserService.queryListPage(pageModel);
+        pageModel = (PageModel<SysUserModel>) sysUserService.queryListPage(pageModel);
         return ResultUtil.ok(pageModel);
     }
 
     /**
      * 新增用户
      *
-     * @param umpUserModel
+     * @param sysUserModel
      * @return ResultModel
      * @author wanyong
      * @date 2017-12-03 10:18
      */
     @PostMapping("/add")
     @SysLogOpt(module = "用户管理", value = "用户新增", operationType = Constants.LogOptEnum.ADD)
-    public ResultModel add(@Valid @RequestBody UmpUserModel umpUserModel) {
-        UmpUserModel existUmpUserModel = umpUserService.queryByAccount(umpUserModel.getAccount());
-        if (ObjectUtil.isNotNull(existUmpUserModel)) {
+    public ResultModel add(@Valid @RequestBody SysUserModel sysUserModel) {
+        SysUserModel existSysUserModel = sysUserService.queryByAccount(sysUserModel.getAccount());
+        if (ObjectUtil.isNotNull(existSysUserModel)) {
             throw new BusinessException("已存在相同账号的用户");
         }
         // 设置初始密码: 123456
-        umpUserModel.setPassword(SecurityUtil.encryptPassword("123456"));
-        umpUserModel.setCreateBy(getCurrUser());
-        umpUserService.add(umpUserModel);
+        sysUserModel.setPassword(SecurityUtil.encryptPassword("123456"));
+        sysUserModel.setCreateBy(getCurrUser());
+        sysUserService.add(sysUserModel);
         return ResultUtil.ok();
     }
 
@@ -100,21 +100,21 @@ public class SysUserController extends BaseController {
         if (ids.size() == 0) {
             throw new BusinessException("用户ID集合不能为空");
         }
-        return ResultUtil.ok(umpUserService.delBatchByIds(ids));
+        return ResultUtil.ok(sysUserService.delBatchByIds(ids));
     }
 
     @PostMapping("/modify")
     @SysLogOpt(module = "用户管理", value = "用户修改", operationType = Constants.LogOptEnum.MODIFY)
-    public ResultModel modify(@RequestBody UmpUserModel umpUserModel) {
-        umpUserModel.setCreateBy(this.getCurrUser());
-        umpUserModel.setUpdateTime(new Date());
-        return ResultUtil.ok(umpUserService.modifyUser(umpUserModel));
+    public ResultModel modify(@RequestBody SysUserModel sysUserModel) {
+        sysUserModel.setCreateBy(this.getCurrUser());
+        sysUserModel.setUpdateTime(new Date());
+        return ResultUtil.ok(sysUserService.modifyUser(sysUserModel));
     }
 
     @GetMapping("/queryRoles/{deptId}")
     public ResultModel queryRoles(@PathVariable Long deptId) {
         Assert.notNull(deptId);
-        List<UmpRoleModel> list = umpUserService.queryRoles(deptId);
+        List<SysRoleModel> list = sysUserService.queryRoles(deptId);
         return ResultUtil.ok(list);
     }
 
@@ -129,7 +129,7 @@ public class SysUserController extends BaseController {
     @GetMapping("/queryUserRoles/{userId}")
     public ResultModel queryUserRoles(@PathVariable Long userId) {
         Assert.notNull(userId);
-        List<UmpUserRoleModel> list = umpUserService.queryUserRoles(userId);
+        List<SysUserRoleModel> list = sysUserService.queryUserRoles(userId);
         return ResultUtil.ok(list);
     }
 

@@ -6,8 +6,8 @@ import com.jww.common.core.model.PageModel;
 import com.jww.common.web.BaseController;
 import com.jww.common.web.model.ResultModel;
 import com.jww.common.web.util.ResultUtil;
-import com.jww.ump.model.UmpParamModel;
-import com.jww.ump.rpc.api.UmpParamService;
+import com.jww.ump.model.SysParamModel;
+import com.jww.ump.rpc.api.SysParamService;
 import com.jww.ump.server.annotation.SysLogOpt;
 import com.xiaoleilu.hutool.lang.Assert;
 import com.xiaoleilu.hutool.util.CollectionUtil;
@@ -32,13 +32,13 @@ import java.util.List;
 public class SysParamController extends BaseController {
 
     @Autowired
-    private UmpParamService umpParamService;
+    private SysParamService sysParamService;
 
     /**
      * 根据参数ID查询参数
      *
      * @param paramId 参数主键
-     * @return ResultModel<UmpParamModel>
+     * @return ResultModel<SysParamModel>
      * @author shadj
      * @date 2017-12-05 13:35
      */
@@ -47,29 +47,29 @@ public class SysParamController extends BaseController {
     @PostMapping("/query")
     public ResultModel query(@RequestBody Long paramId) {
         Assert.notNull(paramId);
-        UmpParamModel umpParamModel = umpParamService.queryById(paramId);
-        return ResultUtil.ok(umpParamModel);
+        SysParamModel sysParamModel = sysParamService.queryById(paramId);
+        return ResultUtil.ok(sysParamModel);
     }
 
     @PostMapping("/listPage")
     public ResultModel queryListPage(@RequestBody PageModel pageModel) {
-        pageModel = (PageModel) umpParamService.queryListPage(pageModel);
+        pageModel = (PageModel) sysParamService.queryListPage(pageModel);
         return ResultUtil.ok(pageModel);
     }
 
     @PostMapping("/add")
     @SysLogOpt(module = "参数管理", value = "参数新增", operationType = Constants.LogOptEnum.ADD)
-    public ResultModel add(@Valid @RequestBody UmpParamModel umpParamModel) {
-        umpParamModel.setCreateBy(getCurrUser());
-        umpParamModel.setUpdateBy(getCurrUser());
-        return ResultUtil.ok(umpParamService.add(umpParamModel));
+    public ResultModel add(@Valid @RequestBody SysParamModel sysParamModel) {
+        sysParamModel.setCreateBy(getCurrUser());
+        sysParamModel.setUpdateBy(getCurrUser());
+        return ResultUtil.ok(sysParamService.add(sysParamModel));
     }
 
     @PostMapping("/modify")
     @SysLogOpt(module = "参数管理", value = "参数修改", operationType = Constants.LogOptEnum.MODIFY)
-    public ResultModel modify(@RequestBody UmpParamModel umpParamModel) {
-        umpParamModel.setUpdateBy(getCurrUser());
-        umpParamService.modifyById(umpParamModel);
+    public ResultModel modify(@RequestBody SysParamModel sysParamModel) {
+        sysParamModel.setUpdateBy(getCurrUser());
+        sysParamService.modifyById(sysParamModel);
         return ResultUtil.ok();
     }
 
@@ -87,7 +87,7 @@ public class SysParamController extends BaseController {
         if (CollectionUtil.isEmpty(ids)) {
             throw new BusinessException("参数ID集合不能为空");
         }
-        return ResultUtil.ok(umpParamService.delBatchByIds(new UmpParamModel(), ids));
+        return ResultUtil.ok(sysParamService.delBatchByIds(new SysParamModel(), ids));
     }
 }
 

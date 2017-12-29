@@ -45,15 +45,15 @@
 <!-- 分页控件div -->
 <div id="pageDiv"></div>
 <!-- 工具栏模板 -->
-<script type="text/html" id="toolBar">
+<div style="display: none;" id="toolBar">
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
     <permission value="sys:param:update">
         <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     </permission>
-    <permission value="sys:param:update">
+    <permission value="sys:param:delete">
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
     </permission>
-</script>
+</div>
 <script type="text/javascript" src="../../layui/layui.js"></script>
 <script type="text/javascript" src="paramList.js"></script>
 <!-- 启用状态转换器 -->

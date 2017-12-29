@@ -8,8 +8,8 @@ import com.jww.common.redis.util.CacheUtil;
 import com.jww.common.web.BaseController;
 import com.jww.common.web.model.ResultModel;
 import com.jww.common.web.util.ResultUtil;
-import com.jww.ump.model.UmpUserModel;
-import com.jww.ump.rpc.api.UmpUserService;
+import com.jww.ump.model.SysUserModel;
+import com.jww.ump.rpc.api.SysUserService;
 import com.jww.ump.server.annotation.SysLogOpt;
 import com.xiaoleilu.hutool.captcha.CaptchaUtil;
 import com.xiaoleilu.hutool.captcha.CircleCaptcha;
@@ -42,9 +42,9 @@ import java.util.Map;
 public class LoginController extends BaseController {
 
     @Autowired
-    private UmpUserService umpUserService;
+    private SysUserService sysUserService;
 
-    /**
+    /**z
      * 获取验证码
      *
      * @param captchaId 验证码ID
@@ -109,8 +109,8 @@ public class LoginController extends BaseController {
         // 清空验证码缓存
         CacheUtil.getCache().del(Constants.CAPTCHA_CACHE_NAMESPACE + loginModel.getCaptchaId());
         // 验证通过，返回前端所需的用户信息
-        UmpUserModel crrentUser = (UmpUserModel) subject.getPrincipal();
-        UmpUserModel umpUserModel = new UmpUserModel();
+        SysUserModel crrentUser = (SysUserModel) subject.getPrincipal();
+        SysUserModel umpUserModel = new SysUserModel();
         umpUserModel.setId(crrentUser.getId());
         umpUserModel.setAccount(crrentUser.getAccount());
         umpUserModel.setUserName(crrentUser.getUserName());
