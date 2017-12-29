@@ -3,6 +3,7 @@ package com.jww.ump.rpc.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.jww.common.core.annotation.DistributedLock;
 import com.jww.common.core.base.BaseServiceImpl;
 import com.jww.ump.dao.mapper.SysRoleMapper;
 import com.jww.ump.dao.mapper.SysUserMapper;
@@ -14,6 +15,8 @@ import com.jww.ump.rpc.api.SysUserService;
 import com.xiaoleilu.hutool.lang.Assert;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,6 +63,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUserMo
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @CacheEvict(value = "data", allEntries = true)
     public boolean delBatchByIds(List<Long> ids) {
         List<SysUserModel> sysUserModelList = new ArrayList<>(5);
         for (Long id : ids) {
@@ -89,7 +93,9 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUserMo
     }
 
     @Override
+    @CachePut(value = "data")
     @Transactional(rollbackFor = Exception.class)
+    @DistributedLock
     public SysUserModel add(SysUserModel sysUserModel) {
         sysUserModel.setCreateTime(new Date());
         sysUserModel.setUpdateTime(new Date());

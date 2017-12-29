@@ -123,7 +123,7 @@ public class SysDeptController extends BaseController {
     @SysLogOpt(module = "部门管理", value = "部门批量删除", operationType = Constants.LogOptEnum.DELETE)
     public ResultModel delBatchByIds(@RequestBody Long[] ids) {
         Assert.notNull(ids);
-        return ResultUtil.ok(sysDeptService.delBatchByIds(ids));
+        return ResultUtil.ok(sysDeptService.deleteBatch(ids));
     }
 
     /**

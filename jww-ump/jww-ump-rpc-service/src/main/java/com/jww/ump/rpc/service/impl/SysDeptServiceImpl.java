@@ -3,6 +3,7 @@ package com.jww.ump.rpc.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.jww.common.core.annotation.DistributedLock;
 import com.jww.common.core.base.BaseServiceImpl;
 import com.jww.common.core.exception.BusinessException;
 import com.jww.ump.dao.mapper.SysDeptMapper;
@@ -13,6 +14,8 @@ import com.jww.ump.rpc.api.SysDeptService;
 import com.xiaoleilu.hutool.lang.Assert;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -33,8 +36,10 @@ public class SysDeptServiceImpl extends BaseServiceImpl<SysDeptMapper, SysDeptMo
     private SysTreeMapper sysTreeMapper;
 
     @Override
-    public boolean addDept(SysDeptModel sysDeptModel) {
-        return super.insert(sysDeptModel);
+    @CachePut(value = "data")
+    @DistributedLock(value = "#sysDeptModel.getParentId()")
+    public SysDeptModel addDept(SysDeptModel sysDeptModel) {
+        return super.add(sysDeptModel);
     }
 
     @Override
@@ -61,19 +66,22 @@ public class SysDeptServiceImpl extends BaseServiceImpl<SysDeptMapper, SysDeptMo
     }
 
     @Override
-    public boolean delBatchByIds(Long[] ids) {
-        int subDeptCount = querySubDeptCount(ids);
-        if (subDeptCount > 0) {
-            throw new BusinessException("必须先删除子部门");
-        }
-        List<SysDeptModel> list = new ArrayList<>();
+    @CacheEvict(value = "data", allEntries = true)
+    public Integer deleteBatch(Long[] ids) {
+        int succ = 0;
         for (Long id : ids) {
-            SysDeptModel umpdeptModel = new SysDeptModel();
-            umpdeptModel.setId(id);
-            umpdeptModel.setIsDel(1);
-            list.add(umpdeptModel);
+            Boolean res = false;
+            try {
+                res = this.delDept(id);
+            } catch (Exception e) {
+                log.error("删除部门失败，id:{}", id, e);
+            }
+            if (res) {
+                succ++;
+            }
+            log.debug("删除部门完成，id:{}，执行结果：{}", id, res);
         }
-        return super.updateBatchById(list);
+        return succ;
     }
 
     @Override
@@ -91,6 +99,7 @@ public class SysDeptServiceImpl extends BaseServiceImpl<SysDeptMapper, SysDeptMo
     }
 
     @Override
+    @DistributedLock
     public boolean delDept(Long id) {
         int subDeptCount = querySubDeptCount(id);
         if (subDeptCount > 0) {

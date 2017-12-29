@@ -14,7 +14,7 @@ import java.util.List;
  * @date 2017-12-27 12:02
  */
 public interface SysDeptService extends BaseService<SysDeptModel> {
-    public boolean addDept(SysDeptModel sysDeptModel);
+    public SysDeptModel addDept(SysDeptModel sysDeptModel);
 
     public boolean modifyDept(SysDeptModel sysDeptModel);
 
@@ -22,7 +22,7 @@ public interface SysDeptService extends BaseService<SysDeptModel> {
 
     public SysDeptModel queryOne(Long id);
 
-    boolean delBatchByIds(Long[] ids);
+    public Integer deleteBatch(Long[] ids);
 
     public List<SysTreeModel> queryTree();
 
