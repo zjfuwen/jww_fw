@@ -41,8 +41,7 @@
                 sys_dept
             WHERE
                 is_del = 0
-        ) AS d ON r.dept_id = d.id_
-        WHERE r.is_del = 0
+        ) AS d ON r.dept_id = d.id_ AND r.is_del = 0
         <where>
             ${ew.sqlSegment}
         </where>

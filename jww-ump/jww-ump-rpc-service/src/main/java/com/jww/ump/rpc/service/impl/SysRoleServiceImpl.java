@@ -64,6 +64,7 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRoleMo
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public SysRoleModel add(SysRoleModel sysRoleModel) {
         // 根据角色名称和部门检查是否存在相同的角色
         SysRoleModel checkModel = new SysRoleModel();
@@ -87,12 +88,15 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRoleMo
     @Transactional(rollbackFor = Exception.class)
     public SysRoleModel modifyById(SysRoleModel sysRoleModel) {
         SysRoleModel result = super.modifyById(sysRoleModel);
-        SysRoleMenuModel sysRoleMenuModel = new SysRoleMenuModel();
-        sysRoleMenuModel.setRoleId(sysRoleModel.getId());
-        EntityWrapper<SysRoleMenuModel> entityWrapper = new EntityWrapper<>(sysRoleMenuModel);
-        // 关系数据相对不重要，直接数据库删除
-        sysRoleMenuService.delete(entityWrapper);
-        sysRoleMenuService.insertBatch(getRoleMenuListByMenuIds(sysRoleModel, sysRoleModel.getMenuIdList()));
+        // 这里增加sysRoleModel.getMenuIdList() != null判断是由于删除角色时实际会调用modifyById方法去更新is_del字段，只有当修改角色时menuIdList才不会为空
+        if (sysRoleModel.getMenuIdList() != null) {
+            SysRoleMenuModel sysRoleMenuModel = new SysRoleMenuModel();
+            sysRoleMenuModel.setRoleId(sysRoleModel.getId());
+            EntityWrapper<SysRoleMenuModel> entityWrapper = new EntityWrapper<>(sysRoleMenuModel);
+            // 关系数据相对不重要，直接数据库删除
+            sysRoleMenuService.delete(entityWrapper);
+            sysRoleMenuService.insertBatch(getRoleMenuListByMenuIds(sysRoleModel, sysRoleModel.getMenuIdList()));
+        }
         return result;
     }
 

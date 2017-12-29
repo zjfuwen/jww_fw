@@ -28,7 +28,7 @@ layui.define(['jquery'], function (exports) {
             try {
                 var resultObj = JSON.parse(result);
                 // 没有登录
-                if (resultObj.code == 401) {
+                if (resultObj.code === 401) {
                     window.top.location.href = "/page/login/login.html";
                     return null;
                 }
