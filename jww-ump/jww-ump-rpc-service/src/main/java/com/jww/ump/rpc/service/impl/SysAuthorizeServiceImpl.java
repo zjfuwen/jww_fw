@@ -22,7 +22,7 @@ import java.util.List;
 public class SysAuthorizeServiceImpl implements SysAuthorizeService {
 
     @Autowired
-    private SysAuthorizeMapper umpAuthorizeMapper;
+    private SysAuthorizeMapper sysAuthorizeMapper;
     @Autowired
     private SysMenuMapper sysMenuMapper;
 
@@ -33,12 +33,12 @@ public class SysAuthorizeServiceImpl implements SysAuthorizeService {
             List<String> permissions = new ArrayList<String>();
             List<SysMenuModel> list = sysMenuMapper.selectList(new EntityWrapper<SysMenuModel>());
             if (CollUtil.isNotEmpty(list)) {
-                for (SysMenuModel umpMenuModel : list) {
-                    permissions.add(umpMenuModel.getPermission());
+                for (SysMenuModel sysMenuModel : list) {
+                    permissions.add(sysMenuModel.getPermission());
                 }
             }
             return permissions;
         }
-        return umpAuthorizeMapper.selectPermissionsByUserId(userId);
+        return sysAuthorizeMapper.selectPermissionsByUserId(userId);
     }
 }

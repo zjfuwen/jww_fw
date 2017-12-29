@@ -110,12 +110,12 @@ public class LoginController extends BaseController {
         CacheUtil.getCache().del(Constants.CAPTCHA_CACHE_NAMESPACE + loginModel.getCaptchaId());
         // 验证通过，返回前端所需的用户信息
         SysUserModel crrentUser = (SysUserModel) subject.getPrincipal();
-        SysUserModel umpUserModel = new SysUserModel();
-        umpUserModel.setId(crrentUser.getId());
-        umpUserModel.setAccount(crrentUser.getAccount());
-        umpUserModel.setUserName(crrentUser.getUserName());
-        umpUserModel.setAvatar(crrentUser.getAvatar());
-        return ResultUtil.ok(umpUserModel);
+        SysUserModel sysUserModel = new SysUserModel();
+        sysUserModel.setId(crrentUser.getId());
+        sysUserModel.setAccount(crrentUser.getAccount());
+        sysUserModel.setUserName(crrentUser.getUserName());
+        sysUserModel.setAvatar(crrentUser.getAvatar());
+        return ResultUtil.ok(sysUserModel);
     }
 
     @ApiOperation(value = "用户登出")

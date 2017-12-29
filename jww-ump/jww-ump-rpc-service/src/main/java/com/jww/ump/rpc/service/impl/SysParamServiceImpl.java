@@ -25,9 +25,9 @@ public class SysParamServiceImpl extends BaseServiceImpl<SysParamMapper, SysPara
 
     @Override
     public Page<SysParamModel> queryListPage(Page<SysParamModel> page) {
-        SysParamModel umpParamModel = new SysParamModel();
-        umpParamModel.setIsDel(0);
-        EntityWrapper<SysParamModel> entityWrapper = new EntityWrapper<>(umpParamModel);
+        SysParamModel sysParamModel = new SysParamModel();
+        sysParamModel.setIsDel(0);
+        EntityWrapper<SysParamModel> entityWrapper = new EntityWrapper<>(sysParamModel);
         if (ObjectUtil.isNotNull(page.getCondition())) {
             StringBuilder conditionSql = new StringBuilder();
             Map<String, Object> paramMap = page.getCondition();
