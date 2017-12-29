@@ -157,14 +157,14 @@ public class SysMenuController extends BaseController {
     }
 
     @PostMapping("/roleFuncTree")
-    @RequiresPermissions("sys:menu:tree")
+    @RequiresPermissions("sys:menu:read")
     public ResultModel queryFuncMenuTree(@RequestBody Long roleId) {
         List<SysTreeModel> treeModelList = sysMenuService.queryFuncMenuTree(roleId);
         return ResultUtil.ok(treeModelList);
     }
 
     @PostMapping("/funcTree")
-    @RequiresPermissions("sys:menu:tree")
+    @RequiresPermissions("sys:menu:read")
     public ResultModel queryFuncMenuTree() {
         List<SysTreeModel> treeModelList = sysMenuService.queryFuncMenuTree(null);
         return ResultUtil.ok(treeModelList);

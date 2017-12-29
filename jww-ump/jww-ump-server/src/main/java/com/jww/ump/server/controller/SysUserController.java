@@ -126,7 +126,7 @@ public class SysUserController extends BaseController {
      * @date 17/12/25 21:26:57
      */
     @GetMapping("/queryUserRoles/{userId}")
-    @RequiresPermissions("sys:user_role:read")
+    @RequiresPermissions("sys:user:read")
     public ResultModel queryUserRoles(@PathVariable Long userId) {
         Assert.notNull(userId);
         List<SysUserRoleModel> list = sysUserService.queryUserRoles(userId);

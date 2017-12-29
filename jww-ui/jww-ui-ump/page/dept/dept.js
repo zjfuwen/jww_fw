@@ -30,7 +30,7 @@ layui.config({
                         },500);
                     }else{
                         top.layer.close(index);
-                        top.layer.msg("操作失败！");
+                        layer.msg(data.message, {icon: 2});
                     }
                 },
                 contentType: "application/json"

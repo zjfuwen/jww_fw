@@ -141,7 +141,7 @@ public class SysDeptController extends BaseController {
      * @date 17/12/25 21:29:52
      */
     @GetMapping("/queryTree/{id}")
-    @RequiresPermissions("sys:dept:tree")
+    @RequiresPermissions("sys:dept:read")
     public ResultModel queryTree(@PathVariable(value = "id", required = false) Long id) {
         List<SysTreeModel> list = sysDeptService.queryTree(id);
         return ResultUtil.ok(list);
@@ -156,7 +156,7 @@ public class SysDeptController extends BaseController {
      * @date 17/12/25 21:30:28
      */
     @GetMapping("/queryTree")
-    @RequiresPermissions("sys:dept:tree")
+    @RequiresPermissions("sys:dept:read")
     public ResultModel queryTree() {
         List<SysTreeModel> list = sysDeptService.queryTree();
         return ResultUtil.ok(list);
