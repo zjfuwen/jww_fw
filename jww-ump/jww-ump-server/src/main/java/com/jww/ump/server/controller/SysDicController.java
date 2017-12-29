@@ -34,7 +34,7 @@ import java.util.List;
 public class SysDicController extends BaseController {
 
     @Autowired
-    private SysDicService umpDicService;
+    private SysDicService sysDicService;
 
     /**
      * 根据字典ID查询字典
@@ -49,13 +49,13 @@ public class SysDicController extends BaseController {
     @PostMapping("/query")
     public ResultModel query(@RequestBody Long dicId) {
         Assert.notNull(dicId);
-        SysDicModel sysDicModel = umpDicService.queryById(dicId);
+        SysDicModel sysDicModel = sysDicService.queryById(dicId);
         return ResultUtil.ok(sysDicModel);
     }
 
     @PostMapping("/listPage")
     public ResultModel queryListPage(@RequestBody PageModel pageModel) {
-        pageModel = (PageModel) umpDicService.queryListPage(pageModel);
+        pageModel = (PageModel) sysDicService.queryListPage(pageModel);
         return ResultUtil.ok(pageModel);
     }
 
@@ -64,14 +64,14 @@ public class SysDicController extends BaseController {
     public ResultModel add(@Valid @RequestBody SysDicModel sysDicModel) {
         sysDicModel.setCreateBy(getCurrUser());
         sysDicModel.setUpdateBy(getCurrUser());
-        return ResultUtil.ok(umpDicService.add(sysDicModel));
+        return ResultUtil.ok(sysDicService.add(sysDicModel));
     }
 
     @PostMapping("/modify")
     @SysLogOpt(module = "字典管理", value = "字典修改", operationType = Constants.LogOptEnum.MODIFY)
     public ResultModel modify(@Valid @RequestBody SysDicModel sysDicModel) {
         sysDicModel.setUpdateBy(getCurrUser());
-        umpDicService.modifyById(sysDicModel);
+        sysDicService.modifyById(sysDicModel);
         return ResultUtil.ok();
     }
 
@@ -89,7 +89,7 @@ public class SysDicController extends BaseController {
         if (ids.size() == 0) {
             throw new BusinessException("字典ID集合不能为空");
         }
-        return ResultUtil.ok(umpDicService.delBatchByIds(new SysDicModel(), ids));
+        return ResultUtil.ok(sysDicService.delBatchByIds(new SysDicModel(), ids));
     }
 }
 

@@ -42,7 +42,7 @@ public class SysTreeModel implements Serializable {
     private String permission;
 
 
-    private static SysTreeModel getRootNote(List<SysTreeModel> umpTreeModelList) {
+    private static SysTreeModel getRootNote(List<SysTreeModel> sysTreeModelList) {
         SysTreeModel rootNode = new SysTreeModel();
         rootNode.setParentId(-999L);
         rootNode.setId(0L);
@@ -52,19 +52,19 @@ public class SysTreeModel implements Serializable {
         return rootNode;
     }
 
-    private static SysTreeModel constructTree(SysTreeModel rootNode, List<SysTreeModel> umpTreeModelList, int rootLevel) {
-        if (umpTreeModelList == null || umpTreeModelList.size() == 0) {
+    private static SysTreeModel constructTree(SysTreeModel rootNode, List<SysTreeModel> sysTreeModelList, int rootLevel) {
+        if (sysTreeModelList == null || sysTreeModelList.size() == 0) {
             return null;
         }
         List<SysTreeModel> childNodeList = new ArrayList<SysTreeModel>();
-        for (SysTreeModel umpTreeModel : umpTreeModelList) {
-            if (umpTreeModel.getParentId().equals(rootNode.getId())) {
+        for (SysTreeModel sysTreeModel : sysTreeModelList) {
+            if (sysTreeModel.getParentId().equals(rootNode.getId())) {
                 SysTreeModel childNode = new SysTreeModel();
-                childNode.setId(umpTreeModel.getId());
-                childNode.setName(umpTreeModel.getName());
-                childNode.setParentId(umpTreeModel.getParentId());
+                childNode.setId(sysTreeModel.getId());
+                childNode.setName(sysTreeModel.getName());
+                childNode.setParentId(sysTreeModel.getParentId());
                 childNode.setLevel(rootLevel + 1);
-                childNode.setType(umpTreeModel.getType());
+                childNode.setType(sysTreeModel.getType());
                 childNodeList.add(childNode);
             }
         }
@@ -74,16 +74,16 @@ public class SysTreeModel implements Serializable {
         } else {
             rootNode.setLeaf(false);
         }
-        for (SysTreeModel umpTreeModel : childNodeList) {
-            constructTree(umpTreeModel, umpTreeModelList, ++rootLevel);
+        for (SysTreeModel sysTreeModel : childNodeList) {
+            constructTree(sysTreeModel, sysTreeModelList, ++rootLevel);
             --rootLevel;
         }
         return rootNode;
     }
 
-    public static List<SysTreeModel> getTree(List<SysTreeModel> umpTreeModelList) {
-        SysTreeModel rootNode = SysTreeModel.getRootNote(umpTreeModelList);
-        rootNode = SysTreeModel.constructTree(rootNode, umpTreeModelList, 0);
+    public static List<SysTreeModel> getTree(List<SysTreeModel> sysTreeModelList) {
+        SysTreeModel rootNode = SysTreeModel.getRootNote(sysTreeModelList);
+        rootNode = SysTreeModel.constructTree(rootNode, sysTreeModelList, 0);
         return rootNode.getChildren();
     }
 }
