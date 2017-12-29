@@ -1,4 +1,4 @@
-package com.jww.ump.server.servlet;
+package com.jww.ump.server.druid.servlet;
 
 import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;

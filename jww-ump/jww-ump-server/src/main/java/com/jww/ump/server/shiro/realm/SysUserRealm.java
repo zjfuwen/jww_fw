@@ -1,4 +1,4 @@
-package com.jww.ump.server.realm;
+package com.jww.ump.server.shiro.realm;
 
 import com.alibaba.fastjson.JSON;
 import com.jww.common.web.util.WebUtil;
@@ -60,7 +60,7 @@ public class SysUserRealm extends AuthorizingRealm {
                     );
                 }
             }
-            log.info("userId:{},permissionList:{}", sysUserModel.getId(), JSON.toJSONString(permissionList));
+            log.info("userId:{},simpleAuthorizationInfo:{}", sysUserModel.getId(), JSON.toJSONString(simpleAuthorizationInfo.getStringPermissions()));
         }
         return simpleAuthorizationInfo;
     }

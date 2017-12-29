@@ -1,6 +1,7 @@
-package com.jww.ump.server.configuration;
+package com.jww.ump.server.shiro.configuration;
 
-import com.jww.ump.server.realm.SysUserRealm;
+import com.jww.ump.server.shiro.realm.SysUserRealm;
+import com.jww.ump.server.shiro.cache.RedisCacheManager;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
@@ -37,11 +38,11 @@ public class ShiroConfiguration {
      * @date 2017/11/29 13:29
      */
     @Bean
-    public SecurityManager securityManager(SysUserRealm sysUserRealm) {
+    public SecurityManager securityManager(SysUserRealm sysUserRealm, RedisCacheManager redisCacheManager) {
         log.info("========== 注入securityManager ==========");
         DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
         defaultWebSecurityManager.setRealm(sysUserRealm);
-        //TODO 注入缓存管理器(优先使用redis实现)
+        defaultWebSecurityManager.setCacheManager(redisCacheManager);
         return defaultWebSecurityManager;
     }
 

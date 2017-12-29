@@ -40,10 +40,13 @@ public final class RedisHelper implements CacheManager {
         CacheUtil.setCacheManager(this);
     }
 
+
     /**
-     * @return
-     * @description: 放入缓存
-     * @param:
+     * 放入缓存
+     *
+     * @param key
+     * @param value
+     * @return void
      * @author shadj
      * @date 2017/11/21 22:23
      */
@@ -52,24 +55,29 @@ public final class RedisHelper implements CacheManager {
         redisTemplate.opsForValue().set(key, value);
     }
 
+
+
     /**
-     * @return Object
-     * @description: 取出缓存，key为String类型
-     * @param: key
+     * 取出缓存，key为String类型
+     *
+     * @param key
+     * @return java.lang.Object
      * @author shadj
-     * @date 2017/11/21 22:14
+     * @date 2017/12/29 20:18
      */
     @Override
     public Object get(final String key) {
         return redisTemplate.opsForValue().get(key);
     }
 
+
     /**
-     * @return Set<Object>
-     * @description: 根据key模式获取所有的缓存
-     * @param: pattern
+     * 根据key模式获取所有的缓存
+     *
+     * @param pattern
+     * @return java.util.Set<java.lang.Object>
      * @author shadj
-     * @date 2017/11/21 22:26
+     * @date 2017/12/29 20:20
      */
     @Override
     public Set<Object> getAll(String pattern) {
@@ -109,9 +117,11 @@ public final class RedisHelper implements CacheManager {
     }
 
     /**
+     * 在某段时间后失效
+     *
+     * @param key
+     * @param seconds
      * @return Boolean
-     * @description: 在某段时间后失效
-     * @param:
      * @author shadj
      * @date 2017/11/21 23:47
      */
@@ -121,9 +131,11 @@ public final class RedisHelper implements CacheManager {
     }
 
     /**
+     * 在某个时间点失效
+     *
+     * @param key
+     * @param unixTime
      * @return Boolean
-     * @description: 在某个时间点失效
-     * @param:
      * @author shadj
      * @date 2017/11/21 23:47
      */

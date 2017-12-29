@@ -47,6 +47,11 @@ public final class Constants {
     public static final String CAPTCHA_CACHE_NAMESPACE = CACHE_NAMESPACE + "captcha:";
 
     /**
+     * SHIRO缓存命名空间
+     */
+    public static final String SHIRO_CACHE_NAMESPACE = CACHE_NAMESPACE + "shiro:";
+
+    /**
      * 缓存键值
      */
     public static final Map<Class<?>, String> CACHE_KEY_MAP = new HashMap<>(5);
