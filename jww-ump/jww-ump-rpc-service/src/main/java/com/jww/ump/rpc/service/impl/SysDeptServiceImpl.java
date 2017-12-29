@@ -93,8 +93,8 @@ public class SysDeptServiceImpl extends BaseServiceImpl<SysDeptMapper, SysDeptMo
 
     @Override
     public List<SysTreeModel> queryTree(Long id) {
-        List<SysTreeModel> umpTreeModelList = sysTreeMapper.selectDeptTree(id);
-        List<SysTreeModel> list = SysTreeModel.getTree(umpTreeModelList);
+        List<SysTreeModel> sysTreeModelList = sysTreeMapper.selectDeptTree(id);
+        List<SysTreeModel> list = SysTreeModel.getTree(sysTreeModelList);
         return list;
     }
 

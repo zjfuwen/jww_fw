@@ -9,6 +9,7 @@ import com.jww.ump.model.SysLogModel;
 import com.jww.ump.rpc.api.SysLogService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,6 +38,7 @@ public class SysLogController extends BaseController {
      * @date 17/12/26 12:28:13
      */
     @PostMapping("/queryListPage")
+    @RequiresPermissions("sys:log:read")
     public ResultModel queryListPage(@RequestBody PageModel<SysLogModel> pageModel) {
         pageModel = (PageModel<SysLogModel>) sysLogService.queryListPage(pageModel);
         return ResultUtil.ok(pageModel);

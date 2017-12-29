@@ -18,6 +18,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,6 +52,7 @@ public class SysUserController extends BaseController {
     @ApiOperation(value = "查询用户", notes = "根据用户主键ID查询用户")
     @ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "Long")
     @GetMapping("/query/{id}")
+    @RequiresPermissions("sys:user:read")
     public ResultModel<SysUserModel> query(@PathVariable Long id) {
         Assert.notNull(id);
         SysUserModel sysUserModel = sysUserService.queryOne(id);
@@ -66,6 +68,7 @@ public class SysUserController extends BaseController {
      * @date 2017/12/2 14:31
      */
     @PostMapping("/listPage")
+    @RequiresPermissions("sys:user:read")
     public ResultModel queryListPage(@RequestBody PageModel pageModel) {
         pageModel = (PageModel<SysUserModel>) sysUserService.queryListPage(pageModel);
         return ResultUtil.ok(pageModel);
@@ -80,6 +83,7 @@ public class SysUserController extends BaseController {
      * @date 2017-12-03 10:18
      */
     @PostMapping("/add")
+    @RequiresPermissions("sys:user:add")
     @SysLogOpt(module = "用户管理", value = "用户新增", operationType = Constants.LogOptEnum.ADD)
     public ResultModel add(@Valid @RequestBody SysUserModel sysUserModel) {
         SysUserModel existSysUserModel = sysUserService.queryByAccount(sysUserModel.getAccount());
@@ -95,6 +99,7 @@ public class SysUserController extends BaseController {
 
 
     @PostMapping("/delBatchByIds")
+    @RequiresPermissions("sys:user:delete")
     @SysLogOpt(module = "用户管理", value = "用户批量删除", operationType = Constants.LogOptEnum.DELETE)
     public ResultModel delBatchByIds(@RequestBody List<Long> ids) {
         if (ids.size() == 0) {
@@ -104,18 +109,12 @@ public class SysUserController extends BaseController {
     }
 
     @PostMapping("/modify")
+    @RequiresPermissions("sys:user:update")
     @SysLogOpt(module = "用户管理", value = "用户修改", operationType = Constants.LogOptEnum.MODIFY)
     public ResultModel modify(@RequestBody SysUserModel sysUserModel) {
         sysUserModel.setCreateBy(this.getCurrUser());
         sysUserModel.setUpdateTime(new Date());
         return ResultUtil.ok(sysUserService.modifyUser(sysUserModel));
-    }
-
-    @GetMapping("/queryRoles/{deptId}")
-    public ResultModel queryRoles(@PathVariable Long deptId) {
-        Assert.notNull(deptId);
-        List<SysRoleModel> list = sysUserService.queryRoles(deptId);
-        return ResultUtil.ok(list);
     }
 
     /**
@@ -127,6 +126,7 @@ public class SysUserController extends BaseController {
      * @date 17/12/25 21:26:57
      */
     @GetMapping("/queryUserRoles/{userId}")
+    @RequiresPermissions("sys:user_role:read")
     public ResultModel queryUserRoles(@PathVariable Long userId) {
         Assert.notNull(userId);
         List<SysUserRoleModel> list = sysUserService.queryUserRoles(userId);

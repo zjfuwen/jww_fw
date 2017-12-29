@@ -12,6 +12,7 @@ import com.jww.ump.server.annotation.SysLogOpt;
 import com.xiaoleilu.hutool.lang.Assert;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -47,6 +48,7 @@ public class SysDicController extends BaseController {
     @ApiOperation(value = "查询字典", notes = "根据字典主键ID查询字典")
     @ApiImplicitParam(name = "id", value = "角色ID", required = true, dataType = "Long")
     @PostMapping("/query")
+    @RequiresPermissions("sys:dic:read")
     public ResultModel query(@RequestBody Long dicId) {
         Assert.notNull(dicId);
         SysDicModel sysDicModel = sysDicService.queryById(dicId);
@@ -54,12 +56,14 @@ public class SysDicController extends BaseController {
     }
 
     @PostMapping("/listPage")
+    @RequiresPermissions("sys:dic:read")
     public ResultModel queryListPage(@RequestBody PageModel pageModel) {
         pageModel = (PageModel) sysDicService.queryListPage(pageModel);
         return ResultUtil.ok(pageModel);
     }
 
     @PostMapping("/add")
+    @RequiresPermissions("sys:dic:add")
     @SysLogOpt(module = "字典管理", value = "字典新增", operationType = Constants.LogOptEnum.ADD)
     public ResultModel add(@Valid @RequestBody SysDicModel sysDicModel) {
         sysDicModel.setCreateBy(getCurrUser());
@@ -68,6 +72,7 @@ public class SysDicController extends BaseController {
     }
 
     @PostMapping("/modify")
+    @RequiresPermissions("sys:dic:update")
     @SysLogOpt(module = "字典管理", value = "字典修改", operationType = Constants.LogOptEnum.MODIFY)
     public ResultModel modify(@Valid @RequestBody SysDicModel sysDicModel) {
         sysDicModel.setUpdateBy(getCurrUser());
@@ -84,6 +89,7 @@ public class SysDicController extends BaseController {
      * @date 2017-12-23 02:46
      */
     @PostMapping("/delBatchByIds")
+    @RequiresPermissions("sys:dic:delete")
     @SysLogOpt(module = "字典管理", value = "字典批量删除", operationType = Constants.LogOptEnum.DELETE)
     public ResultModel delBatchByIds(@RequestBody List<Long> ids) {
         if (ids.size() == 0) {

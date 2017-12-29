@@ -14,6 +14,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,6 +48,7 @@ public class SysDeptController extends BaseController {
     @ApiOperation(value = "查询部门", notes = "根据部门主键ID查询部门")
     @ApiImplicitParam(name = "id", value = "部门ID", required = true, dataType = "Long")
     @GetMapping("/query/{id}")
+    @RequiresPermissions("sys:dept:read")
     public ResultModel<SysDeptModel> query(@PathVariable Long id) {
         Assert.notNull(id);
         SysDeptModel sysDeptModel = sysDeptService.queryOne(id);
@@ -62,6 +64,7 @@ public class SysDeptController extends BaseController {
      * @date 17/12/25 21:28:13
      */
     @PostMapping("/queryListPage")
+    @RequiresPermissions("sys:dept:read")
     public ResultModel queryListPage(@RequestBody PageModel<SysDeptModel> pageModel) {
         pageModel = (PageModel<SysDeptModel>) sysDeptService.queryListPage(pageModel);
         return ResultUtil.ok(pageModel);
@@ -76,6 +79,7 @@ public class SysDeptController extends BaseController {
      * @date 17/12/25 21:28:41
      */
     @PostMapping("/add")
+    @RequiresPermissions("sys:dept:add")
     @SysLogOpt(module = "部门管理", value = "部门新增", operationType = Constants.LogOptEnum.ADD)
     public ResultModel add(@Valid @RequestBody SysDeptModel sysDeptModel) {
         log.info("DeptController->add: SysDeptModel={}", sysDeptModel);
@@ -102,6 +106,7 @@ public class SysDeptController extends BaseController {
      * @date 17/12/25 21:29:09
      */
     @PutMapping("/modify")
+    @RequiresPermissions("sys:dept:update")
     @SysLogOpt(module = "部门管理", value = "部门修改", operationType = Constants.LogOptEnum.MODIFY)
     public ResultModel modify(@RequestBody SysDeptModel sysDeptModel) {
         log.info("DeptController->mod: SysDeptModel={}", sysDeptModel);
@@ -120,6 +125,7 @@ public class SysDeptController extends BaseController {
      * @date 17/12/25 21:29:23
      */
     @DeleteMapping("/delBatchByIds")
+    @RequiresPermissions("sys:dept:delete")
     @SysLogOpt(module = "部门管理", value = "部门批量删除", operationType = Constants.LogOptEnum.DELETE)
     public ResultModel delBatchByIds(@RequestBody Long[] ids) {
         Assert.notNull(ids);
@@ -135,6 +141,7 @@ public class SysDeptController extends BaseController {
      * @date 17/12/25 21:29:52
      */
     @GetMapping("/queryTree/{id}")
+    @RequiresPermissions("sys:dept:tree")
     public ResultModel queryTree(@PathVariable(value = "id", required = false) Long id) {
         List<SysTreeModel> list = sysDeptService.queryTree(id);
         return ResultUtil.ok(list);
@@ -149,6 +156,7 @@ public class SysDeptController extends BaseController {
      * @date 17/12/25 21:30:28
      */
     @GetMapping("/queryTree")
+    @RequiresPermissions("sys:dept:tree")
     public ResultModel queryTree() {
         List<SysTreeModel> list = sysDeptService.queryTree();
         return ResultUtil.ok(list);
@@ -163,6 +171,7 @@ public class SysDeptController extends BaseController {
      * @date 17/12/25 21:30:45
      */
     @DeleteMapping("/delDept")
+    @RequiresPermissions("sys:dept:delete")
     @SysLogOpt(module = "部门管理", value = "部门删除", operationType = Constants.LogOptEnum.DELETE)
     public ResultModel delDept(@RequestBody Long id) {
         Assert.notNull(id);

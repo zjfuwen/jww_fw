@@ -9,6 +9,7 @@ import com.jww.ump.model.SysRoleMenuModel;
 import com.jww.ump.model.SysRoleModel;
 import com.jww.ump.rpc.api.SysRoleMenuService;
 import com.jww.ump.rpc.api.SysRoleService;
+import com.xiaoleilu.hutool.lang.Assert;
 import com.xiaoleilu.hutool.util.ObjectUtil;
 import com.xiaoleilu.hutool.util.StrUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,5 +118,13 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRoleMo
             sysRoleMenuModelList.add(sysRoleMenuModel);
         }
         return sysRoleMenuModelList;
+    }
+
+    @Override
+    public List<SysRoleModel> queryRoles(Long deptId) {
+        Assert.notNull(deptId);
+        EntityWrapper<SysRoleModel> entityWrapper = new EntityWrapper<>();
+        entityWrapper.eq("dept_id", deptId);
+        return sysRoleMapper.selectList(entityWrapper);
     }
 }

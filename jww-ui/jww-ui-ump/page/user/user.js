@@ -152,7 +152,7 @@ layui.config({
         // 查询角色
         $.ajax({
             type: 'GET',
-            url: 'user/queryRoles/' + deptId,
+            url: 'role/queryRoles/' + deptId,
             async: false,
             success: function (data) {
                 if (data.code === 200) {

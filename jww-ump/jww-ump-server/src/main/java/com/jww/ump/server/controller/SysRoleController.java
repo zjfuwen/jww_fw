@@ -16,10 +16,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -103,6 +100,14 @@ public class SysRoleController extends BaseController {
             throw new BusinessException("角色ID集合不能为空");
         }
         return ResultUtil.ok(sysRoleService.delBatchByIds(new SysRoleModel(), ids));
+    }
+
+    @GetMapping("/queryRoles/{deptId}")
+    @RequiresPermissions("sys:role:read")
+    public ResultModel queryRoles(@PathVariable Long deptId) {
+        Assert.notNull(deptId);
+        List<SysRoleModel> list = sysRoleService.queryRoles(deptId);
+        return ResultUtil.ok(list);
     }
 }
 

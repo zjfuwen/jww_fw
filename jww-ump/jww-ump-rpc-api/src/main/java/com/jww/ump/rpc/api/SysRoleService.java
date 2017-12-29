@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.jww.common.core.base.BaseService;
 import com.jww.ump.model.SysRoleModel;
 
+import java.util.List;
+
 /**
  * <p>
  * 角色信息表 服务类
@@ -47,4 +49,13 @@ public interface SysRoleService extends BaseService<SysRoleModel> {
     @Override
     SysRoleModel modifyById(SysRoleModel sysRoleModel);
 
+    /**
+     * 查询部门下所有角色
+     *
+     * @param deptId
+     * @return List<SysRoleModel>
+     * @author shadj
+     * @date 2017/12/29 17:31
+     */
+    List<SysRoleModel> queryRoles(Long deptId);
 }
