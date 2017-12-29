@@ -57,7 +57,7 @@ public class SysMenuController extends BaseController {
      * @date 2017/12/18 21:34
      */
     @PostMapping("/queryListPage")
-    @RequiresPermissions("sys:menu:update1")
+    @RequiresPermissions("sys:menu:read")
     public ResultModel<List<UmpMenuModel>> queryListPage(@RequestBody PageModel pageModel) {
         return ResultUtil.ok(umpMenuService.queryListPage(pageModel));
     }
@@ -108,7 +108,7 @@ public class SysMenuController extends BaseController {
     }
 
     @GetMapping("/query/{id}")
-    @RequiresPermissions("sys:menu")
+    @RequiresPermissions("sys:menu:read")
     public ResultModel<UmpMenuModel> query(@PathVariable Long id) {
         Assert.notNull(id);
         UmpMenuModel umpMenuModel = umpMenuService.selectById(id);
@@ -157,14 +157,14 @@ public class SysMenuController extends BaseController {
     }
 
     @PostMapping("/roleFuncTree")
-    @RequiresPermissions("sys:role")
+    @RequiresPermissions("sys:menu:tree")
     public ResultModel queryFuncMenuTree(@RequestBody Long roleId) {
         List<UmpTreeModel> treeModelList = umpMenuService.queryFuncMenuTree(roleId);
         return ResultUtil.ok(treeModelList);
     }
 
     @PostMapping("/funcTree")
-    @RequiresPermissions("sys:role")
+    @RequiresPermissions("sys:menu:tree")
     public ResultModel queryFuncMenuTree() {
         List<UmpTreeModel> treeModelList = umpMenuService.queryFuncMenuTree(null);
         return ResultUtil.ok(treeModelList);

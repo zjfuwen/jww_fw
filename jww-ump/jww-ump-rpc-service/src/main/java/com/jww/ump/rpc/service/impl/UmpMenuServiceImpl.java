@@ -70,7 +70,6 @@ public class UmpMenuServiceImpl extends BaseServiceImpl<UmpMenuMapper, UmpMenuMo
         if (StrUtil.isNotEmpty(menuName)) {
             wrapper.like(" a.menu_name ", "%" + menuName + "%");
         }
-        wrapper.orderBy(" a.parent_id,  a.sort_no ", true);
         page.setCondition(null);
         return super.selectPage(page, wrapper);
     }
