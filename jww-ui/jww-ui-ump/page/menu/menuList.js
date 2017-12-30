@@ -205,7 +205,7 @@ layui.config({
         });
     })
 
-    function modMenuData(modData) {alert(JSON.stringify(modData));
+    function modMenuData(modData) {
         var index = layer.msg('修改中，请稍候', {icon: 16, time: false, shade: 0.8});
         $.ajax({
             type: "POST",
