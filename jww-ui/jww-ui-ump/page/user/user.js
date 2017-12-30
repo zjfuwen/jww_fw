@@ -35,11 +35,14 @@ layui.config({
                     if (data.code === 200) {
                         top.layer.close(index);
                         if (parent.pageOperation === 1) {
-                            // 重置表单
-                            $("#roleDiv").empty();
-                            form.render('checkbox');
-                            $("#userForm")[0].reset();
+                            // // 重置表单
+                            // $("#roleDiv").empty();
+                            // form.render('checkbox');
+                            // $("#userForm")[0].reset();
                             layer.msg('用户添加成功', {icon: 1});
+                            layer.closeAll("iframe");
+                            //刷新父页面
+                            parent.location.reload();
                         } else if (parent.pageOperation === 2) {
                             setTimeout(function () {
                                 top.layer.msg("用户修改成功！");
