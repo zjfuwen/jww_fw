@@ -25,6 +25,9 @@ datasource:
     minIdle: 5
     maxWait: 60000
     defaultReadOnly: false
+    filters: stat
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=2000
+    useGlobalDataSourceStat: true
   slaver:
       url: jdbc:mysql://119.29.114.28:3306/jww?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
       username: root
@@ -35,6 +38,9 @@ datasource:
       minIdle: 5
       maxWait: 60000
       defaultReadOnly: false
+      filters: stat
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=2000
+      useGlobalDataSourceStat: true
 #mybatis-plus
 mybatis-plus:
   mapper-locations: classpath*:mapper/*Mapper.xml
@@ -66,3 +72,7 @@ mybatis-plus:
     cache-enabled: false
 server:
   port: 8088
+
+logging:
+  level:
+     root: info
