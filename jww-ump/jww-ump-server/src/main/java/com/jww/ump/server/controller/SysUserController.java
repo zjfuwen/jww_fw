@@ -7,6 +7,7 @@ import com.jww.common.core.util.SecurityUtil;
 import com.jww.common.web.BaseController;
 import com.jww.common.web.model.ResultModel;
 import com.jww.common.web.util.ResultUtil;
+import com.jww.common.web.util.WebUtil;
 import com.jww.ump.model.SysRoleModel;
 import com.jww.ump.model.SysUserModel;
 import com.jww.ump.model.SysUserRoleModel;
@@ -115,6 +116,17 @@ public class SysUserController extends BaseController {
         sysUserModel.setCreateBy(this.getCurrUser());
         sysUserModel.setUpdateTime(new Date());
         return ResultUtil.ok(sysUserService.modifyUser(sysUserModel));
+    }
+
+    @PostMapping("/modifyMySelf")
+    @SysLogOpt(module = "用户管理", value = "个人资料修改", operationType = Constants.LogOptEnum.MODIFY)
+    public ResultModel modifyMySelf(@RequestBody SysUserModel sysUserModel) {
+        if(!sysUserModel.getId().equals(WebUtil.getCurrentUser())){
+            throw new BusinessException("不能修改其他用户信息");
+        }
+        sysUserModel.setCreateBy(this.getCurrUser());
+        sysUserModel.setUpdateTime(new Date());
+        return ResultUtil.ok(sysUserService.modifyById(sysUserModel));
     }
 
     /**

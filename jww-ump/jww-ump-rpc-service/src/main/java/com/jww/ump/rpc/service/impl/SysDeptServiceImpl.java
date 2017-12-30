@@ -12,6 +12,7 @@ import com.jww.ump.model.SysDeptModel;
 import com.jww.ump.model.SysTreeModel;
 import com.jww.ump.rpc.api.SysDeptService;
 import com.xiaoleilu.hutool.lang.Assert;
+import com.xiaoleilu.hutool.util.ObjectUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -20,6 +21,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -39,6 +41,22 @@ public class SysDeptServiceImpl extends BaseServiceImpl<SysDeptMapper, SysDeptMo
     @CachePut(value = "data")
     @DistributedLock(value = "#sysDeptModel.getParentId()")
     public SysDeptModel addDept(SysDeptModel sysDeptModel) {
+        EntityWrapper<SysDeptModel> wrapper = new EntityWrapper<>();
+
+        wrapper.eq("parent_id", sysDeptModel.getParentId());
+        wrapper.eq("dept_name", sysDeptModel.getDeptName());
+        wrapper.eq("is_del", 0);
+        List<SysDeptModel> deptModelList = sysDeptMapper.selectList(wrapper);
+        if (ObjectUtil.isNotNull(super.selectOne(wrapper))) {
+            throw new BusinessException("同级部门名称不能重复");
+        }
+        sysDeptModel.setUnitId(Long.valueOf(1));
+        Date now = new Date();
+        sysDeptModel.setCreateTime(now);
+        sysDeptModel.setUpdateTime(now);
+        if (sysDeptModel.getParentId() == null) {
+            sysDeptModel.setParentId(0L);
+        }
         return super.add(sysDeptModel);
     }
 

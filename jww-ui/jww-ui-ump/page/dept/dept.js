@@ -65,7 +65,6 @@ layui.config({
                         }
                     }
                 }else{
-                    top.layer.close(index);
                     top.layer.msg("查询异常！");
                 }
             },

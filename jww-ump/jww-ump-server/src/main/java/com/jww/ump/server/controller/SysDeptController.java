@@ -84,17 +84,10 @@ public class SysDeptController extends BaseController {
     public ResultModel add(@Valid @RequestBody SysDeptModel sysDeptModel) {
         log.info("DeptController->add: SysDeptModel={}", sysDeptModel);
         if (sysDeptModel != null) {
-            sysDeptModel.setUnitId(Long.valueOf(1));
-            Date now = new Date();
-            sysDeptModel.setCreateTime(now);
             sysDeptModel.setCreateBy(this.getCurrUser());
             sysDeptModel.setUpdateBy(this.getCurrUser());
-            sysDeptModel.setUpdateTime(now);
-            if (sysDeptModel.getParentId() == null) {
-                sysDeptModel.setParentId(0L);
-            }
         }
-        return ResultUtil.ok(sysDeptService.add(sysDeptModel));
+        return ResultUtil.ok(sysDeptService.addDept(sysDeptModel));
     }
 
     /**

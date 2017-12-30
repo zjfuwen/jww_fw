@@ -22,12 +22,16 @@
         </div>
         <a class="layui-btn search_btn">查询</a>
     </div>
+    <permission value="sys:dept:add">
     <div class="layui-inline">
         <a class="layui-btn layui-btn-normal deptAdd_btn">添加部门</a>
     </div>
+    </permission>
+    <permission value="sys:dept:delete">
     <div class="layui-inline">
         <a class="layui-btn layui-btn-danger batchDel">批量删除</a>
     </div>
+    </permission>
 </blockquote>
 
 <table class="layui-table" id="deptTable" lay-filter="deptTable"></table>
@@ -40,8 +44,12 @@
 <!-- 工具栏模板  -->
 <!--<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>-->
 <script type="text/html" id="toolBar">
+    <permission value="sys:dept:update">
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    </permission>
+    <permission value="sys:dept:delete">
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </permission>
 </script>
 <script type="text/javascript" src="../../layui/layui.js"></script>
 <script type="text/javascript" src="deptList.js"></script>
