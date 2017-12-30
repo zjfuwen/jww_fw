@@ -61,6 +61,9 @@ public class DistributedLockAspect {
             log.info("获取分布式锁成功，lockName ：{}，lockValue : {}", lockName, lockValue);
             try {
                 result = pjp.proceed();
+            } catch (BusinessException e) {
+                log.error("方法执行失败", e);
+                throw e;
             } catch (Throwable throwable) {
                 log.error("方法执行失败", throwable);
                 throw new BusinessException(throwable);

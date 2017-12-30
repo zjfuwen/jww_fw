@@ -1,6 +1,5 @@
 layui.config({
-    base: "../../js/",
-    version: true
+    base: "../../js/"
 }).use(['base', 'form', 'layer', 'jquery', 'table'], function () {
     var base = layui.base,
         form = layui.form,
@@ -79,6 +78,7 @@ layui.config({
         var modData = {};
         modData["id"] = data.id;
         modData[field] = value;
+        modData["parentId"] = data.parentId;
         modMenuData(modData);
     });
 
@@ -118,7 +118,7 @@ layui.config({
                                 obj.del();
                                 layer.msg("删除成功", {icon: 1, time: 2000});
                             } else {
-                                layer.msg("删除失败，请重试", {icon: 2});
+                                layer.msg(data.message, {icon: 2});
                             }
                         } else {
                             layer.msg(data.message, {icon: 2});
@@ -205,7 +205,7 @@ layui.config({
         });
     })
 
-    function modMenuData(modData) {
+    function modMenuData(modData) {alert(JSON.stringify(modData));
         var index = layer.msg('修改中，请稍候', {icon: 16, time: false, shade: 0.8});
         $.ajax({
             type: "POST",

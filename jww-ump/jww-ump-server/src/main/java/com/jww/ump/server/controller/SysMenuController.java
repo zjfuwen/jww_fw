@@ -152,7 +152,7 @@ public class SysMenuController extends BaseController {
             sysMenuModel.setUpdateBy(this.getCurrUser());
             sysMenuModel.setUpdateTime(now);
         }
-        sysMenuService.insert(sysMenuModel);
+        sysMenuService.add(sysMenuModel);
         return ResultUtil.ok();
     }
 

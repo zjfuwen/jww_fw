@@ -12,6 +12,7 @@ import com.jww.ump.dao.mapper.SysTreeMapper;
 import com.jww.ump.model.SysMenuModel;
 import com.jww.ump.model.SysTreeModel;
 import com.jww.ump.rpc.api.SysMenuService;
+import com.xiaoleilu.hutool.collection.CollUtil;
 import com.xiaoleilu.hutool.util.ArrayUtil;
 import com.xiaoleilu.hutool.util.CollectionUtil;
 import com.xiaoleilu.hutool.util.StrUtil;
@@ -21,10 +22,8 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.Struct;
+import java.util.*;
 
 /**
  * <p>
@@ -70,6 +69,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuMapper, SysMenuMo
         if (StrUtil.isNotEmpty(menuName)) {
             wrapper.like(" a.menu_name ", "%" + menuName + "%");
         }
+        wrapper.orderBy(" parent_id, sort_no ", true);
         page.setCondition(null);
         return super.selectPage(page, wrapper);
     }
@@ -148,7 +148,35 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuMapper, SysMenuMo
     @CachePut(value = "data")
     @DistributedLock(value = "#sysMenuModel.getParentId()")
     public SysMenuModel add(SysMenuModel sysMenuModel) {
+        //名称重复验证，同一目录下，菜单名称不能相同
+        SysMenuModel menuModel = new SysMenuModel();
+        menuModel.setParentId(sysMenuModel.getParentId());
+        menuModel.setMenuName(sysMenuModel.getMenuName());
+        EntityWrapper<SysMenuModel> entityWrapper = new EntityWrapper<>(menuModel);
+        List<SysMenuModel> sysMenuModelList = super.selectList(entityWrapper);
+        if (CollUtil.isNotEmpty(sysMenuModelList)) {
+            throw new BusinessException("同一目录下，菜单名称不能相同");
+        }
         return super.add(sysMenuModel);
+    }
+
+    @Override
+    @CacheEvict(value = "data")
+    public SysMenuModel modifyById(SysMenuModel sysMenuModel) {
+        if(StrUtil.isNotBlank(sysMenuModel.getMenuName())){
+            //名称重复验证，同一目录下，菜单名称不能相同（需要排除自己）
+            SysMenuModel menuModel = new SysMenuModel();
+            menuModel.setParentId(sysMenuModel.getParentId());
+            menuModel.setMenuName(sysMenuModel.getMenuName());
+            menuModel.setIsDel(0);
+            EntityWrapper<SysMenuModel> entityWrapper = new EntityWrapper<>(menuModel);
+            entityWrapper.ne("id_", sysMenuModel.getId());
+            List<SysMenuModel> sysMenuModelList = super.selectList(entityWrapper);
+            if (CollUtil.isNotEmpty(sysMenuModelList)) {
+                throw new BusinessException("同一目录下，菜单名称不能相同");
+            }
+        }
+        return super.modifyById(sysMenuModel);
     }
 
     /**

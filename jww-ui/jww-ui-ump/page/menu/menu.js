@@ -28,6 +28,7 @@ layui.config({
                     //$(".layui-form input:radio[name='menuType']").eq(data.data.menuType).attr("checked",'checked');
                     $(':radio[name="menuType"]').eq(data.data.menuType).attr("checked", "checked");
                     form.render('radio');
+                    changeForm({"value": data.data.menuType.toString()});
                     $(".layui-input.menuName").val(data.data.menuName);
                     $(".layui-input.parentId").val(data.data.parentId);
                     $(".layui-input.parentName").val(data.data.parentName);
@@ -51,7 +52,6 @@ layui.config({
         var url = pageOpt === 1 ? "menu/add" : "menu/modify";
         form.on("submit(btn_submit)", function (data) {
             var index = top.layer.msg('数据提交中，请稍候', {icon: 16, time: false, shade: 0.8});
-            // alert(JSON.stringify(data.field));
             $.ajax({
                 type: "POST",
                 url: url,
@@ -68,7 +68,7 @@ layui.config({
                         }, 1000);
                     } else {
                         top.layer.close(index);
-                        top.layer.msg("操作失败！");
+                        layer.msg(data.message, {icon: 2});
                     }
                 },
                 contentType: "application/json"
@@ -88,43 +88,7 @@ layui.config({
             });
         });
 
-        //菜单类型选择事件监听，不同选项显示不同字段
-        form.on('radio(menuType)', function (data) {
-            switch (data.value) {
-                case '0':
-                    $(".layui-form-item.request").hide();
-                    $(".layui-input.request").attr("disabled", "disabled");
-                    $(".layui-form-item.permission").hide();
-                    $(".layui-input.permission").attr("disabled", "disabled");
 
-                    $(".layui-form-item.iconcls").show();
-                    $(".layui-input.iconcls").removeAttr("disabled");
-                    $(".layui-form-item.sortNo").show();
-                    $(".layui-input.sortNo").removeAttr("disabled");
-                    break;
-                case '1':
-                    $(".layui-form-item.request").show();
-                    $(".layui-input.request").removeAttr("disabled");
-                    $(".layui-form-item.permission").show();
-                    $(".layui-input.permission").removeAttr("disabled");
-                    $(".layui-form-item.iconcls").show();
-                    $(".layui-input.iconcls").removeAttr("disabled");
-                    $(".layui-form-item.sortNo").show();
-                    $(".layui-input.sortNo").removeAttr("disabled");
-                    break;
-                case '2':
-                    $(".layui-form-item.request").hide();
-                    $(".layui-input.request").attr("disabled", "disabled");
-                    $(".layui-form-item.permission").show();
-                    $(".layui-input.permission").removeAttr("disabled");
-                    $(".layui-form-item.iconcls").hide();
-                    $(".layui-input.iconcls").removeAttr("disabled");
-                    $(".layui-form-item.sortNo").hide();
-                    $(".layui-input.sortNo").removeAttr("disabled");
-                    break;
-                default:
-            }
-        });
     }
 
     form.verify({
@@ -138,6 +102,46 @@ layui.config({
     menuTreeCallBack = function (menuId, menuName) {
         $("#parentId").val(menuId);
         $("#parentName").val(menuName);
-    }
+    };
+
+    //菜单类型选择事件监听，不同选项显示不同字段
+    form.on('radio(menuType)', changeForm);
+
+    function changeForm(data) {
+        switch (data.value) {
+            case '0':
+                $(".layui-form-item.request").hide();
+                $(".layui-input.request").attr("disabled", "disabled");
+                $(".layui-form-item.permission").hide();
+                $(".layui-input.permission").attr("disabled", "disabled");
+
+                $(".layui-form-item.iconcls").show();
+                $(".layui-input.iconcls").removeAttr("disabled");
+                $(".layui-form-item.sortNo").show();
+                $(".layui-input.sortNo").removeAttr("disabled");
+                break;
+            case '1':
+                $(".layui-form-item.request").show();
+                $(".layui-input.request").removeAttr("disabled");
+                $(".layui-form-item.permission").show();
+                $(".layui-input.permission").removeAttr("disabled");
+                $(".layui-form-item.iconcls").show();
+                $(".layui-input.iconcls").removeAttr("disabled");
+                $(".layui-form-item.sortNo").show();
+                $(".layui-input.sortNo").removeAttr("disabled");
+                break;
+            case '2':
+                $(".layui-form-item.request").hide();
+                $(".layui-input.request").attr("disabled", "disabled");
+                $(".layui-form-item.permission").show();
+                $(".layui-input.permission").removeAttr("disabled");
+                $(".layui-form-item.iconcls").hide();
+                $(".layui-input.iconcls").removeAttr("disabled");
+                $(".layui-form-item.sortNo").hide();
+                $(".layui-input.sortNo").removeAttr("disabled");
+                break;
+            default:
+        }
+    };
 
 })

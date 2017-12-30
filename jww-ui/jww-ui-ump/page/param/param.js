@@ -47,14 +47,16 @@ layui.config({
                 data: JSON.stringify(data.field),
                 success: function (data) {
                     if (data.code === 200) {
-                        if (parent.pageOperation === 1) {
-                            // 重置表单
-                            $("#paramForm")[0].reset();
-                            layer.msg('参数添加成功', {icon: 1});
-                        } else {
-                            layer.msg('参数修改成功', {icon: 1});
-                        }
+                        //弹出loading
+                        setTimeout(function () {
+                            top.layer.close(index);
+                            top.layer.msg("操作成功！");
+                            layer.closeAll("iframe");
+                            //刷新父页面
+                            parent.location.reload();
+                        }, 1000);
                     } else {
+                        top.layer.close(index);
                         layer.msg(data.message, {icon: 2});
                     }
                 }
