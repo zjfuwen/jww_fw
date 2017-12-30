@@ -13,24 +13,25 @@
     <link rel="stylesheet" href="../../css/common.css" media="all"/>
 </head>
 <body class="childrenBody">
-<form class="layui-form" style="width: 80%;">
+<form class="layui-form" style="width: 80%;" id="form">
     <div style="margin:0 0 15px 110px;color:#f00;">旧密码请输入“123456”，新密码必须两次输入一致才能提交</div>
     <div class="layui-form-item">
         <label class="layui-form-label">用户名</label>
         <div class="layui-input-block">
-            <input type="text" name="account" id="account" class="layui-input layui-disabled" readonly>
+            <input type="text" id="account" class="layui-input layui-disabled" readonly>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">旧密码</label>
         <div class="layui-input-block">
-            <input type="password" value="" placeholder="请输入旧密码" lay-verify="required|oldPwd" class="layui-input pwd">
+            <input type="password" name="oldPassword" value="" placeholder="请输入旧密码" lay-verify="required|oldPwd"
+                   class="layui-input pwd">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">新密码</label>
         <div class="layui-input-block">
-            <input type="password" placeholder="请输入新密码" lay-verify="required|newPwd" id="newPwd" name="newPwd"
+            <input type="password" placeholder="请输入新密码" lay-verify="required|newPwd" id="password" name="password"
                    class="layui-input pwd">
         </div>
     </div>
@@ -49,7 +50,6 @@
     </div>
 </form>
 <script type="text/javascript" src="../../layui/layui.js"></script>
-<script type="text/javascript" src="address.js"></script>
 <script type="text/javascript" src="changePwd.js"></script>
 </body>
 </html>

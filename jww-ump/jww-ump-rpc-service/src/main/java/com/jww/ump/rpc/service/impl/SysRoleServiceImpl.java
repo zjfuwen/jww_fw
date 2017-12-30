@@ -10,6 +10,8 @@ import com.jww.ump.model.SysRoleModel;
 import com.jww.ump.rpc.api.SysRoleMenuService;
 import com.jww.ump.rpc.api.SysRoleService;
 import com.xiaoleilu.hutool.lang.Assert;
+import com.xiaoleilu.hutool.util.ArrayUtil;
+import com.xiaoleilu.hutool.util.CollectionUtil;
 import com.xiaoleilu.hutool.util.ObjectUtil;
 import com.xiaoleilu.hutool.util.StrUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +78,8 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRoleMo
             throw new BusinessException("已存在相同名称的角色");
         }
         SysRoleModel result = super.add(sysRoleModel);
-        if (result != null) {
+        // 这里增加CollectionUtil.isNotEmpty(sysRoleModel.getMenuIdList())判断是由于新增角色时允许不选择权限
+        if (result != null && CollectionUtil.isNotEmpty(sysRoleModel.getMenuIdList())) {
             sysRoleMenuService.insertBatch(getRoleMenuListByMenuIds(sysRoleModel, sysRoleModel.getMenuIdList()));
         }
         return result;
@@ -88,8 +91,8 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRoleMo
     @Transactional(rollbackFor = Exception.class)
     public SysRoleModel modifyById(SysRoleModel sysRoleModel) {
         SysRoleModel result = super.modifyById(sysRoleModel);
-        // 这里增加sysRoleModel.getMenuIdList() != null判断是由于删除角色时实际会调用modifyById方法去更新is_del字段，只有当修改角色时menuIdList才不会为空
-        if (sysRoleModel.getMenuIdList() != null) {
+        // 这里增加CollectionUtil.isNotEmpty(sysRoleModel.getMenuIdList())判断是由于删除角色时实际会调用modifyById方法去更新is_del字段，只有当修改角色时menuIdList才不会为空
+        if (CollectionUtil.isNotEmpty(sysRoleModel.getMenuIdList())) {
             SysRoleMenuModel sysRoleMenuModel = new SysRoleMenuModel();
             sysRoleMenuModel.setRoleId(sysRoleModel.getId());
             EntityWrapper<SysRoleMenuModel> entityWrapper = new EntityWrapper<>(sysRoleMenuModel);

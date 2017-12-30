@@ -41,6 +41,11 @@ public class SysUserModel extends BaseModel {
     @TableField("password_")
     private String password;
     /**
+     * 旧密码
+     */
+    @TableField(exist = false)
+    private String oldPassword;
+    /**
      * 用户类型(1普通用户2管理员3系统用户)
      */
     @TableField("user_type")

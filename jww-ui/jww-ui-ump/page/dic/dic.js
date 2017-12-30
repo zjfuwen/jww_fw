@@ -53,11 +53,14 @@ layui.config({
                 if (data.code === 200) {
                     if (parent.pageOperation === 1) {
                         // 重置表单
-                        $("#dicForm")[0].reset();
-                        layer.msg('字典添加成功', {icon: 1});
+                        // $("#dicForm")[0].reset();
+                        top.layer.msg('字典添加成功', {icon: 1});
                     } else {
-                        layer.msg('字典修改成功', {icon: 1});
+                        top.layer.msg('字典修改成功', {icon: 1});
                     }
+                    layer.closeAll("iframe");
+                    // 刷新父页面
+                    parent.location.reload();
                 } else {
                     layer.msg(data.message, {icon: 2});
                 }
