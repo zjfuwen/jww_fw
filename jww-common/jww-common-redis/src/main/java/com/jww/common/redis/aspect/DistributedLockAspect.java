@@ -19,8 +19,6 @@ import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-
 /**
  * 分布式锁切面处理类
  *
@@ -32,10 +30,6 @@ import java.util.Arrays;
 @Component
 @Order(0)
 public class DistributedLockAspect {
-
-    public DistributedLockAspect() {
-        log.info("---------------DistributedLockAspect()----------------------");
-    }
 
     @Pointcut("@annotation(com.jww.common.core.annotation.DistributedLock)")
     public void pointCut() {

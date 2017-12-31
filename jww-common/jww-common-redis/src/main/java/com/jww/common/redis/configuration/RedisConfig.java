@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jww.common.core.Constants;
 import com.jww.common.core.base.BaseModel;
 import com.xiaoleilu.hutool.util.ArrayUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.*;
 import org.springframework.cache.interceptor.KeyGenerator;
@@ -27,7 +26,6 @@ import java.util.stream.Stream;
  * @description: Redis缓存配置类
  * @date 2017/11/24 10:19
  */
-@Slf4j
 @Configuration
 @EnableCaching
 public class RedisConfig extends CachingConfigurerSupport {
@@ -44,7 +42,6 @@ public class RedisConfig extends CachingConfigurerSupport {
     @Bean
     @Override
     public KeyGenerator keyGenerator() {
-        log.info("================自定义KEY生成器====================");
         return new KeyGenerator() {
             @Override
             public Object generate(Object target, Method method, Object... params) {

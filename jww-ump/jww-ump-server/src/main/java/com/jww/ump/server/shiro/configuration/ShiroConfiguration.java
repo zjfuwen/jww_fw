@@ -1,8 +1,7 @@
 package com.jww.ump.server.shiro.configuration;
 
-import com.jww.ump.server.shiro.realm.SysUserRealm;
 import com.jww.ump.server.shiro.cache.RedisCacheManager;
-import lombok.extern.slf4j.Slf4j;
+import com.jww.ump.server.shiro.realm.SysUserRealm;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -24,7 +23,6 @@ import java.util.Map;
  * @author wanyong
  * @date 2017/11/29 13:08
  */
-@Slf4j
 @Configuration
 @EnableAutoConfiguration(exclude = RedisAutoConfiguration.class)
 public class ShiroConfiguration {
@@ -39,7 +37,6 @@ public class ShiroConfiguration {
      */
     @Bean
     public SecurityManager securityManager(SysUserRealm sysUserRealm, RedisCacheManager redisCacheManager) {
-        log.info("========== 注入securityManager ==========");
         DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
         defaultWebSecurityManager.setRealm(sysUserRealm);
         defaultWebSecurityManager.setCacheManager(redisCacheManager);

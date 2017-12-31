@@ -8,7 +8,6 @@ import com.baomidou.mybatisplus.spring.boot.starter.MybatisPlusProperties;
 import com.baomidou.mybatisplus.spring.boot.starter.SpringBootVFS;
 import com.jww.common.core.Constants;
 import com.jww.common.mdb.DynamicDataSource;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.mapping.DatabaseIdProvider;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -39,7 +38,6 @@ import java.util.Map;
  * @author wanyong
  * @date 2017/11/20 23:15
  */
-@Slf4j
 @Configuration
 @AutoConfigureBefore(DataSourceAutoConfiguration.class)
 public class MultipleDataSourceAutoConfiguration {
@@ -79,8 +77,7 @@ public class MultipleDataSourceAutoConfiguration {
     @Primary
     @Bean("masterDataSource")
     @ConfigurationProperties(prefix = "datasource.master")
-    public DataSource masterDataSource() {
-        log.debug("===========初始化masterDataSource=============");
+    public DataSource masterDataSource() throws Exception {
         return DataSourceBuilder.create().type(dataSourceType).build();
     }
 
@@ -93,8 +90,7 @@ public class MultipleDataSourceAutoConfiguration {
      */
     @Bean("slaverDataSource")
     @ConfigurationProperties(prefix = "datasource.slaver")
-    public DataSource slaverDataSource() {
-        log.debug("===========初始化slaverDataSource=============");
+    public DataSource slaverDataSource() throws Exception {
         return DataSourceBuilder.create().type(dataSourceType).build();
     }
 
@@ -108,7 +104,6 @@ public class MultipleDataSourceAutoConfiguration {
     @Bean("dynamicDataSource")
     public DynamicDataSource dynamicDataSource(@Qualifier("masterDataSource") DataSource masterDataSource,
                                                @Qualifier("slaverDataSource") DataSource slaverDataSource) {
-        log.debug("===========初始化dynamicDataSource=============");
         Map<Object, Object> targetDataSources = new HashMap<Object, Object>(2);
         targetDataSources.put(Constants.DataSourceEnum.MASTER.getName(), masterDataSource);
         targetDataSources.put(Constants.DataSourceEnum.SLAVE.getName(), slaverDataSource);
@@ -129,7 +124,6 @@ public class MultipleDataSourceAutoConfiguration {
     @Bean
     public SqlSessionFactory sqlSessionFactory(@Qualifier("dynamicDataSource") DynamicDataSource dynamicDataSource)
             throws Exception {
-        log.debug("================创建sqlSessionFactory====================");
         MybatisSqlSessionFactoryBean factory = new MybatisSqlSessionFactoryBean();
         factory.setDataSource(dynamicDataSource);
         factory.setVfs(SpringBootVFS.class);
@@ -185,7 +179,6 @@ public class MultipleDataSourceAutoConfiguration {
      */
     @Bean
     public DataSourceTransactionManager transactionManager(DynamicDataSource dynamicDataSource) throws Exception {
-        log.debug("================初始化transactionManager====================");
         return new DataSourceTransactionManager(dynamicDataSource);
     }
 }
