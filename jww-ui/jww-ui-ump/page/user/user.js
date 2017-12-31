@@ -108,7 +108,7 @@ layui.config({
                         }
                     }
                 } else {
-                    top.layer.msg("查询异常！");
+                    top.layer.msg(data.message, {icon: 2});
                 }
             },
             contentType: "application/json"
@@ -127,7 +127,7 @@ layui.config({
                             form.render('checkbox');
                         });
                     } else {
-                        top.layer.msg("查询异常！");
+                        top.layer.msg(data.message, {icon: 2});
                     }
                 },
                 contentType: "application/json"

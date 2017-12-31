@@ -15,16 +15,6 @@ layui.config({
     });
 
     form.on('submit(addUser)', function (data) {
-        if (typeof(data.field.enable) === "undefined" || data.field.enable === 'undefined') {
-            data.field.enable = 0;
-        }
-
-        var role = [];
-        $('input[name="role"]:checked').each(function (index, element) {
-            role[index] = $(this).val();
-        });
-        data.field.role = role;
-
         var index = top.layer.msg('数据提交中，请稍候', {icon: 16, time: false, shade: 0.8});
         $.ajax({
             type: 'POST',
@@ -77,7 +67,7 @@ layui.config({
                     }
                 }
             } else {
-                top.layer.msg("查询异常！");
+                top.layer.msg(data.message, {icon: 2});
             }
         },
         contentType: "application/json"
