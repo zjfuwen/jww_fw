@@ -8,7 +8,6 @@ import com.jww.common.web.BaseController;
 import com.jww.common.web.model.ResultModel;
 import com.jww.common.web.util.ResultUtil;
 import com.jww.common.web.util.WebUtil;
-import com.jww.ump.model.SysRoleModel;
 import com.jww.ump.model.SysUserModel;
 import com.jww.ump.model.SysUserRoleModel;
 import com.jww.ump.rpc.api.SysUserService;
@@ -19,6 +18,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -121,7 +121,7 @@ public class SysUserController extends BaseController {
     @PostMapping("/modifyMySelf")
     @SysLogOpt(module = "用户管理", value = "个人资料修改", operationType = Constants.LogOptEnum.MODIFY)
     public ResultModel modifyMySelf(@RequestBody SysUserModel sysUserModel) {
-        if(!sysUserModel.getId().equals(WebUtil.getCurrentUser())){
+        if (!sysUserModel.getId().equals(WebUtil.getCurrentUser())) {
             throw new BusinessException("不能修改其他用户信息");
         }
         sysUserModel.setCreateBy(this.getCurrUser());
@@ -143,6 +143,31 @@ public class SysUserController extends BaseController {
         Assert.notNull(userId);
         List<SysUserRoleModel> list = sysUserService.queryUserRoles(userId);
         return ResultUtil.ok(list);
+    }
+
+    /**
+     * 修改密码
+     *
+     * @param sysUserModel
+     * @return ResultModel
+     * @author wanyong
+     * @date 2017/12/30 22:18
+     */
+    @PostMapping("/modifyPassword")
+    @RequiresPermissions("sys:user:update")
+    @SysLogOpt(module = "用户管理", value = "修改密码", operationType = Constants.LogOptEnum.MODIFY)
+    public ResultModel modifyPassword(@RequestBody SysUserModel sysUserModel) {
+        Assert.notEmpty(sysUserModel.getOldPassword());
+        Assert.notEmpty(sysUserModel.getPassword());
+        String encryptOldPassword = SecurityUtil.encryptPassword(sysUserModel.getOldPassword());
+        SysUserModel currentSysUserModel = sysUserService.queryById(getCurrUser());
+        if (!encryptOldPassword.equals(currentSysUserModel.getPassword())) {
+            throw new BusinessException("旧密码不正确");
+        }
+        String encryptPassword = SecurityUtil.encryptPassword(sysUserModel.getPassword());
+        sysUserModel.setPassword(encryptPassword);
+        sysUserModel.setId(getCurrUser());
+        return ResultUtil.ok(sysUserService.modifyById(sysUserModel));
     }
 
 }

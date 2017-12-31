@@ -2,7 +2,7 @@ function navBar(strData) {
     var data;
     var permissionArray = new Array(); // 用户权限集合
     if (typeof(strData) === "string") {
-        data = JSON.parse(strData); //部分用户解析出来的是字符串，转换一下
+        data = JSON.parse(strData); // 部分用户解析出来的是字符串，转换一下
     } else {
         data = strData;
     }

@@ -32,7 +32,12 @@
             update_time,
             update_by
         FROM
-            sys_role AS r
+            (SELECT
+              *
+            FROM
+              sys_role
+            WHERE
+              is_del = 0) AS r
         LEFT JOIN (
             SELECT
                 id_,
@@ -41,7 +46,7 @@
                 sys_dept
             WHERE
                 is_del = 0
-        ) AS d ON r.dept_id = d.id_ AND r.is_del = 0
+        ) AS d ON r.dept_id = d.id_
         <where>
             ${ew.sqlSegment}
         </where>
