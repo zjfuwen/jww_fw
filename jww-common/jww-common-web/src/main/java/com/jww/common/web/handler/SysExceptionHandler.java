@@ -23,16 +23,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class SysExceptionHandler {
 
-    public SysExceptionHandler() {
-        log.info("========== 初始化SysExceptionHandler ==========");
-    }
-
     /**
      * 处理自定义异常
      */
     @ExceptionHandler(Exception.class)
     public ResultModel exceptionHandler(Exception e) {
-        log.info("SysExceptionHandler->exceptionHandler->comein...");
         log.info(e.getMessage(), e);
         // 媒体类型
         if (e instanceof HttpMediaTypeNotSupportedException) {
