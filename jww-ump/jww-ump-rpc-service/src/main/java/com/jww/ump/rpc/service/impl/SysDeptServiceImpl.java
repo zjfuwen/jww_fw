@@ -25,7 +25,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @Author: Ricky Wang
+ * @author: Ricky Wang
  * @Date: 17/12/1 14:49:30
  */
 @Service("sysDeptService")

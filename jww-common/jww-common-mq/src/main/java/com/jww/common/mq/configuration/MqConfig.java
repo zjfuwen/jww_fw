@@ -1,6 +1,6 @@
 package com.jww.common.mq.configuration;
 
-import com.jww.common.mq.propties.MQPropties;
+import com.jww.common.mq.propties.MqPropties;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.ActiveMQPrefetchPolicy;
 import org.apache.activemq.RedeliveryPolicy;
@@ -27,13 +27,13 @@ import javax.jms.Queue;
 @Configuration
 @EnableJms
 @EnableConfigurationProperties(ActiveMQProperties.class)
-public class MQConfig {
+public class MqConfig {
 
     @Autowired
     private ActiveMQProperties activeMQProperties;
 
     @Autowired
-    private MQPropties mqPropties;
+    private MqPropties mqPropties;
 
     @Bean
     public Queue queue() {
@@ -84,10 +84,12 @@ public class MQConfig {
     @Bean
     public JmsTemplate jmsTemplate(CachingConnectionFactory cachingConnectionFactory, Queue queue) {
         JmsTemplate jmsTemplate = new JmsTemplate();
-        jmsTemplate.setDeliveryMode(2);//进行持久化配置 1表示非持久化，2表示持久化
+        //进行持久化配置 1表示非持久化，2表示持久化
+        jmsTemplate.setDeliveryMode(2);
         jmsTemplate.setSessionTransacted(true);
         jmsTemplate.setConnectionFactory(cachingConnectionFactory);
-        jmsTemplate.setDefaultDestination(queue); //此处可不设置默认，在发送消息时也可设置队列
+        //此处可不设置默认，在发送消息时也可设置队列
+        jmsTemplate.setDefaultDestination(queue);
 //        jmsTemplate.setSessionAcknowledgeMode(4);//客户端签收模式
 //        jmsTemplate.setReceiveTimeout(3000);//默认0永不超时
         return jmsTemplate;
@@ -110,8 +112,6 @@ public class MQConfig {
         factory.setConcurrency("1-10");
         //重连间隔时间
         factory.setRecoveryInterval(1000L);
-        //签收模式
-//        factory.setSessionAcknowledgeMode(4);
         return factory;
     }
 

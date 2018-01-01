@@ -18,8 +18,9 @@ import javax.jms.Destination;
  */
 @Service("mqService")
 @Slf4j
-public class MQService {
-    @Autowired() // 也可以注入JmsTemplate，JmsMessagingTemplate对JmsTemplate进行了封装
+public class MqService {
+    @Autowired()
+    //也可以注入JmsTemplate，JmsMessagingTemplate对JmsTemplate进行了封装
     private JmsMessagingTemplate jmsMessagingTemplate;
 
     // 发送消息，destination是发送到的队列，message是待发送的消息

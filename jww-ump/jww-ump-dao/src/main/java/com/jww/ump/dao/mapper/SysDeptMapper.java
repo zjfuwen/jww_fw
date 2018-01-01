@@ -17,7 +17,7 @@ public interface SysDeptMapper extends BaseMapper<SysDeptModel> {
 
     /**
      * 分页查询
-     *
+     * @Param page 分页参数
      * @param deptName 部门名称
      * @return List<SysDeptModel>
      * @author wanyong

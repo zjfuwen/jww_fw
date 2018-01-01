@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * 部门管理控制器
  *
- * @Author: Ricky Wang
+ * @author: Ricky Wang
  * @Date: 17/12/1 11:23:17
  */
 @RestController

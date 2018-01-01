@@ -3,7 +3,7 @@ package com.jww.common.core.util;
 /**
  * @Title: 正则表达式工具类
  * @Description:
- * @Author: Ricky Wang
+ * @author: Ricky Wang
  * @Date: 17/12/29 16:17:06
  */
 public class RegexUtil {

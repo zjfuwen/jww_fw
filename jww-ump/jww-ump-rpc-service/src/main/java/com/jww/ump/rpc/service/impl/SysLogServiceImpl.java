@@ -53,16 +53,4 @@ public class SysLogServiceImpl extends BaseServiceImpl<SysLogMapper, SysLogModel
         page.setCondition(null);
         return super.selectPage(page, entityWrapper);
     }
-
-    @Override
-    public boolean delBatchByIds(Long[] ids) {
-        List<SysLogModel> list = new ArrayList<>();
-        for (Long id : ids) {
-            SysLogModel sysLogModel = new SysLogModel();
-            sysLogModel.setId(id);
-            sysLogModel.setIsDel(1);
-            list.add(sysLogModel);
-        }
-        return super.updateBatchById(list);
-    }
 }

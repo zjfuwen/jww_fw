@@ -7,13 +7,13 @@ import org.springframework.stereotype.Component;
 import javax.jms.TextMessage;
 
 /**
- * @Title:
- * @Description:
- * @Author: Ricky Wang
- * @Date: 2017/11/21 15:07
+ * MQ接收队列监听
+ *
+ * @author RickyWang
+ * @date 18/1/1 15:12:13
  */
 @Component
-public class MQListener {
+public class MqListener {
     private String text;
 //    private int num = 1;
 

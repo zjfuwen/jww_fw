@@ -1,22 +1,22 @@
 package com.jww.common.mq.utils;
-import com.jww.common.mq.service.MQService;
+import com.jww.common.mq.service.MqService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
 /**
- * @Title: MQ工具类
- * @Description:
- * @Author: Ricky Wang
- * @Date: 2017/11/21 14:15
+ * MQ工具类
+ *
+ * @author RickyWang
+ * @date 18/1/1 15:12:46
  */
 @Component
-public class MQUtils {
+public class MqUtils {
 
     @Autowired
-    private MQService mqService;
-    private static MQUtils mqUtils;
+    private MqService mqService;
+    private static MqUtils mqUtils;
 
     @PostConstruct
     public void init(){

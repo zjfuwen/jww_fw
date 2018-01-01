@@ -6,14 +6,14 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
- * @Title:
- * @Description:
- * @Author: Ricky Wang
- * @Date: 17/11/24 15:16:50
+ * MQ配置文件
+ *
+ * @author RickyWang
+ * @date 18/1/1 15:11:47
  */
 @Component
 @ConfigurationProperties(prefix = "spring.activemq")
-public class MQPropties {
+public class MqPropties {
 
     @Getter@Setter private String defaultQueueName;
 

@@ -153,6 +153,7 @@ public final class Constants {
      * 日志操作类型枚举
      */
     public enum LogOptEnum {
+        //查询
         QUERY(0,"查询"),
         ADD(1,"新增"),
         MODIFY(2,"修改"),
