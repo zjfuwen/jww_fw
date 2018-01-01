@@ -28,7 +28,8 @@ public interface SysTreeMapper extends com.baomidou.mybatisplus.mapper.BaseMappe
     /**
      * 查询菜单树
      *
-     * @param id, menuType
+     * @param id
+     * @param menuType
      * @return java.util.List<com.jww.ump.model.SysTreeModel>
      * @author RickyWang
      * @date 18/1/1 15:10:21

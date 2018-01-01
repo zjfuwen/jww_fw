@@ -20,10 +20,20 @@ import javax.jms.Destination;
 @Slf4j
 public class MqService {
     @Autowired()
-    //也可以注入JmsTemplate，JmsMessagingTemplate对JmsTemplate进行了封装
+    /**
+     * 也可以注入JmsTemplate，JmsMessagingTemplate对JmsTemplate进行了封装
+     *
+     * @author RickyWang
+     * @date 18/1/1 15:19:22
+     */
     private JmsMessagingTemplate jmsMessagingTemplate;
 
-    // 发送消息，destination是发送到的队列，message是待发送的消息
+    /**
+     * 发送消息，destination是发送到的队列，message是待发送的消息
+     *
+     * @author RickyWang
+     * @date 18/1/1 15:19:41
+     */
     public void send(String queueName, final Object object) {
         send(new ActiveMQQueue(queueName), object);
     }
