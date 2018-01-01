@@ -16,7 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * shiro权限获取
@@ -48,18 +50,9 @@ public class SysUserRealm extends AuthorizingRealm {
         SysUserModel sysUserModel = (SysUserModel) principals.getPrimaryPrincipal();
         if (sysUserModel != null) {
             List<String> permissionList = sysAuthorizeService.queryPermissionsByUserId(sysUserModel.getId());
-            for (String permission : permissionList) {
-                if (StrUtil.isNotBlank(permission)) {
-                    //一个菜单有多个权限标识，逗号分隔，需要拆分
-                    String[] perms = StrUtil.split(permission, ",");
-                    Arrays.stream(perms).forEach(perm -> {
-                                if (StrUtil.isNotBlank(perm)) {
-                                    simpleAuthorizationInfo.addStringPermission(perm);
-                                }
-                            }
-                    );
-                }
-            }
+            permissionList.stream().forEach(permission -> {
+                simpleAuthorizationInfo.addStringPermission(permission);
+            });
             log.info("userId:{},simpleAuthorizationInfo:{}", sysUserModel.getId(), JSON.toJSONString(simpleAuthorizationInfo.getStringPermissions()));
         }
         return simpleAuthorizationInfo;

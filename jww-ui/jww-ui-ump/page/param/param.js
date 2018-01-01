@@ -41,6 +41,7 @@ layui.config({
     // 监听submit
     if (parent.pageOperation === 1 || parent.pageOperation === 2) {
         form.on('submit(addFilter)', function (data) {
+            var index = top.layer.msg('数据提交中，请稍候', {icon: 16, time: false, shade: 0.8});
             $.ajax({
                 type: 'POST',
                 url: submitUrl,

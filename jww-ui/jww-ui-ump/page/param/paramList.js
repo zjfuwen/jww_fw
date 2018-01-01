@@ -215,6 +215,11 @@ layui.config({
                 } else {
                     top.layer.close(index);
                     layer.msg(data.message, {icon: 2});
+                    tableIns.reload({
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                    });
                 }
             },
             contentType: "application/json"

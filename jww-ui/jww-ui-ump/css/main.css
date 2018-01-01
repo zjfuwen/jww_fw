@@ -181,3 +181,18 @@
 	.top_menu .layui-nav-item.showNotice[pc]{ display:none !important; }
 	.panel{ width:100%; }
 }
+
+/* li 自动计数 */
+ol {
+    counter-reset: ordered;
+}
+
+ol li:before {
+    counter-increment: ordered;
+    content: counter(ordered) ". ";
+}
+
+ul li {
+    list-style: square;
+    margin-left: 1em;
+}
