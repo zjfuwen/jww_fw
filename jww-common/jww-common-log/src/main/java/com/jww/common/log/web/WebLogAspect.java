@@ -72,7 +72,7 @@ public class WebLogAspect {
         logbf.append(",HTTP_METHOD:").append(request.getMethod());
         logbf.append(",IP:").append(HttpUtil.getClientIP(request));
         logbf.append(",CLASS_METHOD:").append(pjp.getSignature().getDeclaringTypeName() + "." + pjp.getSignature().getName());
-        logbf.append(",ARGS:").append(JSON.toJSONString(pjp.getArgs()).replaceAll(RegexUtil.getJSonValueRegex("password"),"****"));
+        logbf.append(",ARGS:").append(JSON.toJSONString(pjp.getArgs()).replaceAll(RegexUtil.getJSonValueRegex("password"),"****").replaceAll(RegexUtil.getJSonValueRegex("oldPassword"),"****"));
         return logbf;
     }
 

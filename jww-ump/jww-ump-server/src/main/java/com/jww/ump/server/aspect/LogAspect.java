@@ -100,7 +100,7 @@ public class LogAspect {
         //方法名含包名（com.jww.ump.server.controller.SysLogController.queryListPage）
         String classMethod = pjp.getSignature().getDeclaringTypeName() + "." + pjp.getSignature().getName();
         //请求参数
-        String args = JSON.toJSONString(pjp.getArgs()).replaceAll(RegexUtil.getJSonValueRegex("password"),"****");
+        String args = JSON.toJSONString(pjp.getArgs()).replaceAll(RegexUtil.getJSonValueRegex("password"),"****").replaceAll(RegexUtil.getJSonValueRegex("oldPassword"),"****");
         sysLogModel.setIp(ip);
         sysLogModel.setMethod(classMethod);
         sysLogModel.setParams(args);
