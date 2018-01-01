@@ -118,8 +118,6 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRoleMo
             SysRoleMenuModel sysRoleMenuModel = new SysRoleMenuModel();
             sysRoleMenuModel.setRoleId(sysRoleModel.getId());
             sysRoleMenuModel.setMenuId(menuId);
-            // sysRoleMenuModel.setPermission("123");
-            // 取sysRoleModel的修改人作为sysRoleMenuModel的创建人
             sysRoleMenuModel.setCreateBy(sysRoleModel.getUpdateBy());
             sysRoleMenuModel.setUpdateBy(sysRoleModel.getUpdateBy());
             sysRoleMenuModelList.add(sysRoleMenuModel);
