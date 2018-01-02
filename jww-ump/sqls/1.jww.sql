@@ -167,7 +167,7 @@ INSERT INTO `sys_menu` VALUES ('9', '日志管理', '1', '1', 'icon-ccgl-shujuzi
 INSERT INTO `sys_menu` VALUES ('18', '新增', '2', '2', null, null, '0', '2', '1', 'sys:user:add,sys:role:read,sys:user:read', null, '0', '1', '1', '2017-12-19 11:22:58', '1', '2017-12-30 14:46:41');
 INSERT INTO `sys_menu` VALUES ('19', '修改', '2', '2', null, null, '0', '3', '1', 'sys:user:update,sys:role:read,sys:user:read', null, '0', '1', '1', '2017-12-19 12:35:36', '1', '2017-12-30 15:14:57');
 INSERT INTO `sys_menu` VALUES ('21', '删除', '2', '2', null, null, '0', '4', '1', 'sys:user:delete', null, '0', '1', '1', '2017-12-19 12:37:20', '1', '2017-12-19 12:37:23');
-INSERT INTO `sys_menu` VALUES ('22', 'SQL监控', '1', '1', 'icon-jiaoseguanli', 'druid/sql.html', '0', '12', '1', 'sys:sql:read', null, '0', '1', '1', '2016-06-20 09:16:56', '1', '2017-12-28 22:44:36');
+INSERT INTO `sys_menu` VALUES ('22', '应用监控', '1', '1', 'icon-jiaoseguanli', 'druid/webapp.html', '0', '12', '1', 'sys:sql:read', null, '0', '1', '1', '2016-06-20 09:16:56', '1', '2017-12-28 22:44:36');
 INSERT INTO `sys_menu` VALUES ('945569164808769538', '新增', '2', '5', null, null, '0', '2', '1', 'sys:role:add,sys:menu:read', null, '0', '1', '1', '2017-12-26 16:17:11', '1', '2017-12-29 15:49:48');
 INSERT INTO `sys_menu` VALUES ('945569292122673153', '修改', '2', '5', null, null, '0', '3', '1', 'sys:role:update,sys:role:read,sys:menu:read', null, '0', '1', '1', '2017-12-26 16:17:42', '1', '2017-12-29 15:49:57');
 INSERT INTO `sys_menu` VALUES ('945569401908580354', '删除', '2', '5', null, null, '0', '4', '1', 'sys:role:delete', null, '0', '1', '1', '2017-12-26 16:18:08', '1', '2017-12-26 16:20:08');
