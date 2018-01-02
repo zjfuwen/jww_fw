@@ -27,7 +27,7 @@ layui.config({
                     }
                 });
             } else {
-                layer.msg("部门加载失败！");
+                layer.msg("部门加载失败！", {icon: 2});
             }
         }
     });

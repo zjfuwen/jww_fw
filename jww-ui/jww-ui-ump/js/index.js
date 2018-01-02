@@ -218,7 +218,7 @@ layui.config({
     // 解锁
     $("body").on("click", "#unlock", function () {
         if ($(this).siblings(".admin-header-lock-input").val() === '') {
-            layer.msg("请输入解锁密码！");
+            layer.msg("请输入解锁密码！", {icon: 0});
             $(this).siblings(".admin-header-lock-input").focus();
         } else {
             if ($(this).siblings(".admin-header-lock-input").val() === "123456") {
@@ -226,7 +226,7 @@ layui.config({
                 $(this).siblings(".admin-header-lock-input").val('');
                 layer.closeAll("page");
             } else {
-                layer.msg("密码错误，请重新输入！");
+                layer.msg("密码错误，请重新输入！", {icon: 2});
                 $(this).siblings(".admin-header-lock-input").val('').focus();
             }
         }
@@ -341,7 +341,7 @@ layui.config({
                 $(".refresh").addClass("refreshThis");
             }, 5000)
         } else {
-            layer.msg("您刷新速度太快，稍等五秒再刷新吧！");
+            layer.msg("您刷新速度太快，稍等五秒再刷新吧！", {icon: 0});
         }
     });
 
@@ -371,7 +371,7 @@ layui.config({
                 }
             })
         } else {
-            layer.msg("没有可以关闭的窗口了@_@");
+            layer.msg("没有可以关闭的窗口了@_@", {icon: 2});
         }
         //渲染顶部窗口
         tab.tabMove();
@@ -389,7 +389,7 @@ layui.config({
                 }
             })
         } else {
-            layer.msg("没有可以关闭的窗口了@_@");
+            layer.msg("没有可以关闭的窗口了@_@", {icon: 2});
         }
         //渲染顶部窗口
         tab.tabMove();

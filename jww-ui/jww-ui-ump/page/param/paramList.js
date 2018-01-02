@@ -210,7 +210,8 @@ layui.config({
                 if (data.code === 200) {
                     setTimeout(function () {
                         layer.close(index);
-                        layer.msg("修改成功！");
+                        layer.msg("修改成功！", {icon: 1});
+
                     }, 500);
                 } else {
                     top.layer.close(index);

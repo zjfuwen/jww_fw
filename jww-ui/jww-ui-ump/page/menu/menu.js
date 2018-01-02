@@ -38,7 +38,7 @@ layui.config({
                     $(".layui-input.iconcls").val(data.data.iconcls);
                 } else {
                     top.layer.close(index);
-                    top.layer.msg("查询异常！");
+                    top.layer.msg("查询异常！", {icon: 1});
                 }
             },
             contentType: "application/json"
@@ -61,7 +61,7 @@ layui.config({
                         //弹出loading
                         setTimeout(function () {
                             top.layer.close(index);
-                            top.layer.msg("操作成功！");
+                            top.layer.msg("操作成功！", {icon: 1});
                             layer.closeAll("iframe");
                             //刷新父页面
                             parent.location.reload();

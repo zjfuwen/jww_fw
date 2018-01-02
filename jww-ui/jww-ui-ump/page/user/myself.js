@@ -23,7 +23,7 @@ layui.config({
             success: function (data) {
                 if (data.code === 200) {
                     top.layer.close(index);
-                    top.layer.msg("个人资料修改成功！");
+                    top.layer.msg("个人资料修改成功！", {icon: 1});
                 } else {
                     top.layer.close(index);
                     layer.msg(data.message, {icon: 2});

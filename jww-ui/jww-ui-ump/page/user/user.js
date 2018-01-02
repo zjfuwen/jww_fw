@@ -45,7 +45,7 @@ layui.config({
                             parent.location.reload();
                         } else if (parent.pageOperation === 2) {
                             setTimeout(function () {
-                                top.layer.msg("用户修改成功！");
+                                top.layer.msg("用户修改成功！", {icon: 1});
                                 layer.closeAll("iframe");
                                 //刷新父页面
                                 parent.location.reload();

@@ -51,7 +51,7 @@ layui.config({
                         //弹出loading
                         setTimeout(function () {
                             top.layer.close(index);
-                            top.layer.msg("操作成功！");
+                            top.layer.msg("操作成功！", {icon: 1});
                             layer.closeAll("iframe");
                             //刷新父页面
                             parent.location.reload();

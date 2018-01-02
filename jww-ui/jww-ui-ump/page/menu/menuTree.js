@@ -37,7 +37,7 @@ layui.config({
                     }
                 });
             } else {
-                top.layer.msg("菜单加载失败！");
+                top.layer.msg("菜单加载失败！", {icon: 2});
             }
         },
         contentType: "application/json"
