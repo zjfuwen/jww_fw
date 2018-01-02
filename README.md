@@ -88,7 +88,7 @@ jww
  6.	启动MySQL, Zookeeper, Redis, Nginx;
  7.	IntelliJ IDEA中右键 >> Run jww/jww-ump/jww-ump-rpc-service/src/main/java/com/jww/ump/rpc/service/ServiceApplication.java;
  8.	IntelliJ IDEA中右键 >> Run jww/jww-ump/jww-ump-server/src/main/java/com/jww/ump/server/ ServerApplication.java;
- 9.	访问地址：http://localhost 帐户密码：admin/111111
+ 9.	访问地址：http://localhost 帐户密码：admin/123456
 
     
 ## 版权声明
