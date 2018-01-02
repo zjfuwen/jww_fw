@@ -104,12 +104,13 @@ jww
  8.	IntelliJ IDEA中右键 >> Run jww/jww-ump/jww-ump-server/src/main/java/com/jww/ump/server/ServerApplication.java;
  9.	访问地址：http://localhost 帐户密码：admin/123456
 
-## 后续新增功能(不分先后)：
-    ● SSO单点登录服务器统一鉴权
-    ● 全文检索
+## 后续计划(不分先后)：
+    ● SSO单点登录服务
+    ● 分布式全文检索
     ● 分布式定时调度
-    ● 增加spring-cloud版本
+    ● spring-cloud版本
     ● 国际化
+    ● 引入Docker容器
     
 ## 预览图
 
