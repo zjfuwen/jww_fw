@@ -21,8 +21,8 @@ layui.define(['jquery'], function (exports) {
         dataType: 'json',
         contentType: "application/json",
         beforeSend: function (evt, request, settings) {
-            request.url = 'http://localhost:8089/' + request.url;
-            // request.url = '/' + request.url;
+            // request.url = 'http://localhost:8089/' + request.url;
+            request.url = '/' + request.url;
         },
         dataFilter: function (result) {
             try {
