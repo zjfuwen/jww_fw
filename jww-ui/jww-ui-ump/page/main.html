@@ -12,6 +12,22 @@
     <link rel="stylesheet" href="../layui/css/layui.css" media="all"/>
     <link rel="stylesheet" href="//at.alicdn.com/t/font_495397_jzxo653foj6skyb9.css" media="all"/>
     <link rel="stylesheet" href="../css/main.css" media="all"/>
+    <style type="text/css">
+        /* li 自动计数 */
+        ol {
+            counter-reset: ordered;
+        }
+
+        ol li:before {
+            counter-increment: ordered;
+            content: counter(ordered) ". ";
+        }
+
+        ul li {
+            list-style: square;
+            margin-left: 1em;
+        }
+    </style>
 </head>
 <body class="childrenBody">
 <div class="layui-collapse" lay-filter="test">
