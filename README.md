@@ -24,23 +24,27 @@
 
 ## 技术选型
     ● 核心框架：Spring Boot 1.5.8 + Dubbo 2.5.3
+    ● 分布式协调服务：ZooKeeper 3.4.11
+    ● 校验框架：Hibernate Validator 5.3.5.Final
     ● 安全框架：Apache Shiro 1.4.0
+    ● 代码生成：MyBatis Plus Generator 2.1.6
     ● 持久层框架：MyBatis 3.4.5 + MyBatis-Plus 2.1.6
     ● 数据库连接池：Alibaba Druid 1.1.5
     ● 缓存框架：Redis.clients:jedis 2.8.2
     ● 队列框架：Apache ActiveMQ 5.14.5
     ● 会话管理：Spring-Session 1.3.1
     ● 日志管理：SLF4J 
-    ● 前端框架：Layui
-    ● 公用工具集：Hutool 3.2.1
+    ● 前端框架：Layui 2.2.45
+    ● 公用工具集：Hutool 3.2.3
     ● 支付组件：Egan pay-java-parent 2.0.4
     ● 代码简化：Lombok 1.16.18
     ● 序列化框架：Alibaba Fastjson 1.2.41
-    ● HTTP客户端：Hutool-http 3.2.1
-    ● 文档生成：Swagger2
+    ● HTTP客户端：Hutool-http 3.2.3
+    ● 接口测试框架：Swagger2
+    ● 字体图标：Alibaba Iconfont
     
 
-**项目结构** 
+## 项目结构 
 ```
 jww
 ├─jww-common 公共模块
@@ -90,6 +94,12 @@ jww
  8.	IntelliJ IDEA中右键 >> Run jww/jww-ump/jww-ump-server/src/main/java/com/jww/ump/server/ ServerApplication.java;
  9.	访问地址：http://localhost 帐户密码：admin/123456
 
+## 后续新增功能(不分先后)：
+    ● SSO单点登录服务器统一鉴权
+    ● 全文检索
+    ● 分布式定时调度
+    ● 增加spring-cloud版本
+    ● 国际化
     
 ## 版权声明
 jww使用 [Apache License 2.0][] 协议.
