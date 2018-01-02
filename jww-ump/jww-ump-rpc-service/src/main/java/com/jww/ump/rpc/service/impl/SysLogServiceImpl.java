@@ -50,6 +50,7 @@ public class SysLogServiceImpl extends BaseServiceImpl<SysLogMapper, SysLogModel
             });
             entityWrapper.and(StrUtil.removeSuffix(conditionSql.toString(), "OR "));
         }
+        entityWrapper.orderBy("create_time",false);
         page.setCondition(null);
         return super.selectPage(page, entityWrapper);
     }
