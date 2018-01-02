@@ -78,6 +78,10 @@ jww
 
 ![核心技术图](jww-readme/后台核心技术.png)
 
+## 基础架构图
+
+![基础架构图](jww-readme/后台基础架构图.png)
+
 ## 本地部署
 
   1. 环境要求
@@ -103,6 +107,18 @@ jww
     ● 分布式定时调度
     ● 增加spring-cloud版本
     ● 国际化
+    
+## 预览图
+
+![预览图](jww-readme/ui-demo-index.png)
+![预览图](jww-readme/ui-demo-userList.png)
+![预览图](jww-readme/ui-demo-deptList.png)
+![预览图](jww-readme/ui-demo-menuList.png)
+![预览图](jww-readme/ui-demo-roleList.png)
+![预览图](jww-readme/ui-demo-dicList.png)
+![预览图](jww-readme/ui-demo-paramList.png)
+![预览图](jww-readme/ui-demo-log.png)
+![预览图](jww-readme/ui-demo-webMonitor.png)
     
 ## 版权声明
 jww使用 [Apache License 2.0][] 协议.
