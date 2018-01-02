@@ -102,7 +102,14 @@ public class MqConfig {
         return jmsMessagingTemplate;
     }
 
-    //定义一个消息监听器连接工厂，这里定义的是点对点模式的监听器连接工厂
+    /**
+     * 定义一个消息监听器连接工厂，这里定义的是点对点模式的监听器连接工厂
+     *
+     * @param cachingConnectionFactory
+     * @return DefaultJmsListenerContainerFactory
+     * @author wanyong
+     * @date 2018-01-02 11:18
+     */
     @Bean(name = "jmsQueueListener")
     public DefaultJmsListenerContainerFactory jmsQueueListenerContainerFactory(CachingConnectionFactory cachingConnectionFactory) {
         DefaultJmsListenerContainerFactory factory =
