@@ -27,9 +27,29 @@ public class SysRoleMenuModel extends BaseModel {
     private Long roleId;
     @TableField("menu_id")
     private Long menuId;
-    /**
-     * 权限标识
-     */
-    @TableField("permission_")
-    private String permission;
+
+
+    public Long getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
+    }
+
+    public Long getMenuId() {
+        return menuId;
+    }
+
+    public void setMenuId(Long menuId) {
+        this.menuId = menuId;
+    }
+
+    @Override
+    public String toString() {
+        return "SysRoleMenu{" +
+                ", roleId=" + roleId +
+                ", menuId=" + menuId +
+                "}";
+    }
 }

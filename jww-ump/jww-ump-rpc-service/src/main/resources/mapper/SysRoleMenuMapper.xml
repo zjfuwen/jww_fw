@@ -14,7 +14,6 @@
         <result column="update_time" property="updateTime"/>
         <result column="role_id" property="roleId"/>
         <result column="menu_id" property="menuId"/>
-        <result column="permission_" property="permission"/>
     </resultMap>
 
     <select id="selectMenuIdListByRoleId" resultType="Long">

@@ -12,7 +12,7 @@ public class CodeGenerator {
 
     public static void main(String[] args) {
         MybatisPlusGeneratorUtil mybatisPlusGeneratorUtil = new MybatisPlusGeneratorUtil();
-        String propertiesFilePath = "D:\\SOFT\\idea-workspace\\jww\\jww-ump\\jww-ump-generator\\src\\main\\resources\\generator.properties";
+        String propertiesFilePath = "generator.properties";
         mybatisPlusGeneratorUtil.generator(propertiesFilePath);
     }
 
