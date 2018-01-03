@@ -102,9 +102,10 @@ jww
  6. 修改jww/jww-ump/jww-ump-server/src/main/resources/dubbo/consumers.xml，更新Zookeeper的IP；
  7.	修改Nginx/conf/nginx.conf，指定静态和动态页面地址；
  8.	启动MySQL, Zookeeper, Redis, Nginx;
- 9.	IntelliJ IDEA中右键 >> Run jww/jww-ump/jww-ump-rpc-service/src/main/java/com/jww/ump/rpc/service/ServiceApplication.java;
- 10. IntelliJ IDEA中右键 >> Run jww/jww-ump/jww-ump-server/src/main/java/com/jww/ump/server/ServerApplication.java;
- 11. 访问地址：http://localhost 帐户密码：admin/123456
+ 9. IntelliJ IDEA 菜单File-Settings-Plugins，添加lombok plugin插件
+ 10. IntelliJ IDEA中右键 >> Run jww/jww-ump/jww-ump-rpc-service/src/main/java/com/jww/ump/rpc/service/ServiceApplication.java;
+ 11. IntelliJ IDEA中右键 >> Run jww/jww-ump/jww-ump-server/src/main/java/com/jww/ump/server/ServerApplication.java;
+ 12. 访问地址：http://localhost 帐户密码：admin/123456
 
 ## 后续计划(不分先后)：
     ● SSO单点登录服务
