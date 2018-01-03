@@ -10,6 +10,7 @@ import com.jww.ump.model.SysDicModel;
 import com.jww.ump.rpc.api.SysDicService;
 import com.jww.ump.server.annotation.SysLogOpt;
 import com.xiaoleilu.hutool.lang.Assert;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -32,6 +33,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/dic")
+@Api(value = "字典管理", description = "字典管理")
 public class SysDicController extends BaseController {
 
     @Autowired
@@ -46,7 +48,7 @@ public class SysDicController extends BaseController {
      * @date 2017-12-05 13:35
      */
     @ApiOperation(value = "查询字典", notes = "根据字典主键ID查询字典")
-    @ApiImplicitParam(name = "id", value = "角色ID", required = true, dataType = "Long")
+    @ApiImplicitParam(name = "id", value = "字典ID", required = true, dataType = "Long")
     @PostMapping("/query")
     @RequiresPermissions("sys:dic:read")
     public ResultModel query(@RequestBody Long dicId) {
@@ -55,6 +57,15 @@ public class SysDicController extends BaseController {
         return ResultUtil.ok(sysDicModel);
     }
 
+    /**
+     * 分页查询字典列表
+     *
+     * @param pageModel 分页实体
+     * @return ResultModel
+     * @author wanyong
+     * @date 2018-01-03 12:53
+     */
+    @ApiOperation(value = "分页查询字典", notes = "根据字典主键ID查询字典")
     @PostMapping("/listPage")
     @RequiresPermissions("sys:dic:read")
     public ResultModel queryListPage(@RequestBody PageModel pageModel) {
@@ -62,6 +73,15 @@ public class SysDicController extends BaseController {
         return ResultUtil.ok(pageModel);
     }
 
+    /**
+     * 新增字典
+     *
+     * @param sysDicModel 字典实体
+     * @return ResultModel
+     * @author wanyong
+     * @date 2018-01-03 13:28
+     */
+    @ApiOperation(value = "新增字典", notes = "根据字典实体新增字典")
     @PostMapping("/add")
     @RequiresPermissions("sys:dic:add")
     @SysLogOpt(module = "字典管理", value = "字典新增", operationType = Constants.LogOptEnum.ADD)
@@ -71,6 +91,15 @@ public class SysDicController extends BaseController {
         return ResultUtil.ok(sysDicService.add(sysDicModel));
     }
 
+    /**
+     * 修改字典
+     *
+     * @param sysDicModel 字典实体
+     * @return com.jww.common.web.model.ResultModel
+     * @author RickyWang
+     * @date 17/12/25 21:29:09
+     */
+    @ApiOperation(value = "修改字典", notes = "根据字典ID修改字典")
     @PostMapping("/modify")
     @RequiresPermissions("sys:dic:update")
     @SysLogOpt(module = "字典管理", value = "字典修改", operationType = Constants.LogOptEnum.MODIFY)
@@ -88,6 +117,7 @@ public class SysDicController extends BaseController {
      * @author wanyong
      * @date 2017-12-23 02:46
      */
+    @ApiOperation(value = "批量删除字典", notes = "根据主键ID集合批量删除字典")
     @PostMapping("/delBatchByIds")
     @RequiresPermissions("sys:dic:delete")
     @SysLogOpt(module = "字典管理", value = "字典批量删除", operationType = Constants.LogOptEnum.DELETE)
