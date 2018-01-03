@@ -26,7 +26,7 @@
  12. 代码生成器：根据数据库表结构生成简单的增删改查功能代码，包括model、mapper、service、controller。
 
 ## 技术选型
-    ● 核心框架：Spring Boot 1.5.8 + Dubbo 2.5.3
+    ● 核心框架：Spring Boot 1.5.8 + Dubbo 2.5.7
     ● 分布式协调服务：ZooKeeper 3.4.11
     ● 校验框架：Hibernate Validator 5.3.5.Final
     ● 安全框架：Apache Shiro 1.4.0
