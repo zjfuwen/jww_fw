@@ -106,6 +106,7 @@ jww
  10. IntelliJ IDEA中右键 >> Run jww/jww-ump/jww-ump-rpc-service/src/main/java/com/jww/ump/rpc/service/ServiceApplication.java;
  11. IntelliJ IDEA中右键 >> Run jww/jww-ump/jww-ump-server/src/main/java/com/jww/ump/server/ServerApplication.java;
  12. 访问地址：http://localhost 帐户密码：admin/123456
+ 13. swagger地址：http://localhost:8089/swagger-ui.html
 
 ## 后续计划(不分先后)：
     ● SSO单点登录服务
