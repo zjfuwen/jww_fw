@@ -44,7 +44,8 @@ public class LoginController extends BaseController {
     @Autowired
     private SysUserService sysUserService;
 
-    /**z
+    /**
+     * z
      * 获取验证码
      *
      * @param captchaId 验证码ID
@@ -118,6 +119,13 @@ public class LoginController extends BaseController {
         return ResultUtil.ok(sysUserModel);
     }
 
+    /**
+     * 登出
+     *
+     * @return ResultModel
+     * @author wanyong
+     * @date 2018-01-04 11:36
+     */
     @ApiOperation(value = "用户登出")
     @PostMapping("/logout")
     @SysLogOpt(module = "登录接口", value = "用户登出", operationType = Constants.LogOptEnum.LOGIN)

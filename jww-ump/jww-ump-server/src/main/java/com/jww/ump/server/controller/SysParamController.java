@@ -11,6 +11,7 @@ import com.jww.ump.rpc.api.SysParamService;
 import com.jww.ump.server.annotation.SysLogOpt;
 import com.xiaoleilu.hutool.lang.Assert;
 import com.xiaoleilu.hutool.util.CollectionUtil;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -30,6 +31,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/param")
+@Api(value = "参数管理", description = "参数管理")
 public class SysParamController extends BaseController {
 
     @Autowired
@@ -53,6 +55,15 @@ public class SysParamController extends BaseController {
         return ResultUtil.ok(sysParamModel);
     }
 
+    /**
+     * 分页查询参数列表
+     *
+     * @param pageModel 分页对象
+     * @return ResultModel
+     * @author wanyong
+     * @date 2018-01-03 19:27
+     */
+    @ApiOperation(value = "分页查询参数", notes = "根据分页参数查询参数列表")
     @PostMapping("/listPage")
     @RequiresPermissions("sys:param:read")
     public ResultModel queryListPage(@RequestBody PageModel pageModel) {
@@ -60,6 +71,15 @@ public class SysParamController extends BaseController {
         return ResultUtil.ok(pageModel);
     }
 
+    /**
+     * 新增参数
+     *
+     * @param sysParamModel 参数实体
+     * @return ResultModel
+     * @author shadj
+     * @date 2017/12/18 21:54
+     */
+    @ApiOperation(value = "新增参数", notes = "根据参数实体新增参数")
     @PostMapping("/add")
     @RequiresPermissions("sys:param:add")
     @SysLogOpt(module = "参数管理", value = "参数新增", operationType = Constants.LogOptEnum.ADD)
@@ -69,6 +89,15 @@ public class SysParamController extends BaseController {
         return ResultUtil.ok(sysParamService.add(sysParamModel));
     }
 
+    /**
+     * 修改参数
+     *
+     * @param sysParamModel 参数实体
+     * @return ResultModel
+     * @author wanyong
+     * @date 2018-01-03 22:36
+     */
+    @ApiOperation(value = "修改参数", notes = "根据参数ID修改参数")
     @PostMapping("/modify")
     @RequiresPermissions("sys:param:update")
     @SysLogOpt(module = "参数管理", value = "参数修改", operationType = Constants.LogOptEnum.MODIFY)
@@ -86,6 +115,7 @@ public class SysParamController extends BaseController {
      * @author shadj
      * @date 2017-12-24 18:30
      */
+    @ApiOperation(value = "批量删除参数", notes = "根据主键ID集合批量删除参数")
     @DeleteMapping("/deleteBatchByIds")
     @RequiresPermissions("sys:param:delete")
     @SysLogOpt(module = "参数管理", value = "参数批量删除", operationType = Constants.LogOptEnum.DELETE)
