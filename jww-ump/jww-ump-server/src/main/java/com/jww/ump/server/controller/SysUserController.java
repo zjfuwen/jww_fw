@@ -18,7 +18,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -54,7 +53,7 @@ public class SysUserController extends BaseController {
     @ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "Long")
     @GetMapping("/query/{id}")
     @RequiresPermissions("sys:user:read")
-    public ResultModel<SysUserModel> query(@PathVariable Long id) {
+    public ResultModel query(@PathVariable(value = "id") Long id) {
         Assert.notNull(id);
         SysUserModel sysUserModel = sysUserService.queryOne(id);
         return ResultUtil.ok(sysUserModel);
@@ -63,26 +62,27 @@ public class SysUserController extends BaseController {
     /**
      * 分页查询用户列表
      *
-     * @param pageModel
+     * @param pageModel 分页实体
      * @return ResultModel
      * @author wanyong
      * @date 2017/12/2 14:31
      */
+    @ApiOperation(value = "分页查询用户列表", notes = "根据分页参数查询用户列表")
     @PostMapping("/listPage")
     @RequiresPermissions("sys:user:read")
     public ResultModel queryListPage(@RequestBody PageModel pageModel) {
-        pageModel = (PageModel<SysUserModel>) sysUserService.queryListPage(pageModel);
-        return ResultUtil.ok(pageModel);
+        return ResultUtil.ok(sysUserService.queryListPage(pageModel));
     }
 
     /**
      * 新增用户
      *
-     * @param sysUserModel
+     * @param sysUserModel 用户实体
      * @return ResultModel
      * @author wanyong
      * @date 2017-12-03 10:18
      */
+    @ApiOperation(value = "新增用户", notes = "根据用户实体新增用户")
     @PostMapping("/add")
     @RequiresPermissions("sys:user:add")
     @SysLogOpt(module = "用户管理", value = "用户新增", operationType = Constants.LogOptEnum.ADD)
@@ -98,7 +98,15 @@ public class SysUserController extends BaseController {
         return ResultUtil.ok();
     }
 
-
+    /**
+     * 根据用户ID集合批量删除用户
+     *
+     * @param ids 用户ID集合
+     * @return ResultModel
+     * @author wanyong
+     * @date 2018-01-04 11:32
+     */
+    @ApiOperation(value = "批量删除用户", notes = "根据主键ID集合批量删除用户")
     @PostMapping("/delBatchByIds")
     @RequiresPermissions("sys:user:delete")
     @SysLogOpt(module = "用户管理", value = "用户批量删除", operationType = Constants.LogOptEnum.DELETE)
@@ -109,6 +117,15 @@ public class SysUserController extends BaseController {
         return ResultUtil.ok(sysUserService.delBatchByIds(ids));
     }
 
+    /**
+     * 修改用户
+     *
+     * @param sysUserModel 用户实体
+     * @return ResultModel
+     * @author wanyong
+     * @date 2018-01-04 11:33
+     */
+    @ApiOperation(value = "修改用户", notes = "根据用户ID修改用户")
     @PostMapping("/modify")
     @RequiresPermissions("sys:user:update")
     @SysLogOpt(module = "用户管理", value = "用户修改", operationType = Constants.LogOptEnum.MODIFY)
@@ -118,6 +135,15 @@ public class SysUserController extends BaseController {
         return ResultUtil.ok(sysUserService.modifyUser(sysUserModel));
     }
 
+    /**
+     * 个人资料修改
+     *
+     * @param sysUserModel 用户实体
+     * @return ResultModel
+     * @author wanyong
+     * @date 2018-01-04 11:33
+     */
+    @ApiOperation(value = "修改个人资料", notes = "根据用户ID修改用户个人资料")
     @PostMapping("/modifyMySelf")
     @SysLogOpt(module = "用户管理", value = "个人资料修改", operationType = Constants.LogOptEnum.MODIFY)
     public ResultModel modifyMySelf(@RequestBody SysUserModel sysUserModel) {
@@ -132,14 +158,15 @@ public class SysUserController extends BaseController {
     /**
      * 根据用户id查询用户角色关系
      *
-     * @param userId
+     * @param userId 用户ID
      * @return com.jww.common.web.model.ResultModel
      * @author RickyWang
      * @date 17/12/25 21:26:57
      */
+    @ApiOperation(value = "查询用户角色关系", notes = "根据用户id查询用户角色关系")
     @GetMapping("/queryUserRoles/{userId}")
     @RequiresPermissions("sys:user:read")
-    public ResultModel queryUserRoles(@PathVariable Long userId) {
+    public ResultModel queryUserRoles(@PathVariable(value = "userId") Long userId) {
         Assert.notNull(userId);
         List<SysUserRoleModel> list = sysUserService.queryUserRoles(userId);
         return ResultUtil.ok(list);
@@ -148,11 +175,12 @@ public class SysUserController extends BaseController {
     /**
      * 修改密码
      *
-     * @param sysUserModel
+     * @param sysUserModel 用户实体
      * @return ResultModel
      * @author wanyong
      * @date 2017/12/30 22:18
      */
+    @ApiOperation(value = "修改密码", notes = "修改密码")
     @PostMapping("/modifyPassword")
     @RequiresPermissions("sys:user:update")
     @SysLogOpt(module = "用户管理", value = "修改密码", operationType = Constants.LogOptEnum.MODIFY)

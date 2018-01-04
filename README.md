@@ -122,10 +122,9 @@ jww
 ![预览图](jww-readme/ui-demo-deptList.png)
 ![预览图](jww-readme/ui-demo-menuList.png)
 ![预览图](jww-readme/ui-demo-roleList.png)
-![预览图](jww-readme/ui-demo-dicList.png)
-![预览图](jww-readme/ui-demo-paramList.png)
 ![预览图](jww-readme/ui-demo-log.png)
 ![预览图](jww-readme/ui-demo-webMonitor.png)
+![预览图](jww-readme/ui-demo-swagger2.png)
     
 ## 版权声明
 jww使用 [Apache License 2.0][] 协议.
