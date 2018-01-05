@@ -154,12 +154,12 @@ public final class Constants {
      */
     public enum LogOptEnum {
         //查询
-        QUERY(0,"查询"),
-        ADD(1,"新增"),
-        MODIFY(2,"修改"),
-        DELETE(3,"删除"),
-        LOGIN(4,"登录"),
-        UNKNOW(9,"未知");
+        QUERY(0, "查询"),
+        ADD(1, "新增"),
+        MODIFY(2, "修改"),
+        DELETE(3, "删除"),
+        LOGIN(4, "登录"),
+        UNKNOW(9, "未知");
         private final int value;
         private final String message;
 

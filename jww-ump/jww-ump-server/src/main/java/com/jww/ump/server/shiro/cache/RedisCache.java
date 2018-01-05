@@ -23,21 +23,21 @@ public class RedisCache<K, V> implements Cache<K, V> {
 
     @Override
     public V get(K key) throws CacheException {
-        log.info("获取缓存，key:{}", getCacheKey(key));
+        log.debug("获取缓存，key:{}", getCacheKey(key));
         V value = (V) CacheUtil.getCache().get(getCacheKey(key));
         return value;
     }
 
     @Override
     public V put(K key, V value) throws CacheException {
-        log.info("放入缓存，key:{},value:{}", getCacheKey(key), value);
+        log.debug("放入缓存，key:{},value:{}", getCacheKey(key), value);
         CacheUtil.getCache().set(getCacheKey(key), (Serializable) value, 30 * 60);
         return value;
     }
 
     @Override
     public V remove(K key) throws CacheException {
-        log.info("清除缓存，key:{}", getCacheKey(key));
+        log.debug("清除缓存，key:{}", getCacheKey(key));
         V value = (V) get(key);
         CacheUtil.getCache().del(getCacheKey(key));
         return value;
@@ -45,7 +45,7 @@ public class RedisCache<K, V> implements Cache<K, V> {
 
     @Override
     public void clear() throws CacheException {
-        log.info("清空缓存，pattern:{}", getKeyPrefix() + "*");
+        log.debug("清空缓存，pattern:{}", getKeyPrefix() + "*");
         CacheUtil.getCache().delAll(getKeyPrefix() + "*");
     }
 
