@@ -40,6 +40,9 @@ layui.config({
                 layer.close(loadingIndex);
                 if (data.code === 200) {
                     layer.msg('密码修改成功', {icon: 1});
+                    $("#oldPassword").val("");
+                    $("#password").val("");
+                    $("#confirmPwd").val("");
                 } else {
                     layer.msg(data.message, {icon: 2});
                 }
