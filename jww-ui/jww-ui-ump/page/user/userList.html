@@ -23,14 +23,14 @@
         <a class="layui-btn search_btn">查询</a>
     </div>
     <permission value="sys:user:add">
-    <div class="layui-inline">
-        <a class="layui-btn layui-btn-normal usersAdd_btn">添加用户</a>
-    </div>
+        <div class="layui-inline">
+            <a class="layui-btn layui-btn-normal usersAdd_btn">添加用户</a>
+        </div>
     </permission>
-    <permission value="sys:dept:delete">
-    <div class="layui-inline">
-        <a class="layui-btn layui-btn-danger batchDel">批量删除</a>
-    </div>
+    <permission value="sys:user:delete">
+        <div class="layui-inline">
+            <a class="layui-btn layui-btn-danger batchDel">批量删除</a>
+        </div>
     </permission>
 </blockquote>
 
@@ -42,10 +42,10 @@
 <div style="display: none;" id="toolBar">
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
     <permission value="sys:user:update">
-    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     </permission>
     <permission value="sys:user:delete">
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
     </permission>
 </div>
 <script type="text/javascript" src="../../layui/layui.js"></script>
