@@ -29,3 +29,15 @@ spring:
       #    </dependency>
 server:
   port: 8089
+
+dubbo:
+  application:
+    name: jww-ump-dubbo-consumer
+    owner: jww-ump-dubbo-consumer
+  registry:
+    protocol: zookeeper
+    address: localhost:2181
+
+logging:
+  level:
+     root: info

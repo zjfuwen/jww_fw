@@ -95,18 +95,16 @@ jww
    * Redis3.0+
    * Nginx1.8+
    * Apache Activemq-5.0+ (可选)
- 2.	执行SQL文件jww/jww-ump/sqls/jww.sql，初始化表和数据；
- 3.	修改jww/jww-ump/jww-ump-rpc-service/src/main/resources/application-dev.yml，更新MySQL帐号密码，Redis的IP、端口和密码；
- 4. 修改jww/jww-ump/jww-ump-rpc-service/src/main/resources/dubbo/providers.xml，更新Zookeeper的IP；
- 5.	修改jww/jww-ump/jww-ump-server/src/main/resources/application-dev.yml，更新Redis的IP、端口和密码；
- 6. 修改jww/jww-ump/jww-ump-server/src/main/resources/dubbo/consumers.xml，更新Zookeeper的IP；
- 7.	修改Nginx/conf/nginx.conf，指定静态和动态页面地址；
- 8.	启动MySQL, Zookeeper, Redis, Nginx;
- 9. IntelliJ IDEA 菜单File-Settings-Plugins，添加lombok plugin插件
- 10. IntelliJ IDEA中右键 >> Run jww/jww-ump/jww-ump-rpc-service/src/main/java/com/jww/ump/rpc/service/ServiceApplication.java;
- 11. IntelliJ IDEA中右键 >> Run jww/jww-ump/jww-ump-server/src/main/java/com/jww/ump/server/ServerApplication.java;
- 12. 访问地址：http://localhost 帐户密码：admin/123456
- 13. swagger地址：http://localhost:8089/swagger-ui.html
+ 2.	执行SQL文件jww/jww-ump/sqls/jww.sql，初始化库、表和数据；
+ 3.	修改jww/jww-ump/jww-ump-rpc-service/src/main/resources/application-dev.yml，更新MySQL帐号密码，Redis的IP、端口和密码,Zookeeper的地址；
+ 4. 修改jww/jww-ump/jww-ump-server/src/main/resources/application-dev.yml，更新Redis的IP、端口和密码,Zookeeper的地址；
+ 5.	修改Nginx/conf/nginx.conf，指定静态和动态页面地址（参考附件）；
+ 6.	启动MySQL, Zookeeper, Redis, Nginx;
+ 7. IntelliJ IDEA 菜单File-Settings-Plugins，添加lombok plugin插件
+ 8. IntelliJ IDEA中右键 >> Run jww/jww-ump/jww-ump-rpc-service/src/main/java/com/jww/ump/rpc/service/ServiceApplication.java;
+ 9. IntelliJ IDEA中右键 >> Run jww/jww-ump/jww-ump-server/src/main/java/com/jww/ump/server/ServerApplication.java;
+ 10. 访问地址：http://localhost 帐户密码：admin/123456
+ 11. swagger地址：http://localhost:8089/swagger-ui.html
 
 ## 后续计划(不分先后)：
     ● SSO单点登录服务
