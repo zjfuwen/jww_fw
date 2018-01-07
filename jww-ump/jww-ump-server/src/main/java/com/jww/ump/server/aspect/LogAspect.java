@@ -2,6 +2,8 @@ package com.jww.ump.server.aspect;
 
 import com.alibaba.fastjson.JSON;
 import com.jww.common.core.Constants;
+import com.jww.common.core.exception.BusinessException;
+import com.jww.common.core.exception.LoginException;
 import com.jww.common.core.util.RegexUtil;
 import com.jww.common.web.model.ResultModel;
 import com.jww.ump.model.SysLogModel;
@@ -60,11 +62,16 @@ public class LogAspect {
         isQueryType = logPre(pjp);
         try {
             result = pjp.proceed();
-        } finally {
             //查询类型不添加日志
             if(!isQueryType && logAfter(result)){
                 logService.add(sysLogModel);
             }
+        } catch (LoginException e){
+            throw e;
+        } catch (BusinessException e){
+            throw e;
+        } catch (Exception e){
+            log.error(e.getMessage());
         }
         return result;
     }
