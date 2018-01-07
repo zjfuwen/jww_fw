@@ -55,26 +55,28 @@ public class LogAspect {
     }
 
     @Around("logPointCut()")
-    public Object doAround(ProceedingJoinPoint pjp) throws Throwable {
+    public Object doAround(ProceedingJoinPoint pjp) throws Throwable{
         startTime = System.currentTimeMillis();
         Object result = null;
         boolean isQueryType = false;
-        isQueryType = logPre(pjp);
         try {
+            isQueryType = logPre(pjp);
             result = pjp.proceed();
-            //查询类型不添加日志
-            if(!isQueryType && logAfter(result)){
-                logService.add(sysLogModel);
+        } finally {
+            try{
+                //查询类型不添加日志
+                if(!isQueryType && logAfter(result)){
+                    logService.add(sysLogModel);
+                }
+            }  catch (RuntimeException e){
+                log.error(e.getMessage());
+            }  catch (Exception e){
+                log.error(e.getMessage());
+            } catch (Throwable e){
+                log.error(e.getMessage());
             }
-        } catch (LoginException e){
-            throw e;
-        } catch (BusinessException e){
-            throw e;
-        } catch (RuntimeException e){
-            log.error(e.getMessage());
-        } catch (Exception e){
-            log.error(e.getMessage());
         }
+
         return result;
     }
 
