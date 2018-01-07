@@ -70,6 +70,8 @@ public class LogAspect {
             throw e;
         } catch (BusinessException e){
             throw e;
+        } catch (RuntimeException e){
+            log.error(e.getMessage());
         } catch (Exception e){
             log.error(e.getMessage());
         }
